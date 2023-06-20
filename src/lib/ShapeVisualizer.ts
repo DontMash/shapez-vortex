@@ -36,12 +36,13 @@ type ShapeColor = 'r' | 'g' | 'b' | 'y' | 'p' | 'c' | 'w';
 type ShapeColorIdentifier = ShapeColor | 'u' | '-';
 type ShapeQuarter = Mesh;
 
-const SHAPE: ShapeIdentifier = 'CwCwCwRw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
+const SHAPE: ShapeIdentifier = 'CwRwCwCw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
 
 const SHAPE_BASE_OFFSET = 0.05;
 const SHAPE_MAX_LAYERS = 4;
 const SHAPE_LAYER_HEIGHT = 0.1;
-const SHAPE_LAYER_SEPERATOR = ':';
+const SHAPE_LAYER_SCALE_FACTOR = 0.24;
+const SHAPE_LAYER_IDENTIFIER_SEPERATOR = ':';
 const SHAPE_QUARTER_REGEX = /(..?)/g;
 const SHAPE_QUARTER_PARAMETERS_REGEX = /(.?)/g;
 const SHAPE_TYPE_REGEX = /^[CRWSP-]$/;
@@ -131,7 +132,7 @@ export class ShapeVisualizer {
                 .finally(() => {
                     this.clear();
 
-                    const layerIdentifiers = identifier.split(SHAPE_LAYER_SEPERATOR);
+                    const layerIdentifiers = identifier.split(SHAPE_LAYER_IDENTIFIER_SEPERATOR);
                     let currentLayerIndex = 0;
                     layerIdentifiers.forEach((layerIdentifier) => {
                         const quarters = layerIdentifier.match(SHAPE_QUARTER_REGEX);
@@ -226,8 +227,8 @@ export class ShapeVisualizer {
         for (let i = 0; i < SHAPE_MAX_LAYERS; i++) {
             const layer = new Group();
             layer.position.y = i * SHAPE_LAYER_HEIGHT + SHAPE_BASE_OFFSET;
-            layer.scale.x = 1 - i * 0.2;
-            layer.scale.z = 1 - i * 0.2;
+            layer.scale.x = 1 - i * SHAPE_LAYER_SCALE_FACTOR;
+            layer.scale.z = 1 - i * SHAPE_LAYER_SCALE_FACTOR;
             base.add(layer);
         }
         return base;

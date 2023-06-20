@@ -4,7 +4,7 @@
 	import { ShapeVisualizer } from '$lib/ShapeVisualizer';
 	import { ToastType, add } from './toast/toast.service';
 
-	export let shapeIdentifier: string;
+	export let shapeIdentifier: string | undefined;
 
 	let visualizer: ShapeVisualizer | undefined = undefined;
 	let canvas: HTMLCanvasElement | undefined = undefined;
