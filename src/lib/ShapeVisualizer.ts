@@ -35,6 +35,18 @@ type ShapeTypeIdentifier = ShapeType | '-';
 type ShapeColor = 'r' | 'g' | 'b' | 'y' | 'p' | 'c' | 'w';
 type ShapeColorIdentifier = ShapeColor | 'u' | '-';
 type ShapeQuarter = Mesh;
+type ShapeQuarterData = {
+    type: ShapeTypeIdentifier;
+    color: ShapeColorIdentifier;
+};
+type ShapeLayerData = {
+    layerIdentifier: ShapeIdentifier;
+    quarters: Array<ShapeQuarterData>;
+};
+type ShapeData = {
+    identifier: ShapeIdentifier;
+    layers: Array<ShapeLayerData>;
+};
 
 const SHAPE: ShapeIdentifier = 'CwRwCwCw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
 
@@ -132,30 +144,21 @@ export class ShapeVisualizer {
                 .finally(() => {
                     this.clear();
 
-                    const layerIdentifiers = identifier.split(SHAPE_LAYER_IDENTIFIER_SEPERATOR);
+                    const shape = this.getShapeData(identifier);
                     let currentLayerIndex = 0;
-                    layerIdentifiers.forEach((layerIdentifier) => {
-                        const quarters = layerIdentifier.match(SHAPE_QUARTER_REGEX);
-                        if (!quarters) return;
-
+                    shape.layers.forEach(layer => {
                         const shapeLayer = this.getLayer(currentLayerIndex++);
-                        quarters.forEach((quarter, quarterIndex) => {
-                            const quarterShapeParameters = quarter.match(SHAPE_QUARTER_PARAMETERS_REGEX);
-                            if (!quarterShapeParameters) return;
+                        layer.quarters.forEach((quarter, quarterIndex) => {
+                            if (quarter.type === '-') return;
 
-                            const quarterShapeType = quarterShapeParameters[0] as ShapeTypeIdentifier;
-                            const quarterShapeColor = quarterShapeParameters[1] as ShapeColorIdentifier;
-                            if (quarterShapeType === '-') return;
-
-                            const shapeQuarter = this.getQuarter(quarterShapeType).clone();
+                            const shapeQuarter = this.getQuarter(quarter.type).clone();
                             shapeQuarter.rotateY(Math.PI * -0.5 * quarterIndex);
-                            const material = SHAPE_COLOR_MATERIALS[quarterShapeColor];
+                            const material = SHAPE_COLOR_MATERIALS[quarter.color];
                             shapeQuarter.material = material;
 
                             shapeLayer.add(shapeQuarter);
-                        });
-                    });
-
+                        })
+                    })
                     return resolve();
                 });
         });
@@ -219,7 +222,7 @@ export class ShapeVisualizer {
     }
 
     private createBase(): Object3D {
-        const geometry = new CylinderGeometry(0.75, 0.75, 0.1, 32);
+        const geometry = new CylinderGeometry(0.55, 0.55, 0.1, 32);
         const base = new Mesh(geometry, SHAPE_COLOR_BASE_MATERIAL);
         base.position.y = -SHAPE_BASE_OFFSET;
         base.rotateY(Math.PI * 0.5);
@@ -310,6 +313,27 @@ export class ShapeVisualizer {
             throw getError('getQuarter', `Invalid shape type: ${type}`);
         }
         return this.quarters[type];
+    }
+
+    private getShapeData(identifier: ShapeIdentifier): ShapeData {
+        const layerIdentifiers: Array<ShapeIdentifier> = identifier.split(SHAPE_LAYER_IDENTIFIER_SEPERATOR);
+        const layers = layerIdentifiers.map<ShapeLayerData>(layerIdentifier => {
+            const quarterIdentifiers = layerIdentifier.match(SHAPE_QUARTER_REGEX);
+            const quarters = quarterIdentifiers?.map<ShapeQuarterData>(quarterIdentifier => {
+                const quarterShapeParameters = quarterIdentifier.match(SHAPE_QUARTER_PARAMETERS_REGEX);
+                const quarterData: ShapeQuarterData = {
+                    type: quarterShapeParameters ? quarterShapeParameters[0] as ShapeTypeIdentifier : '-',
+                    color: quarterShapeParameters ? quarterShapeParameters[1] as ShapeColorIdentifier : '-',
+                };
+                return quarterData;
+            }) ?? [];
+            const layerData: ShapeLayerData = {
+                layerIdentifier,
+                quarters,
+            };
+            return layerData;
+        });
+        return { identifier, layers };
     }
 }
 
