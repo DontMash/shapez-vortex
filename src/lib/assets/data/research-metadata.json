@@ -1,0 +1,983 @@
+{
+    "Levels": [
+        {
+            "Id": "RLInitial",
+            "Title": "Belts & Extractors",
+            "Description": "Allows to extract and transport shapes.",
+            "GoalShape": null,
+            "GoalAmount": -1,
+            "DependentLevelId": null,
+            "LevelIndex": 0,
+            "DependentLevelIndex": -1,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLHalfCutter",
+            "Title": "Half Cutter",
+            "Description": "Allows to cut a shapes in two halves, but returns only one side of the shape.",
+            "GoalShape": "CuCuCuCu",
+            "GoalAmount": 10,
+            "DependentLevelId": "RLInitial",
+            "LevelIndex": 1,
+            "DependentLevelIndex": 0,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLRotator",
+            "Title": "Rotator",
+            "Description": "Allows to rotate shapes clockwise by 90 degrees.",
+            "GoalShape": "----RuRu",
+            "GoalAmount": 50,
+            "DependentLevelId": "RLHalfCutter",
+            "LevelIndex": 2,
+            "DependentLevelIndex": 1,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLHalvesSwapper",
+            "Title": "Halves Swapper",
+            "Description": "Allows to swap two halves of two shapes.",
+            "GoalShape": "Cu------",
+            "GoalAmount": 100,
+            "DependentLevelId": "RLRotator",
+            "LevelIndex": 3,
+            "DependentLevelIndex": 2,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLLayer2",
+            "Title": "Layer 2",
+            "Description": "Unlocks the second layer.",
+            "GoalShape": "CuCuRuRu",
+            "GoalAmount": 150,
+            "DependentLevelId": "RLHalvesSwapper",
+            "LevelIndex": 4,
+            "DependentLevelIndex": 3,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLBlueprints",
+            "Title": "Blueprints",
+            "Description": "Allows to copy/paste parts of your factory.",
+            "GoalShape": "CuCuCuRu",
+            "GoalAmount": 200,
+            "DependentLevelId": "RLLayer2",
+            "LevelIndex": 5,
+            "DependentLevelIndex": 4,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLStacker",
+            "Title": "Stacker",
+            "Description": "Unlocks the stacker, allowing to combine/staple shapes.",
+            "GoalShape": "Cu----Ru",
+            "GoalAmount": 500,
+            "DependentLevelId": "RLBlueprints",
+            "LevelIndex": 6,
+            "DependentLevelIndex": 5,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLIslandBuilding",
+            "Title": "Platform Building",
+            "Description": "Allows placing new space station platforms.",
+            "GoalShape": "CuRuCuRu:Cu--Cu--",
+            "GoalAmount": 750,
+            "DependentLevelId": "RLStacker",
+            "LevelIndex": 7,
+            "DependentLevelIndex": 6,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLTunnels",
+            "Title": "Space Tunnels",
+            "Description": "Allows to transport shapes over long distances.",
+            "GoalShape": "SuSuSuSu",
+            "GoalAmount": 1250,
+            "DependentLevelId": "RLIslandBuilding",
+            "LevelIndex": 8,
+            "DependentLevelIndex": 7,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLFluids",
+            "Title": "Fluids & Painting",
+            "Description": "Allows painting shapes. Hint: Make use of the blueprint functionality you just unlocked!",
+            "GoalShape": "WuCuWuCu:CuCuCuCu",
+            "GoalAmount": 1750,
+            "DependentLevelId": "RLTunnels",
+            "LevelIndex": 9,
+            "DependentLevelIndex": 8,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLFluidPacking",
+            "Title": "Fluid Packing",
+            "Description": "Allows to transport colors between space stations.",
+            "GoalShape": "RrCrRrCr",
+            "GoalAmount": 2500,
+            "DependentLevelId": "RLFluids",
+            "LevelIndex": 10,
+            "DependentLevelIndex": 9,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLTrains",
+            "Title": "Trains",
+            "Description": "Unlocks trains. They are not working yet, but that won't stop you from progressing.",
+            "GoalShape": "SgCrCrSg:--CuCu--",
+            "GoalAmount": 3500,
+            "DependentLevelId": "RLFluidPacking",
+            "LevelIndex": 11,
+            "DependentLevelIndex": 10,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLPinPusher",
+            "Title": "Pin Pusher",
+            "Description": "Allows to create shapes with floating layers by supporting them with pins.",
+            "GoalShape": "SgCrCrSg:CbCbCbCb",
+            "GoalAmount": 4500,
+            "DependentLevelId": "RLTrains",
+            "LevelIndex": 12,
+            "DependentLevelIndex": 11,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLTrainFluids",
+            "Title": "Fluid Trains",
+            "Description": "Allows to transport fluids via trains. Not working yet.",
+            "GoalShape": "RuCrP-Cr:----Ru--",
+            "GoalAmount": 8000,
+            "DependentLevelId": "RLPinPusher",
+            "LevelIndex": 13,
+            "DependentLevelIndex": 12,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLColorMixing",
+            "Title": "Color Mixing",
+            "Description": "Allows to mix colors.",
+            "GoalShape": "RgCrP-Cr:P-P-RgP-:CbCb--Cb",
+            "GoalAmount": 15000,
+            "DependentLevelId": "RLTrainFluids",
+            "LevelIndex": 14,
+            "DependentLevelIndex": 13,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLLayer3",
+            "Title": "Layer 3",
+            "Description": "Unlocks the third layer.",
+            "GoalShape": "RuCwP-Cw:----Ru--",
+            "GoalAmount": 10000,
+            "DependentLevelId": "RLColorMixing",
+            "LevelIndex": 15,
+            "DependentLevelIndex": 14,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLCrystals",
+            "Title": "End of Alpha",
+            "Description": "Current end of the progression.",
+            "GoalShape": "CwCrCwCr:CrCwCrCw:CwCrCwCr:CrCwCrCw",
+            "GoalAmount": 999999,
+            "DependentLevelId": "RLLayer3",
+            "LevelIndex": 16,
+            "DependentLevelIndex": 15,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLWires",
+            "Title": "Wires",
+            "Description": "Placeholder upgrade, will give you nothing for now.",
+            "GoalShape": "Cuc-Cuc-",
+            "GoalAmount": 10000,
+            "DependentLevelId": "RLCrystals",
+            "LevelIndex": 17,
+            "DependentLevelIndex": 16,
+            "Dependencies": null
+        },
+        {
+            "Id": "RLInfinite",
+            "Title": "Infinite Upgrades",
+            "Description": "Placeholder upgrade, will give you nothing for now. The last upgrade.",
+            "GoalShape": "P-",
+            "GoalAmount": 999999,
+            "DependentLevelId": "RLWires",
+            "LevelIndex": 18,
+            "DependentLevelIndex": 17,
+            "Dependencies": null
+        }
+    ],
+    "Categories": [
+        {
+            "Id": "RCTransport",
+            "Title": "Transport",
+            "Nodes": [
+                {
+                    "Id": "RNSplitter2Way",
+                    "Title": "2-Way Splitter",
+                    "Description": "Allows splitting a belt. Drag over an existing belt to create a splitter.",
+                    "GoalShape": "CuCu----",
+                    "GoalAmount": 50,
+                    "DependentLevelId": "RLRotator",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 2,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNMerger2Way",
+                    "Title": "2-Way Merger",
+                    "Description": "Allows merging belts. Place one belt onto another to create a merger.",
+                    "GoalShape": "CuCuCu--",
+                    "GoalAmount": 75,
+                    "DependentLevelId": "RLHalvesSwapper",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 3,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNSplitter3Way",
+                    "Title": "3-Way Splitter",
+                    "Description": "Placeholder upgrade, will give you nothing for now.",
+                    "GoalShape": "Ru--CuCu",
+                    "GoalAmount": 250,
+                    "DependentLevelId": "RLBlueprints",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 5,
+                    "Dependencies": [
+                        "RNSplitter2Way"
+                    ]
+                },
+                {
+                    "Id": "RNMerger3Way",
+                    "Title": "3-Way Merger",
+                    "Description": "Merges 3 belts.",
+                    "GoalShape": "CuCu--Ru",
+                    "GoalAmount": 375,
+                    "DependentLevelId": "RLStacker",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 6,
+                    "Dependencies": [
+                        "RNMerger2Way"
+                    ]
+                },
+                {
+                    "Id": "RNSplitterTShape",
+                    "Title": "T-Shape Splitter",
+                    "Description": "Splits the outputs to left and right instead of forward and side.",
+                    "GoalShape": "SuSu----:CuCuCuCu",
+                    "GoalAmount": 650,
+                    "DependentLevelId": "RLTunnels",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 8,
+                    "Dependencies": [
+                        "RNSplitter3Way"
+                    ]
+                },
+                {
+                    "Id": "RNMergerTShape",
+                    "Title": "T-Shape Merger",
+                    "Description": "Merges 2 belts, from left and right instead of backward and side.",
+                    "GoalShape": "----SbSb:CuCuCuCu",
+                    "GoalAmount": 1200,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": [
+                        "RNMerger3Way"
+                    ]
+                },
+                {
+                    "Id": "RNSplitterMultiLayer",
+                    "Title": "Multi-Layer Splitter",
+                    "Description": "Placeholder upgrade, will give you nothing for now.",
+                    "GoalShape": "P-P-RuRu:RuRu----:P-P-----:RuRu----",
+                    "GoalAmount": 4000,
+                    "DependentLevelId": "RLPinPusher",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 12,
+                    "Dependencies": [
+                        "RNSplitterTShape"
+                    ]
+                },
+                {
+                    "Id": "RNMergerMultiLayer",
+                    "Title": "Multi-Layer Merger",
+                    "Description": "Placeholder upgrade, will give you nothing for now.",
+                    "GoalShape": "RuRuP-P-:----RrRr:----P-P-:----RgRg",
+                    "GoalAmount": 3000,
+                    "DependentLevelId": "RLTrainFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 13,
+                    "Dependencies": [
+                        "RNMergerTShape"
+                    ]
+                },
+                {
+                    "Id": "RNBeltLifts2Layers",
+                    "Title": "2-Layer Lifts",
+                    "Description": "Placeholder upgrade, will give you nothing for now.",
+                    "GoalShape": "RuRuP-P-:----P-P-:----RuRu",
+                    "GoalAmount": 6000,
+                    "DependentLevelId": "RLLayer3",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 15,
+                    "Dependencies": [
+                        "RNSplitterMultiLayer",
+                        "RNMergerMultiLayer"
+                    ]
+                },
+                {
+                    "Id": "RNStorage",
+                    "Title": "Storage",
+                    "Description": "Allows storing shapes.",
+                    "GoalShape": "SuCuSuCu:CuCuCuCu",
+                    "GoalAmount": 700,
+                    "DependentLevelId": "RLIslandBuilding",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 7,
+                    "Dependencies": [
+                        "RNSplitter3Way",
+                        "RNMerger3Way"
+                    ]
+                },
+                {
+                    "Id": "RNSplitterMergerPriorities",
+                    "Title": "Splitter/Merger Priorities",
+                    "Description": "Placeholder upgrade, will give you nothing for now.",
+                    "GoalShape": "CrRrCrCr:Cu--Cu--",
+                    "GoalAmount": 1750,
+                    "DependentLevelId": "RLFluidPacking",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 10,
+                    "Dependencies": [
+                        "RNSplitterTShape",
+                        "RNMergerTShape"
+                    ]
+                }
+            ],
+            "Upgrades": [
+                {
+                    "Id": "RSBeltSpeed1",
+                    "Title": "Belt Speed <b>1</b>",
+                    "Description": "Increases the speed of belts, rotators, splitters, mergers, catapults and belt lifts.",
+                    "GoalShape": "RuRuRuRu",
+                    "GoalAmount": 125,
+                    "DependentLevelId": "RLRotator",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 2,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RSBeltSpeed2",
+                    "Title": "Belt Speed <b>2</b>",
+                    "Description": "Increases the speed of belts, rotators, splitters, mergers, catapults and belt lifts.",
+                    "GoalShape": "RuRuRuRu:RuRuRuRu",
+                    "GoalAmount": 900,
+                    "DependentLevelId": "RLBlueprints",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 5,
+                    "Dependencies": [
+                        "RSBeltSpeed1"
+                    ]
+                },
+                {
+                    "Id": "RSBeltSpeed3",
+                    "Title": "Belt Speed <b>3</b>",
+                    "Description": "Increases the speed of belts, rotators, splitters, mergers, catapults and belt lifts.",
+                    "GoalShape": "RuRuRuRu:WuWuWuWu:CuCuCuCu",
+                    "GoalAmount": 4500,
+                    "DependentLevelId": "RLTunnels",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 8,
+                    "Dependencies": [
+                        "RSBeltSpeed2"
+                    ]
+                },
+                {
+                    "Id": "RSBeltSpeed4",
+                    "Title": "Belt Speed <b>4</b>",
+                    "Description": "Increases the speed of belts, rotators, splitters, mergers, catapults and belt lifts.",
+                    "GoalShape": "RuRuRuRu:P-P-P-P-:WgWrWgWr:CrCgCrCg",
+                    "GoalAmount": 15000,
+                    "DependentLevelId": "RLPinPusher",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 12,
+                    "Dependencies": [
+                        "RSBeltSpeed3"
+                    ]
+                },
+                {
+                    "Id": "RSExtractorSpeed1",
+                    "Title": "Extractor Speed <b>1</b>",
+                    "Description": "Increases the extraction speed.",
+                    "GoalShape": "RuRuRu--",
+                    "GoalAmount": 250,
+                    "DependentLevelId": "RLLayer2",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 4,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RSExtractorSpeed2",
+                    "Title": "Extractor Speed <b>2</b>",
+                    "Description": "Increases the extraction speed.",
+                    "GoalShape": "RuRuRu--:CuCuCu--",
+                    "GoalAmount": 1500,
+                    "DependentLevelId": "RLStacker",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 6,
+                    "Dependencies": [
+                        "RSExtractorSpeed1"
+                    ]
+                },
+                {
+                    "Id": "RSExtractorSpeed3",
+                    "Title": "Extractor Speed <b>3</b>",
+                    "Description": "Increases the extraction speed.",
+                    "GoalShape": "RbRuRbRu:CbCuCbWu",
+                    "GoalAmount": 7000,
+                    "DependentLevelId": "RLFluidPacking",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 10,
+                    "Dependencies": [
+                        "RSExtractorSpeed2"
+                    ]
+                },
+                {
+                    "Id": "RSExtractorSpeed4",
+                    "Title": "Extractor Speed <b>4</b>",
+                    "Description": "Increases the extraction speed.",
+                    "GoalShape": "RbRpRbRp:CbCpCbWp",
+                    "GoalAmount": 35000,
+                    "DependentLevelId": "RLColorMixing",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 14,
+                    "Dependencies": [
+                        "RSExtractorSpeed3"
+                    ]
+                },
+                {
+                    "Id": "RNHubSize1",
+                    "Title": "HUB Input Size <b>1</b>",
+                    "Description": "Increases the size of the HUB to allow for more inputs.",
+                    "GoalShape": "RgRgRgRg:RuRuRuRu:CuCuCuCu",
+                    "GoalAmount": 2000,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNHubSize2",
+                    "Title": "HUB Input Size <b>2</b>",
+                    "Description": "Increases the size of the HUB to allow for more inputs.",
+                    "GoalShape": "RgRgRgRg:RbRbRbRb:CuCuCuCu",
+                    "GoalAmount": 12000,
+                    "DependentLevelId": "RLTrainFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 13,
+                    "Dependencies": [
+                        "RNHubSize1"
+                    ]
+                },
+                {
+                    "Id": "RNHubSize3",
+                    "Title": "HUB Input Size <b>3</b>",
+                    "Description": "Increases the size of the HUB to allow for more inputs.",
+                    "GoalShape": "SpWgSuWy:--CuSrCg:SpWwWuCp",
+                    "GoalAmount": 50000,
+                    "DependentLevelId": "RLCrystals",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 16,
+                    "Dependencies": [
+                        "RNHubSize2"
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "RCCutStack",
+            "Title": "Cut, Rotate, Stack",
+            "Nodes": [
+                {
+                    "Id": "RNFullCutter",
+                    "Title": "Full Cutter",
+                    "Description": "Allows to cut shapes and outputs both halves.",
+                    "GoalShape": "SuRuSuRu:CuSuCuSu",
+                    "GoalAmount": 500,
+                    "DependentLevelId": "RLTunnels",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 8,
+                    "Dependencies": [
+                        "RNRotatorCCW"
+                    ]
+                },
+                {
+                    "Id": "RNTrash",
+                    "Title": "Trash",
+                    "Description": "Allows you to destroy no longer needed shapes. Can only be placed on the lowest layer.",
+                    "GoalShape": "Cu--Ru--",
+                    "GoalAmount": 100,
+                    "DependentLevelId": "RLLayer2",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 4,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNRotatorCCW",
+                    "Title": "CCW Rotator",
+                    "Description": "Allows rotating a shape counter-clockwise.",
+                    "GoalShape": "CuRuRuRu",
+                    "GoalAmount": 250,
+                    "DependentLevelId": "RLBlueprints",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 5,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNMirroredFullCutter",
+                    "Title": "Mirrored Full Cutter",
+                    "Description": "NOT IMPLEMENTED. Mirrored variant of the full cutter, toggle with F",
+                    "GoalShape": "RuRuRgRg:RuRuRgRg:RuRuRgRg",
+                    "GoalAmount": 1250,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": [
+                        "RNFullCutter"
+                    ]
+                },
+                {
+                    "Id": "RNRotatorHalf",
+                    "Title": "180 Rotator",
+                    "Description": "Allows rotating a shape by 180 degrees.",
+                    "GoalShape": "SgCgRgCg:Cr------",
+                    "GoalAmount": 1200,
+                    "DependentLevelId": "RLFluidPacking",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 10,
+                    "Dependencies": [
+                        "RNRotatorCCW"
+                    ]
+                }
+            ],
+            "Upgrades": [
+                {
+                    "Id": "RSCuttingSpeed1",
+                    "Title": "Cutting Speed <b>1</b>",
+                    "Description": "Increases the cutting, rotating, swapping and pin pushing speed.",
+                    "GoalShape": "------Ru",
+                    "GoalAmount": 300,
+                    "DependentLevelId": "RLHalvesSwapper",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 3,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RSCuttingSpeed2",
+                    "Title": "Cutting Speed <b>2</b>",
+                    "Description": "Increases the cutting, rotating, swapping and pin pushing speed.",
+                    "GoalShape": "Ru--Ru--",
+                    "GoalAmount": 1500,
+                    "DependentLevelId": "RLBlueprints",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 5,
+                    "Dependencies": [
+                        "RSCuttingSpeed1"
+                    ]
+                },
+                {
+                    "Id": "RSCuttingSpeed3",
+                    "Title": "Cutting Speed <b>3</b>",
+                    "Description": "Increases the cutting, rotating, swapping and pin pushing speed.",
+                    "GoalShape": "RuWuRuWu:WuWuWuWu",
+                    "GoalAmount": 5000,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": [
+                        "RSCuttingSpeed2"
+                    ]
+                },
+                {
+                    "Id": "RSCuttingSpeed4",
+                    "Title": "Cutting Speed <b>4</b>",
+                    "Description": "Increases the cutting, rotating, swapping and pin pushing speed.",
+                    "GoalShape": "RgWuRgWu:WgWuWgWu",
+                    "GoalAmount": 12000,
+                    "DependentLevelId": "RLTrainFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 13,
+                    "Dependencies": [
+                        "RSCuttingSpeed3"
+                    ]
+                },
+                {
+                    "Id": "RSStackingSpeed1",
+                    "Title": "Stacking Speed <b>1</b>",
+                    "Description": "Increases the stacking speed.",
+                    "GoalShape": "RuCuRuCu",
+                    "GoalAmount": 1500,
+                    "DependentLevelId": "RLStacker",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 6,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RSStackingSpeed2",
+                    "Title": "Stacking Speed <b>2</b>",
+                    "Description": "Increases the stacking speed.",
+                    "GoalShape": "RuCuRuCu:SuCuSuCu",
+                    "GoalAmount": 2500,
+                    "DependentLevelId": "RLIslandBuilding",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 7,
+                    "Dependencies": [
+                        "RSStackingSpeed1"
+                    ]
+                },
+                {
+                    "Id": "RSStackingSpeed3",
+                    "Title": "Stacking Speed <b>3</b>",
+                    "Description": "Increases the stacking speed.",
+                    "GoalShape": "RrCuRrCu:SuCrSuCr",
+                    "GoalAmount": 5000,
+                    "DependentLevelId": "RLFluidPacking",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 10,
+                    "Dependencies": [
+                        "RSStackingSpeed2"
+                    ]
+                },
+                {
+                    "Id": "RSStackingSpeed4",
+                    "Title": "Stacking Speed <b>4</b>",
+                    "Description": "Increases the stacking speed.",
+                    "GoalShape": "RrCwRrCw:SwCrSwCr",
+                    "GoalAmount": 20000,
+                    "DependentLevelId": "RLLayer3",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 15,
+                    "Dependencies": [
+                        "RSStackingSpeed3"
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "RCIslands",
+            "Title": "Space Stations",
+            "Nodes": [
+                {
+                    "Id": "RNIslandLayouts1",
+                    "Title": "Platform Layouts <b>1</b>",
+                    "Description": "Unlocks new space station layouts.",
+                    "GoalShape": "SbSbSbSb",
+                    "GoalAmount": 600,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNIslandLayouts2",
+                    "Title": "Platform Layouts <b>2</b>",
+                    "Description": "Unlocks new space station layouts.",
+                    "GoalShape": "SbSbSbSb:CrCrCrCr",
+                    "GoalAmount": 1500,
+                    "DependentLevelId": "RLFluidPacking",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 10,
+                    "Dependencies": [
+                        "RNIslandLayouts1"
+                    ]
+                },
+                {
+                    "Id": "RNIslandLayouts3",
+                    "Title": "Platform Layouts <b>3</b>",
+                    "Description": "Unlocks new space station layouts.",
+                    "GoalShape": "SbSbSbSb:--Cu--Cu:CrCrCrCr",
+                    "GoalAmount": 4000,
+                    "DependentLevelId": "RLPinPusher",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 12,
+                    "Dependencies": [
+                        "RNIslandLayouts2"
+                    ]
+                },
+                {
+                    "Id": "RNIslandLayouts4",
+                    "Title": "Platform Layouts <b>4</b>",
+                    "Description": "Unlocks new space station layouts.",
+                    "GoalShape": "SuWw--Sp:CuSbRrCc:--WuWwCu:WyCb--Su",
+                    "GoalAmount": 500000,
+                    "DependentLevelId": "RLCrystals",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 16,
+                    "Dependencies": [
+                        "RNIslandLayouts3"
+                    ]
+                }
+            ],
+            "Upgrades": [
+                {
+                    "Id": "RNChunkLimit1",
+                    "Title": "Chunk Limit <b>1</b>",
+                    "Description": "Increase the maximum amount of platform blocks you can place.",
+                    "GoalShape": "RuRuRuRu:CuCuCuCu",
+                    "GoalAmount": 2500,
+                    "DependentLevelId": "RLIslandBuilding",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 7,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNChunkLimit2",
+                    "Title": "Chunk Limit <b>2</b>",
+                    "Description": "Increase the maximum amount of platform blocks you can place.",
+                    "GoalShape": "RuRuRuRu:CgCgCgCg",
+                    "GoalAmount": 5000,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": [
+                        "RNChunkLimit1"
+                    ]
+                },
+                {
+                    "Id": "RNChunkLimit3",
+                    "Title": "Chunk Limit <b>3</b>",
+                    "Description": "Increase the maximum amount of platform blocks you can place.",
+                    "GoalShape": "RbRuRbRu:CgCgCgCg:CbCbCbCb",
+                    "GoalAmount": 9000,
+                    "DependentLevelId": "RLTrains",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 11,
+                    "Dependencies": [
+                        "RNChunkLimit2"
+                    ]
+                },
+                {
+                    "Id": "RNChunkLimit4",
+                    "Title": "Chunk Limit <b>4</b>",
+                    "Description": "Increase the maximum amount of platform blocks you can place.",
+                    "GoalShape": "RbRuRbRu:CgCgCgCg:P-P-P-P-:CbCbCbCb",
+                    "GoalAmount": 12000,
+                    "DependentLevelId": "RLTrainFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 13,
+                    "Dependencies": [
+                        "RNChunkLimit3"
+                    ]
+                },
+                {
+                    "Id": "RNChunkLimit5",
+                    "Title": "Chunk Limit <b>5</b>",
+                    "Description": "Increase the maximum amount of platform blocks you can place.",
+                    "GoalShape": "RbRwRbRw:CgCgCgCg:P-P-P-P-:CbCbCbCb",
+                    "GoalAmount": 25000,
+                    "DependentLevelId": "RLLayer3",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 15,
+                    "Dependencies": [
+                        "RNChunkLimit4"
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "RCFluids",
+            "Title": "Fluids & Painting",
+            "Nodes": [
+                {
+                    "Id": "RNFluidTank",
+                    "Title": "Fluid Tank",
+                    "Description": "Allows to store fluids.",
+                    "GoalShape": "CrCrRuCr:CuCg--Cg",
+                    "GoalAmount": 1250,
+                    "DependentLevelId": "RLFluidPacking",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 10,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNMirroredPainter",
+                    "Title": "Mirrored Topmost Painter",
+                    "Description": "Placeholder upgrade, will give you nothing for now.",
+                    "GoalShape": "WuCuWgCg:CuCuCgCg",
+                    "GoalAmount": 2500,
+                    "DependentLevelId": "RLTrains",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 11,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNFullPainter",
+                    "Title": "Full Painter",
+                    "Description": "Placeholder upgrade, will give you nothing for now.",
+                    "GoalShape": "CrCrCrCr:CrCrCrCr:CrCrCrCr:CrCrCrCr",
+                    "GoalAmount": 4000,
+                    "DependentLevelId": "RLPinPusher",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 12,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNPipeJunctions",
+                    "Title": "Pipe Junction/Cross",
+                    "Description": "Unlocks 3-way/4-way pipe junctions.",
+                    "GoalShape": "CrSrSrCr",
+                    "GoalAmount": 1200,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNPipeUpDown2",
+                    "Title": "Pipe Up/Down T2",
+                    "Description": "Placeholder upgrade, will give you nothing for now.",
+                    "GoalShape": "CbCbCbCb:CwCwCwCw:WbWbWbWb",
+                    "GoalAmount": 50000,
+                    "DependentLevelId": "RLLayer3",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 15,
+                    "Dependencies": [
+                        "RNPipeJunctions"
+                    ]
+                }
+            ],
+            "Upgrades": [
+                {
+                    "Id": "RSPumpAndPackingSpeed1",
+                    "Title": "Pump & Packing Speed <b>1</b>",
+                    "Description": "Increases the speed of the Fluid Pump, Fluid Filler, Fluid Drainer and Hydraulic Press.",
+                    "GoalShape": "CrCgCrCg",
+                    "GoalAmount": 5000,
+                    "DependentLevelId": "RLFluidPacking",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 10,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RSPumpAndPackingSpeed2",
+                    "Title": "Pump & Packing Speed <b>2</b>",
+                    "Description": "Increases the speed of the Fluid Pump, Fluid Filler, Fluid Drainer and Hydraulic Press.",
+                    "GoalShape": "CrCgCrCg:P-CbP-Cb:Cb--Cb--",
+                    "GoalAmount": 12000,
+                    "DependentLevelId": "RLPinPusher",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 12,
+                    "Dependencies": [
+                        "RSPumpAndPackingSpeed1"
+                    ]
+                },
+                {
+                    "Id": "RSPumpAndPackingSpeed3",
+                    "Title": "Pump & Packing Speed <b>3</b>",
+                    "Description": "Increases the speed of the Fluid Pump, Fluid Filler, Fluid Drainer and Hydraulic Press.",
+                    "GoalShape": "CrCgCrCg:P-CwP-Cw:Cw--Cw--:CbCbCbCb",
+                    "GoalAmount": 24000,
+                    "DependentLevelId": "RLLayer3",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 15,
+                    "Dependencies": [
+                        "RSPumpAndPackingSpeed2"
+                    ]
+                },
+                {
+                    "Id": "RSPaintingSpeed1",
+                    "Title": "Painting Speed <b>1</b>",
+                    "Description": "Increases the speed of the painter.",
+                    "GoalShape": "CbCbCbCb",
+                    "GoalAmount": 2000,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RSPaintingSpeed2",
+                    "Title": "Painting Speed <b>2</b>",
+                    "Description": "Increases the speed of the painter.",
+                    "GoalShape": "CbCbCbCb:CgCgCgCg",
+                    "GoalAmount": 9000,
+                    "DependentLevelId": "RLTrains",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 11,
+                    "Dependencies": [
+                        "RSPaintingSpeed1"
+                    ]
+                },
+                {
+                    "Id": "RSPaintingSpeed3",
+                    "Title": "Painting Speed <b>3</b>",
+                    "Description": "Increases the speed of the painter.",
+                    "GoalShape": "CbCbCbCb:CgCgCgCg:CrCrCrCr",
+                    "GoalAmount": 10000,
+                    "DependentLevelId": "RLTrainFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 13,
+                    "Dependencies": [
+                        "RSPaintingSpeed2"
+                    ]
+                },
+                {
+                    "Id": "RSMixingSpeed1",
+                    "Title": "Mixing Speed <b>1</b>",
+                    "Description": "Increases the speed of the color mixer.",
+                    "GoalShape": "RyRyRyRy:RpRpRpRp:RcRcRcRc",
+                    "GoalAmount": 10000,
+                    "DependentLevelId": "RLColorMixing",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 14,
+                    "Dependencies": []
+                }
+            ]
+        },
+        {
+            "Id": "RCTrains",
+            "Title": "Trains",
+            "Nodes": [],
+            "Upgrades": []
+        },
+        {
+            "Id": "RCWires",
+            "Title": "Wires",
+            "Nodes": [],
+            "Upgrades": []
+        },
+        {
+            "Id": "RCUtility",
+            "Title": "Utility",
+            "Nodes": [
+                {
+                    "Id": "RNLabel",
+                    "Title": "Decorative Label",
+                    "Description": "Allows placing decorative labels.",
+                    "GoalShape": "Ru----Ru:Ru----Ru",
+                    "GoalAmount": 750,
+                    "DependentLevelId": "RLIslandBuilding",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 7,
+                    "Dependencies": []
+                },
+                {
+                    "Id": "RNBeltReader",
+                    "Title": "Belt Reader",
+                    "Description": "Allows to measure the belt speed and display it prominently.",
+                    "GoalShape": "Cr----Cr:Cu----Cu:Sg------:Cu----Cu",
+                    "GoalAmount": 1200,
+                    "DependentLevelId": "RLFluids",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 9,
+                    "Dependencies": []
+                }
+            ],
+            "Upgrades": []
+        }
+    ]
+}
