@@ -271,10 +271,7 @@ export class ShapeVisualizer {
                 loader.parseAsync(STAR_QUARTER, ''),
                 loader.parseAsync(PIN_QUARTER, '')
             ])
-                .then(values => resolve(values.map((value) => {
-                    console.log(value);
-                    return value.scene.children[0] as Mesh;
-                })))
+                .then(values => resolve(values.map((value) => value.scene.children[0] as Mesh)))
                 .catch(reason => reject(getError('getModels', reason.toString())));
         });
     }
