@@ -33,6 +33,11 @@
 			add(message, 2000, ToastType.Error);
 		}
 	});
+
+	export const expandLayers = () => visualizer?.expandLayers();
+	export const collapseLayers = () => visualizer?.collapseLayers();
+	export const expandQuarters = () => visualizer?.expandQuarters();
+	export const collapseQuarters = () => visualizer?.collapseQuarters();
 </script>
 
 <canvas bind:this={canvas} />

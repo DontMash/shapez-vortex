@@ -12,6 +12,7 @@ import {
     PerspectiveCamera,
     Scene,
     Vector2,
+    Vector3,
     WebGLRenderer
 } from 'three';
 import WebGL from 'three/examples/jsm/capabilities/WebGL';
@@ -54,11 +55,12 @@ const SHAPE_BASE_OFFSET = 0.05;
 const SHAPE_MAX_LAYERS = 4;
 const SHAPE_LAYER_HEIGHT = 0.1;
 const SHAPE_LAYER_SCALE_FACTOR = 0.24;
+const SHAPE_QUARTER_EXPAND_OFFSET = new Vector3(0.3, 0, 0.3);
 const SHAPE_LAYER_IDENTIFIER_SEPERATOR = ':';
 const SHAPE_QUARTER_REGEX = /(..?)/g;
 const SHAPE_QUARTER_PARAMETERS_REGEX = /(.?)/g;
 const SHAPE_TYPE_REGEX = /^[CRWSP-]$/;
-export const SHAPE_IDENTIFIER_REGEX = /^([CRWSP-][rgbypcwu-]){4}(:([CRWSP-][rgbypcwu-]){4}){0,4}$/;
+const SHAPE_IDENTIFIER_REGEX = /^([CRWSP-][rgbypcwu-]){4}(:([CRWSP-][rgbypcwu-]){4}){0,4}$/;
 
 const SHAPE_COLOR_BASE = 0x555555;
 const SHAPE_COLOR_NONE = 0x777777;
@@ -96,13 +98,16 @@ const SHAPE_COLOR_MATERIALS: Record<ShapeColorIdentifier, Material> = {
 };
 
 export class ShapeVisualizer {
-    private renderer: WebGLRenderer | undefined;
-    private camera: PerspectiveCamera | undefined;
-    private controls: OrbitControls | undefined;
-    private composer: EffectComposer | undefined;
+    private renderer: WebGLRenderer;
+    private camera: PerspectiveCamera;
+    private controls: OrbitControls;
+    private composer: EffectComposer;
     private scene: Scene;
-    private base: Object3D | undefined;
+    private base: Object3D;
     private quarters: Record<ShapeType, ShapeQuarter> | undefined;
+
+    private isLayerExpanded = false;
+    private isQuarterExpanded = false;
 
     constructor(private canvas: HTMLCanvasElement) {
         if (!WebGL.isWebGLAvailable()) {
@@ -136,39 +141,78 @@ export class ShapeVisualizer {
             if (!identifier.match(SHAPE_IDENTIFIER_REGEX)) {
                 return reject(getError('draw', 'Invalid shape identifier'));
             }
-            this.getModels()
-                .then(models => {
-                    this.quarters = this.getQuarters(models);
-                })
-                .catch(reject)
-                .finally(() => {
-                    this.clear();
 
-                    const shape = this.getShapeData(identifier);
-                    let currentLayerIndex = 0;
-                    shape.layers.forEach(layer => {
-                        const shapeLayer = this.getLayer(currentLayerIndex++);
-                        layer.quarters.forEach((quarter, quarterIndex) => {
-                            if (quarter.type === '-') return;
+            this.clear();
+            const shape = this.getShapeData(identifier);
 
-                            const shapeQuarter = this.getQuarter(quarter.type).clone();
-                            shapeQuarter.rotateY(Math.PI * -0.5 * quarterIndex);
-                            const material = SHAPE_COLOR_MATERIALS[quarter.color];
-                            shapeQuarter.material = material;
-
-                            shapeLayer.add(shapeQuarter);
-                        })
+            if (this.quarters) {
+                this.drawShape(shape);
+                return resolve();
+            }
+            else {
+                this.getModels()
+                    .then(models => {
+                        this.quarters = this.getQuarters(models);
                     })
-                    return resolve();
-                });
+                    .catch(reject)
+                    .finally(() => {
+                        this.drawShape(shape);
+                        return resolve();
+                    });
+            }
         });
     }
 
     clear() {
-        if (!this.base) {
-            throw getError('clear', 'Base not available');
-        }
         this.base.children.forEach(layer => layer.children = []);
+    }
+
+    expandLayers() {
+        if (this.isLayerExpanded) return;
+
+        this.isLayerExpanded = true;
+        this.base.children.forEach((layer, layerIndex) => {
+            layer.position.y += (layerIndex + 1) * SHAPE_LAYER_HEIGHT;
+        });
+    }
+
+    collapseLayers() {
+        if (!this.isLayerExpanded) return;
+
+        this.isLayerExpanded = false;
+        this.base.children.forEach((layer, layerIndex) => {
+            layer.position.y -= (layerIndex + 1) * SHAPE_LAYER_HEIGHT;
+        });
+    }
+
+    expandQuarters() {
+        if (this.isQuarterExpanded) return;
+
+        this.isQuarterExpanded = true;
+        this.base.children.forEach((layer, layerIndex) => {
+            layer.children.forEach(quarter => {
+                const offset = SHAPE_QUARTER_EXPAND_OFFSET
+                    .clone()
+                    .applyQuaternion(quarter.quaternion)
+                    .multiplyScalar((layerIndex + 1) * SHAPE_LAYER_SCALE_FACTOR);
+                quarter.position.add(offset);
+            });
+        });
+    }
+
+    collapseQuarters() {
+        if (!this.isQuarterExpanded) return;
+
+        this.isQuarterExpanded = false;
+        this.base.children.forEach((layer, layerIndex) => {
+            layer.children.forEach(quarter => {
+                const offset = SHAPE_QUARTER_EXPAND_OFFSET
+                    .clone()
+                    .applyQuaternion(quarter.quaternion)
+                    .multiplyScalar((layerIndex + 1) * SHAPE_LAYER_SCALE_FACTOR);
+                quarter.position.sub(offset);
+            });
+        });
     }
 
     private createRenderer(canvas = this.canvas, width = this.width, height = this.height): WebGLRenderer {
@@ -190,13 +234,6 @@ export class ShapeVisualizer {
     }
 
     private createControls(camera = this.camera, renderer = this.renderer): OrbitControls {
-        if (!camera) {
-            throw getError('createControls', 'Camera not provided');
-        }
-        if (!renderer) {
-            throw getError('createControls', 'Renderer not provided');
-        }
-
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enablePan = false;
         controls.enableDamping = true;
@@ -238,13 +275,6 @@ export class ShapeVisualizer {
     }
 
     private createComposer(width = this.width, height = this.height, renderer = this.renderer, camera = this.camera, scene = this.scene, ...objects: Array<Object3D>): EffectComposer {
-        if (!camera) {
-            throw getError('createComposer', 'Camera not provided');
-        }
-        if (!renderer) {
-            throw getError('createComposer', 'Renderer not provided');
-        }
-
         const composer = new EffectComposer(renderer);
         const renderPass = new RenderPass(scene, camera);
         composer.addPass(renderPass);
@@ -299,9 +329,6 @@ export class ShapeVisualizer {
     }
 
     private getLayer(index: number): Object3D {
-        if (!this.base) {
-            throw getError('getLayer', 'Base not available');
-        }
         return this.base.children[index];
     }
 
@@ -334,6 +361,23 @@ export class ShapeVisualizer {
             return layerData;
         });
         return { identifier, layers };
+    }
+
+    private drawShape(shape: ShapeData) {
+        let currentLayerIndex = 0;
+        shape.layers.forEach(layer => {
+            const shapeLayer = this.getLayer(currentLayerIndex++);
+            layer.quarters.forEach((quarter, quarterIndex) => {
+                if (quarter.type === '-') return;
+
+                const shapeQuarter = this.getQuarter(quarter.type).clone();
+                shapeQuarter.rotateY(Math.PI * -0.5 * quarterIndex);
+                const material = SHAPE_COLOR_MATERIALS[quarter.color];
+                shapeQuarter.material = material;
+
+                shapeLayer.add(shapeQuarter);
+            });
+        });
     }
 }
 
