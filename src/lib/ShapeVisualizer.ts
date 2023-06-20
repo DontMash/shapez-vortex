@@ -6,6 +6,7 @@ import {
     Group,
     Material,
     Mesh,
+    MeshStandardMaterial,
     MeshToonMaterial,
     Object3D,
     PerspectiveCamera,
@@ -33,7 +34,7 @@ type ShapeType = 'C' | 'R' | 'W' | 'S' | 'P';
 type ShapeTypeIdentifier = ShapeType | '-';
 type ShapeColor = 'r' | 'g' | 'b' | 'y' | 'p' | 'c' | 'w';
 type ShapeColorIdentifier = ShapeColor | 'u' | '-';
-type ShapeQuarter = Object3D;
+type ShapeQuarter = Mesh;
 
 const SHAPE: ShapeIdentifier = 'CwCwCwRw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
 
@@ -59,15 +60,15 @@ const SHAPE_COLOR_WHITE = 0xfafafa;
 const SHAPE_COLOR_OUTLINE = 0x000000;
 
 const SHAPE_COLOR_BASE_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_BASE });
-const SHAPE_COLOR_NONE_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_NONE });
-const SHAPE_COLOR_PIN_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_PIN });
-const SHAPE_COLOR_RED_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_RED });
-const SHAPE_COLOR_GREEN_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_GREEN });
-const SHAPE_COLOR_BLUE_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_BLUE });
-const SHAPE_COLOR_YELLOW_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_YELLOW });
-const SHAPE_COLOR_PURPLE_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_PURPLE });
-const SHAPE_COLOR_CYAN_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_CYAN });
-const SHAPE_COLOR_WHITE_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_WHITE });
+const SHAPE_COLOR_NONE_MATERIAL = new MeshStandardMaterial({ color: SHAPE_COLOR_NONE, vertexColors: true });
+const SHAPE_COLOR_PIN_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_PIN, vertexColors: true });
+const SHAPE_COLOR_RED_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_RED, vertexColors: true });
+const SHAPE_COLOR_GREEN_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_GREEN, vertexColors: true });
+const SHAPE_COLOR_BLUE_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_BLUE, vertexColors: true });
+const SHAPE_COLOR_YELLOW_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_YELLOW, vertexColors: true });
+const SHAPE_COLOR_PURPLE_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_PURPLE, vertexColors: true });
+const SHAPE_COLOR_CYAN_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_CYAN, vertexColors: true });
+const SHAPE_COLOR_WHITE_MATERIAL = new MeshToonMaterial({ color: SHAPE_COLOR_WHITE, vertexColors: true });
 
 const SHAPE_COLOR_MATERIALS: Record<ShapeColorIdentifier, Material> = {
     r: SHAPE_COLOR_RED_MATERIAL,
@@ -147,9 +148,8 @@ export class ShapeVisualizer {
 
                             const shapeQuarter = this.getQuarter(quarterShapeType).clone();
                             shapeQuarter.rotateY(Math.PI * -0.5 * quarterIndex);
-                            const shapeQuarterMesh = shapeQuarter.children[0] as Mesh;
                             const material = SHAPE_COLOR_MATERIALS[quarterShapeColor];
-                            shapeQuarterMesh.material = material;
+                            shapeQuarter.material = material;
 
                             shapeLayer.add(shapeQuarter);
                         });
@@ -199,7 +199,7 @@ export class ShapeVisualizer {
         controls.dampingFactor = 0.05;
         controls.minDistance = 1.5;
         controls.maxDistance = 3;
-        controls.maxPolarAngle = Math.PI * 0.5;
+        controls.maxPolarAngle = Math.PI * 0.4;
         return controls;
     }
 
@@ -261,8 +261,8 @@ export class ShapeVisualizer {
         return composer;
     }
 
-    private getModels(): Promise<Array<Object3D>> {
-        return new Promise<Array<Object3D>>((resolve, reject) => {
+    private getModels(): Promise<Array<Mesh>> {
+        return new Promise<Array<Mesh>>((resolve, reject) => {
             const loader = new GLTFLoader();
             Promise.all([
                 loader.parseAsync(CIRCLE_QUARTER, ''),
@@ -271,7 +271,10 @@ export class ShapeVisualizer {
                 loader.parseAsync(STAR_QUARTER, ''),
                 loader.parseAsync(PIN_QUARTER, '')
             ])
-                .then(values => resolve(values.map((value) => value.scene.children[0])))
+                .then(values => resolve(values.map((value) => {
+                    console.log(value);
+                    return value.scene.children[0] as Mesh;
+                })))
                 .catch(reason => reject(getError('getModels', reason.toString())));
         });
     }
