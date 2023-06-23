@@ -17,7 +17,7 @@
 </script>
 
 <label
-	class="h-12 w-12 cursor-pointer bg-stone-200 p-2 hover:bg-stone-100 focus-visible:bg-stone-100 active:bg-stone-300"
+	class="h-12 w-12 cursor-pointer bg-stone-200 p-2 hover:bg-stone-100 focus-within:bg-stone-100 active:bg-stone-300"
 	for={id}
 >
 	<span class="sr-only">{label}</span>

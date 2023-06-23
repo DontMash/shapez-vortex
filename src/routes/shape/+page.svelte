@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import Visualizer from '$lib/components/Visualizer.svelte';
+	import Visualizer from '$lib/components/Viewer.svelte';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import Toggle from '$lib/components/Toggle.svelte';
 	import LayersIcon from '$lib/components/icons/LayersIcon.svelte';

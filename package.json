@@ -36,6 +36,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"three": "^0.153.0"
+		"shapez-viewer": "^1.0.0"
 	}
 }
