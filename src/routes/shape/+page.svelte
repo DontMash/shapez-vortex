@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import Visualizer from '$lib/components/ShapeViewer.svelte';
-	import ShapeForm from '$lib/components/ShapeForm.svelte';
+	import Viewer from '$lib/components/ShapeViewer.svelte';
 	import Toggle from '$lib/components/Toggle.svelte';
 	import LayersIcon from '$lib/components/icons/LayersIcon.svelte';
 	import LayersFilledIcon from '$lib/components/icons/LayersFilledIcon.svelte';
@@ -11,11 +10,11 @@
 
 	export let data: PageData;
 
-	let visualizer: Visualizer;
+	let viewer: Viewer;
 	const toggleLayers = (value: boolean) =>
-		value ? visualizer?.expandLayers() : visualizer?.collapseLayers();
+		value ? viewer?.expandLayers() : viewer?.collapseLayers();
 	const toggleQuarters = (value: boolean) =>
-		value ? visualizer?.expandQuarters() : visualizer?.collapseQuarters();
+		value ? viewer?.expandQuarters() : viewer?.collapseQuarters();
 </script>
 
 <svelte:head>
@@ -24,10 +23,9 @@
 
 <h1 class="sr-only">Shapez Viewer</h1>
 
-<section class="relative mx-auto h-[calc(100vh_-_theme(spacing[6])_*_2_-_theme(spacing[16]))] w-full max-w-5xl">
-	<div class="relative z-10 flex flex-col items-center space-y-2">
-		<ShapeForm input={data.shape?.identifier ?? ''} />
-		<div class="flex border-2 border-neutral-900 divide-x-2 divide-neutral-900">
+<section class="relative mx-auto h-[48rem] w-full max-w-5xl">
+	<div class="flex relative z-10 justify-center">
+		<div class="flex divide-x-2 divide-neutral-900 border-2 border-neutral-900">
 			<Toggle
 				id="expandLayers"
 				label="Expand all layers"
@@ -55,6 +53,6 @@
 		</div>
 	</div>
 	<figure class="absolute left-0 top-0 h-full w-full">
-		<Visualizer shapeIdentifier={data.shape?.identifier} bind:this={visualizer} />
+		<Viewer shapeIdentifier={data.shape?.identifier} bind:this={viewer} />
 	</figure>
 </section>
