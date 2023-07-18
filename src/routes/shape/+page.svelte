@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import Visualizer from '$lib/components/Viewer.svelte';
-	import Navigation from '$lib/components/Navigation.svelte';
+	import Visualizer from '$lib/components/ShapeViewer.svelte';
+	import ShapeForm from '$lib/components/ShapeForm.svelte';
 	import Toggle from '$lib/components/Toggle.svelte';
 	import LayersIcon from '$lib/components/icons/LayersIcon.svelte';
 	import LayersFilledIcon from '$lib/components/icons/LayersFilledIcon.svelte';
@@ -18,9 +18,15 @@
 		value ? visualizer?.expandQuarters() : visualizer?.collapseQuarters();
 </script>
 
-<section class="relative mx-auto h-screen w-full max-w-5xl">
-	<div class="relative z-10 mt-8 flex flex-col items-center space-y-2">
-		<Navigation input={data.shape?.identifier ?? ''} />
+<svelte:head>
+	<title>Shapez Viewer</title>
+</svelte:head>
+
+<h1 class="sr-only">Shapez Viewer</h1>
+
+<section class="relative mx-auto h-[calc(100vh_-_theme(spacing[6])_*_2_-_theme(spacing[16]))] w-full max-w-5xl">
+	<div class="relative z-10 flex flex-col items-center space-y-2">
+		<ShapeForm input={data.shape?.identifier ?? ''} />
 		<div class="flex border-2 border-neutral-900 divide-x-2 divide-neutral-900">
 			<Toggle
 				id="expandLayers"

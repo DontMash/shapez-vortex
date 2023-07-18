@@ -1,9 +1,9 @@
 {
 	"name": "shapez-visualizer",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "ORIGIN=http://localhost:5173 vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -15,6 +15,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
+		"@types/pako": "^2.0.0",
 		"@types/three": "^0.152.1",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
@@ -36,6 +37,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"shapez-viewer": "^1.0.0"
+		"pako": "^2.1.0",
+		"shapez-viewer": "^1.1.1"
 	}
 }

@@ -3,7 +3,7 @@
 	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
 </script>
 
-<footer class="grid grid-cols-3 p-4 text-xs" id="footer">
+<footer class="grid grid-cols-3 mx-auto w-full max-w-7xl p-4 text-xs" id="footer">
 	<div class="col-start-2 flex items-center justify-center space-x-[0.25ch]">
 		<span> Created with </span>
 		<figure class="inline-block w-4 fill-stone-100">

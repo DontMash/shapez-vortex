@@ -1,10 +1,13 @@
 <script lang="ts">
-	import Navigation from '$lib/components/Navigation.svelte';
 </script>
 
+<svelte:head>
+	<title>Shapez Visualizer</title>
+</svelte:head>
+
 <section
-	class="mx-auto flex h-screen w-full max-w-5xl flex-col items-center justify-center space-y-4"
+	class="mx-auto flex w-full max-w-5xl flex-col items-center justify-center space-y-4"
 >
-	<img src="/favicon.png" alt="Logo" />
-	<Navigation />
+	<a class="underline" href="/shape">Shape Viewer</a>
+	<a class="underline" href="/blueprint">Blueprint Transformer</a>
 </section>

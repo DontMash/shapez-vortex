@@ -27,7 +27,7 @@
 	};
 </script>
 
-<nav class="flex divide-x-2 divide-neutral-900 border-2 border-neutral-900">
+<div class="flex divide-x-2 divide-neutral-900 border-2 border-neutral-900">
 	<form class="flex items-center divide-x-2 divide-neutral-900" method="GET" action="/shape">
 		<label class="relative h-12" for="identifier" aria-label="Shape identifier">
 			<span class="sr-only">Shape identifier</span>
@@ -66,4 +66,4 @@
 			<ShareIcon />
 		</figure>
 	</button>
-</nav>
+</div>
