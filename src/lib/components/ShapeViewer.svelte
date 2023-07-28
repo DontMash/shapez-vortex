@@ -56,5 +56,6 @@
 			<Loading />
 		</div>
 	{/if}
+	<figcaption class="sr-only">{shapeIdentifier}</figcaption>
 	<canvas bind:this={canvas} />
 </figure>

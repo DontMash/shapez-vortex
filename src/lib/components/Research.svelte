@@ -3,7 +3,11 @@
 
 	import { MultiShapeViewer, type ShapeViewOption } from 'shapez-viewer';
 	import { ToastType, add } from './toast/toast.service';
-	import { nodeColorVariants, type ResearchCategoryIdentifier, type ResearchEntry } from '$lib/research.types';
+	import {
+		nodeColorVariants,
+		type ResearchCategoryIdentifier,
+		type ResearchEntry
+	} from '$lib/research.types';
 
 	import Loading from './Loading.svelte';
 	import ResearchCard from './ResearchCard.svelte';
@@ -38,7 +42,6 @@
 			categories
 		};
 	});
-
 	const views: Record<string, Partial<ShapeViewOption>> = milestones.reduce((views, current) => {
 		if (!current.GoalShape) return views;
 
@@ -55,17 +58,23 @@
 		return views;
 	}, {} as Record<string, Partial<ShapeViewOption>>);
 
+	let isLoading: boolean = true;
 	let viewer: MultiShapeViewer | undefined = undefined;
 	let canvas: HTMLCanvasElement | undefined = undefined;
 
 	$: {
-		viewer?.init().catch((reason: any) => {
-			const error = reason as Error;
-			if (import.meta.env.DEV) {
-				console.error(error);
-			}
-			add(error.message, 2000, ToastType.Error);
-		});
+		viewer
+			?.init()
+			.then(() => {
+				isLoading = false;
+			})
+			.catch((reason: any) => {
+				const error = reason as Error;
+				if (import.meta.env.DEV) {
+					console.error(error);
+				}
+				add(error.message, 2000, ToastType.Error);
+			});
 	}
 	onMount(() => {
 		if (!canvas) return console.warn('Canvas not provided');
@@ -102,9 +111,11 @@
 						class="relative h-32 w-32 shrink-0 bg-neutral-900"
 						bind:this={views[milestone.Id].element}
 					>
-						<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-							<Loading />
-						</div>
+						{#if isLoading}
+							<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+								<Loading />
+							</div>
+						{/if}
 						<figcaption class="sr-only">{milestone.GoalShape}</figcaption>
 					</figure>
 				</ResearchCard>
@@ -136,9 +147,11 @@
 											class="relative h-32 w-32 shrink-0 bg-neutral-900"
 											bind:this={views[node.Id].element}
 										>
-											<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-												<Loading />
-											</div>
+											{#if isLoading}
+												<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+													<Loading />
+												</div>
+											{/if}
 											<figcaption class="sr-only">{node.GoalShape}</figcaption>
 										</figure>
 									</ResearchCard>
@@ -159,9 +172,11 @@
 											class="relative h-32 w-32 shrink-0 bg-neutral-900"
 											bind:this={views[upgrade.Id].element}
 										>
-											<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-												<Loading />
-											</div>
+											{#if isLoading}
+												<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+													<Loading />
+												</div>
+											{/if}
 											<figcaption class="sr-only">{upgrade.GoalShape}</figcaption>
 										</figure>
 									</ResearchCard>
