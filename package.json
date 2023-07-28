@@ -38,6 +38,6 @@
 	"type": "module",
 	"dependencies": {
 		"pako": "^2.1.0",
-		"shapez-viewer": "^1.1.1"
+		"shapez-viewer": "^1.3.3"
 	}
 }

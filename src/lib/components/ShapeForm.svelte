@@ -36,7 +36,7 @@
 				name="identifier"
 				placeholder="Shape identifier..."
 				required
-				minlength="8"
+				minlength="2"
 				maxlength="35"
 				bind:this={shapeIdentifierInputElement}
 				value={input}
@@ -53,6 +53,7 @@
 		<button
 			class="inline-block h-12 w-12 bg-cyan-500 fill-neutral-800 p-1 leading-none outline-none transition hover:bg-cyan-400 focus-visible:bg-cyan-400 active:bg-cyan-600"
 			type="submit"
+			aria-label="View shape"
 		>
 			<ArrowRightAltIcon />
 		</button>
@@ -60,6 +61,7 @@
 	<button
 		class="inline-block h-12 w-12 bg-neutral-900 fill-stone-100 p-1 leading-none outline-none transition hover:bg-neutral-800 focus-visible:bg-neutral-800 active:bg-black"
 		type="button"
+		aria-label="Share page link"
 		on:click={() => onShare()}
 	>
 		<figure class="data-[loading=true]:animate-spin" data-loading={isLoading}>

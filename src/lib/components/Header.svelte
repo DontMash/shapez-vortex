@@ -4,7 +4,7 @@
 	import Toaster from '$lib/components/toast/Toaster.svelte';
 </script>
 
-<header class="pointer-events-none sticky left-0 right-0 top-0 z-50">
+<header class="pointer-events-none sticky left-0 right-0 top-0 z-50 p-4">
 	<div class="absolute left-1/2 -translate-x-1/2 top-[calc(100%_+_theme(spacing[8]))] z-50">
 		<Toaster />
 	</div>

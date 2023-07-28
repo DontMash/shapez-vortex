@@ -1,14 +1,13 @@
 # Shapez Visualizer
 
 ## Roadmap
-- model loading indicator
-- url-query for options/tools
-- blueprint library
 - README
-- Help
-- Research
-- Shape logic
-- Randomize
-- Shape builder
-- Tests
-- Solution Calculator
+- blueprint viewer
+- blueprint library
+- research sorting & filtering
+- shape viewer help
+- shape logic
+- randomize
+- shape builder
+- tests
+- solution calculator

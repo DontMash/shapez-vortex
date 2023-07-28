@@ -10,4 +10,5 @@
 >
 	<a class="underline" href="/shape">Shape Viewer</a>
 	<a class="underline" href="/blueprint">Blueprint Transformer</a>
+	<a class="underline" href="/research">Research Overview</a>
 </section>
