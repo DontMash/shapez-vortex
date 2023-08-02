@@ -50,12 +50,12 @@
 	export const collapseQuarters = () => viewer?.collapseQuarters();
 </script>
 
-<figure class="relative h-full w-full">
+<figure class="relative h-full">
 	{#if isLoading}
-		<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-			<Loading />
-		</div>
+	<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+		<Loading />
+	</div>
 	{/if}
-	<figcaption class="sr-only">{shapeIdentifier}</figcaption>
 	<canvas bind:this={canvas} />
+	<figcaption class="sr-only">{shapeIdentifier}</figcaption>
 </figure>

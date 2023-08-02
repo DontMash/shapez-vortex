@@ -10,7 +10,6 @@
 	export let category: ResearchCategoryIdentifier | undefined = undefined;
 	export let prefix: string;
 	export let title: string;
-	export let subtitle: string;
 	export let description: string;
 	export let goal: string | undefined = undefined;
 	export let goalAmount: number | undefined = undefined;
@@ -32,7 +31,6 @@
 			<span class="font-black">{prefix}</span>
 			{@html title}
 		</h2>
-		<small class="text-xs">{subtitle}</small>
 		<p class="text-sm">{description}</p>
 	</div>
 
@@ -42,7 +40,10 @@
 		} flex h-32 divide-x-2 divide-neutral-900`}
 	>
 		{#if goal}
-			<slot />
+			<figure class="relative h-32 w-32 shrink-0 bg-neutral-900" data-view data-view-shape={goal}>
+				<slot />
+				<figcaption class="sr-only">{goal}</figcaption>
+			</figure>
 
 			{#if goalAmount}
 				<div class="flex w-full flex-col items-start justify-center p-2.5">
