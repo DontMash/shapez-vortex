@@ -40,7 +40,7 @@
 		} flex h-32 divide-x-2 divide-neutral-900`}
 	>
 		{#if goal}
-			<figure class="relative h-32 w-32 shrink-0 bg-neutral-900" data-view data-view-shape={goal}>
+			<figure class="relative h-32 w-32 shrink-0 bg-neutral-900 select-none" data-view data-view-shape={goal}>
 				<slot />
 				<figcaption class="sr-only">{goal}</figcaption>
 			</figure>

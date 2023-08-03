@@ -45,7 +45,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -57,11 +56,13 @@
 
 ## About The Project
 
-[![Shape Viewer][product-screenshot]](https://shapez.soren.codes)
+[![Shape Viewer][product-image]][product-url]
 
 This project started by passion for the game [Shapez 2](https://store.steampowered.com/app/2162800/shapez_2/). I wanted to have a way to share visual information with other players. Therefore I created this project.
 
-The purpose of this project is to provide a suite of tools to visualize and modify data used by or generated from the game. In the current state it provides the following features:
+The purpose of this project is to provide a suite of tools to visualize and modify data used by or generated from the game.
+
+In the current state it provides the following features:
 
 * [shape-viewer](https://shapez.soren.codes/shape) - visualize shapes by their identifier
 * [blueprint-transformer](https://shapez.soren.codes/blueprint) - modify blueprint data with multiple
@@ -71,7 +72,11 @@ The purpose of this project is to provide a suite of tools to visualize and modi
 
 ### Built With
 
-* [![Svelte][Svelte.dev]][Svelte-url]
+* [![TailwindCSS][Tailwind-badge]][Tailwind-url]
+* [![three.js][threejs-badge]][threejs-url]
+* [![Svelte][Svelte-badge]][Svelte-url]
+* [![Typescript][Typescript-badge]][Typescript-url]
+* [![Vercel][Vercel-badge]][Vercel-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -79,49 +84,51 @@ The purpose of this project is to provide a suite of tools to visualize and modi
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+To setup, install & develop you will need some tools:
 
-* npm
+* [Node.js (>= v16)](https://nodejs.org/en) **(using [nvm](https://github.com/nvm-sh/nvm))**
+
+  _if you already installed nvm this step is not needed_
 
   ```sh
-  npm install npm@latest -g
+  # Windows
+  winget install CoreyButler.NVMforWindows
+  ```
+
+  ```sh
+  # MacOS
+  brew install nvm
+  ```
+
+  ```sh
+  # Linux
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+  ```
+
+  _After the installation you probably need to source or restart your terminal to load nvm_
+
+  ```sh
+  nvm install 16
   ```
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
 
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/DontMash/shapez-visualizer.git
    ```
 
-3. Install NPM packages
+2. Install NPM packages
 
-   ```sh
-   npm install
-   ```
+    ```sh
+      # nvm use
+      npm install
+    ```
 
-4. Enter your API in `config.js`
-
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- USAGE EXAMPLES -->
-
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+3. Visit [localhost:5173](http://localhost:5173)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -158,7 +165,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
   * Code coverage
   * Visuals
 
-See the [open issues](https://github.com/DontMash/shapez-visualizer/issues) for a full list of proposed features (and known issues).
+See the [open issues][issues-url] for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -183,7 +190,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [`LICENSE`][license-url] for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -193,13 +200,15 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Sören Maschmann - [E-Mail](mailto:work@soren.codes)
 
-[Project Link](https://github.com/DontMash/shapez-visualizer)
+[Project Link][repo-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS -->
 <!-- IMAGES -->
-[product-screenshot]: resources/images/product.png
+[repo-url]: https://github.com/DontMash/shapez-visualizer
+[product-url]: https://shapez.soren.codes
+[product-image]: resources/images/product.png
 
 <!-- SHIELDS -->
 [stars-shield]: https://img.shields.io/github/stars/DontMash/shapez-visualizer.svg?style=for-the-badge
@@ -210,5 +219,13 @@ Sören Maschmann - [E-Mail](mailto:work@soren.codes)
 [license-url]: https://github.com/DontMash/shapez-visualizer/blob/main/LICENSE
 
 <!-- BADGES -->
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
+[Tailwind-badge]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind-url]: https://tailwindcss.com/
+[threejs-badge]: https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white
+[threejs-url]: https://threejs.org/
+[Svelte-badge]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
 [Svelte-url]: https://svelte.dev/
+[Typescript-badge]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[Typescript-url]: https://www.typescriptlang.org/
+[Vercel-badge]: https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white
+[Vercel-url]: https://vercel.com/
