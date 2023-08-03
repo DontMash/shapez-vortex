@@ -136,10 +136,6 @@ To setup, install & develop you will need some tools:
 
 ## Roadmap
 
-* SEO
-  * robots.txt
-  * SEO-tags
-  * OpenGraph support
 * Blueprints
   * Viewer
   * Library

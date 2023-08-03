@@ -10,12 +10,6 @@
 	const isEncode = $page.url.searchParams.get('/encode') !== null && hasData;
 </script>
 
-<svelte:head>
-	<title>Blueprint Transformer</title>
-</svelte:head>
-
-<h1 class="sr-only">Blueprint Transformer</h1>
-
 <section class="mx-auto flex w-full max-w-5xl flex-col items-center space-y-4">
 	<div class="self-start">
 		<h2 class="text-3xl">Converter</h2>

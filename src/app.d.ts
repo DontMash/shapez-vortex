@@ -4,7 +4,19 @@ declare global {
 	namespace App {
 		// interface Error {}
 		// interface Locals {}
-		// interface PageData {}
+		interface PageData {
+			seo: {
+				title: string;
+				description: string;
+				keywords?: Array<string>;
+				og?: {
+					title?: string;
+					type: 'website';
+					image: string;
+					url: string;
+				}
+			}
+		}
 		// interface Platform {}
 	}
 }

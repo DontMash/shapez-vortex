@@ -1,6 +1,16 @@
 import { error } from '@sveltejs/kit';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import type { Blueprint } from '$lib/server/blueprint';
+
+export const load = (() => {
+    return {
+        seo: {
+            title: 'Blueprint transformer',
+            description: 'Decode, encode or modify existing blueprints. Make changes within the blueprint to customize it according to your specific requirements.',
+            keywords: ['Shapez', 'Shapez 2', 'Blueprint', 'Modify', 'Decode', 'Encode'],
+        }
+    };
+}) satisfies PageServerLoad;
 
 export const actions = {
     modify: ({ request, fetch }) => new Promise<string>(

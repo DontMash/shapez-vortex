@@ -32,12 +32,6 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Shapez Viewer</title>
-</svelte:head>
-
-<h1 class="sr-only">Shapez Viewer</h1>
-
 <section class="relative mx-auto h-[48rem] w-full max-w-5xl">
 	<div class="relative z-10 flex justify-center">
 		<div class="flex divide-x-2 divide-neutral-900 border-2 border-neutral-900">

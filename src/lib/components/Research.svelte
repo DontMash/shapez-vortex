@@ -104,8 +104,8 @@
 				</ResearchCard>
 
 				{#each milestone.categories as category}
-					<ul>
-						{#if category.nodes.length > 0 || category.upgrades.length > 0}
+					{#if category.nodes.length > 0 || category.upgrades.length > 0}
+						<div>
 							<h2
 								class={`${
 									nodeColorVariants[category.id]
@@ -114,61 +114,63 @@
 								{category.title}
 							</h2>
 
-							<li class="space-y-12">
-								{#if category.nodes.length > 0}
-									<ul class="space-y-12">
-										{#each category.nodes as node}
-											<li>
-												<ResearchCard
-													type="side-goal"
-													category={category.id}
-													prefix="Side-Goal:"
-													title={node.Title}
-													description={node.Description}
-													goal={node.GoalShape ?? undefined}
-													goalAmount={node.GoalAmount}
-												>
-													{#if isLoading}
-														<div
-															class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-														>
-															<Loading />
-														</div>
-													{/if}
-												</ResearchCard>
-											</li>
-										{/each}
-									</ul>
-								{/if}
+							<ul>
+								<li class="space-y-12">
+									{#if category.nodes.length > 0}
+										<ul class="space-y-12">
+											{#each category.nodes as node}
+												<li>
+													<ResearchCard
+														type="side-goal"
+														category={category.id}
+														prefix="Side-Goal:"
+														title={node.Title}
+														description={node.Description}
+														goal={node.GoalShape ?? undefined}
+														goalAmount={node.GoalAmount}
+													>
+														{#if isLoading}
+															<div
+																class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+															>
+																<Loading />
+															</div>
+														{/if}
+													</ResearchCard>
+												</li>
+											{/each}
+										</ul>
+									{/if}
 
-								{#if category.upgrades.length > 0}
-									<ul class="space-y-12">
-										{#each category.upgrades as upgrade}
-											<li>
-												<ResearchCard
-													type="upgrade"
-													category={category.id}
-													prefix="Upgrade:"
-													title={upgrade.Title}
-													description={upgrade.Description}
-													goal={upgrade.GoalShape ?? undefined}
-													goalAmount={upgrade.GoalAmount}
-												>
-													{#if isLoading}
-														<div
-															class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-														>
-															<Loading />
-														</div>
-													{/if}
-												</ResearchCard>
-											</li>
-										{/each}
-									</ul>
-								{/if}
-							</li>
-						{/if}
-					</ul>
+									{#if category.upgrades.length > 0}
+										<ul class="space-y-12">
+											{#each category.upgrades as upgrade}
+												<li>
+													<ResearchCard
+														type="upgrade"
+														category={category.id}
+														prefix="Upgrade:"
+														title={upgrade.Title}
+														description={upgrade.Description}
+														goal={upgrade.GoalShape ?? undefined}
+														goalAmount={upgrade.GoalAmount}
+													>
+														{#if isLoading}
+															<div
+																class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+															>
+																<Loading />
+															</div>
+														{/if}
+													</ResearchCard>
+												</li>
+											{/each}
+										</ul>
+									{/if}
+								</li>
+							</ul>
+						</div>
+					{/if}
 				{/each}
 			</li>
 		{/each}
