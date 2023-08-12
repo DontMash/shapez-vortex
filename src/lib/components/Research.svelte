@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-
 	import { MultiShapeViewer, type ShapeViewOption } from 'shapez-viewer';
+
 	import { ToastType, add } from './toast/toast.service';
 	import {
 		nodeColorVariants,
@@ -48,20 +48,6 @@
 	let host: HTMLElement | undefined = undefined;
 	let canvas: HTMLCanvasElement | undefined = undefined;
 
-	$: {
-		viewer
-			?.init()
-			.then(() => {
-				isLoading = false;
-			})
-			.catch((reason: any) => {
-				const error = reason as Error;
-				if (import.meta.env.DEV) {
-					console.error(error);
-				}
-				add(error.message, 2000, ToastType.Error);
-			});
-	}
 	onMount(() => {
 		if (!host) return console.warn('Host not provided');
 		if (!canvas) return console.warn('Canvas not provided');
@@ -74,6 +60,18 @@
 				element
 			}));
 			viewer = new MultiShapeViewer(canvas, views);
+			viewer
+				.init()
+				.then(() => {
+					isLoading = false;
+				})
+				.catch((reason: any) => {
+					const error = reason as Error;
+					if (import.meta.env.DEV) {
+						console.error(error);
+					}
+					add(error.message, 2000, ToastType.Error);
+				});
 		} catch (error) {
 			const message = (error as Error).message;
 			if (import.meta.env.DEV) {

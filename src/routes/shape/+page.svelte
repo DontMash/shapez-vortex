@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 
 	export let data: PageData;
+
 	let viewer: Viewer;
 	let shapeIdentifier: string | undefined;
 	let isExtended: boolean = false;

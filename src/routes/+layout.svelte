@@ -8,17 +8,19 @@
 
 <svelte:head>
 	{#key $page.data}
-		<title>{$page.data.seo.title}</title>
-		<meta name="description" content={$page.data.seo.description} />
-		{#if $page.data.seo.keywords}
-			<meta name="keywords" content={$page.data.seo.keywords.join(', ')} />
-		{/if}
+		{#if $page.data.seo}
+			<title>{$page.data.seo.title}</title>
+			<meta name="description" content={$page.data.seo.description} />
+			{#if $page.data.seo.keywords}
+				<meta name="keywords" content={$page.data.seo.keywords.join(', ')} />
+			{/if}
 
-		{#if $page.data.seo.og}
-			<meta property="og:title" content={$page.data.seo.og.title ?? $page.data.seo.title} />
-			<meta property="og:type" content={$page.data.seo.og.type} />
-			<meta property="og:image" content={$page.data.seo.og.image} />
-			<meta property="og:url" content={$page.data.seo.og.url} />
+			{#if $page.data.seo.og}
+				<meta property="og:title" content={$page.data.seo.og.title ?? $page.data.seo.title} />
+				<meta property="og:type" content={$page.data.seo.og.type} />
+				<meta property="og:image" content={$page.data.seo.og.image} />
+				<meta property="og:url" content={$page.data.seo.og.url} />
+			{/if}
 		{/if}
 	{/key}
 </svelte:head>

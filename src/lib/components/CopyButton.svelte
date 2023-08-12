@@ -6,7 +6,7 @@
 	type Color = 'light' | 'dark';
 	const TOAST_DURATION = 3000;
 
-	export let value: string;
+	export let value: any;
 	export let color: Color = 'light';
 
 	const colorVariants: Record<Color, string> = {
@@ -19,7 +19,7 @@
 		isLoading = true;
 
 		navigator.clipboard
-			.writeText(value)
+			.writeText(typeof value !== 'object' ? value : JSON.stringify(value))
 			.then(() => add('Content copied', TOAST_DURATION))
 			.catch(() => {
 				add('Cannot copy content!', TOAST_DURATION, ToastType.Error);
@@ -30,6 +30,7 @@
 
 <button
 	class={`${colorVariants[color]} h-6 w-6 outline-none transition`}
+	type="button"
 	on:click={() => onCopy()}
 >
 	<span class="sr-only">Copy</span>

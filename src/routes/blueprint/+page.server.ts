@@ -2,12 +2,18 @@ import { error } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { Blueprint } from '$lib/server/blueprint';
 
-export const load = (() => {
+export const load = (({ url }) => {
     return {
         seo: {
-            title: 'Blueprint transformer',
+            title: 'Blueprint Transformer',
             description: 'Decode, encode or modify existing blueprints. Make changes within the blueprint to customize it according to your specific requirements.',
             keywords: ['Shapez', 'Shapez 2', 'Blueprint', 'Modify', 'Decode', 'Encode'],
+            og: {
+                title: 'Blueprint Transformer - Decode, encode or modify existing blueprints',
+                type: 'website',
+                image: `${url.origin}/favicon.png`,
+                url: url.href,
+            },
         }
     };
 }) satisfies PageServerLoad;

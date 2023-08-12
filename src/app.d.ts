@@ -5,7 +5,7 @@ declare global {
 		// interface Error {}
 		// interface Locals {}
 		interface PageData {
-			seo: {
+			seo?: {
 				title: string;
 				description: string;
 				keywords?: Array<string>;

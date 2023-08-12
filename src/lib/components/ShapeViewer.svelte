@@ -13,19 +13,9 @@
 	let canvas: HTMLCanvasElement | undefined = undefined;
 
 	$: {
-		viewer
-			?.init()
-			.then(() => {
-				viewer?.assign(shapeIdentifier);
-				isLoading = false;
-			})
-			.catch((reason) => {
-				const error = reason as Error;
-				if (import.meta.env.DEV) {
-					console.error(error);
-				}
-				add(error.message, 2000, ToastType.Error);
-			});
+		if (viewer?.isInitialized) {
+			viewer.assign(shapeIdentifier);
+		}
 	}
 
 	onMount(() => {
@@ -35,6 +25,19 @@
 
 		try {
 			viewer = new ShapeViewer(canvas);
+			viewer
+				.init()
+				.then(() => {
+					viewer?.assign(shapeIdentifier);
+					isLoading = false;
+				})
+				.catch((reason) => {
+					const error = reason as Error;
+					if (import.meta.env.DEV) {
+						console.error(error);
+					}
+					add(error.message, 2000, ToastType.Error);
+				});
 		} catch (error) {
 			const message = (error as Error).message;
 			if (import.meta.env.DEV) {
@@ -52,9 +55,9 @@
 
 <figure class="relative h-full">
 	{#if isLoading}
-	<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-		<Loading />
-	</div>
+		<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+			<Loading />
+		</div>
 	{/if}
 	<canvas bind:this={canvas} />
 	<figcaption class="sr-only">{shapeIdentifier}</figcaption>

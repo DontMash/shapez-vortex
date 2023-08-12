@@ -10,7 +10,7 @@ type Data = {
             type: 'website';
             image: string;
             url: string;
-        }
+        };
     };
     shape: {
         identifier?: string;
@@ -24,6 +24,11 @@ export const load = (({ url }) => {
     const extend = url.searchParams.get('extend');
     const expand = url.searchParams.get('expand');
 
+    const imageUrl = new URL('api/v1/shape', url.origin);
+    if (identifier) {
+        imageUrl.searchParams.append('identifier', identifier);
+    }
+
     const value: Data = {
         seo: {
             title: 'Shape Viewer',
@@ -32,15 +37,15 @@ export const load = (({ url }) => {
             og: {
                 title: 'Shape Viewer - View and interact with the 3D visualization of a shape',
                 type: 'website',
-                image: `${url.origin}/favicon.png`,
+                image: imageUrl.href,
                 url: url.href,
-            }
+            },
         },
         shape:
         {
             extend: extend === 'true',
             expand: expand === 'true',
-        }
+        },
     };
     if (!identifier) return value;
 

@@ -119,7 +119,7 @@
 						required
 					/>
 				{/if}
-				{#if hasData}
+				{#if hasData && isEncode}
 					<div
 						class="absolute right-2 top-2 opacity-0 transition focus-within:opacity-100 group-hover:opacity-100"
 					>
@@ -165,7 +165,7 @@
 						required
 					/>
 				{/if}
-				{#if hasData}
+				{#if hasData && isDecode}
 					<div
 						class="absolute right-2 top-2 opacity-0 transition focus-within:opacity-100 group-hover:opacity-100"
 					>
