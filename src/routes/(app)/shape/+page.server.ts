@@ -23,11 +23,7 @@ export const load = (({ url }) => {
     const identifier = url.searchParams.get('identifier');
     const extend = url.searchParams.get('extend');
     const expand = url.searchParams.get('expand');
-
-    const imageUrl = new URL('api/v1/shape', url.origin);
-    if (identifier) {
-        imageUrl.searchParams.append('identifier', identifier);
-    }
+    const imageUrl = new URL('favicon.png', url.origin);
 
     const value: Data = {
         seo: {

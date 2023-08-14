@@ -37,9 +37,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@napi-rs/canvas": "^0.1.43",
-		"gl": "^6.0.2",
+		"@sparticuz/chromium-min": "^115.0.0",
 		"pako": "^2.1.0",
+		"puppeteer-core": "^21.0.3",
 		"shapez-viewer": "^1.4.0"
 	}
 }

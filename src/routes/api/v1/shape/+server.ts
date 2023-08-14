@@ -1,20 +1,45 @@
-import { createCanvas } from '$lib/server/canvas';
-import type { RequestHandler } from '@sveltejs/kit';
-import { ShapeRenderer, ShapeView } from 'shapez-viewer';
+import { redirect, type RequestHandler } from '@sveltejs/kit';
+import { dev } from '$app/environment';
+import chromium from '@sparticuz/chromium-min';
+import puppeteer, { type PuppeteerLaunchOptions } from 'puppeteer-core';
 
-global.ProgressEvent = (function () { }) as unknown as { new(type: string, eventInitDict?: ProgressEventInit | undefined): ProgressEvent<EventTarget>; prototype: ProgressEvent<EventTarget>; };
+export const GET = (async ({ url }) => {
+    if (!dev) throw redirect(303, url.origin);
 
-export const GET = (({ url }) =>
-    new Promise<Response>((resolve, reject) => {
-        const identifier = url.searchParams.get('identifier');
+    const identifier = url.searchParams.get('identifier');
+    const viewURL = new URL('api/v1/shape/view', url.origin);
+    if (identifier)
+        viewURL.searchParams.set('identifier', identifier);
+
+    const options: PuppeteerLaunchOptions = dev ? {
+        headless: 'new',
+        channel: 'chrome'
+    } : {
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath('https://github.com/Sparticuz/chromium/releases/download/v115.0.0/chromium-v115.0.0-pack.tar'),
+        headless: chromium.headless,
+        ignoreHTTPSErrors: true,
+    };
+    const browser = await puppeteer.launch(options);
+
+    try {
         const size = 256;
-        const canvas = createCanvas(size, size);
-        const renderer = new ShapeRenderer(canvas as unknown as HTMLCanvasElement, canvas.width, canvas.height);
-        const view = identifier ? new ShapeView(identifier) : new ShapeView();
-        view.init()
-            .then(() => {
-                renderer.update([view]);
-                const image = canvas.toBuffer('image/png');
-                return resolve(new Response(image));
-            }).catch(reject);
-    })) satisfies RequestHandler;
+        const page = await browser.newPage();
+        console.error('test');
+        await page.setViewport({ width: size, height: size });
+        await page.goto(viewURL.href, {
+            waitUntil: 'load'
+        });
+
+        const data = await page.screenshot({
+            type: "png",
+            omitBackground: true,
+        });
+        await browser.close();
+
+        return new Response(data as Buffer);
+    } catch (error) {
+        return new Response((error as object).toString());
+    }
+}) satisfies RequestHandler;
