@@ -1,4 +1,5 @@
 {
+    "GameVersion": "0.0.0-alpha7.4",
     "Levels": [
         {
             "Id": "RLInitial",
@@ -9,7 +10,19 @@
             "DependentLevelId": null,
             "LevelIndex": 0,
             "DependentLevelIndex": -1,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "BeltDefaultVariant",
+                "ExtractorDefaultVariant",
+                "BeltPortReceiverVariant",
+                "BeltPortSenderVariant",
+                "WKBeltPlacement",
+                "WKEssentialControls",
+                "WKIntroduction",
+                "WKResearch"
+            ]
         },
         {
             "Id": "RLHalfCutter",
@@ -20,7 +33,12 @@
             "DependentLevelId": "RLInitial",
             "LevelIndex": 1,
             "DependentLevelIndex": 0,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "CutterHalfVariant"
+            ]
         },
         {
             "Id": "RLRotator",
@@ -31,7 +49,12 @@
             "DependentLevelId": "RLHalfCutter",
             "LevelIndex": 2,
             "DependentLevelIndex": 1,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "RotatorOneQuadVariant"
+            ]
         },
         {
             "Id": "RLHalvesSwapper",
@@ -42,7 +65,12 @@
             "DependentLevelId": "RLRotator",
             "LevelIndex": 3,
             "DependentLevelIndex": 2,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "HalvesSwapperDefaultVariant"
+            ]
         },
         {
             "Id": "RLLayer2",
@@ -53,7 +81,20 @@
             "DependentLevelId": "RLHalvesSwapper",
             "LevelIndex": 4,
             "DependentLevelIndex": 3,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "Lift1UpBackwardVariant",
+                "Lift1UpForwardVariant",
+                "Lift1UpLeftVariant",
+                "Lift1UpRightVariant",
+                "Lift1DownBackwardVariant",
+                "Lift1DownForwardVariant",
+                "Lift1DownLeftVariant",
+                "Lift1DownRightVariant",
+                "[[research.RULayer2.title]]"
+            ]
         },
         {
             "Id": "RLBlueprints",
@@ -64,7 +105,12 @@
             "DependentLevelId": "RLLayer2",
             "LevelIndex": 5,
             "DependentLevelIndex": 4,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "[[research.RUBlueprints.title]]"
+            ]
         },
         {
             "Id": "RLStacker",
@@ -75,7 +121,12 @@
             "DependentLevelId": "RLBlueprints",
             "LevelIndex": 6,
             "DependentLevelIndex": 5,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "StackerDefaultVariant"
+            ]
         },
         {
             "Id": "RLIslandBuilding",
@@ -86,7 +137,15 @@
             "DependentLevelId": "RLStacker",
             "LevelIndex": 7,
             "DependentLevelIndex": 6,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "[[research.RUIslandPlacement.title]]",
+                "LayoutMiner",
+                "Layout_1",
+                "Layout_2"
+            ]
         },
         {
             "Id": "RLTunnels",
@@ -97,7 +156,13 @@
             "DependentLevelId": "RLIslandBuilding",
             "LevelIndex": 8,
             "DependentLevelIndex": 7,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "LayoutTunnelEntrance",
+                "LayoutTunnelExit"
+            ]
         },
         {
             "Id": "RLFluids",
@@ -108,7 +173,23 @@
             "DependentLevelId": "RLTunnels",
             "LevelIndex": 9,
             "DependentLevelIndex": 8,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "PainterDefaultVariant",
+                "PumpDefaultVariant",
+                "PipeDefaultVariant",
+                "PipeUpBackwardVariant",
+                "PipeUpForwardVariant",
+                "PipeUpLeftVariant",
+                "PipeUpRightVariant",
+                "PipeDownBackwardVariant",
+                "PipeDownForwardVariant",
+                "PipeDownLeftVariant",
+                "PipeDownRightVariant",
+                "LayoutFluidExtractor"
+            ]
         },
         {
             "Id": "RLFluidPacking",
@@ -119,7 +200,13 @@
             "DependentLevelId": "RLFluids",
             "LevelIndex": 10,
             "DependentLevelIndex": 9,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "FluidPackerDefaultVariant",
+                "FluidUnpackerDefaultVariant"
+            ]
         },
         {
             "Id": "RLTrains",
@@ -130,7 +217,16 @@
             "DependentLevelId": "RLFluidPacking",
             "LevelIndex": 11,
             "DependentLevelIndex": 10,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "TrainStationLoaderVariant",
+                "TrainStationUnloaderVariant",
+                "ShapePackerDefaultVariant",
+                "ShapeUnpackerDefaultVariant",
+                "[[research.RURailManagement.title]]"
+            ]
         },
         {
             "Id": "RLPinPusher",
@@ -141,18 +237,26 @@
             "DependentLevelId": "RLTrains",
             "LevelIndex": 12,
             "DependentLevelIndex": 11,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "PinPusherDefaultVariant"
+            ]
         },
         {
             "Id": "RLTrainFluids",
             "Title": "Fluid Trains",
             "Description": "Allows to transport fluids via trains. Not working yet.",
             "GoalShape": "RuCrP-Cr:----Ru--",
-            "GoalAmount": 8000,
+            "GoalAmount": 80000,
             "DependentLevelId": "RLPinPusher",
             "LevelIndex": 13,
             "DependentLevelIndex": 12,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": []
         },
         {
             "Id": "RLColorMixing",
@@ -163,18 +267,28 @@
             "DependentLevelId": "RLTrainFluids",
             "LevelIndex": 14,
             "DependentLevelIndex": 13,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "MixerDefaultVariant"
+            ]
         },
         {
             "Id": "RLLayer3",
             "Title": "Layer 3",
             "Description": "Unlocks the third layer.",
             "GoalShape": "RuCwP-Cw:----Ru--",
-            "GoalAmount": 10000,
+            "GoalAmount": 100000,
             "DependentLevelId": "RLColorMixing",
             "LevelIndex": 15,
             "DependentLevelIndex": 14,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "[[research.RULayer3.title]]"
+            ]
         },
         {
             "Id": "RLCrystals",
@@ -185,18 +299,30 @@
             "DependentLevelId": "RLLayer3",
             "LevelIndex": 16,
             "DependentLevelIndex": 15,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "CrystalGeneratorDefaultVariant"
+            ]
         },
         {
             "Id": "RLWires",
             "Title": "Wires",
             "Description": "Placeholder upgrade, will give you nothing for now.",
-            "GoalShape": "Cuc-Cuc-",
+            "GoalShape": "CucrCucr",
             "GoalAmount": 10000,
             "DependentLevelId": "RLCrystals",
             "LevelIndex": 17,
             "DependentLevelIndex": 16,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": [
+                "SandboxFluidProducerDefaultVariant",
+                "SandboxItemProducerDefaultVariant",
+                "UnstackerDefaultVariant"
+            ]
         },
         {
             "Id": "RLInfinite",
@@ -207,7 +333,10 @@
             "DependentLevelId": "RLWires",
             "LevelIndex": 18,
             "DependentLevelIndex": 17,
-            "Dependencies": null
+            "CategoryId": null,
+            "CategoryName": null,
+            "Dependencies": null,
+            "Unlocks": []
         }
     ],
     "Categories": [
@@ -224,7 +353,12 @@
                     "DependentLevelId": "RLRotator",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 2,
-                    "Dependencies": []
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "Splitter1To2Variant"
+                    ]
                 },
                 {
                     "Id": "RNMerger2Way",
@@ -235,7 +369,12 @@
                     "DependentLevelId": "RLHalvesSwapper",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 3,
-                    "Dependencies": []
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "Merger2To1Variant"
+                    ]
                 },
                 {
                     "Id": "RNSplitter3Way",
@@ -246,9 +385,12 @@
                     "DependentLevelId": "RLBlueprints",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 5,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNSplitter2Way"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNMerger3Way",
@@ -259,8 +401,13 @@
                     "DependentLevelId": "RLStacker",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 6,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNMerger2Way"
+                    ],
+                    "Unlocks": [
+                        "Merger3To1Variant"
                     ]
                 },
                 {
@@ -272,8 +419,13 @@
                     "DependentLevelId": "RLTunnels",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 8,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNSplitter3Way"
+                    ],
+                    "Unlocks": [
+                        "SplitterTShapeVariant"
                     ]
                 },
                 {
@@ -285,8 +437,13 @@
                     "DependentLevelId": "RLFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 9,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNMerger3Way"
+                    ],
+                    "Unlocks": [
+                        "MergerTShapeVariant"
                     ]
                 },
                 {
@@ -298,9 +455,12 @@
                     "DependentLevelId": "RLPinPusher",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 12,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNSplitterTShape"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNMergerMultiLayer",
@@ -311,9 +471,12 @@
                     "DependentLevelId": "RLTrainFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 13,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNMergerTShape"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNBeltLifts2Layers",
@@ -324,23 +487,21 @@
                     "DependentLevelId": "RLLayer3",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 15,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNSplitterMultiLayer",
                         "RNMergerMultiLayer"
-                    ]
-                },
-                {
-                    "Id": "RNStorage",
-                    "Title": "Storage",
-                    "Description": "Allows storing shapes.",
-                    "GoalShape": "SuCuSuCu:CuCuCuCu",
-                    "GoalAmount": 700,
-                    "DependentLevelId": "RLIslandBuilding",
-                    "LevelIndex": -1,
-                    "DependentLevelIndex": 7,
-                    "Dependencies": [
-                        "RNSplitter3Way",
-                        "RNMerger3Way"
+                    ],
+                    "Unlocks": [
+                        "Lift2UpForwardVariant",
+                        "Lift2UpRightVariant",
+                        "Lift2UpBackwardVariant",
+                        "Lift2UpLeftVariant",
+                        "Lift2DownForwardVariant",
+                        "Lift2DownRightVariant",
+                        "Lift2DownBackwardVariant",
+                        "Lift2DownLeftVariant"
                     ]
                 },
                 {
@@ -352,10 +513,13 @@
                     "DependentLevelId": "RLFluidPacking",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 10,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNSplitterTShape",
                         "RNMergerTShape"
-                    ]
+                    ],
+                    "Unlocks": []
                 }
             ],
             "Upgrades": [
@@ -368,7 +532,12 @@
                     "DependentLevelId": "RLRotator",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 2,
-                    "Dependencies": []
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "BeltSpeed -> 75"
+                    ]
                 },
                 {
                     "Id": "RSBeltSpeed2",
@@ -379,8 +548,13 @@
                     "DependentLevelId": "RLBlueprints",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 5,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RSBeltSpeed1"
+                    ],
+                    "Unlocks": [
+                        "BeltSpeed -> 100"
                     ]
                 },
                 {
@@ -392,8 +566,13 @@
                     "DependentLevelId": "RLTunnels",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 8,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RSBeltSpeed2"
+                    ],
+                    "Unlocks": [
+                        "BeltSpeed -> 125"
                     ]
                 },
                 {
@@ -405,8 +584,13 @@
                     "DependentLevelId": "RLPinPusher",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 12,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RSBeltSpeed3"
+                    ],
+                    "Unlocks": [
+                        "BeltSpeed -> 150"
                     ]
                 },
                 {
@@ -418,7 +602,12 @@
                     "DependentLevelId": "RLLayer2",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 4,
-                    "Dependencies": []
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "ExtractorSpeed -> 75"
+                    ]
                 },
                 {
                     "Id": "RSExtractorSpeed2",
@@ -429,8 +618,13 @@
                     "DependentLevelId": "RLStacker",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 6,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RSExtractorSpeed1"
+                    ],
+                    "Unlocks": [
+                        "ExtractorSpeed -> 100"
                     ]
                 },
                 {
@@ -442,8 +636,13 @@
                     "DependentLevelId": "RLFluidPacking",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 10,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RSExtractorSpeed2"
+                    ],
+                    "Unlocks": [
+                        "ExtractorSpeed -> 125"
                     ]
                 },
                 {
@@ -455,8 +654,13 @@
                     "DependentLevelId": "RLColorMixing",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 14,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RSExtractorSpeed3"
+                    ],
+                    "Unlocks": [
+                        "ExtractorSpeed -> 150"
                     ]
                 },
                 {
@@ -468,7 +672,10 @@
                     "DependentLevelId": "RLFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 9,
-                    "Dependencies": []
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
+                    "Dependencies": [],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNHubSize2",
@@ -479,9 +686,12 @@
                     "DependentLevelId": "RLTrainFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 13,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNHubSize1"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNHubSize3",
@@ -492,9 +702,12 @@
                     "DependentLevelId": "RLCrystals",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 16,
+                    "CategoryId": "RCTransport",
+                    "CategoryName": "Transport",
                     "Dependencies": [
                         "RNHubSize2"
-                    ]
+                    ],
+                    "Unlocks": []
                 }
             ]
         },
@@ -511,8 +724,13 @@
                     "DependentLevelId": "RLTunnels",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 8,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RNRotatorCCW"
+                    ],
+                    "Unlocks": [
+                        "CutterDefaultVariant"
                     ]
                 },
                 {
@@ -524,7 +742,12 @@
                     "DependentLevelId": "RLLayer2",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 4,
-                    "Dependencies": []
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "TrashDefaultVariant"
+                    ]
                 },
                 {
                     "Id": "RNRotatorCCW",
@@ -535,7 +758,12 @@
                     "DependentLevelId": "RLBlueprints",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 5,
-                    "Dependencies": []
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "RotatorOneQuadCCWVariant"
+                    ]
                 },
                 {
                     "Id": "RNMirroredFullCutter",
@@ -546,9 +774,12 @@
                     "DependentLevelId": "RLFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 9,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RNFullCutter"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNRotatorHalf",
@@ -559,8 +790,13 @@
                     "DependentLevelId": "RLFluidPacking",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 10,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RNRotatorCCW"
+                    ],
+                    "Unlocks": [
+                        "RotatorHalfVariant"
                     ]
                 }
             ],
@@ -574,19 +810,29 @@
                     "DependentLevelId": "RLHalvesSwapper",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 3,
-                    "Dependencies": []
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "CutterSpeed -> 75"
+                    ]
                 },
                 {
                     "Id": "RSCuttingSpeed2",
                     "Title": "Cutting Speed <b>2</b>",
                     "Description": "Increases the cutting, rotating, swapping and pin pushing speed.",
                     "GoalShape": "Ru--Ru--",
-                    "GoalAmount": 1500,
+                    "GoalAmount": 1000,
                     "DependentLevelId": "RLBlueprints",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 5,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RSCuttingSpeed1"
+                    ],
+                    "Unlocks": [
+                        "CutterSpeed -> 100"
                     ]
                 },
                 {
@@ -598,8 +844,13 @@
                     "DependentLevelId": "RLFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 9,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RSCuttingSpeed2"
+                    ],
+                    "Unlocks": [
+                        "CutterSpeed -> 125"
                     ]
                 },
                 {
@@ -611,8 +862,13 @@
                     "DependentLevelId": "RLTrainFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 13,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RSCuttingSpeed3"
+                    ],
+                    "Unlocks": [
+                        "CutterSpeed -> 150"
                     ]
                 },
                 {
@@ -624,7 +880,12 @@
                     "DependentLevelId": "RLStacker",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 6,
-                    "Dependencies": []
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "StackerSpeed -> 75"
+                    ]
                 },
                 {
                     "Id": "RSStackingSpeed2",
@@ -632,11 +893,16 @@
                     "Description": "Increases the stacking speed.",
                     "GoalShape": "RuCuRuCu:SuCuSuCu",
                     "GoalAmount": 2500,
-                    "DependentLevelId": "RLIslandBuilding",
+                    "DependentLevelId": "RLTunnels",
                     "LevelIndex": -1,
-                    "DependentLevelIndex": 7,
+                    "DependentLevelIndex": 8,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RSStackingSpeed1"
+                    ],
+                    "Unlocks": [
+                        "StackerSpeed -> 100"
                     ]
                 },
                 {
@@ -648,8 +914,13 @@
                     "DependentLevelId": "RLFluidPacking",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 10,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RSStackingSpeed2"
+                    ],
+                    "Unlocks": [
+                        "StackerSpeed -> 125"
                     ]
                 },
                 {
@@ -661,8 +932,13 @@
                     "DependentLevelId": "RLLayer3",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 15,
+                    "CategoryId": "RCCutStack",
+                    "CategoryName": "Cut, Rotate, Stack",
                     "Dependencies": [
                         "RSStackingSpeed3"
+                    ],
+                    "Unlocks": [
+                        "StackerSpeed -> 150"
                     ]
                 }
             ]
@@ -675,12 +951,17 @@
                     "Id": "RNIslandLayouts1",
                     "Title": "Platform Layouts <b>1</b>",
                     "Description": "Unlocks new space station layouts.",
-                    "GoalShape": "SbSbSbSb",
-                    "GoalAmount": 600,
-                    "DependentLevelId": "RLFluids",
+                    "GoalShape": "SuSu----",
+                    "GoalAmount": 6000,
+                    "DependentLevelId": "RLTunnels",
                     "LevelIndex": -1,
-                    "DependentLevelIndex": 9,
-                    "Dependencies": []
+                    "DependentLevelIndex": 8,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "Layout_3_L"
+                    ]
                 },
                 {
                     "Id": "RNIslandLayouts2",
@@ -691,9 +972,12 @@
                     "DependentLevelId": "RLFluidPacking",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 10,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
                     "Dependencies": [
                         "RNIslandLayouts1"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNIslandLayouts3",
@@ -704,8 +988,13 @@
                     "DependentLevelId": "RLPinPusher",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 12,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
                     "Dependencies": [
                         "RNIslandLayouts2"
+                    ],
+                    "Unlocks": [
+                        "LayoutMinerCompact"
                     ]
                 },
                 {
@@ -717,8 +1006,14 @@
                     "DependentLevelId": "RLCrystals",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 16,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
                     "Dependencies": [
                         "RNIslandLayouts3"
+                    ],
+                    "Unlocks": [
+                        "Layout_4_Quad_TwoNotches",
+                        "Layout_9_Quad_TopAllNotches"
                     ]
                 }
             ],
@@ -732,7 +1027,10 @@
                     "DependentLevelId": "RLIslandBuilding",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 7,
-                    "Dependencies": []
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
+                    "Dependencies": [],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNChunkLimit2",
@@ -743,9 +1041,12 @@
                     "DependentLevelId": "RLFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 9,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
                     "Dependencies": [
                         "RNChunkLimit1"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNChunkLimit3",
@@ -756,9 +1057,12 @@
                     "DependentLevelId": "RLTrains",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 11,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
                     "Dependencies": [
                         "RNChunkLimit2"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNChunkLimit4",
@@ -769,9 +1073,12 @@
                     "DependentLevelId": "RLTrainFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 13,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
                     "Dependencies": [
                         "RNChunkLimit3"
-                    ]
+                    ],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNChunkLimit5",
@@ -782,9 +1089,28 @@
                     "DependentLevelId": "RLLayer3",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 15,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
                     "Dependencies": [
                         "RNChunkLimit4"
-                    ]
+                    ],
+                    "Unlocks": []
+                },
+                {
+                    "Id": "RNChunkLimit6",
+                    "Title": "Chunk Limit <b>6</b>",
+                    "Description": "Increase the maximum amount of platform blocks you can place.",
+                    "GoalShape": "RpSySySc:WbSwRwCr:--RpWyWg",
+                    "GoalAmount": 5000000,
+                    "DependentLevelId": "RLLayer3",
+                    "LevelIndex": -1,
+                    "DependentLevelIndex": 15,
+                    "CategoryId": "RCIslands",
+                    "CategoryName": "Space Stations",
+                    "Dependencies": [
+                        "RNChunkLimit5"
+                    ],
+                    "Unlocks": []
                 }
             ]
         },
@@ -801,7 +1127,12 @@
                     "DependentLevelId": "RLFluidPacking",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 10,
-                    "Dependencies": []
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "FluidStorageDefaultVariant"
+                    ]
                 },
                 {
                     "Id": "RNMirroredPainter",
@@ -812,7 +1143,10 @@
                     "DependentLevelId": "RLTrains",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 11,
-                    "Dependencies": []
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
+                    "Dependencies": [],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNFullPainter",
@@ -823,7 +1157,10 @@
                     "DependentLevelId": "RLPinPusher",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 12,
-                    "Dependencies": []
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
+                    "Dependencies": [],
+                    "Unlocks": []
                 },
                 {
                     "Id": "RNPipeJunctions",
@@ -834,7 +1171,13 @@
                     "DependentLevelId": "RLFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 9,
-                    "Dependencies": []
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "PipeCrossVariant",
+                        "PipeJunctionVariant"
+                    ]
                 },
                 {
                     "Id": "RNPipeUpDown2",
@@ -845,9 +1188,12 @@
                     "DependentLevelId": "RLLayer3",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 15,
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
                     "Dependencies": [
                         "RNPipeJunctions"
-                    ]
+                    ],
+                    "Unlocks": []
                 }
             ],
             "Upgrades": [
@@ -860,7 +1206,12 @@
                     "DependentLevelId": "RLFluidPacking",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 10,
-                    "Dependencies": []
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "PumpAndPackingSpeed -> 75"
+                    ]
                 },
                 {
                     "Id": "RSPumpAndPackingSpeed2",
@@ -871,8 +1222,13 @@
                     "DependentLevelId": "RLPinPusher",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 12,
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
                     "Dependencies": [
                         "RSPumpAndPackingSpeed1"
+                    ],
+                    "Unlocks": [
+                        "PumpAndPackingSpeed -> 100"
                     ]
                 },
                 {
@@ -884,8 +1240,13 @@
                     "DependentLevelId": "RLLayer3",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 15,
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
                     "Dependencies": [
                         "RSPumpAndPackingSpeed2"
+                    ],
+                    "Unlocks": [
+                        "PumpAndPackingSpeed -> 150"
                     ]
                 },
                 {
@@ -897,7 +1258,12 @@
                     "DependentLevelId": "RLFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 9,
-                    "Dependencies": []
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "PainterSpeed -> 75"
+                    ]
                 },
                 {
                     "Id": "RSPaintingSpeed2",
@@ -908,8 +1274,13 @@
                     "DependentLevelId": "RLTrains",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 11,
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
                     "Dependencies": [
                         "RSPaintingSpeed1"
+                    ],
+                    "Unlocks": [
+                        "PainterSpeed -> 100"
                     ]
                 },
                 {
@@ -921,8 +1292,13 @@
                     "DependentLevelId": "RLTrainFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 13,
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
                     "Dependencies": [
                         "RSPaintingSpeed2"
+                    ],
+                    "Unlocks": [
+                        "PainterSpeed -> 150"
                     ]
                 },
                 {
@@ -934,7 +1310,12 @@
                     "DependentLevelId": "RLColorMixing",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 14,
-                    "Dependencies": []
+                    "CategoryId": "RCFluids",
+                    "CategoryName": "Fluids & Painting",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "MixerSpeed -> 100"
+                    ]
                 }
             ]
         },
@@ -963,7 +1344,12 @@
                     "DependentLevelId": "RLIslandBuilding",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 7,
-                    "Dependencies": []
+                    "CategoryId": "RCUtility",
+                    "CategoryName": "Utility",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "LabelDefaultVariant"
+                    ]
                 },
                 {
                     "Id": "RNBeltReader",
@@ -974,7 +1360,12 @@
                     "DependentLevelId": "RLFluids",
                     "LevelIndex": -1,
                     "DependentLevelIndex": 9,
-                    "Dependencies": []
+                    "CategoryId": "RCUtility",
+                    "CategoryName": "Utility",
+                    "Dependencies": [],
+                    "Unlocks": [
+                        "BeltReaderDefaultVariant"
+                    ]
                 }
             ],
             "Upgrades": []

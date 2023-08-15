@@ -26,7 +26,6 @@ export const GET = (async ({ url }) => {
     try {
         const size = 256;
         const page = await browser.newPage();
-        console.error('test');
         await page.setViewport({ width: size, height: size });
         await page.goto(viewURL.href, {
             waitUntil: 'load'
