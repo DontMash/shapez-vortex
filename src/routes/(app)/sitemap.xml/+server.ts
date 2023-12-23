@@ -1,7 +1,7 @@
 import type { RequestHandler } from './$types';
 
 export const GET = (({ url }) => {
-    const pages = [`shape`, `research`, `blueprint`];
+    const pages = ['shape', 'research', 'blueprint/codec', 'blueprint/converter'];
     const headers = {
         'Cache-Control': 'max-age=0, s-maxage=3600',
         'Content-Type': 'application/xml',
