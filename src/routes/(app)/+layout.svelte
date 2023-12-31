@@ -4,6 +4,12 @@
 	import '../../app.css';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
+	import { ToastType, add } from '$lib/components/toast/toast.service';
+
+	function onError(event: Event) {
+		const errorEvent = event as ErrorEvent;
+		add(errorEvent.error.message, 3000, ToastType.Error);
+	}
 </script>
 
 <svelte:head>
@@ -24,9 +30,9 @@
 		{/if}
 	{/key}
 </svelte:head>
+<svelte:window on:error={event => onError(event)} />
 
 <Header />
-
 <main class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden py-8">
 	{#key $page.data}
 		{#if $page.data.seo?.title}

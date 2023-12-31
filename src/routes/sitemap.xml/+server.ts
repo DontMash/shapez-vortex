@@ -1,7 +1,10 @@
 import type { RequestHandler } from './$types';
 
 export const GET = (({ url }) => {
-    const pages = ['shape', 'research', 'blueprint/codec', 'blueprint/converter'];
+    const pages = Object.keys(import.meta.glob('/src/routes/\\(app\\)/**/+page.svelte')).slice(1).map(path => {
+        const page = (path.split('/src/routes/(app)/')[1]).replace('/+page.svelte', '');
+        return page;
+    });
     const headers = {
         'Cache-Control': 'max-age=0, s-maxage=3600',
         'Content-Type': 'application/xml',

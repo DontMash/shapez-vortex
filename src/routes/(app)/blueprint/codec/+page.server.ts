@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { Blueprint } from '$lib/server/blueprint';
+import type { Blueprint } from '$lib/blueprint.types';
 
 export const load = (({ url }) => {
     return {

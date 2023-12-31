@@ -27,12 +27,13 @@
 	};
 </script>
 
-<div class="flex divide-x-2 divide-neutral-900 border-2 border-neutral-900">
-	<form class="flex items-center divide-x-2 divide-neutral-900" method="GET" action="/shape">
-		<label class="relative h-12" for="identifier" aria-label="Shape identifier">
+<div class="flex divide-x-2 divide-neutral-900 border-2 border-neutral-800 rounded-2xl overflow-hidden">
+	<form class="flex items-center divide-x-2 divide-neutral-800" method="GET" action="/shape">
+		<label class="relative h-12" for="shape-identifier" aria-label="Shape identifier">
 			<span class="sr-only">Shape identifier</span>
 			<input
-				class="peer h-full w-[35ch] bg-stone-200 pl-2 pr-7 text-neutral-800 outline-none transition placeholder:select-none placeholder:text-stone-400 placeholder:transition hover:bg-stone-100 focus-visible:bg-stone-100 focus-visible:placeholder:text-stone-600"
+				class="peer h-full w-[35ch] bg-stone-200 pl-3 pr-7 text-neutral-800 outline-none transition placeholder:select-none placeholder:text-stone-400 placeholder:transition hover:bg-stone-100 focus-visible:bg-stone-100 focus-visible:placeholder:text-stone-600"
+				id="shape-identifier"
 				name="identifier"
 				placeholder="Shape identifier..."
 				required
@@ -59,7 +60,7 @@
 		</button>
 	</form>
 	<button
-		class="inline-block h-12 w-12 bg-neutral-900 fill-stone-100 p-1 leading-none outline-none transition hover:bg-neutral-800 focus-visible:bg-neutral-800 active:bg-black"
+		class="inline-block h-12 w-12 bg-neutral-950 fill-stone-100 p-1 leading-none outline-none transition hover:bg-neutral-900 focus-visible:bg-neutral-900 active:bg-black"
 		type="button"
 		aria-label="Share page link"
 		on:click={() => onShare()}

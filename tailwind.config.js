@@ -2,8 +2,15 @@
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
-    extend: {},
+    extend: {
+      borderRadius: {
+        '4xl': '2rem',
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    require('tailwind-scrollbar-hide'),
+  ],
 }
 

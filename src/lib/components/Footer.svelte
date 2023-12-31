@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { version } from '$app/environment';
+
 	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
+
+	import RESEARCH_DATA from '$lib/assets/data/research-metadata.json';
 </script>
 
-<footer class="grid grid-cols-3 mx-auto w-full max-w-7xl p-4 text-xs" id="footer">
+<footer class="mx-auto grid w-full max-w-7xl grid-cols-3 p-4 text-xs" id="footer">
 	<div class="col-start-2 flex items-center justify-center space-x-[0.25ch]">
 		<span> Created with </span>
 		<figure class="inline-block w-4 fill-stone-100">
@@ -19,5 +22,5 @@
 			@DontMash
 		</a>
 	</div>
-	<i class="text-end">v{version}</i>
+	<i class="text-end">v{version} - Game Version {RESEARCH_DATA.GameVersion}</i>
 </footer>

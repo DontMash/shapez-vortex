@@ -1,5 +1,7 @@
 import type { PageServerLoad } from './$types';
 
+import RESEARCH_DATA from '$lib/assets/data/research-metadata.json';
+
 export const load = (({ url }) => {
     return {
         seo: {
@@ -13,5 +15,6 @@ export const load = (({ url }) => {
                 url: url.href,
             },
         },
+        research: RESEARCH_DATA.Levels,
     };
 }) satisfies PageServerLoad;

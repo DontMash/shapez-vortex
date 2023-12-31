@@ -24,9 +24,9 @@
 	</div>
 
 	<div class="flex w-full flex-col divide-y-2 divide-neutral-900 border-2 border-neutral-900">
-		<form class="flex flex-col divide-y-2 divide-neutral-900" method="post" action="?/decode">
+		<form class="flex flex-col divide-y-2 divide-neutral-900 overflow-hidden rounded-t-4xl" method="post" action="?/decode">
 			<label
-				class="group relative flex h-60 flex-col bg-stone-200 p-2 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
+				class="group relative flex h-60 flex-col bg-stone-200 px-6 py-4 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
 				for="blueprint-identifier-decode"
 			>
 				<span class="sr-only">Blueprint identifier</span>
@@ -57,22 +57,22 @@
 				{/if}
 			</label>
 			<button
-				class="inline-block bg-cyan-500 px-10 py-6 leading-none text-neutral-800 outline-none transition hover:bg-cyan-400 focus-visible:bg-cyan-400 active:bg-cyan-600"
+				class="inline-block bg-cyan-500 h-12 leading-none text-neutral-800 outline-none transition hover:bg-cyan-400 focus-visible:bg-cyan-400 active:bg-cyan-600"
 				type="submit"
 			>
 				Decode
 			</button>
 		</form>
 
-		<form class="flex flex-col divide-y-2 divide-neutral-900" method="post" action="?/encode">
+		<form class="flex flex-col divide-y-2 divide-neutral-900 overflow-hidden rounded-b-4xl" method="post" action="?/encode">
 			<button
-				class="inline-block bg-neutral-900 px-10 py-6 leading-none outline-none transition hover:bg-neutral-800 focus-visible:bg-neutral-800 active:bg-black"
+				class="inline-block bg-neutral-900 h-12 leading-none outline-none transition hover:bg-neutral-800 focus-visible:bg-neutral-800 active:bg-black"
 				type="submit"
 			>
 				Encode
 			</button>
 			<label
-				class="group relative h-60 flex-col bg-stone-200 p-2 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
+				class="group relative h-60 flex-col bg-stone-200 px-6 py-4 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
 				for="blueprint-data-encode"
 			>
 				<span class="sr-only">Blueprint data</span>

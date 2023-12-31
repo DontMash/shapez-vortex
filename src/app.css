@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 :root {
-   @apply bg-neutral-700 text-stone-100; 
+   @apply bg-neutral-900 text-stone-100; 
 }

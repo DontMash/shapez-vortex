@@ -1,0 +1,100 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.8.19",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "PipeForwardGlas"
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Cylinder.003",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 32,
+            "max" : [
+                0.15000003576278687,
+                0.3500000238418579,
+                0.5
+            ],
+            "min" : [
+                -0.15000002086162567,
+                0.04999999701976776,
+                -0.5
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 32,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 32,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 96,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 384,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 384,
+            "byteOffset" : 384
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 256,
+            "byteOffset" : 768
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 192,
+            "byteOffset" : 1024
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 1216,
+            "uri" : "data:application/octet-stream;base64,nNkgMzQzsz4AAAC/2AqHszQzsz4AAAA/8B5rPZxarT4AAAC/1R5rPZxarT4AAAA/KTnZPa+0nD4AAAC/GjnZPa+0nD4AAAA/b+gNPkPKgz4AAAC/Z+gNPkPKgz4AAAA/nJkZPs3MTD7///++lZkZPs3MTD4AAAA/cegNPhUFEj4AAAC/augNPhUFEj4AAAA/LznZPXlgwD0AAAC/IDnZPXlgwD0AAAA/AB9rPYiRez0AAAC/5R5rPYiRez0AAAA/ymK5M8zMTD0AAAC/4KZwsszMTD0AAAA/yh5rvYCRez0AAAC/5R5rvYCRez0AAAA/FDnZvXNgwD0AAAC/IznZvXNgwD0AAAA/ZOgNvg8FEj4AAAC/bOgNvg8FEj4AAAA/lJkZvsnMTD4AAAC/m5kZvsnMTD7///8+ZegNvkHKgz4AAAC/begNvkHKgz4AAAA/HTnZva20nD4AAAC/LDnZva20nD4AAAA/2R5rvZxarT4AAAC/9B5rvZxarT4AAAA/5SomsgAAgD/lKqamWED5sgAAgD/lKianIO/DPl2DbD9aNS4zHu/DPl2DbD9aNS4z8wQ1P/QENT9r2qkz8wQ1P/QENT9q2qkzX4NsPxnvwz5O5PMzXoNsPxjvwz5N5PMzAACAPzHImzSTeOIz//9/P4r5oDSQeOIzYYNsPwzvw74967YzYINsPwvvw74767Yz9gQ1P/EENb98f6Uz9QQ1P/EENb98f6UzHu/DPl2DbL991DUzHu/DPl2DbL991DUzShhaNAAAgL9UQPmn7lJFNAAAgL+HZRGoE+/DvmCDbL+fHi2zE+/DvmCDbL+gHi2z8AQ1v/YENb9NkLKz8QQ1v/YENb9NkLKzXINsvyTvw75yLuuzXINsvybvw75yLuuzAACAv5y1z7NL5POzAACAv5i1z7NK5POzYINsvxDvwz6zwtmzYYNsvxDvwz6zwtmz/QQ1v+sENT+NJKGz/QQ1v+sENT+NJKGzK+/DvlmDbD9UNS6zK+/DvlmDbD9UNS6zAABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwAATD5SuEE/AABMPlK4QT8AAEw+UrhBPwMABQAEAAMABAACAAUABwAGAAUABgAEAAcACQAIAAcACAAGAAkACwAKAAkACgAIAAsADQAMAAsADAAKAA0ADwAOAA0ADgAMAA8AEQAQAA8AEAAOABEAEwASABEAEgAQABMAFQAUABMAFAASABUAFwAWABUAFgAUABcAGQAYABcAGAAWABkAGwAaABkAGgAYABsAHQAcABsAHAAaAB0AHwAeAB0AHgAcAB8AAQAAAB8AAAAeAAEAAwACAAEAAgAAAA=="
+        }
+    ]
+}

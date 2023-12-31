@@ -3,7 +3,7 @@
 	import CopyButton from '$lib/components/CopyButton.svelte';
 
 	const GAME_VERSION = 1033;
-    
+
 	const hasData = !!$page.form;
 	const isModify = $page.url.searchParams.get('/modify') !== null && hasData;
 </script>
@@ -16,12 +16,12 @@
 	</div>
 
 	<form
-		class="flex w-[32rem] flex-col divide-y-2 divide-neutral-900 border-2 border-neutral-900"
+		class="flex w-full flex-col divide-y-2 divide-neutral-900 overflow-hidden rounded-4xl border-2 border-neutral-900"
 		method="post"
 		action="?/modify"
 	>
 		<label
-			class="flex h-12 items-center bg-stone-200 p-2 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
+			class="flex h-12 items-center bg-stone-200 px-6 py-4 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
 			for="blueprint-version"
 		>
 			<input
@@ -42,7 +42,7 @@
 			</span>
 		</label>
 		<label
-			class="flex h-40 flex-col bg-stone-200 p-2 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
+			class="flex h-40 flex-col bg-stone-200 px-6 py-4 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
 			for="blueprint-identifier-modify"
 		>
 			<span class="sr-only">Blueprint identifier</span>
