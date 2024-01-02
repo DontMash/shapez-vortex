@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 export const load = (({ url }) => {
     return {
         seo: {
-            title: 'Shape Viewer',
+            title: 'Blueprint Viewer',
             description: 'View and interact with the 3D visualization of a blueprint. Explore the blueprints\'s multiple layers and parts.',
             keywords: ['Shapez', 'Shapez 2', 'Viewer', '3D', 'Visualization', 'Blueprint', 'Tool'],
             og: {

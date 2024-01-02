@@ -36,6 +36,7 @@ import SPLITTERT_DATA from '$lib/assets/models/buildings/SplitterTShapeInternalV
 import MERGER2_LEFT_DATA from '$lib/assets/models/buildings/Merger2To1LInternalVariant.gltf';
 import MERGER2_RIGHT_DATA from '$lib/assets/models/buildings/Merger2To1RInternalVariant.gltf';
 import MERGERT_DATA from '$lib/assets/models/buildings/MergerTShapeInternalVariant.gltf';
+import MERGER3_DATA from '$lib/assets/models/buildings/Merger3To1InternalVariant.gltf';
 import LIFT1_UP_FORWARD_DATA from '$lib/assets/models/buildings/Lift1UpForwardInternalVariant.gltf';
 import LIFT1_UP_BACKWARD_DATA from '$lib/assets/models/buildings/Lift1UpBackwardInternalVariant.gltf';
 import LIFT1_UP_LEFT_DATA from '$lib/assets/models/buildings/Lift1UpLeftInternalVariant.gltf';
@@ -107,7 +108,7 @@ const BUILDINGS: Record<BuildingIdentifier, string> = {
     SplitterTShapeInternalVariant: SPLITTERT_DATA,
     Merger2To1LInternalVariant: MERGER2_LEFT_DATA,
     Merger2To1RInternalVariant: MERGER2_RIGHT_DATA,
-    Merger3To1InternalVariant: BELT_FORWARD_DATA, // UNUSED
+    Merger3To1InternalVariant: MERGER3_DATA,
     MergerTShapeInternalVariant: MERGERT_DATA,
     Lift1DownBackwardInternalVariant: LIFT1_DOWN_BACKWARD_DATA,
     Lift1DownForwardInternalVariant: LIFT1_DOWN_FORWARD_DATA,
@@ -295,6 +296,7 @@ export const view: Action<HTMLCanvasElement, Blueprint, { 'on:load': (e: CustomE
             case 'Merger2To1LInternalVariant':
             case 'Merger2To1RInternalVariant':
             case 'MergerTShapeInternalVariant':
+            case 'Merger3To1InternalVariant':
             case 'Splitter1To2LInternalVariant':
             case 'Splitter1To2RInternalVariant':
             case 'SplitterTShapeInternalVariant':
