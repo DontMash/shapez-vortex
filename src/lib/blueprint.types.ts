@@ -1,15 +1,29 @@
-import type { BuildingIdentifier } from '$lib/building.types';
+import type BUILDINGS_METADATA from '$lib/assets/data/buildings-metadata.json';
 
 export type Blueprint = {
     // version
     V: number;
-    BP: BlueprintData;
+    BP: BlueprintIsland | BlueprintBuilding;
 };
-type BlueprintData = {
-    '$type': 'Building' | 'Island';
-    Entries: Array<BlueprintEntry>;
+export type BlueprintIsland = {
+    '$type': 'Island';
+    Entries: Array<BlueprintIslandEntry>;
 };
-type BlueprintEntry = {
+export type BlueprintIslandEntry = {
+    // island layout type
+    T: string;
+    // relative x position
+    X?: number;
+    // relative y position
+    Y?: number;
+    R?: BlueprintEntryRotation;
+    B: BlueprintBuilding;
+};
+export type BlueprintBuilding = {
+    '$type': 'Building';
+    Entries: Array<BlueprintBuildingEntry>;
+};
+export type BlueprintBuildingEntry = {
     // building identifier
     T: BuildingIdentifier;
     // relative x position
@@ -36,3 +50,16 @@ type BlueprintStringSeperator = '-';
 type BlueprintStringSuffix = '$';
 export type BlueprintString =
     `${BlueprintStringPrefix}${BlueprintStringSeperator}${BlueprintStringVersion}${BlueprintStringSeperator}${string}${BlueprintStringSuffix}`;
+
+type BuildingIntervalVariant = typeof BUILDINGS_METADATA[number]['Variants'][number]['InternalVariants'][number];
+export type BuildingIdentifier = BuildingIntervalVariant['Id'];
+
+export const GRID_SIZE = 1001;
+export const GRID_COLOR = 0x444444;
+
+const ISLAND_PADDING_SIZE = 4;
+const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;
+const ISLAND_MIN_SIZE = 12;
+export const ISLAND_LAYOUT_UNIT = ISLAND_MIN_SIZE + ISLAND_GAP_SIZE;
+const ISLAND_LAYOUT_IDENTIFIER = ['Layout_1', 'Layout_2', 'Layout_3_L', 'Layout_4_Quad_TwoNotches', 'Layout_4_T', 'Layout_5_Cross', 'Layout_9_Quad_TopAllNotches'] as const;
+export type IslandLayoutIdentifier = typeof ISLAND_LAYOUT_IDENTIFIER[number];

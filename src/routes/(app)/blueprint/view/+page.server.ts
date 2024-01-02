@@ -1,31 +1,27 @@
-import type { BlueprintString } from '$lib/blueprint.types';
-import { decode } from '$lib/server/blueprint';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import type { BlueprintString } from '$lib/blueprint.types';
+import { decode } from '$lib/server/blueprint';
 
-const BLUEPRINT = 'SHAPEZ2-1-H4sIADyejGUA/8xaXVPaQBR991c4TB/paDYQnc74UKCoHbTIh1U7fVjJAtumm8xmI9qO/70JMBaRkN27F+iTJJB77sfes3dP/LO3v1+6Ln3Ydw5dt5xd1NrpVXY7/fxOPUUsvSzVEh74XIxK5dkXn4SSnMXpV9+mN/bnT0y/vElvvz8u/7txm93wFm500hvuwnVvisEC1WBDmgSqGcoJlf65UEwKGlxTyalQpfkDz+UczCMbzA4fjZUporcOcRmhxYbGAFXjkLpRwFUK4vRC0jGFq1jBtUzhXDBcrzumETPFc4zxLpgcMUl6oWMcHLEAMymciW1Q2hxQW7VDqbpM+ExiwrWWftBZun4F32EDxh+MHVjPXas82DaXmfqAz22tvLxviuu0Qt4c9xnD43KhEfwGuFELf1NcaQhuxZ0GWLA0F3IL+Q+4heycW8i2uYXsllvIbrmF7JhbyC65hWyRW8hWueWN9RYfKqcfYfGGWxTNHA+HI/KsQ/igss74yuFmCtYIJwKYPNcEMT+ZmQegdFaLikdy0lujg5+QgAk8xZCKOnA4QIQGCNB2c3AWDKz7gMUDNWNhLxLkXqyaAOK3ojETIHemB883oLpHcDRgfObCS0/SeDyfLm2LqQPGRVdRxUPRCukKgWThiXr2xMHB8YmVH1pssehXXwRongEkzGz4aafFZxJWFAQlIXOhLyILJwiKgtNhWR1gHnjmmafCvw8fzxX71ZahnwxyoZdXQmNU+01Pm5O7XtTw+5fOlXvd8K9OTqx81CvVzOdmkHDf0OnapPbjnjw+DLjzZMxjhcmsJ9mJ6YwGQ1vKNM5Jm4t2Eo+hC+fVSeKFkwnKwSF3PyUI54RFY7YyQe7OS+AzcUVn7yNIpwztSYaADxVEOx7bkX69dUA9VmajE6b7Xyi/CHaVUBNrWl352nq9/tUQgGgCACjnjXbgFlNMxJB0BC0sFA1hpWUMPdEteieVAX1OxCCbrmzFipVR1GUYx7ZV91ZZRtOLPJ06I6lFOZFg1DrHNMaesGy+lbeUEIUowHAxw7feMYyixdCEtMGAipCWfSw9CFQ3HDVIM05AyVwYErD3ilqP4LZe1QAOvfM8aKwImo82FpbWXDxRUJ5BAI9H6+D0WnEG30yCwLIVCyOdnYstdAwXhGinnVRMMevyKVY0OGWCyWwEBhbWKZq0LvgjJKbbpcppLZJpHrtpMHTEEM7xsIW6mSlfGxt96s/dRLBPAVr/qbapU0FulCinBBeyb21oFZGdrSKyrVVEdrmKCNYqInpyKYzoHFNumYFdcClDyWxeMGmtwTMaPLC4O6FRhPVKo3BH7CqL/dcDogETaiwI9UWskN4PzYREes8C3ZcGH2v9u5vLwxeQ6d/ve9mn578CDAACIuZYUDEAAA==$';
+const BLUEPRINT = 'SHAPEZ2-1-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$';
 
 export const load = (({ url }) => {
     try {
-        const blueprint = decode(url.searchParams.get('blueprint-identifier') as BlueprintString ?? BLUEPRINT);
-        if (blueprint.BP.$type !== 'Building') {
-            throw error(400, { message: 'Invalid blueprint identifier: Not a building blueprint' });
-        } else {
-            return {
-                seo: {
-                    title: 'Shape Viewer',
-                    description: 'View and interact with the 3D visualization of a blueprint. Explore the blueprints\'s multiple layers and parts.',
-                    keywords: ['Shapez', 'Shapez 2', 'Viewer', '3D', 'Visualization', 'Blueprint', 'Tool'],
-                    og: {
-                        title: 'Blueprint Viewer - View and interact with the 3D visualization of a blueprint',
-                        type: 'website',
-                        image: `${url.origin}/favicon.png`,
-                        url: url.href,
-                    },
+        const blueprint = decode(url.searchParams.get('identifier')?.trim() as BlueprintString ?? BLUEPRINT);
+        return {
+            seo: {
+                title: 'Shape Viewer',
+                description: 'View and interact with the 3D visualization of a blueprint. Explore the blueprints\'s multiple layers and parts.',
+                keywords: ['Shapez', 'Shapez 2', 'Viewer', '3D', 'Visualization', 'Blueprint', 'Tool'],
+                og: {
+                    title: 'Blueprint Viewer - View and interact with the 3D visualization of a blueprint',
+                    type: 'website',
+                    image: `${url.origin}/favicon.png`,
+                    url: url.href,
                 },
-                blueprint,
-            };
-        }
+            },
+            blueprint,
+        };
     } catch (err) {
         throw error(400, { message: (err as Error).message });
     }

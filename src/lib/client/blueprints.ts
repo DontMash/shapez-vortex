@@ -1,11 +1,22 @@
 import type { Action } from 'svelte/action';
 import {
+    type Blueprint,
+    type BlueprintBuilding,
+    type BlueprintIsland,
+    GRID_SIZE,
+    type BuildingIdentifier,
+    GRID_COLOR,
+    ISLAND_LAYOUT_UNIT,
+    type BlueprintBuildingEntry
+} from '$lib/blueprint.types';
+import {
     AmbientLight,
     Camera,
     ColorManagement,
     DirectionalLight,
     GridHelper,
     Group,
+    MOUSE,
     Mesh,
     MeshStandardMaterial,
     PerspectiveCamera,
@@ -15,8 +26,6 @@ import {
 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GRID_SIZE, type BuildingIdentifier, GRID_COLOR } from '$lib/building.types';
-import type { Blueprint } from '$lib/blueprint.types';
 
 import BELT_FORWARD_DATA from '$lib/assets/models/buildings/BeltDefaultForwardInternalVariant.gltf';
 import BELT_LEFT_DATA from '$lib/assets/models/buildings/BeltDefaultLeftInternalVariant.gltf';
@@ -163,35 +172,10 @@ const BUILDINGS: Record<BuildingIdentifier, string> = {
     ArtistPlaygroundBuildingInternalVariant: BELT_FORWARD_DATA // UNUSED
 };
 
-const loader = new GLTFLoader();
-
-export function getBuildingModel(identifier: BuildingIdentifier): Promise<Mesh> {
-    return new Promise<Mesh>((resolve, reject) => {
-        loader.loadAsync(BUILDINGS[identifier])
-            .then(value => {
-                return resolve(value.scene.children[0] as Mesh);
-            })
-            .catch(reject);
-    });
-}
-
-/**
- * Applies default BULDING_MATERIAL to mesh and children
- * TODO: replace with official material
- * @param mesh Mesh to apply material to recursively for children
- */
-export function applyMaterial(mesh: Mesh) {
-    mesh.material = BUILDING_MATERIAL;
-    if (mesh.children.length < 1) return;
-
-    mesh.children.forEach((child) => applyMaterial(child as Mesh));
-};
-
-export const view: Action<HTMLCanvasElement, Blueprint> = (canvas, blueprint) => {
+export const view: Action<HTMLCanvasElement, Blueprint, { 'on:load': (e: CustomEvent<string>) => void; }> = (canvas, blueprint) => {
     if (!blueprint) {
         throw new Error('[BLUEPRINT-VIEW] No blueprint identifier provided');
     }
-
     const scene = new Scene();
     const lights = createLights();
     scene.add(lights);
@@ -200,6 +184,7 @@ export const view: Action<HTMLCanvasElement, Blueprint> = (canvas, blueprint) =>
     const camera = createCamera(canvas.width, canvas.height);
     const controls = createControls(camera, canvas);
     const renderer = createRenderer(canvas);
+    const loader = new GLTFLoader();
 
     let minPan: Vector3 = new Vector3(-5, 0, -5);
     let maxPan: Vector3 = new Vector3(5, 0, 5);
@@ -227,8 +212,9 @@ export const view: Action<HTMLCanvasElement, Blueprint> = (canvas, blueprint) =>
     }
     function createCamera(width: number, height: number): PerspectiveCamera {
         const camera = new PerspectiveCamera(55, width / height, 0.1, 1000);
-        camera.position.y = 5;
-        camera.position.z = 5;
+        const distance = 15;
+        camera.position.y = distance;
+        camera.position.z = distance;
         camera.lookAt(0, 0, 0);
         return camera;
     }
@@ -237,8 +223,12 @@ export const view: Action<HTMLCanvasElement, Blueprint> = (canvas, blueprint) =>
         controls.enableDamping = true;
         controls.dampingFactor = 0.1;
         controls.maxPolarAngle = Math.PI * 0.4;
-        controls.minDistance = 1.5;
-        controls.maxDistance = 20;
+        controls.minDistance = 5;
+        controls.maxDistance = 40;
+        controls.mouseButtons = {
+            'LEFT': MOUSE.PAN,
+            'RIGHT': MOUSE.ROTATE,
+        };
         return controls;
     }
     function createRenderer(canvas: HTMLCanvasElement): WebGLRenderer {
@@ -254,7 +244,9 @@ export const view: Action<HTMLCanvasElement, Blueprint> = (canvas, blueprint) =>
         if (event.key !== 'c') return;
 
         event.preventDefault();
+        controls.enableDamping = false;
         controls.reset();
+        controls.enableDamping = true;
     }
     function onResize() {
         const width = canvas.parentElement?.offsetWidth ?? window.innerWidth;
@@ -264,6 +256,76 @@ export const view: Action<HTMLCanvasElement, Blueprint> = (canvas, blueprint) =>
 
         renderer.setSize(width, height);
         renderer.setPixelRatio(window.devicePixelRatio);
+    }
+
+    function getBuildingModel(identifier: BuildingIdentifier): Promise<Mesh> {
+        return new Promise<Mesh>((resolve, reject) => {
+            loader.loadAsync(BUILDINGS[identifier])
+                .then(value => {
+                    return resolve(value.scene.children[0] as Mesh);
+                })
+                .catch(reject);
+        });
+    }
+    /**
+     * Applies default BULDING_MATERIAL to mesh and children
+     * TODO: replace with official material
+     * @param mesh Mesh to apply material to recursively for children
+     */
+    function applyMaterial(mesh: Mesh) {
+        mesh.material = BUILDING_MATERIAL;
+        if (mesh.children.length < 1) return;
+
+        mesh.children.forEach((child) => applyMaterial(child as Mesh));
+    };
+    function createBuilding(entry: BlueprintBuildingEntry, mesh: Mesh) {
+        const x = entry.X ?? 0;
+        const y = entry.Y ?? 0;
+        const l = entry.L ?? 0;
+
+        mesh.position.set(x, l, y);
+        const rotation = Math.PI * 1.5 * (entry.R ?? 0) - 0.5 * Math.PI;
+        mesh.rotateY(rotation);
+        applyMaterial(mesh);
+
+        switch (entry.T) {
+            case 'BeltDefaultForwardInternalVariant':
+            case 'BeltDefaultLeftInternalVariant':
+            case 'BeltDefaultRightInternalVariant':
+            case 'Merger2To1LInternalVariant':
+            case 'Merger2To1RInternalVariant':
+            case 'MergerTShapeInternalVariant':
+            case 'Splitter1To2LInternalVariant':
+            case 'Splitter1To2RInternalVariant':
+            case 'SplitterTShapeInternalVariant':
+                mesh.children.forEach((child) => (child.visible = false));
+                mesh.children[l].visible = true;
+                break;
+
+            case 'LabelDefaultInternalVariant':
+                {
+                    mesh.children.forEach((child) => (child.visible = false));
+                    const text = atob(String(entry.C)).trim().replace(/[\W_]/g, '').toUpperCase();
+                    [...text].forEach((char, index, array) => {
+                        const letterIndex = char.charCodeAt(0) - 65;
+                        const letter = mesh.children[letterIndex].clone();
+                        if (array.length > 8) {
+                            const scale = (1 / array.length) * 8;
+                            letter.translateX(index * scale * -0.525);
+                            letter.scale.set(scale, scale, 1);
+                        } else {
+                            letter.translateX(index * -0.525);
+                        }
+                        letter.visible = true;
+                        mesh.add(letter);
+                    });
+                }
+                break;
+
+            default:
+                break;
+        }
+        return mesh;
     }
 
     function update() {
@@ -277,68 +339,72 @@ export const view: Action<HTMLCanvasElement, Blueprint> = (canvas, blueprint) =>
 
         renderer.render(scene, camera);
     }
-    function assign(blueprint: Blueprint) {
-        const min = new Vector3();
-        const max = new Vector3();
-        blueprint.BP.Entries.forEach((entry) => {
-            const x = entry.X ?? 0;
-            const y = entry.Y ?? 0;
-            const l = entry.L ?? 0;
-            const r = entry.R ?? 0;
-
-            if (x < min.x) min.x = x;
-            if (y < min.z) min.z = y;
-            if (x > max.x) max.x = x;
-            if (y > max.z) max.z = y;
-            minPan = min;
-            maxPan = max;
-
-            getBuildingModel(entry.T).then((mesh) => {
-                mesh.position.set(x, l, y);
-                mesh.rotateY(Math.PI * 1.5 * r - 0.5 * Math.PI);
-                applyMaterial(mesh);
-                scene.add(mesh);
-
-                switch (entry.T) {
-                    case 'BeltDefaultForwardInternalVariant':
-                    case 'BeltDefaultLeftInternalVariant':
-                    case 'BeltDefaultRightInternalVariant':
-                    case 'Merger2To1LInternalVariant':
-                    case 'Merger2To1RInternalVariant':
-                    case 'MergerTShapeInternalVariant':
-                    case 'Splitter1To2LInternalVariant':
-                    case 'Splitter1To2RInternalVariant':
-                    case 'SplitterTShapeInternalVariant':
-                        mesh.children.forEach((child) => (child.visible = false));
-                        mesh.children[l].visible = true;
-                        break;
-
-                    case 'LabelDefaultInternalVariant':
-                        {
-                            mesh.children.forEach((child) => (child.visible = false));
-                            const text = atob(String(entry.C)).trim().replace(/[\W_]/g, '').toUpperCase();
-                            [...text].forEach((char, index, array) => {
-                                const letterIndex = char.charCodeAt(0) - 65;
-                                const letter = mesh.children[letterIndex].clone();
-                                if (array.length > 8) {
-                                    const scale = (1 / array.length) * 8;
-                                    letter.translateX(index * scale * -0.525);
-                                    letter.scale.set(scale, scale, 1);
-                                } else {
-                                    letter.translateX(index * -0.525);
-                                }
-                                letter.visible = true;
-                                mesh.add(letter);
-                            });
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
+    async function assign(blueprint: Blueprint) {
+        if (blueprint.BP.$type === 'Island') {
+            return assignBlueprintIsland(blueprint.BP).then(() => {
+                canvas.dispatchEvent(new CustomEvent('load'));
             });
+        }
+        return assignBlueprintBuilding(blueprint.BP).then(() => {
+            canvas.dispatchEvent(new CustomEvent('load'));
         });
     }
+    async function assignBlueprintIsland(blueprint: BlueprintIsland) {
+        return new Promise<void>((resolve, reject) => {
+            let min = new Vector3(-3, 0, -3);
+            let max = new Vector3(3, 0, 3);
+            const islandPromises = blueprint.Entries.map<Promise<void>>((islandEntry => new Promise<void>((resolve, reject) => {
+                const x = islandEntry.X ?? 0;
+                const y = islandEntry.Y ?? 0;
+                const position = new Vector3(x, 0, y);
+
+                min = min.min(position);
+                max = max.max(position);
+
+                const group = new Group();
+                group.position
+                    .add(position)
+                    .multiplyScalar(ISLAND_LAYOUT_UNIT)
+                    .sub(new Vector3(ISLAND_LAYOUT_UNIT * 0.5, 0, ISLAND_LAYOUT_UNIT * 0.5));
+                scene.add(group);
+
+                const buildingPromises = islandEntry.B.Entries.map<Promise<void>>((buildingEntry) => new Promise<void>((resolve, reject) => {
+                    getBuildingModel(buildingEntry.T).then(mesh => {
+                        const building = createBuilding(buildingEntry, mesh);
+                        group.add(building);
+                        return resolve();
+                    }).catch(reject);
+                }));
+                Promise.all(buildingPromises).then(() => resolve()).catch(reject);
+            })));
+            minPan = min.multiplyScalar(ISLAND_LAYOUT_UNIT);
+            maxPan = max.multiplyScalar(ISLAND_LAYOUT_UNIT);
+            Promise.all(islandPromises).then(() => resolve()).catch(reject);
+        });
+    };
+    async function assignBlueprintBuilding(blueprint: BlueprintBuilding) {
+        return new Promise<void>((resolve, reject) => {
+            let min = new Vector3();
+            let max = new Vector3();
+            const buildingPromises = blueprint.Entries.map<Promise<void>>((entry) => new Promise<void>((resolve, reject) => {
+                const x = entry.X ?? 0;
+                const y = entry.Y ?? 0;
+                const position = new Vector3(x, 0, y);
+                min = min.min(position);
+                max = max.max(position);
+
+                getBuildingModel(entry.T).then(mesh => {
+                    const building = createBuilding(entry, mesh);
+                    scene.add(building);
+                    return resolve();
+                }).catch(reject);
+            }));
+            minPan = min;
+            maxPan = max;
+            Promise.all(buildingPromises).then(() => resolve()).catch(reject);
+        });
+
+    };
 
     return {
         update(blueprint) {

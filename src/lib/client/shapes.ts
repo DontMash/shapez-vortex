@@ -3,7 +3,7 @@ import { PerspectiveCamera, type Mesh, Group, Camera, WebGLRenderer, ColorManage
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import { SHAPE_COLOR_MATERIALS, SHAPE_LAYER_HEIGHT, SHAPE_LAYER_SCALE_FACTOR, SHAPE_MAX_LAYERS, SHAPE_MAX_QUARTERS, SHAPE_QUARTER_EXPAND_OFFSET, type ShapeData, type ShapeType } from '$lib/shape.types';
+import { SHAPE_COLOR_BASE_MATERIAL, SHAPE_COLOR_MATERIALS, SHAPE_LAYER_HEIGHT, SHAPE_LAYER_SCALE_FACTOR, SHAPE_MAX_LAYERS, SHAPE_MAX_QUARTERS, SHAPE_QUARTER_EXPAND_OFFSET, type ShapeData, type ShapeType } from '$lib/shape.types';
 
 import BASE_SHAPE from '$lib/assets/models/shapes/base.gltf';
 import CIRCLE_SHAPE from '$lib/assets/models/shapes/circle-quarter.gltf';
@@ -13,47 +13,25 @@ import STAR_SHAPE from '$lib/assets/models/shapes/star-quarter.gltf';
 import PIN_SHAPE from '$lib/assets/models/shapes/pin-quarter.gltf';
 import CRYSTAL_SHAPE from '$lib/assets/models/shapes/crystal-quarter.gltf';
 
-const SHAPES: Record<ShapeType, string> = {
-    C: CIRCLE_SHAPE,
-    R: RECT_SHAPE,
-    W: WIND_SHAPE,
-    S: STAR_SHAPE,
-    P: PIN_SHAPE,
-    c: CRYSTAL_SHAPE
-};
-
-const loader = new GLTFLoader();
-
-export function getBaseModel(): Promise<Mesh> {
-    return new Promise<Mesh>((resolve, reject) => {
-        loader.loadAsync(BASE_SHAPE)
-            .then(value => {
-                return resolve(value.scene.children[0] as Mesh);
-            })
-            .catch(reject);
-    });
-}
-export function getShapeModel(type: ShapeType): Promise<Mesh> {
-    return new Promise<Mesh>((resolve, reject) => {
-        loader.loadAsync(SHAPES[type])
-            .then(value => {
-                return resolve(value.scene.children[0] as Mesh);
-            })
-            .catch(reject);
-    });
-}
-
-export const view: Action<HTMLCanvasElement, { data: ShapeData, isExtended: boolean, isExpanded: boolean; }> = (canvas, params) => {
+export const view: Action<HTMLCanvasElement, { data: ShapeData, isExtended: boolean, isExpanded: boolean; }, { 'on:load': (e: CustomEvent<string>) => void; }> = (canvas, params) => {
     if (!params) {
         throw new Error('[SHAPE-VIEW] No params provided');
     }
-
+    const SHAPES: Record<ShapeType, string> = {
+        C: CIRCLE_SHAPE,
+        R: RECT_SHAPE,
+        W: WIND_SHAPE,
+        S: STAR_SHAPE,
+        P: PIN_SHAPE,
+        c: CRYSTAL_SHAPE
+    };
     const { data } = params;
 
     const renderer = createRenderer(canvas);
     const camera = createCamera(canvas.width, canvas.height);
     const controls = createControls(camera, canvas);
     const scene = new Scene();
+    const loader = new GLTFLoader();
     const base = createBase();
     scene.add(base);
 
@@ -95,6 +73,11 @@ export const view: Action<HTMLCanvasElement, { data: ShapeData, isExtended: bool
         return controls;
     }
     function createBase(): Group {
+        getBaseModel().then((base) => {
+            base.material = SHAPE_COLOR_BASE_MATERIAL;
+            scene.add(base);
+        }).catch(() => { throw new Error('Base model not found'); });
+
         const base = new Group();
         for (let i = 0; i < SHAPE_MAX_LAYERS; i++) {
             const layer = new Group();
@@ -120,6 +103,24 @@ export const view: Action<HTMLCanvasElement, { data: ShapeData, isExtended: bool
         renderer.setSize(width, height);
         renderer.setPixelRatio(window.devicePixelRatio);
     }
+    function getBaseModel(): Promise<Mesh> {
+        return new Promise<Mesh>((resolve, reject) => {
+            loader.loadAsync(BASE_SHAPE)
+                .then(value => {
+                    return resolve(value.scene.children[0] as Mesh);
+                })
+                .catch(reject);
+        });
+    }
+    function getShapeModel(type: ShapeType): Promise<Mesh> {
+        return new Promise<Mesh>((resolve, reject) => {
+            loader.loadAsync(SHAPES[type])
+                .then(value => {
+                    return resolve(value.scene.children[0] as Mesh);
+                })
+                .catch(reject);
+        });
+    }
 
     function update() {
         requestAnimationFrame(() => update());
@@ -127,25 +128,37 @@ export const view: Action<HTMLCanvasElement, { data: ShapeData, isExtended: bool
         controls.update();
         renderer.render(scene, camera);
     }
-    function assign(shapeData: ShapeData) {
-        shapeData.layers.forEach((layerData, layerDataIndex) => {
-            layerData.quarters.forEach((quarterData, quarterDataIndex) => {
-                if (quarterData.type === '-') return;
+    async function assign(shapeData: ShapeData) {
+        return new Promise<void>((resolve, reject) => {
+            const layerPromises = shapeData.layers.map<Promise<void>>((layerData, layerDataIndex) => {
+                return new Promise<void>((resolve, reject) => {
+                    const quarterPromises = layerData.quarters.map<Promise<void>>((quarterData, quarterDataIndex) => {
+                        return new Promise<void>((resolve, reject) => {
+                            if (quarterData.type === '-') return resolve();
 
-                getShapeModel(quarterData.type).then((shapeQuarter) => {
-                    const material = SHAPE_COLOR_MATERIALS[quarterData.color];
-                    shapeQuarter.material = material;
+                            getShapeModel(quarterData.type).then((shapeQuarter) => {
+                                const material = SHAPE_COLOR_MATERIALS[quarterData.color];
+                                shapeQuarter.material = material;
 
-                    if (layerDataIndex < 0 || layerDataIndex > 3)
-                        throw new Error(`Invalid layerIndex ${layerDataIndex}`);
-                    if (quarterDataIndex < 0 || quarterDataIndex > 3)
-                        throw new Error(`Invalid quarterIndex ${quarterDataIndex}`);
+                                if (layerDataIndex < 0 || layerDataIndex > 3)
+                                    throw new Error(`Invalid layerIndex ${layerDataIndex}`);
+                                if (quarterDataIndex < 0 || quarterDataIndex > 3)
+                                    throw new Error(`Invalid quarterIndex ${quarterDataIndex}`);
 
-                    const layer = base.children[layerDataIndex];
-                    const quarter = layer.children[quarterDataIndex];
-                    quarter.add(shapeQuarter);
+                                const layer = base.children[layerDataIndex];
+                                const quarter = layer.children[quarterDataIndex];
+                                quarter.add(shapeQuarter);
+                                return resolve();
+                            }).catch(() => reject(new Error('Shape model not found')));
+                        });
+                    });
+                    Promise.all(quarterPromises).then(() => resolve()).catch(reject);
                 });
             });
+            Promise.all(layerPromises).then(() => {
+                canvas.dispatchEvent(new CustomEvent('load'));
+                return resolve();
+            }).catch(reject);
         });
     }
     function extend() {

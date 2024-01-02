@@ -4,13 +4,13 @@
 		action="/blueprint/view"
 	>
 		<label
-			class="flex h-40 flex-col bg-stone-200 px-6 py-4 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
+			class="flex h-96 flex-col bg-stone-200 px-6 py-4 text-neutral-800 transition focus-within:bg-stone-100 hover:bg-stone-100"
 			for="blueprint-identifier"
 		>
 			<span class="sr-only">Blueprint identifier</span>
 			<textarea
 				class="h-full w-full resize-none overflow-y-auto bg-transparent outline-none placeholder:select-none placeholder:text-stone-400 focus-visible:placeholder:text-stone-600"
-				name="blueprint-identifier"
+				name="identifier"
 				id="blueprint-identifier"
 				placeholder="Blueprint identifier..."
 				required

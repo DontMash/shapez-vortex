@@ -137,7 +137,6 @@ To setup, install & develop you will need some tools:
 ## Roadmap
 
 * Blueprints
-  * Viewer
   * Library
   * Linking/Shorting
   * Builder?
