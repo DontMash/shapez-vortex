@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	import ToastComponent from './Toast.svelte';
-	import { subscribe, type Toast } from './toast.service';
+	import ToastComponent from '$lib/components/toast/Toast.svelte';
+	import { subscribe, type Toast } from '$lib/client/toast/toast.service';
 
 	const TOAST_TRANSITION_DURATION = 300;
 	let currentToast: Toast | undefined;

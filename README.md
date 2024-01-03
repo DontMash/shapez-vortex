@@ -137,6 +137,11 @@ To setup, install & develop you will need some tools:
 ## Roadmap
 
 * Blueprints
+  * Load from file
+  * Save to file (+ convert to current game version)
+  * Compatibility for old game versions
+    * Viewer: error models
+    * Codec/Convert: trainstation empty color config
   * Library
   * Linking/Shorting
   * Builder?

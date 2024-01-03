@@ -1,4 +1,4 @@
-import type { Action } from 'svelte/action';
+import type { Action, ActionReturn } from 'svelte/action';
 import {
     type Blueprint,
     type BlueprintBuilding,
@@ -173,10 +173,18 @@ const BUILDINGS: Record<BuildingIdentifier, string> = {
     ArtistPlaygroundBuildingInternalVariant: BELT_FORWARD_DATA // UNUSED
 };
 
-export const view: Action<HTMLCanvasElement, Blueprint, { 'on:load': (e: CustomEvent<string>) => void; }> = (canvas, blueprint) => {
-    if (!blueprint) {
-        throw new Error('[BLUEPRINT-VIEW] No blueprint identifier provided');
+type Parameters = {
+    blueprint: Blueprint;
+    isCenter?: boolean | undefined;
+};
+type Attributes = { 'on:load': (e: CustomEvent<void>) => void; center: () => void; };
+
+export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, params) => {
+    if (!params) {
+        throw new Error('[BLUEPRINT-VIEW] No blueprint view parameters provided');
     }
+    const { blueprint } = params;
+
     const scene = new Scene();
     const lights = createLights();
     scene.add(lights);
@@ -245,9 +253,7 @@ export const view: Action<HTMLCanvasElement, Blueprint, { 'on:load': (e: CustomE
         if (event.key !== 'c') return;
 
         event.preventDefault();
-        controls.enableDamping = false;
-        controls.reset();
-        controls.enableDamping = true;
+        center();
     }
     function onResize() {
         const width = canvas.parentElement?.offsetWidth ?? window.innerWidth;
@@ -353,8 +359,8 @@ export const view: Action<HTMLCanvasElement, Blueprint, { 'on:load': (e: CustomE
     }
     async function assignBlueprintIsland(blueprint: BlueprintIsland) {
         return new Promise<void>((resolve, reject) => {
-            let min = new Vector3(-3, 0, -3);
-            let max = new Vector3(3, 0, 3);
+            let min = new Vector3(-1, 0, -1);
+            let max = new Vector3(1, 0, 1);
             const islandPromises = blueprint.Entries.map<Promise<void>>((islandEntry => new Promise<void>((resolve, reject) => {
                 const x = islandEntry.X ?? 0;
                 const y = islandEntry.Y ?? 0;
@@ -405,16 +411,28 @@ export const view: Action<HTMLCanvasElement, Blueprint, { 'on:load': (e: CustomE
             maxPan = max;
             Promise.all(buildingPromises).then(() => resolve()).catch(reject);
         });
-
     };
+    function center() {
+        controls.enableDamping = false;
+        controls.reset();
+        controls.enableDamping = true;
+    }
 
     return {
-        update(blueprint) {
-            assign(blueprint);
+        update(params) {
+            const { blueprint: updateBlueprint, isCenter } = params;
+
+            if (updateBlueprint !== blueprint) {
+                assign(updateBlueprint);
+                center();
+            }
+            if (isCenter) {
+                center();
+            }
         },
         destroy() {
             resizeObserver.disconnect();
             canvas.removeEventListener('keyup', (event) => onCenter(event), true);
-        }
-    };
+        },
+    } satisfies ActionReturn<Parameters, Attributes>;
 };

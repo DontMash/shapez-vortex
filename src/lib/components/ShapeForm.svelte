@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ToastType, add } from '$lib/components/toast/toast.service';
+	import { ToastType, add } from '$lib/client/toast/toast.service';
 
 	import ArrowRightAltIcon from '$lib/components/icons/ArrowRightAltIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';

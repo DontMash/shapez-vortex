@@ -2,9 +2,9 @@
 	import { page } from '$app/stores';
 
 	import '../../app.css';
+	import { ToastType, add } from '$lib/client/toast/toast.service';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
-	import { ToastType, add } from '$lib/components/toast/toast.service';
 
 	function onError(event: Event) {
 		const errorEvent = event as ErrorEvent;

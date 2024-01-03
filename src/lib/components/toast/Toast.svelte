@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ToastType } from '$lib/components/toast/toast.service';
+	import { ToastType } from '$lib/client/toast/toast.service';
 
 	export let type: ToastType = ToastType.Info;
 
