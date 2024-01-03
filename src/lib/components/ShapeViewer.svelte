@@ -31,7 +31,7 @@
 				<input name="extend" type="hidden" value={!isExtended} />
 				<input name="expand" type="hidden" value={isExpanded} />
 				<button
-					class="h-14 w-14 cursor-pointer bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:pl-3 group-first:pr-1 group-last:pl-1 group-last:pr-3"
+					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
 					type="submit"
 				>
 					<span class="sr-only"> Extend all layers </span>
@@ -47,7 +47,7 @@
 				<input name="extend" type="hidden" value={isExtended} />
 				<input name="expand" type="hidden" value={!isExpanded} />
 				<button
-					class="h-14 w-14 cursor-pointer bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:pl-3 group-first:pr-1 group-last:pl-1 group-last:pr-3"
+					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 					type="submit"
 				>
 					<span class="sr-only"> Expand all quarters </span>
@@ -59,7 +59,7 @@
 				</button>
 			</form>
 			<button
-				class="h-14 w-14 cursor-pointer bg-stone-200 fill-neutral-900 p-2 first:pl-3 first:pr-1 last:pl-1 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+				class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 first:w-16 first:pl-3 last:w-16 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 				type="button"
 				use:fullscreen={{ fullscreenElement: viewer }}
 				on:change={(event) => (isFullscreen = event.detail)}
@@ -74,7 +74,7 @@
 			<form class="group" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
 				<button
-					class="h-14 w-14 cursor-pointer bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:pl-3 group-first:pr-1 group-last:pl-1 group-last:pr-3"
+					class="h-14 w-14 cursor-pointer bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
 					type="submit"
 				>
 					<span class="sr-only">Reset controls</span>

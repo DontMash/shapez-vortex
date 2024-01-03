@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 
-export const GET = (({ url }) => {
+export const GET: RequestHandler = (({ url }) => {
     const pages = Object.keys(import.meta.glob('/src/routes/\\(app\\)/**/+page.svelte')).slice(1).map(path => {
         const page = (path.split('/src/routes/(app)/')[1]).replace('/+page.svelte', '');
         return page;
@@ -11,7 +11,7 @@ export const GET = (({ url }) => {
     };
     const body = sitemap(url.origin, pages);
     return new Response(body, { headers });
-}) satisfies RequestHandler;
+});
 
 const sitemap = (
     origin: string,

@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import { view } from '$lib/client/blueprints';
 	import { fullscreen } from '$lib/client/fullscreen';
 
 	import Loading from '$lib/components/Loading.svelte';
+	import UploadIcon from '$lib/components/icons/UploadIcon.svelte';
+	import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
 	import FullscreenIcon from '$lib/components/icons/FullscreenIcon.svelte';
 	import FullscreenExitIcon from '$lib/components/icons/FullscreenExitIcon.svelte';
 	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
@@ -19,6 +22,10 @@
 		isCenter = true;
 		setTimeout(() => (isCenter = false), 100);
 	}
+	function onFileChange(event: Event) {
+		const input = event.target as HTMLInputElement;
+		input.form?.submit();
+	}
 </script>
 
 <section class="relative mx-auto w-full max-w-5xl">
@@ -27,9 +34,42 @@
 			<div
 				class="flex divide-x-2 divide-neutral-800 overflow-hidden rounded-4xl border-2 border-neutral-800"
 			>
+				<form class="group" method="post" action="/blueprint?/upload" enctype="multipart/form-data">
+					<label
+						class="inline-flex h-14 w-14 flex-col items-center justify-center bg-stone-200 fill-neutral-900 p-2 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
+						for="blueprint-file"
+					>
+						<input
+							class="hidden"
+							id="blueprint-file"
+							name="file"
+							type="file"
+							accept=".spz2bp"
+							required
+							on:change={(event) => onFileChange(event)}
+						/>
+						<span class="sr-only">Load blueprint</span>
+						<UploadIcon />
+					</label>
+				</form>
+				<form class="group" action="/blueprint/download">
+					<input
+						id="blueprint-identifier"
+						name="identifier"
+						type="hidden"
+						value={$page.url.searchParams.get('identifier')}
+						required
+					/>
+					<button
+						class="inline-flex h-14 w-14 flex-col items-center justify-center bg-stone-200 fill-neutral-900 p-2 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
+						type="submit"
+					>
+						<span class="sr-only">Save blueprint</span>
+						<DownloadIcon />
+					</button>
+				</form>
 				<button
-					class="h-14 w-14 cursor-pointer bg-stone-200 fill-neutral-900 p-2 first:pl-3 first:pr-1 last:pl-1 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
-					type="button"
+					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 first:w-16 first:pl-3 last:w-16 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 					use:fullscreen={{ fullscreenElement: viewer }}
 					on:change={(event) => (isFullscreen = event.detail)}
 				>
@@ -41,8 +81,7 @@
 					{/if}
 				</button>
 				<button
-					class="h-14 w-14 cursor-pointer bg-stone-200 fill-neutral-900 p-2 first:pl-3 first:pr-1 last:pl-1 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
-					type="button"
+					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 first:w-16 first:pl-3 last:w-16 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 					on:click={() => reset()}
 				>
 					<span class="sr-only">Reset controls</span>

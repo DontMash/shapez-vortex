@@ -1,3 +1,4 @@
+import { error, type Actions, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (({ url }) => {
@@ -15,3 +16,26 @@ export const load = (({ url }) => {
         },
     };
 }) satisfies PageServerLoad;
+
+export const actions = {
+    upload: ({ request, url }) => new Promise<void>(
+        (_, reject) => {
+            request.formData().then(formData => {
+                if (!formData)
+                    return reject(error(400, 'invalid/missing form data'));
+
+                const file = formData.get('file') as File;
+                if (!file)
+                    return reject(error(400, 'invalid/missing form data: file'));
+
+                file.arrayBuffer().then(buffer => {
+                    const codec = new TextDecoder();
+                    const blueprintIdentifier = codec.decode(buffer);
+
+                    const viewUrl = new URL('blueprint/view', url.origin);
+                    viewUrl.searchParams.append('identifier', blueprintIdentifier);
+                    throw redirect(301, viewUrl);
+                }).catch(reject);
+            }).catch(reject);
+        }),
+} satisfies Actions;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CopyIcon from './icons/CopyIcon.svelte';
 
-	import { ToastType, add } from '$lib/components/toast/toast.service';
+	import { ToastType, add } from '$lib/client/toast/toast.service';
 
 	type Color = 'light' | 'dark';
 	const TOAST_DURATION = 3000;
