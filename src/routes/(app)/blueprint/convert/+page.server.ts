@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { Blueprint } from '$lib/server/blueprint';
+import type { BlueprintString } from '$lib/blueprint.types';
+import { update } from '$lib/server/blueprint';
 
 export const load = (({ url }) => {
     return {
@@ -19,32 +20,23 @@ export const load = (({ url }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    modify: ({ request, fetch }) => new Promise<string>(
+    modify: ({ request }) => new Promise<string>(
         (resolve, reject) => {
-            request.formData().then(data => {
-                const versionData = data.get('blueprint-version');
-                const blueprintData = data.get('blueprint-identifier');
-                if (!versionData || !blueprintData)
-                    return reject(error(400, 'invalid/missing form data entries'));
+            request.formData()
+                .then(data => {
+                    const versionData = data.get('blueprint-version');
+                    const blueprintIdentifier = data.get('blueprint-identifier');
+                    if (!versionData || !blueprintIdentifier)
+                        return reject(error(400, 'invalid/missing form data entries'));
 
-                const version = +versionData;
-                const blueprint = blueprintData as string;
-                fetch('/api/v1/blueprint/decode', { body: blueprint.trim(), method: 'post' })
-                    .then(decodeResponse => {
-                        if (!decodeResponse.ok) return reject(error(400, 'invalid blueprint identifier'));
-                        return decodeResponse.json();
-                    })
-                    .then(value => {
-                        const data = value as Blueprint;
-                        data.V = version;
-
-                        fetch('/api/v1/blueprint/encode', { body: JSON.stringify(data), method: 'post' })
-                            .then(encodeResponse => encodeResponse.text())
-                            .then(resolve)
-                            .catch(reject);
-                    })
-                    .catch(reject);
-            })
+                    const version = +versionData;
+                    const identifier = blueprintIdentifier as BlueprintString;
+                    try {
+                        return resolve(update(identifier, version));
+                    } catch (err) {
+                        return reject(error(400, 'invalid blueprint identifier'));
+                    }
+                })
                 .catch(() => reject(error(400, 'invalid request form data')));
         }),
 } satisfies Actions;

@@ -1,5 +1,7 @@
-import { error, type Actions, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { error, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
+import type { BlueprintString } from '$lib/blueprint.types';
+import { update } from '$lib/server/blueprint';
 
 export const load = (({ url }) => {
     return {
@@ -18,24 +20,19 @@ export const load = (({ url }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    upload: ({ request, url }) => new Promise<void>(
-        (_, reject) => {
-            request.formData().then(formData => {
-                if (!formData)
-                    return reject(error(400, 'invalid/missing form data'));
+    view: ({ request, url }) => new Promise<void>((_, reject) => {
+        request.formData().then(formData => {
+            if (!formData)
+                return reject(error(400, 'invalid/missing form data'));
 
-                const file = formData.get('file') as File;
-                if (!file)
-                    return reject(error(400, 'invalid/missing form data: file'));
+            const identifier = formData.get('identifier') as BlueprintString;
+            const isUpdate = (formData.get('update') ?? 'off') === 'on';
+            if (!identifier)
+                return reject(error(400, 'invalid/missing form data: identifier'));
 
-                file.arrayBuffer().then(buffer => {
-                    const codec = new TextDecoder();
-                    const blueprintIdentifier = codec.decode(buffer);
-
-                    const viewUrl = new URL('blueprint/view', url.origin);
-                    viewUrl.searchParams.append('identifier', blueprintIdentifier);
-                    throw redirect(301, viewUrl);
-                }).catch(reject);
-            }).catch(reject);
-        }),
+            const viewUrl = new URL('blueprint/view', url.origin);
+            viewUrl.searchParams.append('identifier', isUpdate ? update(identifier) : identifier);
+            throw redirect(301, viewUrl);
+        }).catch(reject);
+    })
 } satisfies Actions;

@@ -3,9 +3,9 @@ import {
     type Blueprint,
     type BlueprintBuilding,
     type BlueprintIsland,
-    GRID_SIZE,
+    BLUEPRINT_GRID_SIZE,
     type BuildingIdentifier,
-    GRID_COLOR,
+    BLUEPRINT_GRID_COLOR,
     ISLAND_LAYOUT_UNIT,
     type BlueprintBuildingEntry
 } from '$lib/blueprint.types';
@@ -98,7 +98,10 @@ import SANDBOX_FLUID_PRODUCER_DATA from '$lib/assets/models/buildings/SandboxFlu
 import LABEL_DATA from '$lib/assets/models/buildings/LabelDefaultInternalVariant.gltf';
 import BELT_READER_DATA from '$lib/assets/models/buildings/BeltReaderDefaultInternalVariant.gltf';
 
+import ERROR_DATA from '$lib/assets/models/error.gltf';
+
 const BUILDING_MATERIAL = new MeshStandardMaterial({ color: 0xaaaaaa });
+const BUILDING_ERROR_MATERIAL = new MeshStandardMaterial({ color: 0xff0000 });
 const BUILDINGS: Record<BuildingIdentifier, string> = {
     BeltDefaultForwardInternalVariant: BELT_FORWARD_DATA,
     BeltDefaultRightInternalVariant: BELT_RIGHT_DATA,
@@ -188,7 +191,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
     const scene = new Scene();
     const lights = createLights();
     scene.add(lights);
-    const grid = new GridHelper(GRID_SIZE, GRID_SIZE, GRID_COLOR, GRID_COLOR);
+    const grid = new GridHelper(BLUEPRINT_GRID_SIZE, BLUEPRINT_GRID_SIZE, BLUEPRINT_GRID_COLOR, BLUEPRINT_GRID_COLOR);
     scene.add(grid);
     const camera = createCamera(canvas.width, canvas.height);
     const controls = createControls(camera, canvas);
@@ -267,7 +270,8 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
 
     function getBuildingModel(identifier: BuildingIdentifier): Promise<Mesh> {
         return new Promise<Mesh>((resolve, reject) => {
-            loader.loadAsync(BUILDINGS[identifier])
+            const building = BUILDINGS[identifier] ?? ERROR_DATA;
+            loader.loadAsync(building)
                 .then(value => {
                     return resolve(value.scene.children[0] as Mesh);
                 })
@@ -281,6 +285,9 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
      */
     function applyMaterial(mesh: Mesh) {
         mesh.material = BUILDING_MATERIAL;
+        if (mesh.name.toLowerCase() === 'error') {
+            mesh.material = BUILDING_ERROR_MATERIAL
+        }        
         if (mesh.children.length < 1) return;
 
         mesh.children.forEach((child) => applyMaterial(child as Mesh));

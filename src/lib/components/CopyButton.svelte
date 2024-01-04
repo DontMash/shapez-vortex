@@ -1,10 +1,9 @@
 <script lang="ts">
 	import CopyIcon from './icons/CopyIcon.svelte';
 
-	import { ToastType, add } from '$lib/client/toast/toast.service';
+	import { copy } from '$lib/client/clipboard';
 
 	type Color = 'light' | 'dark';
-	const TOAST_DURATION = 3000;
 
 	export let value: any;
 	export let color: Color = 'light';
@@ -14,27 +13,17 @@
 		dark: 'fill-neutral-900 hover:fill-neutral-800 focus-visible:fill-neutral-800'
 	};
 	let isLoading = false;
-
-	const onCopy = () => {
-		isLoading = true;
-
-		navigator.clipboard
-			.writeText(typeof value !== 'object' ? value : JSON.stringify(value))
-			.then(() => add('Content copied', TOAST_DURATION))
-			.catch(() => {
-				add('Cannot copy content!', TOAST_DURATION, ToastType.Error);
-			})
-			.finally(() => (isLoading = false));
-	};
 </script>
 
 <button
 	class={`${colorVariants[color]} h-6 w-6 outline-none transition`}
 	type="button"
-	on:click={() => onCopy()}
+	on:click={() => (isLoading = true)}
+	use:copy={{ value }}
+	on:copy={() => (isLoading = false)}
 >
 	<span class="sr-only">Copy</span>
-	<figure class="data-[loading=true]:animate-spin" data-loading={isLoading}>
+	<div class="data-[loading=true]:animate-spin" data-loading={isLoading}>
 		<CopyIcon />
-	</figure>
+	</div>
 </button>

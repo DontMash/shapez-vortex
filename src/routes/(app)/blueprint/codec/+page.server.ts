@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { Blueprint } from '$lib/blueprint.types';
+import type { Blueprint, BlueprintString } from '$lib/blueprint.types';
+import { decode, encode } from '$lib/server/blueprint';
 
 export const load = (({ url }) => {
     return {
@@ -19,44 +20,39 @@ export const load = (({ url }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    decode: ({ request, fetch }) => new Promise<Blueprint>(
+    decode: ({ request }) => new Promise<Blueprint>(
         (resolve, reject) => {
             request.formData().then(data => {
-                const blueprintData = data.get('blueprint-identifier');
-                if (!blueprintData)
+                const blueprintIdentifier = data.get('blueprint-identifier');
+                if (!blueprintIdentifier)
                     return reject(error(400, 'invalid/missing form data entries'));
 
-                const blueprint = blueprintData as string;
-                fetch('/api/v1/blueprint/decode', { body: blueprint.trim(), method: 'post' })
-                    .then(response => {
-                        if (!response.ok) return reject(error(400, 'invalid blueprint identifier'));
-                        return response.json();
-                    })
-                    .then(resolve)
-                    .catch(reject);
+                try {
+                    const data = decode(blueprintIdentifier as BlueprintString);
+                    return resolve(data);
+                } catch (err) {
+                    return reject(error(400, 'invalid blueprint identifier'));
+                }
             })
                 .catch(() => reject(error(400, 'invalid request form data')));
         }),
 
-    encode: ({ request, fetch }) => new Promise<string>(
+    encode: ({ request }) => new Promise<string>(
         (resolve, reject) => {
-            request.formData().then(data => {
-                const blueprintData = data.get('blueprint-data');
-                if (!blueprintData)
-                    return reject(error(400, 'invalid/missing form data entries'));
+            request.formData()
+                .then(data => {
+                    const blueprintData = data.get('blueprint-data');
+                    if (!blueprintData)
+                        return reject(error(400, 'invalid/missing form data entries'));
 
-                const blueprint = blueprintData as string;
-                fetch('/api/v1/blueprint/encode', { body: blueprint.trim(), method: 'post' })
-                    .then(response => {
-                        if (!response.ok) {
-                            reject(error(400, 'invalid blueprint data'));
-                            return '';
-                        }
-                        return response.text();
-                    })
-                    .then(resolve)
-                    .catch(reject);
-            })
+                    const blueprint = JSON.parse(blueprintData as string) as Blueprint;
+                    try {
+                        const identifier = encode(blueprint);
+                        return resolve(identifier);
+                    } catch (err) {
+                        return reject(error(400, 'invalid blueprint data'));
+                    }
+                })
                 .catch(() => reject(error(400, 'invalid request form data')));
         })
 } satisfies Actions;

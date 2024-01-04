@@ -8,13 +8,13 @@ type Attributes = {
     'on:change': (e: CustomEvent<boolean>) => void;
 };
 
-export const fullscreen: Action<HTMLButtonElement, Parameters> = (element, params) => {
+export const fullscreen: Action<HTMLButtonElement, Parameters> = (button, params) => {
     if (!screenfull.isEnabled) return;
 
     let fullscreenElement = params?.fullscreenElement;
-    element.addEventListener('click', () => toggle(), true);
+    button.addEventListener('click', () => toggle(), true);
     screenfull.on('change', () => {
-        element.dispatchEvent(new CustomEvent('change', { detail: screenfull.isFullscreen }));
+        button.dispatchEvent(new CustomEvent('change', { detail: screenfull.isFullscreen }));
     });
     screenfull.on('error', () => {
         add('Fullscreen error', 3000, ToastType.Error);
@@ -31,7 +31,7 @@ export const fullscreen: Action<HTMLButtonElement, Parameters> = (element, param
             fullscreenElement = params.fullscreenElement;
         },
         destroy() {
-            element.removeEventListener('click', () => toggle());
+            button.removeEventListener('click', () => toggle());
 
             screenfull.off('change', () => true);
             screenfull.off('error', () => true);

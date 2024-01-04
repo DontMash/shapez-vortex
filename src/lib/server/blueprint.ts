@@ -1,6 +1,12 @@
-import type { Blueprint, BlueprintString } from '$lib/blueprint.types';
+import { GAME_VERSION, type Blueprint, type BlueprintString, type BlueprintBuilding, type BlueprintIsland, BLUEPRINT_EMPTY_DATA } from '$lib/blueprint.types';
 import { ungzip, gzip } from 'pako';
 
+export function update(value: BlueprintString, version: number = GAME_VERSION): BlueprintString {
+    const blueprint = decode(value);
+    blueprint.V = version;
+    const identifier = encode(blueprint);
+    return identifier;
+}
 export function decode(value: BlueprintString): Blueprint {
     const data = parse(value);
     const gzipedData = atob(data);
@@ -23,16 +29,37 @@ export function isBlueprintString(value: BlueprintString): boolean {
     const regex = /^(SHAPEZ2)-\d-.+\$$/;
     return regex.test(value);
 };
-
-export function encode(value: Blueprint): string {
+export function encode(value: Blueprint): BlueprintString {
     if (!isBlueprint(value)) throw new Error('Invalid blueprint');
 
-    const content = JSON.stringify(value);
+    const blueprint = fix(value);
+    const content = JSON.stringify(blueprint);
     const zipedDataArray = gzip(content);
     const zipedData = btoa(String.fromCharCode(...zipedDataArray));
-    return stringify(zipedData);
+    return stringify(zipedData) as BlueprintString;
 };
 export function isBlueprint(value: any) { return 'BP' in value && 'Entries' in value.BP && Array.isArray(value.BP.Entries) && 'V' in value; }
+function fix(value: Blueprint): Blueprint {
+    const bp = value.BP.$type === 'Island' ? fixBlueprintIsland(value.BP) : fixBlueprintBuilding(value.BP);
+    return { ...value, BP: bp };
+}
+function fixBlueprintIsland(value: BlueprintIsland): BlueprintIsland {
+    const entries = value.Entries.map(entry => ({ ...entry, B: fixBlueprintBuilding(entry.B) }));
+    return { ...value, Entries: entries };
+}
+function fixBlueprintBuilding(value: BlueprintBuilding): BlueprintBuilding {
+    const entries = value.Entries.map(entry => {
+        switch (entry.T) {
+            case 'TrainStationLoaderInternalVariant':
+            case 'TrainStationUnloaderInternalVariant':
+                return { ...entry, C: BLUEPRINT_EMPTY_DATA };
+
+            default:
+                return entry;
+        }
+    });
+    return { ...value, Entries: entries };
+}
 function stringify(value: string): string {
     const BLUEPRINT_STRING_PREFIX = 'SHAPEZ2';
     const BLUEPRINT_STRING_VERSION = 1;

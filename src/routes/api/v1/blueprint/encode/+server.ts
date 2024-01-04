@@ -1,5 +1,6 @@
-import { encode, type Blueprint } from '$lib/server/blueprint';
 import { error, type RequestHandler } from '@sveltejs/kit';
+import type { Blueprint } from '$lib/blueprint.types';
+import { encode } from '$lib/server/blueprint';
 
 
 export const POST = (({ request }) => new Promise<Response>(
@@ -10,7 +11,7 @@ export const POST = (({ request }) => new Promise<Response>(
 
                 const blueprint = value as Blueprint;
                 try {
-                    const data = encode(blueprint);                    
+                    const data = encode(blueprint);
                     return resolve(new Response(data));
                 } catch (reason) {
                     const message = (reason as Error).message;

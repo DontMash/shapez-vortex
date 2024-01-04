@@ -2,11 +2,14 @@
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import { view } from '$lib/client/blueprints';
+	import { copy, paste } from '$lib/client/clipboard';
 	import { fullscreen } from '$lib/client/fullscreen';
 
 	import Loading from '$lib/components/Loading.svelte';
 	import UploadIcon from '$lib/components/icons/UploadIcon.svelte';
 	import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
+	import PasteIcon from '$lib/components/icons/PasteIcon.svelte';
+	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 	import FullscreenIcon from '$lib/components/icons/FullscreenIcon.svelte';
 	import FullscreenExitIcon from '$lib/components/icons/FullscreenExitIcon.svelte';
 	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
@@ -25,6 +28,17 @@
 	function onFileChange(event: Event) {
 		const input = event.target as HTMLInputElement;
 		input.form?.submit();
+	}
+	function onPaste(event: Event) {
+		const customEvent = event as CustomEvent<string>;
+		const button = customEvent.target as HTMLButtonElement;
+		const input = button.form?.querySelector('input[name=identifier]') as HTMLInputElement | null;
+		if (!input) {
+			throw new Error('No input element "identifier"');
+		}
+		input.value = customEvent.detail.trim();
+		button.form?.submit();
+		button.form?.reset();
 	}
 </script>
 
@@ -54,7 +68,6 @@
 				</form>
 				<form class="group" action="/blueprint/download">
 					<input
-						id="blueprint-identifier"
 						name="identifier"
 						type="hidden"
 						value={$page.url.searchParams.get('identifier')}
@@ -68,6 +81,25 @@
 						<DownloadIcon />
 					</button>
 				</form>
+				<form class="group">
+					<input name="identifier" type="hidden" required />
+					<button
+						class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
+						type="button"
+						use:paste
+						on:paste={(event) => onPaste(event)}
+					>
+						<span class="sr-only">Paste blueprint</span>
+						<PasteIcon />
+					</button>
+				</form>
+				<button
+					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 first:w-16 first:pl-3 last:w-16 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+					use:copy={{ value: $page.url.searchParams.get('identifier') }}
+				>
+					<span class="sr-only">Copy blueprint</span>
+					<CopyIcon />
+				</button>
 				<button
 					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 first:w-16 first:pl-3 last:w-16 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 					use:fullscreen={{ fullscreenElement: viewer }}

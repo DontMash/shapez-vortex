@@ -1,11 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { GAME_VERSION } from '$lib/blueprint.types';
+
 	import CopyButton from '$lib/components/CopyButton.svelte';
-
-	const GAME_VERSION = 1033;
-
-	const hasData = !!$page.form;
-	const isModify = $page.url.searchParams.get('/modify') !== null && hasData;
 </script>
 
 <section class="mx-auto flex w-full max-w-5xl flex-col items-center space-y-4">
@@ -60,8 +57,8 @@
 		>
 	</form>
 
-	{#if isModify}
-		<output class="group relative h-40 w-[32rem] overflow-y-auto break-words bg-neutral-900 p-2">
+	{#if !!$page.form}
+		<output class="group relative h-40 w-[32rem] overflow-y-auto break-words bg-neutral-800 p-2">
 			<span>{$page.form}</span>
 			<div
 				class="absolute right-2 top-2 opacity-0 transition focus-within:opacity-100 group-hover:opacity-100"

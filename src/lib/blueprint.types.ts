@@ -1,5 +1,14 @@
 import type BUILDINGS_METADATA from '$lib/assets/data/buildings-metadata.json';
 
+export const GAME_VERSION = 1033;
+
+type BlueprintStringPrefix = 'SHAPEZ2';
+type BlueprintStringVersion = number;
+type BlueprintStringSeperator = '-';
+type BlueprintStringSuffix = '$';
+export type BlueprintString =
+    `${BlueprintStringPrefix}${BlueprintStringSeperator}${BlueprintStringVersion}${BlueprintStringSeperator}${string}${BlueprintStringSuffix}`;
+
 export type Blueprint = {
     // version
     V: number;
@@ -44,18 +53,12 @@ const BLUEPRINT_ENTRYROTATIONS = {
 } as const;
 type BlueprintEntryRotation = typeof BLUEPRINT_ENTRYROTATIONS[keyof typeof BLUEPRINT_ENTRYROTATIONS];
 
-type BlueprintStringPrefix = 'SHAPEZ2';
-type BlueprintStringVersion = number;
-type BlueprintStringSeperator = '-';
-type BlueprintStringSuffix = '$';
-export type BlueprintString =
-    `${BlueprintStringPrefix}${BlueprintStringSeperator}${BlueprintStringVersion}${BlueprintStringSeperator}${string}${BlueprintStringSuffix}`;
-
 type BuildingIntervalVariant = typeof BUILDINGS_METADATA[number]['Variants'][number]['InternalVariants'][number];
 export type BuildingIdentifier = BuildingIntervalVariant['Id'];
 
-export const GRID_SIZE = 1001;
-export const GRID_COLOR = 0x444444;
+export const BLUEPRINT_EMPTY_DATA = '//8=';
+export const BLUEPRINT_GRID_SIZE = 1001;
+export const BLUEPRINT_GRID_COLOR = 0x444444;
 
 const ISLAND_PADDING_SIZE = 4;
 const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;

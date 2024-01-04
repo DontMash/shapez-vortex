@@ -66,7 +66,7 @@
 
 		<form class="flex flex-col divide-y-2 divide-neutral-900 overflow-hidden rounded-b-4xl" method="post" action="?/encode">
 			<button
-				class="inline-block bg-neutral-900 h-12 leading-none outline-none transition hover:bg-neutral-800 focus-visible:bg-neutral-800 active:bg-black"
+				class="inline-block bg-neutral-800 h-12 leading-none outline-none transition hover:bg-neutral-700 focus-visible:bg-neutral-700 active:bg-black"
 				type="submit"
 			>
 				Encode
