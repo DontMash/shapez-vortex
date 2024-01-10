@@ -10,13 +10,16 @@
 	import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
 	import PasteIcon from '$lib/components/icons/PasteIcon.svelte';
 	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
+	import PhotoCameraIcon from '$lib/components/icons/PhotoCameraIcon.svelte';
 	import FullscreenIcon from '$lib/components/icons/FullscreenIcon.svelte';
 	import FullscreenExitIcon from '$lib/components/icons/FullscreenExitIcon.svelte';
 	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
+	import { capture } from '$lib/client/capture';
 
 	export let data: PageData;
 
 	let viewer: HTMLElement;
+	let canvas: HTMLCanvasElement;
 	let isLoading = true;
 	let isFullscreen = false;
 	let isCenter = false;
@@ -48,7 +51,12 @@
 			<div
 				class="flex divide-x-2 divide-neutral-800 overflow-hidden rounded-4xl border-2 border-neutral-800"
 			>
-				<form class="group" method="post" action="/blueprint/view/?/upload" enctype="multipart/form-data">
+				<form
+					class="group"
+					method="post"
+					action="/blueprint/view/?/upload"
+					enctype="multipart/form-data"
+				>
 					<label
 						class="inline-flex h-14 w-14 flex-col items-center justify-center bg-stone-200 fill-neutral-900 p-2 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
 						for="blueprint-file"
@@ -102,6 +110,13 @@
 				</button>
 				<button
 					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 first:w-16 first:pl-3 last:w-16 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+					use:capture={{ captureElement: canvas }}
+				>
+					<span class="sr-only">Capture blueprint</span>
+					<PhotoCameraIcon />
+				</button>
+				<button
+					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 first:w-16 first:pl-3 last:w-16 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 					use:fullscreen={{ fullscreenElement: viewer }}
 					on:change={(event) => (isFullscreen = event.detail)}
 				>
@@ -126,6 +141,7 @@
 				class="bg-neutral-900 outline-none data-[loading=true]:pointer-events-none"
 				tabindex="-1"
 				data-loading={isLoading}
+				bind:this={canvas}
 				on:load={() => {
 					isLoading = false;
 				}}

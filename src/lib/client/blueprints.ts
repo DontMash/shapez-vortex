@@ -263,6 +263,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
             alpha: true,
             antialias: true,
             canvas,
+            preserveDrawingBuffer: true,
         });
         return renderer;
     }

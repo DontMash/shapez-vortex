@@ -137,18 +137,27 @@ To setup, install & develop you will need some tools:
 ## Roadmap
 
 * Blueprints
-  * Screenshot
-  * Library (Personal/Offline)
-  * Library (Public/User)
-  * Linking/Shorting?
+  * Library (Personal/Offline) - IndexedDB
+  * Library (Public/User) - PocketBase
+    * Register & Login (Confirmation)
+    * Upload (short links per user e.g. */user/dontmash/blueprint/0*)
+      * Data (Identifier)
+      * Title
+      * Description
+      * Image (Preview/Icon?)
+    * Like/Favorite (add to personal)
+    * Download counter
+    * Follow User?
+    * Recommended/Popular
+    * Hosting & Deployment
   * Builder?
 * Reseach Overview
+  * Shape images
   * Share entry
   * Search entries
   * Sort entries
   * filter entries
 * Shapes
-  * Shape images
   * Viewer help/instructions
   * Viewer randomize
   * Builder?
