@@ -48,7 +48,7 @@
 			<div
 				class="flex divide-x-2 divide-neutral-800 overflow-hidden rounded-4xl border-2 border-neutral-800"
 			>
-				<form class="group" method="post" action="/blueprint?/upload" enctype="multipart/form-data">
+				<form class="group" method="post" action="/blueprint/view/?/upload" enctype="multipart/form-data">
 					<label
 						class="inline-flex h-14 w-14 flex-col items-center justify-center bg-stone-200 fill-neutral-900 p-2 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
 						for="blueprint-file"

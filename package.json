@@ -46,6 +46,7 @@
     "pako": "^2.1.0",
     "puppeteer-core": "^21.0.3",
     "screenfull": "^6.0.2",
-    "three": "^0.160.0"
+    "three": "^0.160.0",
+    "three-custom-shader-material": "^5.4.0"
   }
 }

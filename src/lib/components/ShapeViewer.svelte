@@ -74,7 +74,7 @@
 			<form class="group" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
 				<button
-					class="h-14 w-14 cursor-pointer bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
+					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
 					type="submit"
 				>
 					<span class="sr-only">Reset controls</span>

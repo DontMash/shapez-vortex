@@ -48,11 +48,11 @@
 			enctype="multipart/form-data"
 		>
 			<label
-				class="inline-flex h-12 flex-col items-center justify-center bg-cyan-500 leading-none text-neutral-800 outline-none transition hover:bg-cyan-400 focus-visible:bg-cyan-400 active:bg-cyan-600"
+				class="inline-flex h-12 flex-col items-center justify-center bg-cyan-500 leading-none text-neutral-800 outline-none transition hover:bg-cyan-400 focus-within:bg-cyan-400 active:bg-cyan-600"
 				for="blueprint-file"
 			>
 				<input
-					class="hidden"
+					class="sr-only"
 					id="blueprint-file"
 					name="file"
 					type="file"

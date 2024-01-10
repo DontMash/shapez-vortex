@@ -12,20 +12,26 @@ import {
 import {
     AmbientLight,
     Camera,
-    ColorManagement,
     DirectionalLight,
     GridHelper,
     Group,
     MOUSE,
     Mesh,
+    MeshBasicMaterial,
     MeshStandardMaterial,
     PerspectiveCamera,
     Scene,
+    TextureLoader,
+    UniformsUtils,
     Vector3,
-    WebGLRenderer
+    WebGLRenderer,
+    type IUniform,
+    Texture,
+    Color,
 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import CustomShaderMaterial from 'three-custom-shader-material/vanilla';
 
 import BELT_FORWARD_DATA from '$lib/assets/models/buildings/BeltDefaultForwardInternalVariant.gltf';
 import BELT_LEFT_DATA from '$lib/assets/models/buildings/BeltDefaultLeftInternalVariant.gltf';
@@ -100,8 +106,10 @@ import BELT_READER_DATA from '$lib/assets/models/buildings/BeltReaderDefaultInte
 
 import ERROR_DATA from '$lib/assets/models/error.gltf';
 
-const BUILDING_MATERIAL = new MeshStandardMaterial({ color: 0xaaaaaa });
-const BUILDING_ERROR_MATERIAL = new MeshStandardMaterial({ color: 0xff0000 });
+import COLOR_MAP from '$lib/assets/images/MaterialLUT.png';
+import BUILDING_VERTEXSHADER from '$lib/assets/shaders/building/building.vs?raw';
+import BUILDING_FRAGMENTSHADER from '$lib/assets/shaders/building/building.fs?raw';
+
 const BUILDINGS: Record<BuildingIdentifier, string> = {
     BeltDefaultForwardInternalVariant: BELT_FORWARD_DATA,
     BeltDefaultRightInternalVariant: BELT_RIGHT_DATA,
@@ -181,7 +189,6 @@ type Parameters = {
     isCenter?: boolean | undefined;
 };
 type Attributes = { 'on:load': (e: CustomEvent<void>) => void; center: () => void; };
-
 export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, params) => {
     if (!params) {
         throw new Error('[BLUEPRINT-VIEW] No blueprint view parameters provided');
@@ -211,7 +218,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
 
     function createLights(): Group {
         const lights = new Group();
-        const ambientLight = new AmbientLight(0xffffff, 1);
+        const ambientLight = new AmbientLight(0xffffff, 0.2);
         lights.add(ambientLight);
 
         const directionalLight = new DirectionalLight(0xffffff, 2);
@@ -233,7 +240,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
     function createControls(camera: Camera, element: HTMLElement): OrbitControls {
         const controls = new OrbitControls(camera, element);
         controls.enableDamping = true;
-        controls.dampingFactor = 0.1;
+        controls.dampingFactor = 0.05;
         controls.maxPolarAngle = Math.PI * 0.4;
         controls.minDistance = 5;
         controls.maxDistance = 40;
@@ -241,21 +248,27 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
             'LEFT': MOUSE.PAN,
             'RIGHT': MOUSE.ROTATE,
         };
+        controls.keys = {
+            'LEFT': 'KeyA',
+            'UP': 'KeyW',
+            'RIGHT': 'KeyD',
+            'BOTTOM': 'KeyS',
+        };
+        controls.keyPanSpeed = 50;
+        controls.listenToKeyEvents(element);
         return controls;
     }
     function createRenderer(canvas: HTMLCanvasElement): WebGLRenderer {
         const renderer = new WebGLRenderer({
             alpha: true,
             antialias: true,
-            canvas
+            canvas,
         });
-        ColorManagement.enabled = true;
         return renderer;
     }
     function onCenter(event: KeyboardEvent) {
         if (event.key !== 'c') return;
 
-        event.preventDefault();
         center();
     }
     function onResize() {
@@ -278,20 +291,6 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
                 .catch(reject);
         });
     }
-    /**
-     * Applies default BULDING_MATERIAL to mesh and children
-     * TODO: replace with official material
-     * @param mesh Mesh to apply material to recursively for children
-     */
-    function applyMaterial(mesh: Mesh) {
-        mesh.material = BUILDING_MATERIAL;
-        if (mesh.name.toLowerCase() === 'error') {
-            mesh.material = BUILDING_ERROR_MATERIAL
-        }        
-        if (mesh.children.length < 1) return;
-
-        mesh.children.forEach((child) => applyMaterial(child as Mesh));
-    };
     function createBuilding(entry: BlueprintBuildingEntry, mesh: Mesh) {
         const x = entry.X ?? 0;
         const y = entry.Y ?? 0;
@@ -300,7 +299,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
         mesh.position.set(x, l, y);
         const rotation = Math.PI * 1.5 * (entry.R ?? 0) - 0.5 * Math.PI;
         mesh.rotateY(rotation);
-        applyMaterial(mesh);
+        applyMaterial(entry, mesh);
 
         switch (entry.T) {
             case 'BeltDefaultForwardInternalVariant':
@@ -342,6 +341,56 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
         }
         return mesh;
     }
+    const textureLoader = new TextureLoader();
+    textureLoader.loadAsync(COLOR_MAP).then(texture => {
+        const uniforms = { 'lutTexture': { value: texture } } satisfies Record<string, IUniform<Texture>>;
+        BUILDING_MATERIAL.uniforms = UniformsUtils.merge([BUILDING_MATERIAL.uniforms, uniforms]);
+    });
+    const BUILDING_COLOR_ACCENT = new Color(0xff9421);
+    const BUILDING_MATERIAL = new CustomShaderMaterial({
+        baseMaterial: MeshStandardMaterial,
+        vertexShader: BUILDING_VERTEXSHADER,
+        fragmentShader: BUILDING_FRAGMENTSHADER,
+        uniforms: UniformsUtils.merge([{ 'accentColor': { value: BUILDING_COLOR_ACCENT } }]),
+        silent: true,
+    });
+    const BUILDING_MATERIAL_GLASS = new MeshStandardMaterial({ color: 0xdddddd, opacity: 0.3, transparent: true });
+    const BUILDING_MATERIAL_ERROR = new MeshBasicMaterial({ color: 0xff0000 });
+    function applyMaterial(entry: BlueprintBuildingEntry, mesh: Mesh) {
+        const name = mesh.name.toLowerCase();
+        if (name === 'error') {
+            mesh.material = BUILDING_MATERIAL_ERROR;
+            console.error(`unknown building ${entry.T}`);
+        }
+        else if (name.includes('glas')) {
+            mesh.material = BUILDING_MATERIAL_GLASS;
+        } else {
+            switch (entry.T) {
+                case 'PipeForwardInternalVariant':
+                case 'PipeLeftInternalVariant':
+                case 'PipeRightInternalVariant':
+                case 'PipeCrossInternalVariant':
+                case 'PipeJunctionInternalVariant':
+                case 'PipeUpForwardInternalVariant':
+                case 'PipeUpLeftInternalVariant':
+                case 'PipeUpRightInternalVariant':
+                case 'PipeUpBackwardInternalVariant':
+                case 'PipeDownForwardInternalVariant':
+                case 'PipeDownLeftInternalVariant':
+                case 'PipeDownRightInternalVariant':
+                case 'PipeDownBackwardInternalVariant':
+                    mesh.material = BUILDING_MATERIAL_GLASS;
+                    break;
+
+                default:
+                    mesh.material = BUILDING_MATERIAL;
+                    break;
+            }
+        }
+        if (mesh.children.length < 1) return;
+
+        mesh.children.forEach((child) => applyMaterial(entry, child as Mesh));
+    };
 
     function update() {
         requestAnimationFrame(() => update());
@@ -440,6 +489,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
         destroy() {
             resizeObserver.disconnect();
             canvas.removeEventListener('keyup', (event) => onCenter(event), true);
+            controls.stopListenToKeyEvents();
         },
     } satisfies ActionReturn<Parameters, Attributes>;
 };

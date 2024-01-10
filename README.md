@@ -137,9 +137,10 @@ To setup, install & develop you will need some tools:
 ## Roadmap
 
 * Blueprints
-  * Materials
-  * Library
-  * Linking/Shorting
+  * Screenshot
+  * Library (Personal/Offline)
+  * Library (Public/User)
+  * Linking/Shorting?
   * Builder?
 * Reseach Overview
   * Share entry
@@ -147,6 +148,7 @@ To setup, install & develop you will need some tools:
   * Sort entries
   * filter entries
 * Shapes
+  * Shape images
   * Viewer help/instructions
   * Viewer randomize
   * Builder?
