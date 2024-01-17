@@ -2,7 +2,7 @@
 	import type { Action } from 'svelte/action';
 	import type { PageData } from './$types';
 
-	import Research from '$lib/components/Research.svelte';
+	import Research from '$lib/components/research/Research.svelte';
 	import Slider from '$lib/components/Slider.svelte';
 
 	export let data: PageData;
@@ -11,7 +11,7 @@
 	$: {
 		isScroll = !!host ? host.scrollWidth > host.offsetWidth : false;
 	}
-	const slider: Action<HTMLElement> = (element) => {
+	const slider: Action<HTMLElement, any> = (element) => {
 		const onInputDown = (_event: UIEvent) => {
 			if (!slider) return;
 

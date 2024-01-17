@@ -17,6 +17,9 @@ declare global {
 				}
 			}
 		}
+		interface PageState {
+			modal: boolean;
+		}
 		// interface Platform {}
 	}
 }

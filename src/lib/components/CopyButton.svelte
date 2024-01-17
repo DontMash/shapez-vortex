@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CopyIcon from './icons/CopyIcon.svelte';
 
-	import { copy } from '$lib/client/clipboard';
+	import { copy } from '$lib/client/actions/clipboard';
 
 	type Color = 'light' | 'dark';
 

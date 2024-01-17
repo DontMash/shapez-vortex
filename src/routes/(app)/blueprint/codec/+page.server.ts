@@ -21,38 +21,38 @@ export const load = (({ url }) => {
 
 export const actions = {
     decode: ({ request }) => new Promise<Blueprint>(
-        (resolve, reject) => {
+        (resolve) => {
             request.formData().then(data => {
                 const blueprintIdentifier = data.get('blueprint-identifier');
                 if (!blueprintIdentifier)
-                    return reject(error(400, 'invalid/missing form data entries'));
+                    error(400, 'invalid/missing form data entries');
 
                 try {
                     const data = decode(blueprintIdentifier as BlueprintString);
                     return resolve(data);
                 } catch (err) {
-                    return reject(error(400, 'invalid blueprint identifier'));
+                    error(400, 'invalid blueprint identifier');
                 }
             })
-                .catch(() => reject(error(400, 'invalid request form data')));
+                .catch(() => error(400, 'invalid request form data'));
         }),
 
     encode: ({ request }) => new Promise<string>(
-        (resolve, reject) => {
+        (resolve) => {
             request.formData()
                 .then(data => {
                     const blueprintData = data.get('blueprint-data');
                     if (!blueprintData)
-                        return reject(error(400, 'invalid/missing form data entries'));
+                        error(400, 'invalid/missing form data entries');
 
                     const blueprint = JSON.parse(blueprintData as string) as Blueprint;
                     try {
                         const identifier = encode(blueprint);
                         return resolve(identifier);
                     } catch (err) {
-                        return reject(error(400, 'invalid blueprint data'));
+                        error(400, 'invalid blueprint data');
                     }
                 })
-                .catch(() => reject(error(400, 'invalid request form data')));
+                .catch(() => error(400, 'invalid request form data'));
         })
 } satisfies Actions;

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
+
 	function onFileChange(event: Event) {
 		const input = event.target as HTMLInputElement;
 		input.form?.submit();
@@ -56,7 +58,7 @@
 					id="blueprint-file"
 					name="file"
 					type="file"
-					accept=".spz2bp"
+					accept={BLUEPRINT_FILE_FORMAT}
 					required
 					on:change={(event) => onFileChange(event)}
 				/>

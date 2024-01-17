@@ -2,14 +2,44 @@
 	import { version } from '$app/environment';
 
 	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
+	import DiscordIcon from '$lib/components/icons/DiscordIcon.svelte';
+	import SteamIcon from '$lib/components/icons/SteamIcon.svelte';
 
 	import RESEARCH_DATA from '$lib/assets/data/research-metadata.json';
 </script>
 
 <footer class="mx-auto grid w-full max-w-7xl grid-cols-3 p-4 text-xs" id="footer">
+	<div class="flex items-center">
+		<span>Visit shapez 2 on</span>
+		<ul class="flex divide-x divide-stone-100 leading-none">
+			<li>
+				<a
+					class="inline-flex h-6 w-10 fill-stone-100 px-2"
+					href="https://discord.gg/shapez-2-1000343719314198548"
+					target="_blank"
+					rel="noreferrer"
+				>
+					<span class="sr-only">Discord</span>
+					<DiscordIcon />
+				</a>
+			</li>
+			<li>
+				<a
+					class="inline-flex h-6 w-10 fill-stone-100 px-2"
+					href="https://store.steampowered.com/app/2162800/shapez_2/"
+					target="_blank"
+					rel="noreferrer"
+				>
+					<span class="sr-only">Steam</span>
+					<SteamIcon />
+				</a>
+			</li>
+		</ul>
+	</div>
 	<div class="col-start-2 flex items-center justify-center space-x-[0.25ch]">
 		<span> Created with </span>
 		<figure class="inline-block w-4 fill-stone-100">
+			<span class="sr-only">heart</span>
 			<FavoriteFilledIcon />
 		</figure>
 		<span> by </span>
@@ -22,5 +52,17 @@
 			@DontMash
 		</a>
 	</div>
-	<i class="text-end">v{version} - Game Version {RESEARCH_DATA.GameVersion}</i>
+	<div class="flex items-center justify-end">
+		<i>
+			<a
+				class="inline-block underline transition hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
+				href="https://github.com/DontMash/shapez-visualizer"
+				target="_blank"
+				rel="noreferrer"
+			>
+				v{version}
+			</a>
+			<span>- Game Version {RESEARCH_DATA.GameVersion}</span>
+		</i>
+	</div>
 </footer>

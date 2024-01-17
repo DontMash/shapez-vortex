@@ -33,7 +33,7 @@
 <svelte:window on:error={event => onError(event)} />
 
 <Header />
-<main class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden py-8">
+<main class="flex min-h-[calc(100vh_-_8rem)] flex-col overflow-y-auto overflow-x-hidden pt-8 pb-32">
 	{#key $page.data}
 		{#if $page.data.seo?.title}
 			<h1 class="sr-only">{$page.data.seo.title}</h1>

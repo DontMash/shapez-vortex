@@ -5,7 +5,7 @@
 </script>
 
 <figure class="space-y-2">
-	<div class="flex">
+	<div class="flex space-x-4">
 		<a class="min-w-fit" href={`/shape?identifier=${data.GoalShape}`}>
 			<img width="96" height="96" src="/placeholder.png" alt={`Shape: ${data.GoalShape}`} />
 		</a>

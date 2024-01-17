@@ -21,22 +21,22 @@ export const load = (({ url }) => {
 
 export const actions = {
     modify: ({ request }) => new Promise<string>(
-        (resolve, reject) => {
+        (resolve) => {
             request.formData()
                 .then(data => {
                     const versionData = data.get('blueprint-version');
                     const blueprintIdentifier = data.get('blueprint-identifier');
                     if (!versionData || !blueprintIdentifier)
-                        return reject(error(400, 'invalid/missing form data entries'));
+                        error(400, 'invalid/missing form data entries');
 
                     const version = +versionData;
                     const identifier = blueprintIdentifier as BlueprintString;
                     try {
                         return resolve(update(identifier, version));
                     } catch (err) {
-                        return reject(error(400, 'invalid blueprint identifier'));
+                        error(400, 'invalid blueprint identifier');
                     }
                 })
-                .catch(() => reject(error(400, 'invalid request form data')));
+                .catch(() => error(400, 'invalid request form data'));
         }),
 } satisfies Actions;

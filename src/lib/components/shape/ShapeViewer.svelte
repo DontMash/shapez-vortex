@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { view } from '$lib/client/shapes';
-	import { fullscreen } from '$lib/client/fullscreen';
 	import type { ShapeData } from '$lib/shape.types';
+	import { view } from '$lib/client/shapes';
+	import { copy } from '$lib/client/actions/clipboard';
+	import { fullscreen } from '$lib/client/actions/fullscreen';
 
 	import Loading from '$lib/components/Loading.svelte';
 	import LayersIcon from '$lib/components/icons/LayersIcon.svelte';
 	import LayersFilledIcon from '$lib/components/icons/LayersFilledIcon.svelte';
 	import LayersClearFilledIcon from '$lib/components/icons/LayersClearFilledIcon.svelte';
 	import LayersClearIcon from '$lib/components/icons/LayersClearIcon.svelte';
+	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 	import FullscreenIcon from '$lib/components/icons/FullscreenIcon.svelte';
 	import FullscreenExitIcon from '$lib/components/icons/FullscreenExitIcon.svelte';
 	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
@@ -24,14 +26,14 @@
 <figure class="relative" bind:this={viewer}>
 	<div class="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 justify-center p-4">
 		<div
-			class="flex divide-x-2 divide-neutral-800 overflow-hidden rounded-4xl border-2 border-neutral-800"
+			class="flex divide-x-2 divide-neutral-800 overflow-hidden rounded-2xl border-2 border-neutral-800"
 		>
 			<form class="group" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
 				<input name="extend" type="hidden" value={!isExtended} />
 				<input name="expand" type="hidden" value={isExpanded} />
 				<button
-					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
+					class="inline-flex h-14 w-14 items-center justify-center bg-stone-200 fill-neutral-900 p-3 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 					type="submit"
 				>
 					<span class="sr-only"> Extend all layers </span>
@@ -47,7 +49,7 @@
 				<input name="extend" type="hidden" value={isExtended} />
 				<input name="expand" type="hidden" value={!isExpanded} />
 				<button
-					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+					class="inline-flex h-14 w-14 items-center justify-center bg-stone-200 fill-neutral-900 p-3 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 					type="submit"
 				>
 					<span class="sr-only"> Expand all quarters </span>
@@ -59,7 +61,14 @@
 				</button>
 			</form>
 			<button
-				class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 first:w-16 first:pl-3 last:w-16 last:pr-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+				class="h-14 w-14 bg-stone-200 fill-neutral-900 p-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+				use:copy={{ value: data.identifier }}
+			>
+				<span class="sr-only">Copy blueprint</span>
+				<CopyIcon />
+			</button>
+			<button
+				class="h-14 w-14 bg-stone-200 fill-neutral-900 p-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 				type="button"
 				use:fullscreen={{ fullscreenElement: viewer }}
 				on:change={(event) => (isFullscreen = event.detail)}
@@ -74,7 +83,7 @@
 			<form class="group" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
 				<button
-					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-2 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300 group-first:w-16 group-first:pl-3 group-last:w-16 group-last:pr-3"
+					class="inline-flex h-14 w-14 items-center justify-center bg-stone-200 fill-neutral-900 p-3 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
 					type="submit"
 				>
 					<span class="sr-only">Reset controls</span>

@@ -23,16 +23,16 @@ export const actions = {
     view: ({ request, url }) => new Promise<void>((_, reject) => {
         request.formData().then(formData => {
             if (!formData)
-                return reject(error(400, 'invalid/missing form data'));
+                error(400, 'invalid/missing form data');
 
             const identifier = formData.get('identifier') as BlueprintString;
             const isUpdate = (formData.get('update') ?? 'off') === 'on';
             if (!identifier)
-                return reject(error(400, 'invalid/missing form data: identifier'));
+                error(400, 'invalid/missing form data: identifier');
 
             const viewUrl = new URL('blueprint/view', url.origin);
             viewUrl.searchParams.append('identifier', isUpdate ? update(identifier) : identifier);
-            throw redirect(301, viewUrl);
+            redirect(301, viewUrl);
         }).catch(reject);
     })
 } satisfies Actions;

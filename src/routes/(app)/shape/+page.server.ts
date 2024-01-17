@@ -5,6 +5,7 @@ import { SHAPE } from '$lib/shape.types';
 
 export const load = (({ url }) => {
     try {
+        const data = parse(url.searchParams.get('identifier') ?? SHAPE);        
         return {
             seo: {
                 title: 'Shape Viewer',
@@ -19,12 +20,12 @@ export const load = (({ url }) => {
             },
             shape:
             {
-                data: parse(url.searchParams.get('identifier') ?? SHAPE),
+                data,
                 extend: url.searchParams.get('extend') === 'true',
                 expand: url.searchParams.get('expand') === 'true',
             },
         };
     } catch (err) {
-        throw error(400, (err as Error).message);
+        error(400, (err as Error).message);
     }
 }) satisfies PageServerLoad;

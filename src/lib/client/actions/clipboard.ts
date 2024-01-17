@@ -1,5 +1,5 @@
 import type { Action, ActionReturn } from 'svelte/action';
-import { ToastType, add } from './toast/toast.service';
+import { ToastType, add } from '../toast/toast.service';
 
 type CopyParameters = { value: any; };
 type CopyAttributes = {
@@ -38,7 +38,7 @@ export const copy: Action<HTMLButtonElement, CopyParameters> = (button, params) 
 type PasteAttributes = {
     'on:paste': (e: CustomEvent<string>) => void;
 };
-export const paste: Action<HTMLButtonElement> = (button) => {
+export const paste: Action<HTMLButtonElement, any> = (button) => {
     button.addEventListener('click', () => onPaste());
 
     function onPaste() {

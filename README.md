@@ -61,6 +61,7 @@
 This project started by passion for the game [Shapez 2](https://store.steampowered.com/app/2162800/shapez_2/). I wanted to have a way to share visual information with other players. Therefore I created this project.
 
 The purpose of this project is to provide a suite of tools to visualize and modify data used by or generated from the game.
+You can also share content related to the game with other users.
 
 In the current state it provides the following features:
 
@@ -137,20 +138,50 @@ To setup, install & develop you will need some tools:
 ## Roadmap
 
 * Blueprints
-  * Library (Personal/Offline) - IndexedDB
   * Library (Public/User) - PocketBase
     * Register & Login (Confirmation)
     * Upload (short links per user e.g. */user/dontmash/blueprint/0*)
-      * Data (Identifier)
-      * Title
-      * Description
-      * Image (Preview/Icon?)
-    * Like/Favorite (add to personal)
-    * Download counter
-    * Follow User?
+      * Blueprints
+        * Created
+        * Updated
+        * Data (Identifier)
+        * Title/Name
+        * Description
+        * Building count
+        * Island count
+        * List of Buildings
+        * Blueprint cost
+        * Image/-s (Preview/Icon?)
+        * Follow counter
+        * Download counter
+        * Report
+      * Shapes
+      * Mods
+    * User
+      * Created
+      * Updated
+      * Identifier
+      * Displayname
+      * E-Mail
+      * Password
+      * Report
+      * Following
+      * Settings
+        * Research-Upgrades
     * Recommended/Popular
     * Hosting & Deployment
+  * Blueprint Viewer
+    * Overview
+      * Building count
+      * Island count
+      * List of Buildings
+      * Blueprint cost
+    * Layers
+      * Select
+      * Toggle
+    * Geometry details
   * Builder?
+* Navigation styling
 * Reseach Overview
   * Shape images
   * Share entry
@@ -160,12 +191,17 @@ To setup, install & develop you will need some tools:
 * Shapes
   * Viewer help/instructions
   * Viewer randomize
+  * New models
   * Builder?
   * Logic?
 * Savegame editor
 * Solution calculator
   * Inputs/Outputs for blueprint
   * Process chain
+* Responsiveness (Device/Platform)
+* SEO
+  * Compose keywords
+  * Preview image
 * Tests
   * Server-Side
   * Client-Side

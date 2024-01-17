@@ -3,7 +3,7 @@ import { PerspectiveCamera, type Mesh, Group, Camera, WebGLRenderer, ColorManage
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import { SHAPE_COLOR_BASE_MATERIAL, SHAPE_COLOR_MATERIALS, SHAPE_LAYER_HEIGHT, SHAPE_LAYER_SCALE_FACTOR, SHAPE_MAX_LAYERS, SHAPE_MAX_QUARTERS, SHAPE_QUARTER_EXPAND_OFFSET, type ShapeData, type ShapeType } from '$lib/shape.types';
+import { SHAPE_COLOR_BASE_MATERIAL, SHAPE_COLOR_MATERIALS, SHAPE_LAYER_HEIGHT, SHAPE_LAYER_SCALE_FACTOR, SHAPE_MAX_LAYERS, SHAPE_MAX_QUARTERS, SHAPE_QUARTER_EXPAND_OFFSET, type ShapeData, type ShapeLayerData, type ShapeQuarterData, type ShapeType } from '$lib/shape.types';
 
 import BASE_SHAPE from '$lib/assets/models/shapes/base.gltf';
 import CIRCLE_SHAPE from '$lib/assets/models/shapes/circle-quarter.gltf';
@@ -129,36 +129,49 @@ export const view: Action<HTMLCanvasElement, { data: ShapeData, isExtended: bool
         renderer.render(scene, camera);
     }
     async function assign(shapeData: ShapeData) {
+        clear();
         return new Promise<void>((resolve, reject) => {
-            const layerPromises = shapeData.layers.map<Promise<void>>((layerData, layerDataIndex) => {
-                return new Promise<void>((resolve, reject) => {
-                    const quarterPromises = layerData.quarters.map<Promise<void>>((quarterData, quarterDataIndex) => {
-                        return new Promise<void>((resolve, reject) => {
-                            if (quarterData.type === '-') return resolve();
-
-                            getShapeModel(quarterData.type).then((shapeQuarter) => {
-                                const material = SHAPE_COLOR_MATERIALS[quarterData.color];
-                                shapeQuarter.material = material;
-
-                                if (layerDataIndex < 0 || layerDataIndex > 3)
-                                    throw new Error(`Invalid layerIndex ${layerDataIndex}`);
-                                if (quarterDataIndex < 0 || quarterDataIndex > 3)
-                                    throw new Error(`Invalid quarterIndex ${quarterDataIndex}`);
-
-                                const layer = base.children[layerDataIndex];
-                                const quarter = layer.children[quarterDataIndex];
-                                quarter.add(shapeQuarter);
-                                return resolve();
-                            }).catch(() => reject(new Error('Shape model not found')));
-                        });
-                    });
-                    Promise.all(quarterPromises).then(() => resolve()).catch(reject);
-                });
-            });
+            const layerPromises = shapeData.layers.map<Promise<void>>(
+                (data, index) => assignLayer(data, index)
+            );
             Promise.all(layerPromises).then(() => {
                 canvas.dispatchEvent(new CustomEvent('load'));
                 return resolve();
             }).catch(reject);
+        });
+    }
+    function clear() {
+        base.children
+            .forEach(layer => layer.children
+                .forEach(quarter => quarter.children = []));
+    }
+    function assignLayer(data: ShapeLayerData, index: number): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            if (index < 0 || index > 3)
+                return reject(new Error(`Invalid layerIndex ${index}`));
+
+            const quarterPromises = data.quarters.map<Promise<void>>(
+                (quarterData, quarterIndex) => assignQuarter(index, quarterData, quarterIndex)
+            );
+            Promise.all(quarterPromises).then(() => resolve()).catch(reject);
+        });
+    }
+    function assignQuarter(layerIndex: number, data: ShapeQuarterData, index: number): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            if (data.type === '-') return resolve();
+
+            getShapeModel(data.type).then((shapeQuarter) => {
+                const material = SHAPE_COLOR_MATERIALS[data.color];
+                shapeQuarter.material = material;
+
+                if (index < 0 || index > 3)
+                    return reject(new Error(`Invalid quarterIndex ${index}`));
+
+                const layer = base.children[layerIndex];
+                const quarter = layer.children[index];
+                quarter.add(shapeQuarter);
+                return resolve();
+            }).catch(() => reject(new Error('Shape model not found')));
         });
     }
     function extend() {

@@ -39,6 +39,15 @@ export function encode(value: Blueprint): BlueprintString {
     return stringify(zipedData) as BlueprintString;
 };
 export function isBlueprint(value: any) { return 'BP' in value && 'Entries' in value.BP && Array.isArray(value.BP.Entries) && 'V' in value; }
+function stringify(value: string): string {
+    const BLUEPRINT_STRING_PREFIX = 'SHAPEZ2';
+    const BLUEPRINT_STRING_VERSION = 1;
+    const BLUEPRINT_STRING_SEPERATOR = '-';
+    const BLUEPRINT_STRING_SUFFIX = '$';
+
+    return `${BLUEPRINT_STRING_PREFIX}${BLUEPRINT_STRING_SEPERATOR}${BLUEPRINT_STRING_VERSION}${BLUEPRINT_STRING_SEPERATOR}${value}${BLUEPRINT_STRING_SUFFIX}`;
+};
+
 function fix(value: Blueprint): Blueprint {
     const bp = value.BP.$type === 'Island' ? fixBlueprintIsland(value.BP) : fixBlueprintBuilding(value.BP);
     return { ...value, BP: bp };
@@ -60,11 +69,21 @@ function fixBlueprintBuilding(value: BlueprintBuilding): BlueprintBuilding {
     });
     return { ...value, Entries: entries };
 }
-function stringify(value: string): string {
-    const BLUEPRINT_STRING_PREFIX = 'SHAPEZ2';
-    const BLUEPRINT_STRING_VERSION = 1;
-    const BLUEPRINT_STRING_SEPERATOR = '-';
-    const BLUEPRINT_STRING_SUFFIX = '$';
 
-    return `${BLUEPRINT_STRING_PREFIX}${BLUEPRINT_STRING_SEPERATOR}${BLUEPRINT_STRING_VERSION}${BLUEPRINT_STRING_SEPERATOR}${value}${BLUEPRINT_STRING_SUFFIX}`;
-};
+export function buildingCount(blueprint: Blueprint): number {
+    if (blueprint.BP.$type === 'Island') {
+        return blueprint.BP.Entries.reduce<number>((previousIsland, currentIsland) => {
+            return previousIsland + currentIsland.B.Entries.length;
+        }, 0);
+    }
+    return blueprint.BP.Entries.length;
+}
+export function islandCount(blueprint: Blueprint): number {
+    if (blueprint.BP.$type === 'Building') {
+        return 0;
+    }
+    return blueprint.BP.Entries.length;
+}
+export function cost(buildingCount: number): number {
+    return buildingCount <= 1 ? 0 : Math.ceil(Math.pow(buildingCount - 1, 1.3));
+}
