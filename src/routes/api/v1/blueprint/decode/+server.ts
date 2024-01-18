@@ -1,12 +1,12 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
-import type { BlueprintString } from '$lib/blueprint.types';
+import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { decode } from '$lib/server/blueprint';
 
 export const POST = (({ request }) => new Promise<Response>(
     (resolve, reject) => {
         request.text()
             .then((value) => {
-                const blueprint = value as BlueprintString;
+                const blueprint = value as BlueprintIdentifier;
                 try {
                     const data = decode(blueprint);
                     return resolve(new Response(JSON.stringify(data)));

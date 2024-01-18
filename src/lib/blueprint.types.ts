@@ -5,22 +5,22 @@ export const GAME_VERSION = 1033;
 export const BLUEPRINT_FILE_FORMAT = '.spz2bp';
 export const BLUEPRINT_DEFAULT_NAME = 'Untitled blueprint';
 export type BlueprintData = {
-    identifier: BlueprintString;
+    identifier: BlueprintIdentifier;
     data: Blueprint,
     meta: {
         name?: string | undefined,
         buildingCount: number,
         islandCount: number,
         cost: number,
-    }
-}
+    };
+};
 
-type BlueprintStringPrefix = 'SHAPEZ2';
-type BlueprintStringVersion = number;
-type BlueprintStringSeperator = '-';
-type BlueprintStringSuffix = '$';
-export type BlueprintString =
-    `${BlueprintStringPrefix}${BlueprintStringSeperator}${BlueprintStringVersion}${BlueprintStringSeperator}${string}${BlueprintStringSuffix}`;
+type BlueprintIdentifierPrefix = 'SHAPEZ2';
+type BlueprintIdentifierVersion = number;
+type BlueprintIdentifierSeperator = '-';
+type BlueprintIdentifierSuffix = '$';
+export type BlueprintIdentifier =
+    `${BlueprintIdentifierPrefix}${BlueprintIdentifierSeperator}${BlueprintIdentifierVersion}${BlueprintIdentifierSeperator}${string}${BlueprintIdentifierSuffix}`;
 
 export type Blueprint = {
     // version

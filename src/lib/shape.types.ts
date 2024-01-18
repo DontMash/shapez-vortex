@@ -14,9 +14,10 @@ export const SHAPE_COLOR_PIN = 0x444450;
 export const SHAPE_COLOR_RED = 0xee3333;
 export const SHAPE_COLOR_GREEN = 0x00ee00;
 export const SHAPE_COLOR_BLUE = 0x0000ee;
-export const SHAPE_COLOR_YELLOW = 0xeeee00;
-export const SHAPE_COLOR_PURPLE = 0xcc00cc;
 export const SHAPE_COLOR_CYAN = 0x00eeee;
+export const SHAPE_COLOR_PURPLE = 0xcc00cc;
+export const SHAPE_COLOR_YELLOW = 0xeeee00;
+export const SHAPE_COLOR_BLACK = 0x141414;
 export const SHAPE_COLOR_WHITE = 0xfafafa;
 
 export const SHAPE_COLOR_BASE_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_BASE, vertexColors: true });
@@ -25,27 +26,42 @@ export const SHAPE_COLOR_PIN_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COL
 export const SHAPE_COLOR_RED_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_RED, vertexColors: true });
 export const SHAPE_COLOR_GREEN_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_GREEN, vertexColors: true });
 export const SHAPE_COLOR_BLUE_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_BLUE, vertexColors: true });
-export const SHAPE_COLOR_YELLOW_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_YELLOW, vertexColors: true });
-export const SHAPE_COLOR_PURPLE_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_PURPLE, vertexColors: true });
 export const SHAPE_COLOR_CYAN_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_CYAN, vertexColors: true });
+export const SHAPE_COLOR_PURPLE_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_PURPLE, vertexColors: true });
+export const SHAPE_COLOR_YELLOW_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_YELLOW, vertexColors: true });
+export const SHAPE_COLOR_BLACK_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_BLACK, vertexColors: true });
 export const SHAPE_COLOR_WHITE_MATERIAL = new MeshBasicMaterial({ color: SHAPE_COLOR_WHITE, vertexColors: true });
 
 export const SHAPE_COLOR_MATERIALS: Record<ShapeColorIdentifier, Material> = {
     r: SHAPE_COLOR_RED_MATERIAL,
     g: SHAPE_COLOR_GREEN_MATERIAL,
     b: SHAPE_COLOR_BLUE_MATERIAL,
-    y: SHAPE_COLOR_YELLOW_MATERIAL,
-    p: SHAPE_COLOR_PURPLE_MATERIAL,
     c: SHAPE_COLOR_CYAN_MATERIAL,
+    p: SHAPE_COLOR_PURPLE_MATERIAL,
+    y: SHAPE_COLOR_YELLOW_MATERIAL,
+    k: SHAPE_COLOR_BLACK_MATERIAL,
     w: SHAPE_COLOR_WHITE_MATERIAL,
     u: SHAPE_COLOR_NONE_MATERIAL,
     '-': SHAPE_COLOR_PIN_MATERIAL
 };
 
+export type ShapeData = {
+    identifier: ShapeIdentifier;
+    data: Shape;
+    meta: {
+        types: Set<ShapeType>;
+        colors: Set<ShapeColor>;
+        layerCount: number;
+        quarterCount: number;
+    };
+};
+
 export type ShapeIdentifier = string;
-export type ShapeType = 'C' | 'R' | 'W' | 'S' | 'P' | 'c';
+export const SHAPE_TYPES = ['C', 'R', 'S', 'W', 'P', 'c'] as const;
+export type ShapeType = typeof SHAPE_TYPES[number];
 export type ShapeTypeIdentifier = ShapeType | '-';
-type ShapeColor = 'r' | 'g' | 'b' | 'y' | 'p' | 'c' | 'w';
+export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'p', 'y', 'k', 'w'] as const;
+export type ShapeColor = typeof SHAPE_COLORS[number];
 export type ShapeColorIdentifier = ShapeColor | 'u' | '-';
 export type ShapeQuarterData = {
     type: ShapeTypeIdentifier;
@@ -55,8 +71,7 @@ export type ShapeLayerData = {
     layerIdentifier: ShapeIdentifier;
     quarters: Array<ShapeQuarterData>;
 };
-export type ShapeData = {
-    identifier: ShapeIdentifier;
+export type Shape = {
     layers: Array<ShapeLayerData>;
 };
 export type ShapeQuarter = Mesh;

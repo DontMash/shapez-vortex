@@ -8,7 +8,7 @@
 	import RESEARCH_DATA from '$lib/assets/data/research-metadata.json';
 </script>
 
-<footer class="mx-auto grid w-full max-w-7xl grid-cols-3 p-4 text-xs" id="footer">
+<footer class="mx-auto grid w-full max-w-5xl grid-cols-3 py-4 text-xs" id="footer">
 	<div class="flex items-center">
 		<span>Visit shapez 2 on</span>
 		<ul class="flex divide-x divide-stone-100 leading-none">

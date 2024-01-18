@@ -1,6 +1,6 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { BlueprintString } from '$lib/blueprint.types';
+import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { update } from '$lib/server/blueprint';
 
 export const load = (({ url }) => {
@@ -25,7 +25,7 @@ export const actions = {
             if (!formData)
                 error(400, 'invalid/missing form data');
 
-            const identifier = formData.get('identifier') as BlueprintString;
+            const identifier = formData.get('identifier') as BlueprintIdentifier;
             const isUpdate = (formData.get('update') ?? 'off') === 'on';
             if (!identifier)
                 error(400, 'invalid/missing form data: identifier');

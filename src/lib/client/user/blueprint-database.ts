@@ -1,17 +1,12 @@
-import type { BlueprintData, BlueprintString } from '$lib/blueprint.types';
-import { DATABASE_BLUEPRINT_STORE_NAME } from '$lib/client/user/database';
+import type { BlueprintData, BlueprintIdentifier } from '$lib/blueprint.types';
+import type { Database } from '$lib/client/database.types';
 
-export type UserBlueprintDatabase = {
-    has: (identifier: BlueprintString) => Promise<boolean>;
-    get: (identifier: BlueprintString) => Promise<BlueprintData>;
-    getAll: () => Promise<Array<BlueprintData>>;
-    add: (data: BlueprintData) => Promise<BlueprintString>;
-    update: (data: BlueprintData) => Promise<BlueprintString>;
-    remove: (identifier: BlueprintString) => Promise<void>;
-};
+export const DATABASE_BLUEPRINT_STORE_NAME = 'blueprints';
+
+export type UserBlueprintDatabase = Database<BlueprintIdentifier, BlueprintData>;
 
 export function has(db: IDBDatabase): UserBlueprintDatabase['has'] {
-    return (identifier: BlueprintString) => new Promise<boolean>((resolve, reject) => {
+    return (identifier: BlueprintIdentifier) => new Promise<boolean>((resolve, reject) => {
         const hasTransaction = db.transaction([DATABASE_BLUEPRINT_STORE_NAME], 'readonly');
         hasTransaction.onerror = (event) => reject(new Error('Database transaction error - cannot has blueprint', { cause: event }));
         hasTransaction.onabort = (event) => reject(new Error('Database transaction abort - cannot has blueprint', { cause: event }));
@@ -29,7 +24,7 @@ export function has(db: IDBDatabase): UserBlueprintDatabase['has'] {
 }
 
 export function get(db: IDBDatabase): UserBlueprintDatabase['get'] {
-    return (identifier: BlueprintString) => new Promise<BlueprintData>((resolve, reject) => {
+    return (identifier: BlueprintIdentifier) => new Promise<BlueprintData>((resolve, reject) => {
         const getTransaction = db.transaction([DATABASE_BLUEPRINT_STORE_NAME], 'readonly');
         getTransaction.onerror = (event) => reject(new Error('Database transaction error - cannot get blueprint', { cause: event }));
         getTransaction.onabort = (event) => reject(new Error('Database transaction abort - cannot get blueprint', { cause: event }));
@@ -65,7 +60,7 @@ export function getAll(db: IDBDatabase): UserBlueprintDatabase['getAll'] {
 }
 
 export function add(db: IDBDatabase): UserBlueprintDatabase['add'] {
-    return (data: BlueprintData) => new Promise<BlueprintString>((resolve, reject) => {
+    return (data: BlueprintData) => new Promise<BlueprintIdentifier>((resolve, reject) => {
         const addTransaction = db.transaction([DATABASE_BLUEPRINT_STORE_NAME], 'readwrite');
         addTransaction.onerror = (event) => reject(new Error('Database transaction error - cannot add blueprint', { cause: event }));
         addTransaction.onabort = (event) => reject(new Error('Database transaction abort - cannot add blueprint', { cause: event }));
@@ -75,13 +70,13 @@ export function add(db: IDBDatabase): UserBlueprintDatabase['add'] {
         addRequest.onerror = (event) => reject(new Error('Database store add error', { cause: event }));
         addRequest.onsuccess = (event) => {
             const request = event.target as IDBRequest<IDBValidKey>;
-            return resolve(request.result as BlueprintString);
+            return resolve(request.result as BlueprintIdentifier);
         };
     });
 }
 
 export function update(db: IDBDatabase): UserBlueprintDatabase['update'] {
-    return (data: BlueprintData) => new Promise<BlueprintString>((resolve, reject) => {
+    return (data: BlueprintData) => new Promise<BlueprintIdentifier>((resolve, reject) => {
         const putTransaction = db.transaction([DATABASE_BLUEPRINT_STORE_NAME], 'readwrite');
         putTransaction.onerror = (event) => reject(new Error('Database transaction error - cannot put blueprint', { cause: event }));
         putTransaction.onabort = (event) => reject(new Error('Database transaction abort - cannot put blueprint', { cause: event }));
@@ -91,13 +86,13 @@ export function update(db: IDBDatabase): UserBlueprintDatabase['update'] {
         putRequest.onerror = (event) => reject(new Error('Database store put error', { cause: event }));
         putRequest.onsuccess = (event) => {
             const request = event.target as IDBRequest<IDBValidKey>;
-            return resolve(request.result as BlueprintString);
+            return resolve(request.result as BlueprintIdentifier);
         };
     });
 }
 
 export function remove(db: IDBDatabase): UserBlueprintDatabase['remove'] {
-    return (identifier: BlueprintString) => new Promise<void>((resolve, reject) => {
+    return (identifier: BlueprintIdentifier) => new Promise<void>((resolve, reject) => {
         const deleteTransaction = db.transaction([DATABASE_BLUEPRINT_STORE_NAME], 'readwrite');
         deleteTransaction.onerror = (event) => reject(new Error('Database transaction error - cannot remove blueprint', { cause: event }));
         deleteTransaction.onabort = (event) => reject(new Error('Database transaction abort - cannot remove blueprint', { cause: event }));

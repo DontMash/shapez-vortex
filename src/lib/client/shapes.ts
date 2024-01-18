@@ -3,7 +3,7 @@ import { PerspectiveCamera, type Mesh, Group, Camera, WebGLRenderer, ColorManage
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import { SHAPE_COLOR_BASE_MATERIAL, SHAPE_COLOR_MATERIALS, SHAPE_LAYER_HEIGHT, SHAPE_LAYER_SCALE_FACTOR, SHAPE_MAX_LAYERS, SHAPE_MAX_QUARTERS, SHAPE_QUARTER_EXPAND_OFFSET, type ShapeData, type ShapeLayerData, type ShapeQuarterData, type ShapeType } from '$lib/shape.types';
+import { SHAPE_COLOR_BASE_MATERIAL, SHAPE_COLOR_MATERIALS, SHAPE_LAYER_HEIGHT, SHAPE_LAYER_SCALE_FACTOR, SHAPE_MAX_LAYERS, SHAPE_MAX_QUARTERS, SHAPE_QUARTER_EXPAND_OFFSET, type Shape, type ShapeLayerData, type ShapeQuarterData, type ShapeType } from '$lib/shape.types';
 
 import BASE_SHAPE from '$lib/assets/models/shapes/base.gltf';
 import CIRCLE_SHAPE from '$lib/assets/models/shapes/circle-quarter.gltf';
@@ -13,7 +13,7 @@ import STAR_SHAPE from '$lib/assets/models/shapes/star-quarter.gltf';
 import PIN_SHAPE from '$lib/assets/models/shapes/pin-quarter.gltf';
 import CRYSTAL_SHAPE from '$lib/assets/models/shapes/crystal-quarter.gltf';
 
-export const view: Action<HTMLCanvasElement, { data: ShapeData, isExtended: boolean, isExpanded: boolean; }, { 'on:load': (e: CustomEvent<string>) => void; }> = (canvas, params) => {
+export const view: Action<HTMLCanvasElement, { data: Shape, isExtended: boolean, isExpanded: boolean; }, { 'on:load': (e: CustomEvent<string>) => void; }> = (canvas, params) => {
     if (!params) {
         throw new Error('[SHAPE-VIEW] No params provided');
     }
@@ -128,7 +128,7 @@ export const view: Action<HTMLCanvasElement, { data: ShapeData, isExtended: bool
         controls.update();
         renderer.render(scene, camera);
     }
-    async function assign(shapeData: ShapeData) {
+    async function assign(shapeData: Shape) {
         clear();
         return new Promise<void>((resolve, reject) => {
             const layerPromises = shapeData.layers.map<Promise<void>>(

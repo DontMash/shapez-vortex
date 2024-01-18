@@ -1,13 +1,13 @@
-import { GAME_VERSION, type Blueprint, type BlueprintString, type BlueprintBuilding, type BlueprintIsland, BLUEPRINT_EMPTY_DATA } from '$lib/blueprint.types';
+import { GAME_VERSION, type Blueprint, type BlueprintIdentifier, type BlueprintBuilding, type BlueprintIsland, BLUEPRINT_EMPTY_DATA } from '$lib/blueprint.types';
 import { ungzip, gzip } from 'pako';
 
-export function update(value: BlueprintString, version: number = GAME_VERSION): BlueprintString {
+export function update(value: BlueprintIdentifier, version: number = GAME_VERSION): BlueprintIdentifier {
     const blueprint = decode(value);
     blueprint.V = version;
     const identifier = encode(blueprint);
     return identifier;
 }
-export function decode(value: BlueprintString): Blueprint {
+export function decode(value: BlueprintIdentifier): Blueprint {
     const data = parse(value);
     const gzipedData = atob(data);
     const gzipedDataArray = Uint8Array.from(gzipedData, (c) => c.charCodeAt(0));
@@ -15,8 +15,8 @@ export function decode(value: BlueprintString): Blueprint {
     const content = new TextDecoder().decode(ungzipedData);
     return JSON.parse(content);
 };
-function parse(value: BlueprintString): string {
-    if (!isBlueprintString(value)) throw new Error('Invalid blueprint string');
+function parse(value: BlueprintIdentifier): string {
+    if (!isBlueprintIdentifier(value)) throw new Error('Invalid blueprint string');
 
     const BLUEPRINT_STRING_SEPERATOR = '-';
     const BLUEPRINT_STRING_SUFFIX = '$';
@@ -25,18 +25,18 @@ function parse(value: BlueprintString): string {
     const data = trim.split(BLUEPRINT_STRING_SEPERATOR)[2];
     return data;
 };
-export function isBlueprintString(value: BlueprintString): boolean {
+export function isBlueprintIdentifier(value: BlueprintIdentifier): boolean {
     const regex = /^(SHAPEZ2)-\d-.+\$$/;
     return regex.test(value);
 };
-export function encode(value: Blueprint): BlueprintString {
+export function encode(value: Blueprint): BlueprintIdentifier {
     if (!isBlueprint(value)) throw new Error('Invalid blueprint');
 
     const blueprint = fix(value);
     const content = JSON.stringify(blueprint);
     const zipedDataArray = gzip(content);
     const zipedData = btoa(String.fromCharCode(...zipedDataArray));
-    return stringify(zipedData) as BlueprintString;
+    return stringify(zipedData) as BlueprintIdentifier;
 };
 export function isBlueprint(value: any) { return 'BP' in value && 'Entries' in value.BP && Array.isArray(value.BP.Entries) && 'V' in value; }
 function stringify(value: string): string {

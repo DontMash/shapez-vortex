@@ -1,20 +1,30 @@
 import {
     add as addBlueprint,
+    DATABASE_BLUEPRINT_STORE_NAME,
     getAll as getAllBlueprints,
     get as getBlueprint,
     has as hasBlueprint,
     remove as removeBlueprint,
     update as updateBlueprint,
     type UserBlueprintDatabase
-} from '$lib/client/user/blueprints-database';
+} from '$lib/client/user/blueprint-database';
+import {
+    add as addShape,
+    DATABASE_SHAPE_STORE_NAME,
+    getAll as getAllShapes,
+    get as getShape,
+    has as hasShape,
+    remove as removeShape,
+    update as updateShape,
+    type UserShapeDatabase
+} from '$lib/client/user/shape-database';
 
 const DATABASE_NAME = 'user_data';
-const DATABASE_VERSION = 1;
-
-export const DATABASE_BLUEPRINT_STORE_NAME = 'blueprints';
+const DATABASE_VERSION = 2;
 
 export type UserDatabase = {
     blueprint: UserBlueprintDatabase;
+    shape: UserShapeDatabase;
     dispose: () => void;
 };
 
@@ -29,8 +39,9 @@ export function create(): Promise<UserDatabase> {
             const upgradeEvent = event as IDBVersionChangeEvent;
             const request = upgradeEvent.target as IDBOpenDBRequest;
             const db = request.result;
-            upgrade(db);
+            upgrade(db, upgradeEvent.oldVersion);
         };
+        
         openRequest.onsuccess = (event) => {
             const upgradeEvent = event as IDBVersionChangeEvent;
             const request = upgradeEvent.target as IDBOpenDBRequest;
@@ -44,14 +55,27 @@ export function create(): Promise<UserDatabase> {
                     update: updateBlueprint(db),
                     remove: removeBlueprint(db),
                 },
+                shape: {
+                    has: hasShape(db),
+                    get: getShape(db),
+                    getAll: getAllShapes(db),
+                    add: addShape(db),
+                    update: updateShape(db),
+                    remove: removeShape(db),
+                },
                 dispose: dispose(db),
             });
         };
     });
 }
 
-function upgrade(db: IDBDatabase) {
-    db.createObjectStore(DATABASE_BLUEPRINT_STORE_NAME, { keyPath: 'identifier', autoIncrement: true });
+function upgrade(db: IDBDatabase, oldVersion: number) {
+    if (oldVersion < 1) {
+        db.createObjectStore(DATABASE_BLUEPRINT_STORE_NAME, { keyPath: 'identifier', autoIncrement: true });
+    }
+    if (oldVersion < 2) {
+        db.createObjectStore(DATABASE_SHAPE_STORE_NAME, { keyPath: 'identifier', autoIncrement: true });
+    }
 }
 
 function dispose(db: IDBDatabase) {

@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { BlueprintString } from '$lib/blueprint.types';
+import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { update } from '$lib/server/blueprint';
 
 export const load = (({ url }) => {
@@ -30,7 +30,7 @@ export const actions = {
                         error(400, 'invalid/missing form data entries');
 
                     const version = +versionData;
-                    const identifier = blueprintIdentifier as BlueprintString;
+                    const identifier = blueprintIdentifier as BlueprintIdentifier;
                     try {
                         return resolve(update(identifier, version));
                     } catch (err) {

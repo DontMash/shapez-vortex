@@ -1,11 +1,22 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { parse } from '$lib/server/shape';
-import { SHAPE } from '$lib/shape.types';
+import { SHAPE, type ShapeData } from '$lib/shape.types';
+import { colors, layerCount, parse, quarterCount, types } from '$lib/server/shape';
 
 export const load = (({ url }) => {
     try {
-        const data = parse(url.searchParams.get('identifier') ?? SHAPE);        
+        const identifier = url.searchParams.get('identifier') ?? SHAPE;
+        const data = parse(identifier);
+        const shape: ShapeData = {
+            identifier,
+            data,
+            meta: {
+                types: types(data),
+                colors: colors(data),
+                layerCount: layerCount(data),
+                quarterCount: quarterCount(data),
+            },
+        };
         return {
             seo: {
                 title: 'Shape Viewer',
@@ -18,12 +29,9 @@ export const load = (({ url }) => {
                     url: url.href,
                 },
             },
-            shape:
-            {
-                data,
-                extend: url.searchParams.get('extend') === 'true',
-                expand: url.searchParams.get('expand') === 'true',
-            },
+            shape,
+            extend: url.searchParams.get('extend') === 'true',
+            expand: url.searchParams.get('expand') === 'true',
         };
     } catch (err) {
         error(400, (err as Error).message);
