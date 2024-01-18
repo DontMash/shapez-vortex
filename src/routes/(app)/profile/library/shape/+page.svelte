@@ -123,7 +123,7 @@
 														{#each Array.from(bookmark.meta.colors).sort((a, b) => SHAPE_COLORS.indexOf(a) - SHAPE_COLORS.indexOf(b)) as color}
 															<li>
 																<b
-																	class={`${colors[color]} text-lg before:mr-1 before:inline-block before:h-3 before:w-3 before:rounded-full before:border-2 before:border-neutral-800 before:bg-stone-100`}
+																	class={`${colors[color]} text-lg before:mr-1 before:inline-block before:h-3 before:w-3 before:rounded-full before:border-2 before:border-neutral-800`}
 																>
 																	{color}
 																</b>
