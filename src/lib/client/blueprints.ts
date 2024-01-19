@@ -240,7 +240,6 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
     function createControls(camera: Camera, element: HTMLElement): OrbitControls {
         const controls = new OrbitControls(camera, element);
         controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
         controls.maxPolarAngle = Math.PI * 0.4;
         controls.minDistance = 5;
         controls.maxDistance = 40;
@@ -270,7 +269,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
     function onCenter(event: KeyboardEvent) {
         if (event.key !== 'c') return;
 
-        center();
+        reset();
     }
     function onResize() {
         const width = canvas.parentElement?.offsetWidth ?? window.innerWidth;
@@ -469,8 +468,9 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
             Promise.all(buildingPromises).then(() => resolve()).catch(reject);
         });
     };
-    function center() {
+    function reset() {
         controls.enableDamping = false;
+        controls.update();
         controls.reset();
         controls.enableDamping = true;
     }
@@ -481,10 +481,10 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
 
             if (updateBlueprint !== blueprint) {
                 assign(updateBlueprint);
-                center();
+                reset();
             }
             if (isCenter) {
-                center();
+                reset();
             }
         },
         destroy() {

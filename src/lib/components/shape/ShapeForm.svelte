@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { clear } from '$lib/client/actions/clear';
 	import { share } from '$lib/client/actions/share';
 
@@ -21,6 +22,7 @@
 				id="shape-identifier"
 				name="identifier"
 				placeholder="Shape identifier..."
+				value={$page.data.shape?.identifier ?? ''}
 				required
 				minlength="2"
 				maxlength="35"
@@ -29,6 +31,7 @@
 			<button
 				class="absolute right-0 top-1/2 mr-1 block w-6 -translate-y-1/2 fill-neutral-800 outline-none transition hover:fill-stone-400 focus:fill-stone-400 peer-placeholder-shown:hidden"
 				type="button"
+				title="Clear"
 				aria-label="Clear search input"
 				use:clear={{ inputElement: shapeIdentifierInputElement }}
 			>
@@ -38,6 +41,7 @@
 		<button
 			class="inline-block h-14 w-14 bg-cyan-500 fill-neutral-800 p-3 leading-none outline-none transition hover:bg-cyan-400 focus-visible:bg-cyan-400 active:bg-cyan-600"
 			type="submit"
+			title="View"
 			aria-label="View shape"
 		>
 			<ArrowRightAltIcon />
@@ -46,6 +50,7 @@
 	<button
 		class="inline-block h-14 w-14 bg-neutral-950 fill-stone-100 p-3 leading-none outline-none transition hover:bg-neutral-900 focus-visible:bg-neutral-900 active:bg-black"
 		type="button"
+		title="Share"
 		aria-label="Share page link"
 		on:click={() => (isLoading = true)}
 		on:share={() => (isLoading = false)}

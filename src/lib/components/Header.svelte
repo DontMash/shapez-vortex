@@ -23,7 +23,8 @@
 		<div class="pointer-events-auto !ml-auto flex items-center">
 			<a
 				class="inline-block h-14 w-14 rounded-2xl border-2 border-neutral-700 border-opacity-50 bg-neutral-800 fill-stone-100 p-3 hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-30 transition-colors"
-				href="/profile"
+					title="Profile"
+					href="/profile"
 			>
 				<span class="sr-only">Profile</span>
 				<PersonIcon />

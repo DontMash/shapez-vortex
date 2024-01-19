@@ -50,13 +50,19 @@
 			<slot name="options">
 				<button
 					class="min-w-14 rounded-2xl border-2 border-red-800 bg-red-800 bg-opacity-70 fill-stone-100 p-3 text-lg font-medium transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
-					value="confirm">OK</button
+					title="Confirm"
+					value="confirm"
 				>
+					OK
+				</button>
 			</slot>
 			<button
 				class="min-w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 text-lg font-medium transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
-				value="cancel">Cancel</button
+				title="Cancel"
+				value="cancel"
 			>
+				Cancel
+			</button>
 		</div>
 	</form>
 </dialog>

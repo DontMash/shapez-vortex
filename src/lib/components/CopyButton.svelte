@@ -18,6 +18,7 @@
 <button
 	class={`${colorVariants[color]} h-6 w-6 outline-none transition`}
 	type="button"
+	title="Copy"
 	on:click={() => (isLoading = true)}
 	use:copy={{ value }}
 	on:copy={() => (isLoading = false)}

@@ -59,10 +59,12 @@ export type ShapeData = {
 export type ShapeIdentifier = string;
 export const SHAPE_TYPES = ['C', 'R', 'S', 'W', 'P', 'c'] as const;
 export type ShapeType = typeof SHAPE_TYPES[number];
-export type ShapeTypeIdentifier = ShapeType | '-';
+export const SHAPE_TYPE_IDENTIFIERS = [...SHAPE_TYPES, '-'] as const;
+export type ShapeTypeIdentifier = typeof SHAPE_TYPE_IDENTIFIERS[number];
 export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'p', 'y', 'k', 'w'] as const;
 export type ShapeColor = typeof SHAPE_COLORS[number];
-export type ShapeColorIdentifier = ShapeColor | 'u' | '-';
+export const SHAPE_COLOR_IDENTIFIERS = [...SHAPE_COLORS, 'u', '-'] as const;
+export type ShapeColorIdentifier = typeof SHAPE_COLOR_IDENTIFIERS[number];
 export type ShapeQuarterData = {
     type: ShapeTypeIdentifier;
     color: ShapeColorIdentifier;

@@ -75,6 +75,7 @@
 			</h2>
 			<a
 				class="!ml-auto inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+				title="Add shape"
 				href="/shape"
 			>
 				<AddIcon />
@@ -119,7 +120,7 @@
 												</span>
 												<span class="sr-only">Colors</span>
 												{#if bookmark.meta.colors.size > 0}
-													<ul class="grid grid-cols-4 auto-rows-auto gap-1">
+													<ul class="grid auto-rows-auto grid-cols-4 gap-1">
 														{#each Array.from(bookmark.meta.colors).sort((a, b) => SHAPE_COLORS.indexOf(a) - SHAPE_COLORS.indexOf(b)) as color}
 															<li>
 																<b
@@ -157,6 +158,7 @@
 									<div class="grid shrink-0 auto-rows-max grid-cols-2 gap-2">
 										<a
 											class="inline-block h-14 w-14 rounded-2xl border-2 border-cyan-800 bg-cyan-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
+											title="View shape"
 											href={url}
 										>
 											<VisibilityIcon />
@@ -164,6 +166,7 @@
 										</a>
 										<button
 											class="inline-block h-14 w-14 rounded-2xl border-2 border-red-800 bg-red-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
+											title="Delete shape"
 											on:click={() => onDelete(bookmark)}
 										>
 											<DeleteIcon />
@@ -171,13 +174,15 @@
 										</button>
 										<button
 											class="inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+											title="Copy shape"
 											use:copy={{ value: bookmark.identifier }}
 										>
 											<CopyIcon />
-											<span class="sr-only">Share</span>
+											<span class="sr-only">Copy</span>
 										</button>
 										<button
 											class="inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+											title="Share shape"
 											use:share={{ href: url }}
 										>
 											<ShareFilledIcon />

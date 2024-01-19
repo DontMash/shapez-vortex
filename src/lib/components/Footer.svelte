@@ -8,13 +8,14 @@
 	import RESEARCH_DATA from '$lib/assets/data/research-metadata.json';
 </script>
 
-<footer class="mx-auto grid w-full max-w-5xl grid-cols-3 py-4 text-xs" id="footer">
+<footer class="mx-auto grid w-full max-w-5xl grid-cols-3 p-4 text-xs" id="footer">
 	<div class="flex items-center">
 		<span>Visit shapez 2 on</span>
 		<ul class="flex divide-x divide-stone-100 leading-none">
 			<li>
 				<a
 					class="inline-flex h-6 w-10 fill-stone-100 px-2"
+					title="Discord"
 					href="https://discord.gg/shapez-2-1000343719314198548"
 					target="_blank"
 					rel="noreferrer"
@@ -26,6 +27,7 @@
 			<li>
 				<a
 					class="inline-flex h-6 w-10 fill-stone-100 px-2"
+					title="Steam"
 					href="https://store.steampowered.com/app/2162800/shapez_2/"
 					target="_blank"
 					rel="noreferrer"
@@ -56,6 +58,7 @@
 		<i>
 			<a
 				class="inline-block underline transition hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
+				title="Github - DontMash - shapez-visualizer"
 				href="https://github.com/DontMash/shapez-visualizer"
 				target="_blank"
 				rel="noreferrer"

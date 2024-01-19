@@ -70,7 +70,7 @@ function fixBlueprintBuilding(value: BlueprintBuilding): BlueprintBuilding {
     return { ...value, Entries: entries };
 }
 
-export function buildingCount(blueprint: Blueprint): number {
+export function getBuildingCount(blueprint: Blueprint): number {
     if (blueprint.BP.$type === 'Island') {
         return blueprint.BP.Entries.reduce<number>((previousIsland, currentIsland) => {
             return previousIsland + currentIsland.B.Entries.length;
@@ -78,12 +78,12 @@ export function buildingCount(blueprint: Blueprint): number {
     }
     return blueprint.BP.Entries.length;
 }
-export function islandCount(blueprint: Blueprint): number {
+export function getIslandCount(blueprint: Blueprint): number {
     if (blueprint.BP.$type === 'Building') {
         return 0;
     }
     return blueprint.BP.Entries.length;
 }
-export function cost(buildingCount: number): number {
+export function getCost(buildingCount: number): number {
     return buildingCount <= 1 ? 0 : Math.ceil(Math.pow(buildingCount - 1, 1.3));
 }

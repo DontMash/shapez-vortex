@@ -1,4 +1,4 @@
-import { error } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { update } from '$lib/server/blueprint';
@@ -8,7 +8,7 @@ export const load = (({ url }) => {
         seo: {
             title: 'Blueprint Converter',
             description: 'Convert existing blueprints to a specific game version',
-            keywords: ['Shapez', 'Shapez 2', 'Blueprint', 'Modify', 'Decode', 'Encode'],
+            keywords: ['Blueprint', 'Convert', 'Update', 'Decode', 'Encode'],
             og: {
                 title: 'Blueprint Converter - Convert existing blueprints to a specific game version',
                 type: 'website',
@@ -20,23 +20,21 @@ export const load = (({ url }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    modify: ({ request }) => new Promise<string>(
-        (resolve) => {
-            request.formData()
-                .then(data => {
-                    const versionData = data.get('blueprint-version');
-                    const blueprintIdentifier = data.get('blueprint-identifier');
-                    if (!versionData || !blueprintIdentifier)
-                        error(400, 'invalid/missing form data entries');
+    update: async ({ request }) => {
+        const data = await request.formData();
+        const versionData = data.get('blueprint-version');
+        const blueprintIdentifier = data.get('blueprint-identifier');
+        if (!versionData)
+            return fail(400, { versionData, missing: true });
+        if (!blueprintIdentifier)
+            return fail(400, { blueprintIdentifier, missing: true });
 
-                    const version = +versionData;
-                    const identifier = blueprintIdentifier as BlueprintIdentifier;
-                    try {
-                        return resolve(update(identifier, version));
-                    } catch (err) {
-                        error(400, 'invalid blueprint identifier');
-                    }
-                })
-                .catch(() => error(400, 'invalid request form data'));
-        }),
+        const version = +versionData;
+        const identifier = blueprintIdentifier as BlueprintIdentifier;
+        try {
+            return ({ identifier: update(identifier, version) });
+        } catch (err) {
+            return fail(400, { identifier, invalid: true });
+        }
+    }
 } satisfies Actions;

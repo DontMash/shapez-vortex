@@ -6,7 +6,7 @@
 
 <figure class="space-y-2">
 	<div class="flex space-x-4">
-		<a class="min-w-fit" href={`/shape?identifier=${data.GoalShape}`}>
+		<a class="min-w-fit" title="View shape" href={`/shape?identifier=${data.GoalShape}`}>
 			<img width="96" height="96" src="/placeholder.png" alt={`Shape: ${data.GoalShape}`} />
 		</a>
 		<div class="flex flex-col">
@@ -17,9 +17,13 @@
 				</i>
 			{/if}
 			{#if data.GoalShape}
-				<a class="font-medium text-blue-900 underline break-all" href={`/shape?identifier=${data.GoalShape}`}
-					>{data.GoalShape}</a
+				<a
+					class="break-all font-medium text-blue-900 underline"
+					title="View shape"
+					href={`/shape?identifier=${data.GoalShape}`}
 				>
+					{data.GoalShape}
+				</a>
 			{/if}
 		</div>
 	</div>

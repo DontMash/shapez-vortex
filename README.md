@@ -10,7 +10,7 @@
 <h3 align="center">Shapez Visualizer</h3>
 
   <p align="center">
-    A collection of tools to view or modify data of the game 
+    A collection of tools to view, share & modify data of the game 
     <a href="https://store.steampowered.com/app/2162800/shapez_2/">Shapez 2</a>.
     <br />
     <br />
@@ -137,48 +137,54 @@ To setup, install & develop you will need some tools:
 
 ## Roadmap
 
-* Blueprints
-  * Library (Public/User) - PocketBase
-    * Register & Login (Confirmation)
-    * Upload (short links per user e.g. */user/dontmash/blueprint/0*)
-      * Blueprints
-        * Created
-        * Updated
-        * Data (Identifier)
-        * Title/Name
-        * Description
-        * Building count
-        * Island count
-        * List of Buildings
-        * Blueprint cost
-        * Image/-s (Preview/Icon?)
-        * Follow counter
-        * Download counter
-        * Report
-      * Shapes
-      * Mods
-    * User
+* Library (Public/User) - PocketBase
+  * Register & Login (Confirmation)
+  * Upload (short links per user e.g. */user/dontmash/blueprint/0*)
+    * Blueprints
       * Created
       * Updated
-      * Identifier
-      * Displayname
-      * E-Mail
-      * Password
+      * Data (Identifier)
+      * Title/Name
+      * Description
+      * Tags
+      * Building count
+      * Island count
+      * List of Buildings
+      * Blueprint cost
+      * Image/-s (Preview/Icon?)
+      * Follow counter
+      * Download counter
       * Report
-      * Following
-      * Settings
-        * Research-Upgrades
-    * Recommended/Popular
-    * Hosting & Deployment
+    * Shapes
+    * Mods
+  * User
+    * Created
+    * Updated
+    * Identifier
+    * Displayname
+    * E-Mail
+    * Password
+    * Report
+    * Following
+    * Settings
+      * Research-Upgrades
+  * Recommended/Popular
+  * Hosting & Deployment
+* Blueprints
+  * Library
+    * Search
+    * Filter
+    * Sort
+    * Tags
   * Blueprint Viewer
+    * Layers
+      * Select
+      * Toggle
     * Overview
       * Building count
       * Island count
       * List of Buildings
       * Blueprint cost
-    * Layers
-      * Select
-      * Toggle
     * Geometry details
   * Builder?
 * Navigation styling
@@ -199,8 +205,9 @@ To setup, install & develop you will need some tools:
   * Inputs/Outputs for blueprint
   * Process chain
 * Responsiveness (Device/Platform)
+* Accessibility
+  * WCAG v2.2
 * SEO
-  * Compose keywords
   * Preview image
 * Tests
   * Server-Side

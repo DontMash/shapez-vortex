@@ -128,6 +128,12 @@ export const view: Action<HTMLCanvasElement, { data: Shape, isExtended: boolean,
         controls.update();
         renderer.render(scene, camera);
     }
+    function reset() {
+        controls.enableDamping = false;
+        controls.update();
+        controls.reset();
+        controls.enableDamping = true;
+    }
     async function assign(shapeData: Shape) {
         clear();
         return new Promise<void>((resolve, reject) => {

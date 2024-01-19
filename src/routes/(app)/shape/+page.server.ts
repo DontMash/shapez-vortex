@@ -1,7 +1,7 @@
-import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { error, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
 import { SHAPE, type ShapeData } from '$lib/shape.types';
-import { colors, layerCount, parse, quarterCount, types } from '$lib/server/shape';
+import { getColors, getLayerCount, parse, getQuarterCount, getTypes, random } from '$lib/server/shape';
 
 export const load = (({ url }) => {
     try {
@@ -11,17 +11,17 @@ export const load = (({ url }) => {
             identifier,
             data,
             meta: {
-                types: types(data),
-                colors: colors(data),
-                layerCount: layerCount(data),
-                quarterCount: quarterCount(data),
+                types: getTypes(data),
+                colors: getColors(data),
+                layerCount: getLayerCount(data),
+                quarterCount: getQuarterCount(data),
             },
         };
         return {
             seo: {
                 title: 'Shape Viewer',
                 description: 'View and interact with the 3D visualization of a shape. Explore the shape\'s multiple layers and parts.',
-                keywords: ['Shapez', 'Shapez 2', 'Viewer', '3D', 'Visualization', 'Shape', 'Tool'],
+                keywords: ['Viewer', '3D', 'Shape'],
                 og: {
                     title: 'Shape Viewer - View and interact with the 3D visualization of a shape',
                     type: 'website',
@@ -37,3 +37,11 @@ export const load = (({ url }) => {
         error(400, (err as Error).message);
     }
 }) satisfies PageServerLoad;
+
+export const actions = {
+    random: ({ url }) => {
+        const identifier = random();
+        url.searchParams.set('identifier', identifier);
+        redirect(301, url);
+    }
+} satisfies Actions;

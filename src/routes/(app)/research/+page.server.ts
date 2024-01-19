@@ -7,7 +7,7 @@ export const load = (({ url }) => {
         seo: {
             title: 'Research Overview',
             description: 'View a visual representation of the research tree.',
-            keywords: ['Shapez', 'Shapez 2', 'Research', 'Overview', '3D', 'Visualization', 'Shape'],
+            keywords: ['Research', 'Overview', 'Goal', 'Shape'],
             og: {
                 title: 'Research Overview - View a visual representation of the research tree',
                 type: 'website',

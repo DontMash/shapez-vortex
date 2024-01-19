@@ -118,9 +118,10 @@
 					{/if}
 					<button
 						class="inline-flex h-14 w-14 items-center justify-center bg-stone-200 fill-neutral-900 p-3 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+						title="Download blueprint"
 						type="submit"
 					>
-						<span class="sr-only">Save blueprint</span>
+						<span class="sr-only">Download blueprint</span>
 						<DownloadIcon />
 					</button>
 				</form>
@@ -128,6 +129,7 @@
 					<input name="identifier" type="hidden" required />
 					<button
 						class="h-14 w-14 bg-stone-200 fill-neutral-900 p-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+						title="Paste blueprint"
 						type="button"
 						use:paste
 						on:paste={(event) => onPaste(event)}
@@ -138,6 +140,7 @@
 				</form>
 				<button
 					class="h-14 w-14 bg-stone-200 fill-neutral-900 p-3 focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
+					title="Copy blueprint"
 					use:copy={{ value: $page.url.searchParams.get('identifier') }}
 				>
 					<span class="sr-only">Copy blueprint</span>
@@ -149,6 +152,7 @@
 			>
 				<button
 					class="h-14 w-14 bg-cyan-500 fill-neutral-900 p-3 focus-within:bg-cyan-400 hover:bg-cyan-400 active:bg-cyan-600"
+					title="Capture blueprint"
 					use:capture={{ captureElement: canvas, filename: data.blueprint.meta.name }}
 				>
 					<span class="sr-only">Capture blueprint</span>
@@ -156,6 +160,7 @@
 				</button>
 				<button
 					class="h-14 w-14 bg-cyan-500 fill-neutral-900 p-3 focus-within:bg-cyan-400 hover:bg-cyan-400 active:bg-cyan-600"
+					title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
 					use:fullscreen={{ fullscreenElement: viewer }}
 					on:change={(event) => (isFullscreen = event.detail)}
 				>
@@ -168,6 +173,7 @@
 				</button>
 				<button
 					class="h-14 w-14 bg-cyan-500 fill-neutral-900 p-3 focus-within:bg-cyan-400 hover:bg-cyan-400 active:bg-cyan-600"
+					title="Reset controls"
 					on:click={() => reset()}
 				>
 					<span class="sr-only">Reset controls</span>
@@ -181,6 +187,7 @@
 				>
 					<button
 						class="h-14 w-14 bg-neutral-950 fill-stone-100 p-3 focus-within:bg-neutral-900 hover:bg-neutral-900 active:bg-black"
+						title={`${isBookmark ? 'Add to' : 'Remove from'} library`}
 						on:click={() => onBookmark()}
 					>
 						<span class="sr-only">{isBookmark ? 'Add to' : 'Remove from'} library</span>

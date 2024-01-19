@@ -83,6 +83,7 @@
 			</h2>
 			<a
 				class="!ml-auto inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+				title="Add blueprint"
 				href="/blueprint"
 			>
 				<AddIcon />
@@ -148,15 +149,23 @@
 										</ul>
 									</div>
 									<div class="grid shrink-0 auto-rows-max grid-cols-3 gap-2">
-										<a
-											class="inline-block h-14 w-14 rounded-2xl border-2 border-cyan-800 bg-cyan-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
-											href={url}
-										>
-											<VisibilityIcon />
-											<span class="sr-only">View</span>
-										</a>
+										<form class="group" action="/blueprint/view">
+											<input name="identifier" type="hidden" value={bookmark.identifier} required />
+											{#if bookmark.meta.name}
+												<input name="name" type="hidden" value={bookmark.meta.name} required />
+											{/if}
+											<button
+												class="inline-flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-cyan-800 bg-cyan-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
+												title="View blueprint"
+												type="submit"
+											>
+												<span class="sr-only">View</span>
+												<VisibilityIcon />
+											</button>
+										</form>
 										<button
 											class="inline-block h-14 w-14 rounded-2xl border-2 border-cyan-800 bg-cyan-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
+											title="Edit blueprint"
 											on:click={() => onEdit(bookmark)}
 										>
 											<EditIcon />
@@ -164,6 +173,7 @@
 										</button>
 										<button
 											class="inline-block h-14 w-14 rounded-2xl border-2 border-red-800 bg-red-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
+											title="Delete blueprint"
 											on:click={() => onDelete(bookmark)}
 										>
 											<DeleteIcon />
@@ -176,21 +186,24 @@
 											{/if}
 											<button
 												class="inline-flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+												title="Download blueprint"
 												type="submit"
 											>
-												<span class="sr-only">Save blueprint</span>
+												<span class="sr-only">Download</span>
 												<DownloadIcon />
 											</button>
 										</form>
 										<button
 											class="inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+											title="Copy blueprint"
 											use:copy={{ value: bookmark.identifier }}
 										>
 											<CopyIcon />
-											<span class="sr-only">Share</span>
+											<span class="sr-only">Copy</span>
 										</button>
 										<button
 											class="inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+											title="Share blueprint"
 											use:share={{ href: url }}
 										>
 											<ShareFilledIcon />

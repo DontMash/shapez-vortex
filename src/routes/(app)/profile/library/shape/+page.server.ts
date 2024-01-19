@@ -5,7 +5,7 @@ export const load = (({ url }) => {
         seo: {
             title: 'Shape Library',
             description: 'View your personal collection of Shapes. View & share shapes\'s with others',
-            keywords: ['Shapez', 'Shapez 2', 'Viewer', '3D', 'Visualization', 'Shape', 'Tool', 'Library'],
+            keywords: ['Shape', 'Library'],
             og: {
                 title: 'Shape Library - View & share shapes\'s with others',
                 type: 'website',

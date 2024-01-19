@@ -5,7 +5,7 @@ export const load = (({ url }) => {
         seo: {
             title: 'Blueprint Library',
             description: 'View your personal collection of blueprints. View & share blueprints\'s with others',
-            keywords: ['Shapez', 'Shapez 2', 'Viewer', '3D', 'Visualization', 'Blueprint', 'Tool', 'Library'],
+            keywords: ['Blueprint', 'Library'],
             og: {
                 title: 'Blueprint Library - View & share blueprints\'s with others',
                 type: 'website',

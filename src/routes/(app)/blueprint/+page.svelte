@@ -37,6 +37,7 @@
 				</label>
 				<button
 					class="inline-block w-full bg-neutral-800 px-6 leading-none outline-none transition hover:bg-neutral-700 focus-visible:bg-neutral-700 active:bg-black"
+					title="View blueprint"
 					type="submit"
 				>
 					View
@@ -50,7 +51,7 @@
 			enctype="multipart/form-data"
 		>
 			<label
-				class="inline-flex h-12 flex-col items-center justify-center bg-cyan-500 leading-none text-neutral-800 outline-none transition hover:bg-cyan-400 focus-within:bg-cyan-400 active:bg-cyan-600"
+				class="inline-flex h-12 flex-col items-center justify-center bg-cyan-500 leading-none text-neutral-800 outline-none transition focus-within:bg-cyan-400 hover:bg-cyan-400 active:bg-cyan-600"
 				for="blueprint-file"
 			>
 				<input
