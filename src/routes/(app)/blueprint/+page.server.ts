@@ -1,7 +1,7 @@
-import { error, fail, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { BlueprintIdentifier } from '$lib/blueprint.types';
-import { update } from '$lib/server/blueprint';
+import { decode, update } from '$lib/server/blueprint';
 
 export const load = (({ url }) => {
     return {
@@ -27,8 +27,23 @@ export const actions = {
         if (!identifier)
             return fail(400, { identifier, missing: true });
 
+        let updatedIdentifier = identifier;
+        if (isUpdate) {
+            try {
+                updatedIdentifier = update(identifier);
+            } catch (err) {
+                return fail(400, { identifier, invalid: true });
+            }
+        } else {
+            try {
+                decode(updatedIdentifier);
+            } catch (err) {
+                return fail(400, { identifier, invalid: true });
+            }
+        }
+
         const viewUrl = new URL('blueprint/view', url.origin);
-        viewUrl.searchParams.append('identifier', isUpdate ? update(identifier) : identifier);
+        viewUrl.searchParams.append('identifier', updatedIdentifier);
         redirect(301, viewUrl);
     }
 } satisfies Actions;

@@ -8,7 +8,7 @@
 	let currentToast: Toast | undefined;
 
 	subscribe((toast) => {
-		if (!toast) return;
+		if (!toast) return;		
 		currentToast = toast;
 
 		setTimeout(() => (currentToast = undefined), toast.duration - TOAST_TRANSITION_DURATION);

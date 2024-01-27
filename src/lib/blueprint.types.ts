@@ -2,33 +2,44 @@ import type BUILDINGS_METADATA from '$lib/assets/data/buildings-metadata.json';
 
 export const GAME_VERSION = 1033;
 
-export const BLUEPRINT_FILE_FORMAT = '.spz2bp';
+export const BLUEPRINT_FILE_FORMAT = '.spz2bp' as const;
 export const BLUEPRINT_DEFAULT_NAME = 'Untitled blueprint';
+export const BLUEPRINT_EMPTY_DATA = '//8=';
+export const BLUEPRINT_GRID_SIZE = 1001;
+export const BLUEPRINT_GRID_COLOR = 0x444444;
+
 export type BlueprintData = {
     identifier: BlueprintIdentifier;
-    data: Blueprint,
+    data: Blueprint;
     meta: {
-        name?: string | undefined,
-        buildingCount: number,
-        islandCount: number,
-        cost: number,
+        name?: string | undefined;
+        buildingCount: number;
+        islandCount: number;
+        cost: number;
+        tags?: Set<string> | undefined;
     };
 };
 
-type BlueprintIdentifierPrefix = 'SHAPEZ2';
-type BlueprintIdentifierVersion = number;
-type BlueprintIdentifierSeperator = '-';
-type BlueprintIdentifierSuffix = '$';
+export const BLUEPRINT_IDENTIFIER_PREFIX = 'SHAPEZ2' as const;
+type BlueprintIdentifierPrefix = typeof BLUEPRINT_IDENTIFIER_PREFIX;
+export const BLUEPRINT_IDENTIFIER_VERSION = 1 as const;
+type BlueprintIdentifierVersion = typeof BLUEPRINT_IDENTIFIER_VERSION;
+export const BLUEPRINT_IDENTIFIER_SEPERATOR = '-' as const;
+type BlueprintIdentifierSeperator = typeof BLUEPRINT_IDENTIFIER_SEPERATOR;
+export const BLUEPRINT_IDENTIFIER_SUFFIX = '$' as const;
+type BlueprintIdentifierSuffix = typeof BLUEPRINT_IDENTIFIER_SUFFIX;
+export const BLUEPRINT_IDENTIFIER_REGEX = new RegExp(`^(${BLUEPRINT_IDENTIFIER_PREFIX})${BLUEPRINT_IDENTIFIER_SEPERATOR}\\d${BLUEPRINT_IDENTIFIER_SEPERATOR}.+$`);
 export type BlueprintIdentifier =
     `${BlueprintIdentifierPrefix}${BlueprintIdentifierSeperator}${BlueprintIdentifierVersion}${BlueprintIdentifierSeperator}${string}${BlueprintIdentifierSuffix}`;
 
+export const BLUEPRINT_TYPES = ['Island', 'Building'] as const;
 export type Blueprint = {
     // version
     V: number;
     BP: BlueprintIsland | BlueprintBuilding;
 };
 export type BlueprintIsland = {
-    '$type': 'Island';
+    '$type': typeof BLUEPRINT_TYPES[0];
     Entries: Array<BlueprintIslandEntry>;
 };
 export type BlueprintIslandEntry = {
@@ -42,7 +53,7 @@ export type BlueprintIslandEntry = {
     B: BlueprintBuilding;
 };
 export type BlueprintBuilding = {
-    '$type': 'Building';
+    '$type': typeof BLUEPRINT_TYPES[1];
     Entries: Array<BlueprintBuildingEntry>;
 };
 export type BlueprintBuildingEntry = {
@@ -68,10 +79,6 @@ type BlueprintEntryRotation = typeof BLUEPRINT_ENTRYROTATIONS[keyof typeof BLUEP
 
 type BuildingIntervalVariant = typeof BUILDINGS_METADATA[number]['Variants'][number]['InternalVariants'][number];
 export type BuildingIdentifier = BuildingIntervalVariant['Id'];
-
-export const BLUEPRINT_EMPTY_DATA = '//8=';
-export const BLUEPRINT_GRID_SIZE = 1001;
-export const BLUEPRINT_GRID_COLOR = 0x444444;
 
 const ISLAND_PADDING_SIZE = 4;
 const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;

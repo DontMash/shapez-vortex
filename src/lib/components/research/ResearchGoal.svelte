@@ -18,7 +18,7 @@
 			{/if}
 			{#if data.GoalShape}
 				<a
-					class="break-all font-medium text-blue-900 underline"
+					class="break-all font-medium text-cyan-500 underline hover:text-cyan-400 focus-visible:text-cyan-400 active:text-cyan-600 transition-colors"
 					title="View shape"
 					href={`/shape?identifier=${data.GoalShape}`}
 				>

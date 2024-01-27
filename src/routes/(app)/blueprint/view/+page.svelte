@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { z } from 'zod';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
-	import { view } from '$lib/client/blueprints';
+	import { BLUEPRINT_FORM_SCHEMA, BLUEPRINT_TAGS_REGEX, view } from '$lib/client/blueprints';
 	import { create } from '$lib/client/user/database';
 	import { capture } from '$lib/client/actions/capture';
 	import { copy, paste } from '$lib/client/actions/clipboard';
@@ -62,12 +63,11 @@
 		}
 		await updateBookmark();
 	}
-	async function addBookmark(name: string) {
+	async function addBookmark(name: string, tags?: Set<string> | undefined) {
 		const { blueprint } = await create();
 		const { add } = blueprint;
 
-		await add({ ...data.blueprint, meta: { ...data.blueprint.meta, name } });
-		isOpen = false;
+		await add({ ...data.blueprint, meta: { ...data.blueprint.meta, name, tags } });
 		await updateBookmark();
 	}
 	async function updateBookmark() {
@@ -225,11 +225,25 @@
 	<Dialog
 		open={isOpen}
 		on:confirm={(event) => {
-			const data = event.detail;
-			if (!data) return;
-			const name = data.get('name');
-			if (!name || typeof name !== 'string') return;
-			addBookmark(name);
+			const formData = event.detail;
+			if (!formData) return;
+
+			try {
+				const data = Object.fromEntries(formData);
+				const validation = BLUEPRINT_FORM_SCHEMA.parse(data);
+				const tags = new Set(
+					validation.tags
+						.trim()
+						.replace(/\s+/, ' ')
+						.split(' ')
+						.map((tag) => tag.replace(/#+/, ''))
+				);
+				addBookmark(validation.name, tags);
+			} catch (err) {
+				throw new Error('Invalid blueprint data - add');
+			} finally {
+				isOpen = false;
+			}
 		}}
 		on:cancel={() => (isOpen = false)}
 	>
@@ -244,6 +258,17 @@
 				type="text"
 				placeholder="Name..."
 				value={data.blueprint.meta.name ?? ''}
+			/>
+		</label>
+		<label class="mt-2 block" for="blueprint-tags">
+			<span class="sr-only">Blueprint tags</span>
+			<input
+				class="w-full rounded-lg bg-stone-200 p-3 text-neutral-800 outline-none transition placeholder:select-none placeholder:text-stone-400 placeholder:transition hover:bg-stone-100 focus-visible:bg-stone-100 focus-visible:placeholder:text-stone-600"
+				id="blueprint-tags"
+				name="tags"
+				type="text"
+				placeholder="#tag..."
+				pattern={BLUEPRINT_TAGS_REGEX.source}
 			/>
 		</label>
 	</Dialog>

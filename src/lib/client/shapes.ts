@@ -137,7 +137,7 @@ export const view: Action<HTMLCanvasElement, { data: Shape, isExtended: boolean,
     async function assign(shapeData: Shape) {
         clear();
         return new Promise<void>((resolve, reject) => {
-            const layerPromises = shapeData.layers.map<Promise<void>>(
+            const layerPromises = shapeData.map<Promise<void>>(
                 (data, index) => assignLayer(data, index)
             );
             Promise.all(layerPromises).then(() => {
@@ -156,7 +156,7 @@ export const view: Action<HTMLCanvasElement, { data: Shape, isExtended: boolean,
             if (index < 0 || index > 3)
                 return reject(new Error(`Invalid layerIndex ${index}`));
 
-            const quarterPromises = data.quarters.map<Promise<void>>(
+            const quarterPromises = data.map<Promise<void>>(
                 (quarterData, quarterIndex) => assignQuarter(index, quarterData, quarterIndex)
             );
             Promise.all(quarterPromises).then(() => resolve()).catch(reject);

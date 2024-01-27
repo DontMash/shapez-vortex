@@ -60,41 +60,41 @@
 	}
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-	<article class="relative">
-		<header
-			class="mb-12 flex w-full items-end space-x-4 border-b-2 border-neutral-800 border-opacity-50 pb-4 pl-4 pr-8"
+<section class="relative mx-auto w-full max-w-5xl">
+	<header
+		class="mb-12 flex w-full items-end space-x-4 border-b-2 border-neutral-800 border-opacity-50 pb-4 px-6"
+	>
+		<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
+			<span class="inline-block h-6 w-6 fill-stone-100">
+				<BookmarkIcon />
+			</span>
+			<span>
+				{data.seo.title}
+			</span>
+		</h2>
+		<a
+			class="!ml-auto inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+			title="Add shape"
+			href="/shape"
 		>
-			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6 fill-stone-100">
-					<BookmarkIcon />
-				</span>
-				<span>
-					{data.seo.title}
-				</span>
-			</h2>
-			<a
-				class="!ml-auto inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
-				title="Add shape"
-				href="/shape"
-			>
-				<AddIcon />
-				<span class="sr-only">Add</span>
-			</a>
-		</header>
-		{#key update}
-			{#await create() then { shape }}
-				{#await shape.getAll()}
-					<div class="absolute left-1/2 top-24 -translate-x-1/2 items-center justify-center">
-						<Loading />
-					</div>
-				{:then bookmarks}
-					{#if bookmarks.length > 0}
-						<ol class="space-y-4">
-							{#each bookmarks as bookmark}
-								{@const url = getShapeViewURL(bookmark.identifier)}
-								<li
-									class="flex w-full rounded-[2rem] border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 p-8 shadow-lg"
+			<AddIcon />
+			<span class="sr-only">Add</span>
+		</a>
+	</header>
+	{#key update}
+		{#await create() then { shape }}
+			{#await shape.getAll()}
+				<div class="absolute left-1/2 top-24 -translate-x-1/2 items-center justify-center">
+					<Loading />
+				</div>
+			{:then bookmarks}
+				{#if bookmarks.length > 0}
+					<ol class="space-y-4">
+						{#each bookmarks as bookmark}
+							{@const url = getShapeViewURL(bookmark.identifier)}
+							<li>
+								<article
+									class="flex w-full rounded-4xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 p-8 shadow-lg"
 								>
 									<div class="flex w-full flex-col justify-between space-y-4">
 										<span class="text-3xl font-bold">{bookmark.identifier}</span>
@@ -189,18 +189,18 @@
 											<span class="sr-only">Share</span>
 										</button>
 									</div>
-								</li>
-							{/each}
-						</ol>
-					{:else}
-						<div class="flex items-center justify-center">
-							<span>No shapes</span>
-						</div>
-					{/if}
-				{/await}
+								</article>
+							</li>
+						{/each}
+					</ol>
+				{:else}
+					<div class="flex items-center justify-center">
+						<span>No shapes</span>
+					</div>
+				{/if}
 			{/await}
-		{/key}
-	</article>
+		{/await}
+	{/key}
 
 	<Dialog
 		open={!!toDeleteBookmark}

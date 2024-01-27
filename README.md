@@ -138,6 +138,7 @@ To setup, install & develop you will need some tools:
 ## Roadmap
 
 * Library (Public/User) - PocketBase
+  * Hosting & Deployment
   * Register & Login (Confirmation)
   * Upload (short links per user e.g. */user/dontmash/blueprint/0*)
     * Blueprints
@@ -169,14 +170,15 @@ To setup, install & develop you will need some tools:
     * Settings
       * Research-Upgrades
   * Recommended/Popular
-  * Hosting & Deployment
 * Blueprints
   * Library
     * Search
     * Filter
     * Sort
-    * Tags
   * Blueprint Viewer
+    * Instructions
+      * How to
+      * Examples
     * Layers
       * Select
       * Toggle
@@ -187,33 +189,48 @@ To setup, install & develop you will need some tools:
       * Blueprint cost
     * Geometry details
   * Builder?
-* Navigation styling
 * Reseach Overview
   * Shape images
   * Share entry
-  * Search entries
-  * Sort entries
-  * filter entries
+  * Search
+  * Filter
+  * Sort
 * Shapes
-  * Viewer help/instructions
-  * Viewer randomize
-  * New models
-  * Builder?
-  * Logic?
+  * Library
+    * Search
+    * Filter
+    * Sort
+  * Viewer
+    * Instructions (similar to [S1-Viewer](https://viewer.shapez.io))
+      * How to
+      * Types (C,R,S,W,P)
+      * Color (r,g,b,c,m,y,w,k)
+      * Examples
+    * Randomize
+      * Shuffle (keep quarters)
+      * Bias
+        * Layers
+        * Quarters
+      * Types
+      * Colors
+    * New models
+    * Builder?
 * Savegame editor
 * Solution calculator
   * Inputs/Outputs for blueprint
   * Process chain
-* Responsiveness (Device/Platform)
-* Accessibility
-  * WCAG v2.2
-* SEO
-  * Preview image
-* Tests
-  * Server-Side
-  * Client-Side
-  * Code coverage
-  * Visuals
+* Quality Assurance
+  * Responsiveness (Device/Platform)
+  * Accessibility
+    * WCAG v2.2
+  * SEO
+    * Preview image
+    * Content update
+  * Tests
+    * Server-Side
+    * Client-Side
+    * Code coverage
+    * Visuals
 
 See the [open issues][issues-url] for a full list of proposed features (and known issues).
 

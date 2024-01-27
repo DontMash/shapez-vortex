@@ -22,12 +22,12 @@ export const load = (({ url }) => {
 export const actions = {
     decode: async ({ request }) => {
         const data = await request.formData();
-        const blueprintIdentifier = data.get('blueprint-identifier');
+        const blueprintIdentifier = data.get('blueprint-identifier') as string;
         if (!blueprintIdentifier)
             return fail(400, { blueprintIdentifier, missing: true });
 
         try {
-            const blueprint = decode(blueprintIdentifier as BlueprintIdentifier);
+            const blueprint = decode(blueprintIdentifier.trim() as BlueprintIdentifier);
             return { blueprint, success: true };
         } catch (err) {
             return fail(400, { blueprintIdentifier, invalid: true });
@@ -40,12 +40,12 @@ export const actions = {
         if (!blueprintData)
             return fail(400, { blueprintData, missing: true });
 
-        const blueprint = JSON.parse(blueprintData as string) as Blueprint;
         try {
+            const blueprint = JSON.parse(blueprintData as string) as Blueprint;
             const blueprintIdentifier = encode(blueprint);
             return { blueprintIdentifier, success: true };
         } catch (err) {
-            return fail(400, { blueprint, invalid: true });
+            return fail(400, { blueprintData, invalid: true });
         }
     }
 } satisfies Actions;

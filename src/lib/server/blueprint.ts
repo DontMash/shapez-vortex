@@ -1,5 +1,27 @@
-import { GAME_VERSION, type Blueprint, type BlueprintIdentifier, type BlueprintBuilding, type BlueprintIsland, BLUEPRINT_EMPTY_DATA } from '$lib/blueprint.types';
 import { ungzip, gzip } from 'pako';
+import { z } from 'zod';
+import {
+    GAME_VERSION,
+    type Blueprint,
+    type BlueprintIdentifier,
+    type BlueprintBuilding,
+    type BlueprintIsland,
+    BLUEPRINT_EMPTY_DATA,
+    BLUEPRINT_IDENTIFIER_PREFIX,
+    BLUEPRINT_IDENTIFIER_SEPERATOR,
+    BLUEPRINT_IDENTIFIER_SUFFIX,
+    BLUEPRINT_IDENTIFIER_VERSION,
+    BLUEPRINT_IDENTIFIER_REGEX,
+    BLUEPRINT_TYPES,
+} from '$lib/blueprint.types';
+
+const BLUEPRINT_SCHEMA = z.object({
+    V: z.number(),
+    BP: z.object({
+        '$type': z.enum(BLUEPRINT_TYPES),
+        Entries: z.any().array(),
+    }),
+});
 
 export function update(value: BlueprintIdentifier, version: number = GAME_VERSION): BlueprintIdentifier {
     const blueprint = decode(value);
@@ -16,18 +38,14 @@ export function decode(value: BlueprintIdentifier): Blueprint {
     return JSON.parse(content);
 };
 function parse(value: BlueprintIdentifier): string {
-    if (!isBlueprintIdentifier(value)) throw new Error('Invalid blueprint string');
+    if (!isBlueprintIdentifier(value)) throw new Error('Invalid blueprint identifier');
 
-    const BLUEPRINT_STRING_SEPERATOR = '-';
-    const BLUEPRINT_STRING_SUFFIX = '$';
-
-    const trim = value.slice(0, -BLUEPRINT_STRING_SUFFIX.length);
-    const data = trim.split(BLUEPRINT_STRING_SEPERATOR)[2];
+    const trim = value.slice(0, -BLUEPRINT_IDENTIFIER_SUFFIX.length);
+    const data = trim.split(BLUEPRINT_IDENTIFIER_SEPERATOR)[2];
     return data;
 };
 export function isBlueprintIdentifier(value: BlueprintIdentifier): boolean {
-    const regex = /^(SHAPEZ2)-\d-.+\$$/;
-    return regex.test(value);
+    return BLUEPRINT_IDENTIFIER_REGEX.test(value);
 };
 export function encode(value: Blueprint): BlueprintIdentifier {
     if (!isBlueprint(value)) throw new Error('Invalid blueprint');
@@ -38,14 +56,12 @@ export function encode(value: Blueprint): BlueprintIdentifier {
     const zipedData = btoa(String.fromCharCode(...zipedDataArray));
     return stringify(zipedData) as BlueprintIdentifier;
 };
-export function isBlueprint(value: any) { return 'BP' in value && 'Entries' in value.BP && Array.isArray(value.BP.Entries) && 'V' in value; }
+export function isBlueprint(value: unknown) {
+    const validation = BLUEPRINT_SCHEMA.safeParse(value);
+    return validation.success;
+}
 function stringify(value: string): string {
-    const BLUEPRINT_STRING_PREFIX = 'SHAPEZ2';
-    const BLUEPRINT_STRING_VERSION = 1;
-    const BLUEPRINT_STRING_SEPERATOR = '-';
-    const BLUEPRINT_STRING_SUFFIX = '$';
-
-    return `${BLUEPRINT_STRING_PREFIX}${BLUEPRINT_STRING_SEPERATOR}${BLUEPRINT_STRING_VERSION}${BLUEPRINT_STRING_SEPERATOR}${value}${BLUEPRINT_STRING_SUFFIX}`;
+    return `${BLUEPRINT_IDENTIFIER_PREFIX}${BLUEPRINT_IDENTIFIER_SEPERATOR}${BLUEPRINT_IDENTIFIER_VERSION}${BLUEPRINT_IDENTIFIER_SEPERATOR}${value}${BLUEPRINT_IDENTIFIER_SUFFIX}`;
 };
 
 function fix(value: Blueprint): Blueprint {

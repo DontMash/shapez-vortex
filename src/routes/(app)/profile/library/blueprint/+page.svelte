@@ -6,6 +6,7 @@
 		type BlueprintData,
 		type BlueprintIdentifier
 	} from '$lib/blueprint.types';
+	import { BLUEPRINT_FORM_SCHEMA, BLUEPRINT_TAGS_REGEX } from '$lib/client/blueprints';
 	import { create } from '$lib/client/user/database';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { share } from '$lib/client/actions/share';
@@ -51,64 +52,76 @@
 	function onEdit(bookmark: BlueprintData) {
 		toEditBookmark = bookmark;
 	}
-	async function updateBookmark(name: string) {
+	async function updateBookmark(name: string, tags?: Set<string> | undefined) {
 		if (!toEditBookmark) return;
 
-		if (name) {
+		{
 			const { blueprint } = await create();
 			const { update } = blueprint;
+
 			await update({
 				...toEditBookmark,
-				meta: { ...toEditBookmark.meta, name }
+				meta: { ...toEditBookmark.meta, name, tags }
 			});
 		}
-
-		toEditBookmark = undefined;
 		update = !update;
 	}
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-	<article class="relative">
-		<header
-			class="mb-12 flex w-full items-end space-x-4 border-b-2 border-neutral-800 border-opacity-50 pb-4 pl-4 pr-8"
+<section class="relative mx-auto w-full max-w-5xl">
+	<header
+		class="mb-12 flex w-full items-end space-x-4 border-b-2 border-neutral-800 border-opacity-50 px-6 pb-4"
+	>
+		<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
+			<span class="inline-block h-6 w-6 fill-stone-100">
+				<BookmarkIcon />
+			</span>
+			<span>
+				{data.seo.title}
+			</span>
+		</h2>
+		<a
+			class="!ml-auto inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+			title="Add blueprint"
+			href="/blueprint"
 		>
-			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6 fill-stone-100">
-					<BookmarkIcon />
-				</span>
-				<span>
-					{data.seo.title}
-				</span>
-			</h2>
-			<a
-				class="!ml-auto inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
-				title="Add blueprint"
-				href="/blueprint"
-			>
-				<AddIcon />
-				<span class="sr-only">Add</span>
-			</a>
-		</header>
-		{#key update}
-			{#await create() then { blueprint }}
-				{#await blueprint.getAll()}
-					<div class="absolute left-1/2 top-24 -translate-x-1/2 items-center justify-center">
-						<Loading />
-					</div>
-				{:then bookmarks}
-					{#if bookmarks.length > 0}
-						<ol class="space-y-4">
-							{#each bookmarks as bookmark}
-								{@const type = bookmark.data.BP.$type}
-								{@const url = getBlueprintViewURL(bookmark.identifier)}
-								<li
-									class="flex w-full rounded-[2rem] border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 p-8 shadow-lg"
+			<AddIcon />
+			<span class="sr-only">Add</span>
+		</a>
+	</header>
+	{#key update}
+		{#await create() then { blueprint }}
+			{#await blueprint.getAll()}
+				<div class="absolute left-1/2 top-24 -translate-x-1/2 items-center justify-center">
+					<Loading />
+				</div>
+			{:then bookmarks}
+				{#if bookmarks.length > 0}
+					<ol class="space-y-4">
+						{#each bookmarks as bookmark}
+							{@const type = bookmark.data.BP.$type}
+							{@const url = getBlueprintViewURL(bookmark.identifier)}
+							<li>
+								<article
+									class="flex w-full rounded-4xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 p-8 shadow-lg"
 								>
 									<div class="flex w-full flex-col justify-between space-y-4">
-										<span class="text-3xl font-bold"
-											>{bookmark.meta.name ?? BLUEPRINT_DEFAULT_NAME}</span
-										>
+										<div class="space-y-2">
+											<h3 class="text-3xl font-bold">
+												{bookmark.meta.name || BLUEPRINT_DEFAULT_NAME}
+											</h3>
+											{#if bookmark.meta.tags}
+												<ul class="flex space-x-1">
+													{#each Array.from(bookmark.meta.tags) as tag}
+														<li
+															class="rounded-4xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 px-2 py-0.5 font-medium text-cyan-400"
+														>
+															#{tag}
+														</li>
+													{/each}
+												</ul>
+											{/if}
+										</div>
 										<ul class="grid grid-cols-4 gap-6">
 											<li class="inline-flex items-center space-x-2">
 												<span
@@ -148,36 +161,32 @@
 											</li>
 										</ul>
 									</div>
-									<div class="grid shrink-0 auto-rows-max grid-cols-3 gap-2">
+									<div class="grid shrink-0 auto-rows-max grid-cols-3 gap-2 self-center">
 										<form class="group" action="/blueprint/view">
 											<input name="identifier" type="hidden" value={bookmark.identifier} required />
 											{#if bookmark.meta.name}
 												<input name="name" type="hidden" value={bookmark.meta.name} required />
 											{/if}
-											<button
-												class="inline-flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-cyan-800 bg-cyan-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
-												title="View blueprint"
-												type="submit"
-											>
+											<button class="button primary icon-only" title="View blueprint" type="submit">
 												<span class="sr-only">View</span>
 												<VisibilityIcon />
 											</button>
 										</form>
 										<button
-											class="inline-block h-14 w-14 rounded-2xl border-2 border-cyan-800 bg-cyan-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
+											class="button primary icon-only"
 											title="Edit blueprint"
 											on:click={() => onEdit(bookmark)}
 										>
-											<EditIcon />
 											<span class="sr-only">Edit</span>
+											<EditIcon />
 										</button>
 										<button
-											class="inline-block h-14 w-14 rounded-2xl border-2 border-red-800 bg-red-800 bg-opacity-70 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50"
+											class="button danger icon-only"
 											title="Delete blueprint"
 											on:click={() => onDelete(bookmark)}
 										>
-											<DeleteIcon />
 											<span class="sr-only">Delete</span>
+											<DeleteIcon />
 										</button>
 										<form class="group" action="/blueprint/download">
 											<input name="identifier" type="hidden" value={bookmark.identifier} required />
@@ -185,7 +194,7 @@
 												<input name="name" type="hidden" value={bookmark.meta.name} required />
 											{/if}
 											<button
-												class="inline-flex h-14 w-14 items-center justify-center rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+												class="button secondary icon-only"
 												title="Download blueprint"
 												type="submit"
 											>
@@ -194,43 +203,57 @@
 											</button>
 										</form>
 										<button
-											class="inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+											class="button secondary icon-only"
 											title="Copy blueprint"
 											use:copy={{ value: bookmark.identifier }}
 										>
-											<CopyIcon />
 											<span class="sr-only">Copy</span>
+											<CopyIcon />
 										</button>
 										<button
-											class="inline-block h-14 w-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 fill-stone-100 p-3 transition-colors hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
+											class="button secondary icon-only"
 											title="Share blueprint"
 											use:share={{ href: url }}
 										>
-											<ShareFilledIcon />
 											<span class="sr-only">Share</span>
+											<ShareFilledIcon />
 										</button>
 									</div>
-								</li>
-							{/each}
-						</ol>
-					{:else}
-						<div class="flex items-center justify-center">
-							<span>No blueprints</span>
-						</div>
-					{/if}
-				{/await}
+								</article>
+							</li>
+						{/each}
+					</ol>
+				{:else}
+					<div class="flex items-center justify-center">
+						<span>No blueprints</span>
+					</div>
+				{/if}
 			{/await}
-		{/key}
-	</article>
+		{/await}
+	{/key}
 
 	<Dialog
 		open={!!toEditBookmark}
-		on:confirm={(event) => {
-			const data = event.detail;
-			if (!data) return;
-			const name = data.get('name');
-			if (typeof name !== 'string') return;
-			updateBookmark(name);
+		on:confirm={async (event) => {
+			const formData = event.detail;
+			if (!formData) return;
+
+			try {
+				const data = Object.fromEntries(formData);
+				const validation = BLUEPRINT_FORM_SCHEMA.parse(data);
+				const tags = new Set(
+					validation.tags
+						.trim()
+						.replace(/\s+/, ' ')
+						.split(' ')
+						.map((tag) => tag.replace(/#+/, ''))
+				);
+				await updateBookmark(validation.name, tags);
+			} catch (err) {
+				throw new Error('Invalid blueprint data - edit');
+			} finally {
+				toEditBookmark = undefined;
+			}
 		}}
 		on:cancel={() => (toEditBookmark = undefined)}
 	>
@@ -245,6 +268,21 @@
 				type="text"
 				placeholder="Name..."
 				value={toEditBookmark?.meta.name ?? ''}
+				required
+			/>
+		</label>
+		<label class="mt-2 block" for="blueprint-tags">
+			<span class="sr-only">Blueprint tags</span>
+			<input
+				class="w-full rounded-lg bg-stone-200 p-3 text-neutral-800 outline-none transition placeholder:select-none placeholder:text-stone-400 placeholder:transition hover:bg-stone-100 focus-visible:bg-stone-100 focus-visible:placeholder:text-stone-600"
+				id="blueprint-tags"
+				name="tags"
+				type="text"
+				placeholder="#tag..."
+				value={`${Array.from(toEditBookmark?.meta.tags ?? [])
+					.map((tag) => `#${tag}`)
+					.join(' ')}`}
+				pattern={BLUEPRINT_TAGS_REGEX.source}
 			/>
 		</label>
 	</Dialog>

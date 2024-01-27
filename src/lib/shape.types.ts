@@ -1,4 +1,4 @@
-import { Material, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import { Material, MeshBasicMaterial, Vector3 } from 'three';
 
 export const SHAPE: ShapeIdentifier = 'CwRwCwCw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
 
@@ -65,18 +65,9 @@ export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'p', 'y', 'k', 'w'] as const;
 export type ShapeColor = typeof SHAPE_COLORS[number];
 export const SHAPE_COLOR_IDENTIFIERS = [...SHAPE_COLORS, 'u', '-'] as const;
 export type ShapeColorIdentifier = typeof SHAPE_COLOR_IDENTIFIERS[number];
+export type Shape = Array<ShapeLayerData>;
+export type ShapeLayerData = Array<ShapeQuarterData>;
 export type ShapeQuarterData = {
     type: ShapeTypeIdentifier;
     color: ShapeColorIdentifier;
 };
-export type ShapeLayerData = {
-    layerIdentifier: ShapeIdentifier;
-    quarters: Array<ShapeQuarterData>;
-};
-export type Shape = {
-    layers: Array<ShapeLayerData>;
-};
-export type ShapeQuarter = Mesh;
-export type ShapeQuarterMap = Record<ShapeTypeIdentifier, ShapeQuarter | undefined>;
-export type ShapeLayerIndex = 0 | 1 | 2 | 3;
-export type ShapeQuarterIndex = 0 | 1 | 2 | 3;
