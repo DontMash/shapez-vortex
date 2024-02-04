@@ -3,18 +3,12 @@ import type { Actions, PageServerLoad } from './$types';
 import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { decode, update } from '$lib/server/blueprint';
 
-export const load = (({ url }) => {
+export const load = (() => {
     return {
         seo: {
             title: 'Blueprint Viewer',
             description: 'View and interact with the 3D visualization of a blueprint. Explore the blueprints\'s multiple layers and parts.',
             keywords: ['Viewer', '3D', 'Blueprint'],
-            og: {
-                title: 'Blueprint Viewer - View and interact with the 3D visualization of a blueprint',
-                type: 'website',
-                image: `${url.origin}/favicon.png`,
-                url: url.href,
-            },
         },
     };
 }) satisfies PageServerLoad;
@@ -44,6 +38,6 @@ export const actions = {
 
         const viewUrl = new URL('blueprint/view', url.origin);
         viewUrl.searchParams.append('identifier', updatedIdentifier);
-        redirect(301, viewUrl);
+        redirect(303, viewUrl);
     }
 } satisfies Actions;

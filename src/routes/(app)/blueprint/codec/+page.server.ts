@@ -1,20 +1,14 @@
-import { error, fail } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { Blueprint, BlueprintIdentifier } from '$lib/blueprint.types';
 import { decode, encode } from '$lib/server/blueprint';
 
-export const load = (({ url }) => {
+export const load = (() => {
     return {
         seo: {
             title: 'Blueprint Codec',
             description: 'Decode or encode existing blueprints. Make changes within the blueprint to customize it according to your specific requirements.',
             keywords: ['Blueprint', 'Modify', 'Decode', 'Encode'],
-            og: {
-                title: 'Blueprint Code - Decode or encode existing blueprints',
-                type: 'website',
-                image: `${url.origin}/favicon.png`,
-                url: url.href,
-            },
         }
     };
 }) satisfies PageServerLoad;

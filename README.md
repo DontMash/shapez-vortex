@@ -10,7 +10,7 @@
 <h3 align="center">Shapez Visualizer</h3>
 
   <p align="center">
-    A collection of tools to view, share & modify data of the game 
+    A collection of tools to view, share & modify data of the game
     <a href="https://store.steampowered.com/app/2162800/shapez_2/">Shapez 2</a>.
     <br />
     <br />
@@ -138,14 +138,12 @@ To setup, install & develop you will need some tools:
 ## Roadmap
 
 * Library (Public/User) - PocketBase
-  * Hosting & Deployment
-  * Register & Login (Confirmation)
   * Upload (short links per user e.g. */user/dontmash/blueprint/0*)
     * Blueprints
       * Created
       * Updated
       * Data (Identifier)
-      * Title/Name
+      * Name
       * Description
       * Tags
       * Building count
@@ -159,18 +157,14 @@ To setup, install & develop you will need some tools:
     * Shapes
     * Mods
   * User
-    * Created
-    * Updated
-    * Identifier
-    * Displayname
-    * E-Mail
-    * Password
     * Report
     * Following
     * Settings
       * Research-Upgrades
   * Recommended/Popular
 * Blueprints
+  * Clipboard fallback for firefox
+  * Caching/Shorting for larger blueprints (no upload)
   * Library
     * Search
     * Filter
@@ -188,11 +182,21 @@ To setup, install & develop you will need some tools:
       * List of Buildings
       * Blueprint cost
     * Geometry details
+      * Belt arrows
+      * Pipe supports
+      * Glass material
+  * Simulation?
+    * Shape Input/Output
+    * Step by Step?
   * Builder?
 * Reseach Overview
   * Shape images
   * Share entry
+  * Unlocks
   * Search
+    * Title
+    * Shape
+    * Unlocks
   * Filter
   * Sort
 * Shapes
@@ -220,6 +224,7 @@ To setup, install & develop you will need some tools:
   * Inputs/Outputs for blueprint
   * Process chain
 * Quality Assurance
+  * Better form errors
   * Responsiveness (Device/Platform)
   * Accessibility
     * WCAG v2.2

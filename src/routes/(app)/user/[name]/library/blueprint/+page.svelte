@@ -3,10 +3,11 @@
 	import type { PageData } from './$types';
 	import {
 		BLUEPRINT_DEFAULT_NAME,
+		BLUEPRINT_FORM_SCHEMA,
+		BLUEPRINT_TAGS_REGEX,
 		type BlueprintData,
 		type BlueprintIdentifier
 	} from '$lib/blueprint.types';
-	import { BLUEPRINT_FORM_SCHEMA, BLUEPRINT_TAGS_REGEX } from '$lib/client/blueprints';
 	import { create } from '$lib/client/user/database';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { share } from '$lib/client/actions/share';
@@ -89,6 +90,7 @@
 			<span class="sr-only">Add</span>
 		</a>
 	</header>
+
 	{#key update}
 		{#await create() then { blueprint }}
 			{#await blueprint.getAll()}

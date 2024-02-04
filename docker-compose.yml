@@ -1,0 +1,31 @@
+services:
+  db:
+    container_name: shapez-base
+    image: shapez-base
+    build:
+      dockerfile: pocketbase.Dockerfile
+    ports: 
+      - 8080:8080
+    volumes:
+      - db-data:/pb/pb_data
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8080/api/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  # backend:
+  #   container_name: shapez-visualizer
+  #   image: shapez-visualizer
+  #   build:
+  #     dockerfile: visualizer.Dockerfile
+  #   ports: 
+  #     - 443:443
+  #   depends_on:
+  #     - db
+      
+volumes:
+  db-data:
+  
+secrets:
+  server-certificate:
+    external: true

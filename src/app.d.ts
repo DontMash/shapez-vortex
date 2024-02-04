@@ -1,9 +1,15 @@
+import PocketBase from 'pocketbase';
+import type { User } from '$lib/user.types';
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			pb: PocketBase;
+			user: User | undefined;
+		}
 		interface PageData {
 			seo?: {
 				title: string;
@@ -11,17 +17,20 @@ declare global {
 				keywords?: Array<string>;
 				og?: {
 					title?: string;
-					type: 'website';
-					image: string;
-					url: string;
-				}
-			}
+					image?: string;
+				};
+			};
+			user: User | undefined;
 		}
 		interface PageState {
 			modal: boolean;
 		}
 		// interface Platform {}
 	}
+}
+
+declare module '$env/static/private' {
+	export const POCKETBASE_URL: string;
 }
 
 export { };

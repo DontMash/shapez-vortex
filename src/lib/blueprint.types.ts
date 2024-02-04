@@ -1,7 +1,14 @@
+import { z } from 'zod';
+
 import type BUILDINGS_METADATA from '$lib/assets/data/buildings-metadata.json';
 
 export const GAME_VERSION = 1033;
 
+export const BLUEPRINT_TAGS_REGEX = /^\s*(#\w+(\s+#\w+)*)?\s*$/;
+export const BLUEPRINT_FORM_SCHEMA = z.object({
+    name: z.string(),
+    tags: z.string().regex(BLUEPRINT_TAGS_REGEX)
+});
 export const BLUEPRINT_FILE_FORMAT = '.spz2bp' as const;
 export const BLUEPRINT_DEFAULT_NAME = 'Untitled blueprint';
 export const BLUEPRINT_EMPTY_DATA = '//8=';
@@ -22,8 +29,8 @@ export type BlueprintData = {
 
 export const BLUEPRINT_IDENTIFIER_PREFIX = 'SHAPEZ2' as const;
 type BlueprintIdentifierPrefix = typeof BLUEPRINT_IDENTIFIER_PREFIX;
-export const BLUEPRINT_IDENTIFIER_VERSION = 1 as const;
-type BlueprintIdentifierVersion = typeof BLUEPRINT_IDENTIFIER_VERSION;
+export const BLUEPRINT_IDENTIFIER_VERSION = 1;
+type BlueprintIdentifierVersion = number;
 export const BLUEPRINT_IDENTIFIER_SEPERATOR = '-' as const;
 type BlueprintIdentifierSeperator = typeof BLUEPRINT_IDENTIFIER_SEPERATOR;
 export const BLUEPRINT_IDENTIFIER_SUFFIX = '$' as const;

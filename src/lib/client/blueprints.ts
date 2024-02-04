@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import type { Action, ActionReturn } from 'svelte/action';
 import {
     type Blueprint,
@@ -495,9 +494,3 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
         },
     } satisfies ActionReturn<Parameters, Attributes>;
 };
-
-export const BLUEPRINT_TAGS_REGEX = /^\s*(#\w+(\s+#\w+)*)?\s*$/;
-export const BLUEPRINT_FORM_SCHEMA = z.object({
-    name: z.string(),
-    tags: z.string().regex(BLUEPRINT_TAGS_REGEX)
-});

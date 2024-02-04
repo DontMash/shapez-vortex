@@ -8,13 +8,13 @@
 	import RESEARCH_DATA from '$lib/assets/data/research-metadata.json';
 </script>
 
-<footer class="mx-auto grid w-full max-w-5xl grid-cols-3 p-4 text-xs" id="footer">
+<footer class="mx-auto grid w-full max-w-5xl grid-cols-3 gap-2 p-4 text-xs" id="footer">
 	<div class="flex items-center">
 		<span>Visit shapez 2 on</span>
 		<ul class="flex divide-x divide-stone-100 leading-none">
 			<li>
 				<a
-					class="inline-flex h-6 w-10 fill-stone-100 px-2"
+					class="inline-flex h-6 w-10 fill-stone-100 px-2 transition-colors hover:fill-cyan-400 focus-visible:fill-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
 					title="Discord"
 					href="https://discord.gg/shapez-2-1000343719314198548"
 					target="_blank"
@@ -26,7 +26,7 @@
 			</li>
 			<li>
 				<a
-					class="inline-flex h-6 w-10 fill-stone-100 px-2"
+					class="inline-flex h-6 w-10 fill-stone-100 px-2 transition-colors hover:fill-cyan-400 focus-visible:fill-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
 					title="Steam"
 					href="https://store.steampowered.com/app/2162800/shapez_2/"
 					target="_blank"
@@ -38,7 +38,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="col-start-2 flex items-center justify-center space-x-[0.25ch]">
+	<div class="flex items-center justify-center space-x-[0.25ch]">
 		<span> Created with </span>
 		<figure class="inline-block w-4 fill-stone-100">
 			<span class="sr-only">heart</span>
@@ -46,7 +46,7 @@
 		</figure>
 		<span> by </span>
 		<a
-			class="inline-block underline transition hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
+			class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
 			href="https://soren.codes"
 			target="_blank"
 			rel="noreferrer"
@@ -54,18 +54,34 @@
 			@DontMash
 		</a>
 	</div>
-	<div class="flex items-center justify-end">
-		<i>
+	<i class="flex space-x-1 items-center justify-end">
+		<a
+			class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
+			title="Github - DontMash - shapez-visualizer"
+			href="https://github.com/DontMash/shapez-visualizer"
+			target="_blank"
+			rel="noreferrer"
+		>
+			v{version}
+		</a>
+		<span>- Game Version {RESEARCH_DATA.GameVersion}</span>
+	</i>
+	<ul class="space-y-1">
+		<li>
 			<a
-				class="inline-block underline transition hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
-				title="Github - DontMash - shapez-visualizer"
-				href="https://github.com/DontMash/shapez-visualizer"
+				class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
+				href="https://tobspr.io/imprint"
 				target="_blank"
-				rel="noreferrer"
+				rel="noreferrer">Imprint</a
 			>
-				v{version}
-			</a>
-			<span>- Game Version {RESEARCH_DATA.GameVersion}</span>
-		</i>
-	</div>
+		</li>
+		<li>
+			<a
+				class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
+				href="https://tobspr.io/privacy"
+				target="_blank"
+				rel="noreferrer">Privacy</a
+			>
+		</li>
+	</ul>
 </footer>

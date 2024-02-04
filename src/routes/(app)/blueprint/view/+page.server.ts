@@ -26,12 +26,6 @@ export const load = (({ url }) => {
                 title: 'Blueprint Viewer',
                 description: 'View and interact with the 3D visualization of a blueprint. Explore the blueprints\'s multiple layers and parts.',
                 keywords: ['Viewer', '3D', 'Blueprint', 'Tool'],
-                og: {
-                    title: 'Blueprint Viewer - View and interact with the 3D visualization of a blueprint',
-                    type: 'website',
-                    image: `${url.origin}/favicon.png`,
-                    url: url.href,
-                },
             },
             blueprint: {
                 identifier,
@@ -58,6 +52,6 @@ export const actions = {
 
         url.searchParams.set('identifier', blueprintIdentifier);
         url.searchParams.set('name', file.name.split(BLUEPRINT_FILE_FORMAT)[0]);
-        redirect(301, url);
+        redirect(303, url);
     }
 } satisfies Actions;

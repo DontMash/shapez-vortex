@@ -3,8 +3,12 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
-	import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
-	import { BLUEPRINT_FORM_SCHEMA, BLUEPRINT_TAGS_REGEX, view } from '$lib/client/blueprints';
+	import {
+		BLUEPRINT_FORM_SCHEMA,
+		BLUEPRINT_TAGS_REGEX,
+		BLUEPRINT_FILE_FORMAT
+	} from '$lib/blueprint.types';
+	import { view } from '$lib/client/blueprints';
 	import { create } from '$lib/client/user/database';
 	import { capture } from '$lib/client/actions/capture';
 	import { copy, paste } from '$lib/client/actions/clipboard';

@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { clear } from '$lib/client/actions/clear';
 	import { share } from '$lib/client/actions/share';
 
 	import ArrowRightAltIcon from '$lib/components/icons/ArrowRightAltIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
 
-	let shapeIdentifierInputElement: HTMLInputElement;
 	let isLoading: boolean;
 </script>
 
@@ -26,14 +24,11 @@
 				required
 				minlength="2"
 				maxlength="35"
-				bind:this={shapeIdentifierInputElement}
 			/>
 			<button
 				class="absolute right-0 top-1/2 mr-1 block w-6 -translate-y-1/2 fill-neutral-800 outline-none transition hover:fill-stone-400 focus:fill-stone-400 peer-placeholder-shown:hidden"
-				type="button"
-				title="Clear"
-				aria-label="Clear search input"
-				use:clear={{ inputElement: shapeIdentifierInputElement }}
+				type="reset"
+				title="Clear search input"
 			>
 				<CloseIcon />
 			</button>

@@ -28,10 +28,17 @@
 			{/if}
 
 			{#if $page.data.seo.og}
-				<meta property="og:title" content={$page.data.seo.og.title ?? $page.data.seo.title} />
-				<meta property="og:type" content={$page.data.seo.og.type} />
-				<meta property="og:image" content={$page.data.seo.og.image} />
-				<meta property="og:url" content={$page.data.seo.og.url} />
+				<meta
+					property="og:title"
+					content={$page.data.seo.og.title ??
+						`${$page.data.seo.title} - ${$page.data.seo.description}`}
+				/>
+				<meta property="og:type" content="website" />
+				<meta
+					property="og:image"
+					content={$page.data.seo.og.image ?? `${$page.url.origin}/favicon.png`}
+				/>
+				<meta property="og:url" content={$page.url.href} />
 			{/if}
 		{/if}
 	{/key}
@@ -50,5 +57,4 @@
 
 	<slot />
 </main>
-
 <Footer />

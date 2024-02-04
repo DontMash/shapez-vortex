@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+
 	import Logo from '$lib/components/Logo.svelte';
 	import ShapeForm from '$lib/components/shape/ShapeForm.svelte';
 	import Toaster from '$lib/components/toast/Toaster.svelte';
 
+	import LoginIcon from '$lib/components/icons/LoginIcon.svelte';
+	import LogoutIcon from '$lib/components/icons/LogoutIcon.svelte';
 	import PersonIcon from '$lib/components/icons/PersonIcon.svelte';
 </script>
 
@@ -20,11 +24,24 @@
 		<div class="pointer-events-auto">
 			<ShapeForm />
 		</div>
-		<div class="pointer-events-auto !ml-auto flex items-center">
-			<a class="button secondary icon-only" title="Profile" href="/profile">
-				<span class="sr-only">Profile</span>
-				<PersonIcon />
-			</a>
+		<div class="pointer-events-auto !ml-auto flex items-center space-x-2">
+			{#if !$page.data.user}
+				<a class="button secondary icon-only" title="Login" href="/login">
+					<span class="sr-only">Login</span>
+					<LoginIcon />
+				</a>
+			{:else}
+				<a class="button secondary icon-only" title="Profile" href="/user">
+					<span class="sr-only">Profile</span>
+					<PersonIcon />
+				</a>
+				<form method="post" action="/logout">
+					<button class="button secondary icon-only" title="Logout">
+						<span class="sr-only">Logout</span>
+						<LogoutIcon />
+					</button>
+				</form>
+			{/if}
 		</div>
 	</nav>
 </header>

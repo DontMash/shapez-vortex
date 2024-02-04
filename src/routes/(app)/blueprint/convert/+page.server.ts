@@ -3,18 +3,12 @@ import type { Actions, PageServerLoad } from './$types';
 import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { update } from '$lib/server/blueprint';
 
-export const load = (({ url }) => {
+export const load = (() => {
     return {
         seo: {
             title: 'Blueprint Converter',
             description: 'Convert existing blueprints to a specific game version',
             keywords: ['Blueprint', 'Convert', 'Update', 'Decode', 'Encode'],
-            og: {
-                title: 'Blueprint Converter - Convert existing blueprints to a specific game version',
-                type: 'website',
-                image: `${url.origin}/favicon.png`,
-                url: url.href,
-            },
         }
     };
 }) satisfies PageServerLoad;

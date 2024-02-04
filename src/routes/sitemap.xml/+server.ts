@@ -1,10 +1,13 @@
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = (({ url }) => {
-    const pages = Object.keys(import.meta.glob('/src/routes/\\(app\\)/**/+page.svelte')).slice(1).map(path => {
-        const page = (path.split('/src/routes/(app)/')[1]).replace('/+page.svelte', '');
-        return page;
-    });
+    const pages = Object.keys(import.meta.glob('/src/routes/\\(app\\)/**/+page.svelte'))
+        .slice(1)
+        .map(path => {
+            const page = (path.split('/src/routes/(app)/')[1]).replace('/+page.svelte', '');
+            return page;
+        })
+        .filter(page => !page.includes('['));
     const headers = {
         'Cache-Control': 'max-age=0, s-maxage=3600',
         'Content-Type': 'application/xml',
@@ -27,14 +30,12 @@ const sitemap = (
 >
     <url>
         <loc>${origin}</loc>
-        <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>
 
   ${pages.map(page => `
     <url>
         <loc>${origin}/${page}</loc>
-        <changefreq>weekly</changefreq>
     </url>
     `).join('')}
 </urlset>`;

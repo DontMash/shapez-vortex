@@ -22,12 +22,6 @@ export const load = (({ url }) => {
                 title: 'Shape Viewer',
                 description: 'View and interact with the 3D visualization of a shape. Explore the shape\'s multiple layers and parts.',
                 keywords: ['Viewer', '3D', 'Shape'],
-                og: {
-                    title: 'Shape Viewer - View and interact with the 3D visualization of a shape',
-                    type: 'website',
-                    image: `${url.origin}/favicon.png`,
-                    url: url.href,
-                },
             },
             shape,
             extend: url.searchParams.get('extend') === 'true',
@@ -42,6 +36,6 @@ export const actions = {
     random: ({ url }) => {
         const identifier = random();
         url.searchParams.set('identifier', identifier);
-        redirect(301, url);
+        redirect(303, url);
     }
 } satisfies Actions;
