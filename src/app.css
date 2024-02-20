@@ -2,31 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-	.button {
-		@apply inline-block rounded-2xl border-2 fill-stone-100 p-3 text-center outline-none transition-colors;
-
-		&[disabled] {
-			@apply pointer-events-none;
-		}
-
-		&.icon-only {
-			@apply h-14 w-14;
-		}
-		&.primary {
-			@apply border-cyan-800 bg-cyan-800 bg-opacity-70 hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50;
-		}
-		&.secondary {
-			@apply border-neutral-800 bg-neutral-800 bg-opacity-50 hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30;
-		}
-		&.danger {
-			@apply border-red-800 bg-red-800 bg-opacity-70 hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50;
-		}
-	}
-}
-
 @layer base {
 	:root {
-		@apply bg-neutral-900 text-stone-100;
+		@apply scroll-pt-64 scroll-smooth fill-base-content;
 	}
 }

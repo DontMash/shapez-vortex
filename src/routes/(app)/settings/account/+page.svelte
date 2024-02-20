@@ -15,73 +15,77 @@
 
 <section class="mx-auto w-full max-w-5xl">
 	<div
-		class="space-y-4 rounded-4xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 p-6 shadow-lg"
+		class="card card-bordered mx-auto w-96 border-base-content border-opacity-20 bg-base-200 shadow-lg"
 	>
-		{#if data.user && data.user.verified}
-			<form method="post" action="/password-reset/?/reset">
-				<input type="hidden" name="email" value={data.user.email} />
-				<button class="button primary h-14 w-full" disabled={isVerificationSuccess}>
-					{#if isResetSuccess}
-						<span class="inline-block h-7 w-7">
+		<div class="card-body">
+			{#if data.user && data.user.verified}
+				<form action="/password-reset/?/reset" method="post">
+					<input type="hidden" name="email" value={data.user.email} />
+					<button class="btn btn-primary btn-block" disabled={isVerificationSuccess}>
+						{#if isResetSuccess}
+							<span class="inline-block h-6 w-6">
+								<DoneIcon />
+							</span>
+						{:else}
+							Request password reset
+						{/if}
+					</button>
+				</form>
+			{:else}
+				<form action="?/requestVerification" method="post">
+					<button class="btn btn-secondary btn-block" disabled={isVerificationSuccess}>
+						{#if isVerificationSuccess}
+							<span class="inline-block h-6 w-6">
+								<DoneIcon />
+							</span>
+						{:else}
+							Request verification
+						{/if}
+					</button>
+				</form>
+			{/if}
+
+			<form class="join" action="?/requestEmail" method="post">
+				<label class="form-control join-item" for="newEmail">
+					<div class="label">
+						<span class="label-text">New email</span>
+					</div>
+					<div class="join">
+						<span
+							class="join-item inline-flex h-12 w-12 items-center justify-center !rounded-l-btn border border-base-content border-opacity-20 bg-base-100 p-2.5"
+						>
+							<MailIcon />
+						</span>
+						<input
+							class="input join-item input-bordered w-full"
+							type="email"
+							name="newEmail"
+							id="newEmail"
+							required
+						/>
+					</div>
+				</label>
+
+				<button class="btn btn-primary join-item self-end" disabled={isEmailSuccess}>
+					{#if isEmailSuccess}
+						<span class="inline-block h-6 w-6">
 							<DoneIcon />
 						</span>
 					{:else}
-						Request password reset
+						Update
 					{/if}
 				</button>
 			</form>
-		{:else}
-			<form method="post" action="?/verification">
-				<button class="button primary h-14 w-full" disabled={isVerificationSuccess}>
-					{#if isVerificationSuccess}
-						<span class="inline-block h-7 w-7">
-							<DoneIcon />
-						</span>
-					{:else}
-						Request verification
-					{/if}
-				</button>
-			</form>
-		{/if}
 
-		<form class="flex items-end space-x-4" method="post" action="?/email">
-			<label
-				class="relative mt-6 flex h-14 w-full rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 leading-none transition-colors focus-within:bg-opacity-80 hover:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
-				for="newEmail"
-			>
-				<span class="absolute left-0 top-0 -translate-y-full pb-1.5 pl-3">New email</span>
-				<span
-					class="inline-block h-full w-14 shrink-0 border-r-2 border-neutral-800 fill-stone-100 p-3"
-				>
-					<MailIcon />
-				</span>
-				<input
-					class="peer h-full w-full bg-transparent pl-3 pr-10 outline-none"
-					type="email"
-					name="newEmail"
-					id="newEmail"
-					required
-				/>
-			</label>
-			<button class="button primary h-14" disabled={isEmailSuccess}>
-				{#if isEmailSuccess}
-					<span class="inline-block h-7 w-7">
-						<DoneIcon />
-					</span>
-				{:else}
-					Update
-				{/if}
-			</button>
-		</form>
-
-		{#if $page.form && !$page.form.success && $page.form.issues}
-			<ul class="inline-block px-3 font-medium italic text-red-700">
-				{#each $page.form.issues as issue}
-					<li>
-						{issue.message}
-					</li>
-				{/each}
-			</ul>
-		{/if}
+			{#if $page.form && !$page.form.success && $page.form.issues}
+				<ul class="text-error inline-block font-medium italic">
+					{#each $page.form.issues as issue}
+						<li>
+							{issue.message}
+						</li>
+					{/each}
+				</ul>
+			{/if}
+		</div>
 	</div>
 </section>

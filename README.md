@@ -7,7 +7,7 @@
     <img src="static/favicon.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Shapez Visualizer</h3>
+<h3 align="center">Shapez Vortex</h3>
 
   <p align="center">
     A collection of tools to view, share & modify data of the game
@@ -58,7 +58,7 @@
 
 [![Shape Viewer][product-image]][product-url]
 
-This project started by passion for the game [Shapez 2](https://store.steampowered.com/app/2162800/shapez_2/). I wanted to have a way to share visual information with other players. Therefore I created this project.
+This project started by passion for the game [Shapez 2](https://store.steampowered.com/app/2162800/shapez_2/). I wanted to provide a tool to share visual information & content with other players, therefore I created this project.
 
 The purpose of this project is to provide a suite of tools to visualize and modify data used by or generated from the game.
 You can also share content related to the game with other users.
@@ -137,34 +137,19 @@ To setup, install & develop you will need some tools:
 
 ## Roadmap
 
-* Library (Public/User) - PocketBase
-  * Upload (short links per user e.g. */user/dontmash/blueprint/0*)
-    * Blueprints
-      * Created
-      * Updated
-      * Data (Identifier)
-      * Name
-      * Description
-      * Tags
-      * Building count
-      * Island count
-      * List of Buildings
-      * Blueprint cost
-      * Image/-s (Preview/Icon?)
-      * Follow counter
-      * Download counter
-      * Report
-    * Shapes
-    * Mods
-  * User
-    * Report
-    * Following
-    * Settings
-      * Research-Upgrades
+* User
+  * Report
+  * Following
+  * Settings
+    * Research-Upgrades
   * Recommended/Popular
 * Blueprints
-  * Clipboard fallback for firefox
-  * Caching/Shorting for larger blueprints (no upload)
+  * Upload
+    * Combobox for tags
+    * Richtext for description
+    * Search/List
+    * Update
+    * Report
   * Library
     * Search
     * Filter
@@ -185,10 +170,12 @@ To setup, install & develop you will need some tools:
       * Belt arrows
       * Pipe supports
       * Glass material
+    * Drag & Drop to view file
   * Simulation?
     * Shape Input/Output
     * Step by Step?
   * Builder?
+  * Steam Workshop link
 * Reseach Overview
   * Shape images
   * Share entry
@@ -200,6 +187,7 @@ To setup, install & develop you will need some tools:
   * Filter
   * Sort
 * Shapes
+  * Upload
   * Library
     * Search
     * Filter
@@ -219,12 +207,16 @@ To setup, install & develop you will need some tools:
       * Colors
     * New models
     * Builder?
+* Mods
 * Savegame editor
 * Solution calculator
   * Inputs/Outputs for blueprint
   * Process chain
 * Quality Assurance
-  * Better form errors
+  * Command+K
+  * Better form responses & errors
+  * Content filters (Profanity, ...)
+  * Link to github issues
   * Responsiveness (Device/Platform)
   * Accessibility
     * WCAG v2.2
@@ -236,6 +228,7 @@ To setup, install & develop you will need some tools:
     * Client-Side
     * Code coverage
     * Visuals
+* KO-FI
 
 See the [open issues][issues-url] for a full list of proposed features (and known issues).
 

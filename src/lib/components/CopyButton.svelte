@@ -1,22 +1,16 @@
 <script lang="ts">
-	import CopyIcon from './icons/CopyIcon.svelte';
-
 	import { copy } from '$lib/client/actions/clipboard';
 
-	type Color = 'light' | 'dark';
+	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 
 	export let value: any;
-	export let color: Color = 'light';
 
-	const colorVariants: Record<Color, string> = {
-		light: 'fill-stone-200 hover:fill-stone-100 focus-visible:fill-stone-100',
-		dark: 'fill-neutral-900 hover:fill-neutral-800 focus-visible:fill-neutral-800'
-	};
 	let isLoading = false;
 </script>
 
 <button
-	class={`${colorVariants[color]} h-6 w-6 outline-none transition`}
+	class="btn btn-accent btn-square fill-accent-content data-[loading=true]:animate-spin"
+	data-loading={isLoading}
 	type="button"
 	title="Copy"
 	on:click={() => (isLoading = true)}
@@ -24,7 +18,7 @@
 	on:copy={() => (isLoading = false)}
 >
 	<span class="sr-only">Copy</span>
-	<div class="data-[loading=true]:animate-spin" data-loading={isLoading}>
+	<span class="inline-block h-6 w-6">
 		<CopyIcon />
-	</div>
+	</span>
 </button>

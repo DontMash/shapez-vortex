@@ -27,4 +27,5 @@ export interface User extends RecordModel {
     displayname: string;
     email: string;
     verified: boolean;
+    blueprints: Array<string>;
 };

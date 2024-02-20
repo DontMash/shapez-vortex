@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import type { ShapeData } from '$lib/shape.types';
 	import { view } from '$lib/client/shapes';
-	import { create } from '$lib/client/user/database';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
 
-	import Loading from '$lib/components/Loading.svelte';
-	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
-	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
+	import ArrowRightAltIcon from '$lib/components/icons/ArrowRightAltIcon.svelte';
+	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 	import FullscreenIcon from '$lib/components/icons/FullscreenIcon.svelte';
 	import FullscreenExitIcon from '$lib/components/icons/FullscreenExitIcon.svelte';
@@ -26,45 +24,16 @@
 	let viewer: HTMLElement;
 	let isLoading = true;
 	let isFullscreen = false;
-	let isBookmark = false;
-
-	async function onBookmark() {
-		const { shape } = await create();
-		const { add, remove } = shape;
-
-		if (isBookmark) {
-			await remove(data.identifier);
-		} else {
-			await add(data);
-		}
-		await updateBookmark();
-	}
-	async function updateBookmark() {
-		const { shape } = await create();
-		const { has } = shape;
-
-		isBookmark = await has(data.identifier);
-	}
-
-	onMount(async () => {
-		await updateBookmark();
-	});
 </script>
 
 <figure class="relative" bind:this={viewer}>
 	<div class="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 justify-center space-x-4 p-4">
-		<div
-			class="flex divide-x-2 divide-neutral-800 overflow-hidden rounded-2xl border-2 border-neutral-800"
-		>
-			<form class="group" action="/shape">
+		<div class="join">
+			<form class="btn btn-square btn-primary join-item" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
 				<input name="extend" type="hidden" value={!isExtended} />
 				<input name="expand" type="hidden" value={isExpanded} />
-				<button
-					class="inline-flex h-14 w-14 items-center justify-center bg-stone-200 fill-neutral-900 p-3 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
-					title="Extend layers"
-					type="submit"
-				>
+				<button class="h-full w-full p-2.5" title="Extend layers" type="submit">
 					<span class="sr-only">Extend layers</span>
 					{#if isExtended}
 						<LayersIcon />
@@ -73,15 +42,11 @@
 					{/if}
 				</button>
 			</form>
-			<form class="group" action="/shape">
+			<form class="btn btn-square btn-primary join-item" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
 				<input name="extend" type="hidden" value={isExtended} />
 				<input name="expand" type="hidden" value={!isExpanded} />
-				<button
-					class="inline-flex h-14 w-14 items-center justify-center bg-stone-200 fill-neutral-900 p-3 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
-					title="Expand quarters"
-					type="submit"
-				>
+				<button class="h-full w-full p-2.5" title="Expand quarters" type="submit">
 					<span class="sr-only">Expand quarters</span>
 					{#if isExpanded}
 						<LayersClearIcon />
@@ -90,22 +55,21 @@
 					{/if}
 				</button>
 			</form>
-			<form class="group" method="post" action="/shape/?/random">
-				<button
-					class="inline-flex h-14 w-14 items-center justify-center bg-stone-200 fill-neutral-900 p-3 text-neutral-800 outline-none transition focus-within:bg-stone-100 hover:bg-stone-100 active:bg-stone-300"
-					title="Randomize shape"
-					type="submit"
-				>
+			<form
+				class="btn btn-square btn-primary join-item"
+				method="post"
+				action="/shape/?/random"
+			>
+				<button class="h-full w-full p-2.5" title="Randomize shape" type="submit">
 					<span class="sr-only">Randomize shape</span>
 					<ShuffleIcon />
 				</button>
 			</form>
 		</div>
-		<div
-			class="flex divide-x-2 divide-neutral-800 overflow-hidden rounded-2xl border-2 border-neutral-800"
-		>
+
+		<div class="join">
 			<button
-				class="h-14 w-14 bg-cyan-500 fill-neutral-900 p-3 focus-within:bg-cyan-400 hover:bg-cyan-400 active:bg-cyan-600"
+				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
 				title="Copy shape"
 				use:copy={{ value: data.identifier }}
 			>
@@ -113,7 +77,7 @@
 				<CopyIcon />
 			</button>
 			<button
-				class="h-14 w-14 bg-cyan-500 fill-neutral-900 p-3 focus-within:bg-cyan-400 hover:bg-cyan-400 active:bg-cyan-600"
+				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
 				type="button"
 				title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
 				use:fullscreen={{ fullscreenElement: viewer }}
@@ -126,35 +90,51 @@
 					<FullscreenExitIcon />
 				{/if}
 			</button>
-			<form class="group" action="/shape">
+			<form
+				class="btn btn-square btn-secondary join-item fill-secondary-content"
+				action="/shape"
+			>
 				<input name="identifier" type="hidden" value={data.identifier} />
-				<button
-					class="inline-flex h-14 w-14 items-center justify-center bg-cyan-500 fill-neutral-900 p-3 transition focus-within:bg-cyan-400 hover:bg-cyan-400 active:bg-cyan-600"
-					title="Reset controls"
-					type="submit"
-				>
+				<button class="h-full w-full p-2.5" title="Reset controls" type="submit">
 					<span class="sr-only">Reset controls</span>
 					<RestartAltIcon />
 				</button>
 			</form>
 		</div>
-		<div
-			class="flex divide-x-2 divide-neutral-800 overflow-hidden rounded-2xl border-2 border-neutral-800"
-		>
-			<button
-				class="h-14 w-14 bg-neutral-950 fill-stone-100 p-3 focus-within:bg-neutral-900 hover:bg-neutral-900 active:bg-black"
-				title={`${isBookmark ? 'Add to' : 'Remove from'} library`}
-				on:click={() => onBookmark()}
+
+		<form class="join">
+			<label
+				class="form-control join-item relative flex"
+				for="shape-identifier"
+				aria-label="Shape identifier"
 			>
-				<span class="sr-only">{isBookmark ? 'Add to' : 'Remove from'} library</span>
-				{#if !isBookmark}
-					<BookmarkIcon />
-				{:else}
-					<BookmarkFilledIcon />
-				{/if}
+				<input
+					class="peer input join-item input-bordered pr-12"
+					type="text"
+					id="shape-identifier"
+					name="identifier"
+					placeholder="Shape code..."
+					value={$page.data.shape?.identifier ?? ''}
+					required
+					minlength="2"
+					maxlength="35"
+				/>
+				<div class="absolute right-2 top-1/2 -translate-y-1/2 peer-placeholder-shown:hidden">
+					<button
+						class="btn btn-square btn-ghost btn-sm p-1"
+						type="reset"
+						title="Clear shape input"
+					>
+						<CloseIcon />
+					</button>
+				</div>
+			</label>
+			<button class="btn btn-square btn-accent join-item fill-accent-content p-2.5">
+				<ArrowRightAltIcon />
 			</button>
-		</div>
+		</form>
 	</div>
+
 	<div class="aspect-h-3 aspect-w-4">
 		<canvas
 			class="bg-neutral-900 outline-none data-[loading=true]:pointer-events-none"
@@ -164,12 +144,14 @@
 			on:load={() => (isLoading = false)}
 		/>
 	</div>
+
 	{#if isLoading}
 		<div
 			class="absolute bottom-auto left-1/2 right-auto top-1/2 h-auto w-auto -translate-x-1/2 -translate-y-1/2"
 		>
-			<Loading />
+			<span class="loading loading-spinner loading-lg" />
 		</div>
 	{/if}
+
 	<figcaption class="sr-only">Shape Viewer: {data.identifier}</figcaption>
 </figure>

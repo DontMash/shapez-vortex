@@ -10,12 +10,10 @@
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b-2 border-neutral-800 border-opacity-50 px-6 pb-4"
-	>
+	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4">
 		<hgroup>
 			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6 fill-stone-100">
+				<span class="inline-block h-6 w-6">
 					<DataObjectIcon />
 				</span>
 				<span>
@@ -29,18 +27,18 @@
 		</hgroup>
 	</header>
 
-	<form
-		class="space-y-2 rounded-4xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 p-6 shadow-lg"
-		method="post"
-		action="?/update"
-	>
-		<label
-			class="flex divide-x-2 divide-neutral-800 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 transition-colors focus-within:bg-opacity-80 hover:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
-			for="blueprint-version"
-		>
-			<span class="shrink-0 px-6 py-3"> Blueprint version </span>
+	<form class="join join-vertical w-full" method="post" action="?/update">
+		<label class="form-control join-item" for="blueprint-version">
+			<div class="label">
+				<span class="label-text"> Blueprint version </span>
+				{#if $page.form && $page.form.invalid && $page.form.identifier}
+					<span class="label-text-alt font-medium italic text-error">
+						Blueprint identifier is invalid
+					</span>
+				{/if}
+			</div>
 			<input
-				class="w-full bg-transparent px-6 outline-none placeholder:select-none placeholder:text-stone-400 focus-visible:placeholder:text-stone-600"
+				class="input input-lg input-bordered rounded-b-none"
 				name="blueprint-version"
 				id="blueprint-version"
 				type="text"
@@ -50,13 +48,10 @@
 				required
 			/>
 		</label>
-		<label
-			class="group relative flex h-60 flex-col rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 pl-6 pt-4 transition-colors focus-within:bg-opacity-80 hover:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
-			for="blueprint-identifier-update"
-		>
-			<span class="sr-only">Blueprint identifier</span>
+
+		<label class="form-control join-item h-80" for="blueprint-identifier-update">
 			<textarea
-				class="h-full w-full resize-none overflow-y-auto bg-transparent outline-none placeholder:select-none placeholder:text-stone-400 focus-visible:placeholder:text-stone-600"
+				class="textarea textarea-bordered textarea-lg resize-none rounded-none h-full w-full"
 				name="blueprint-identifier"
 				id="blueprint-identifier-update"
 				placeholder="Blueprint identifier..."
@@ -65,26 +60,22 @@
 					: ''}
 				required
 			/>
+			<span class="sr-only">Blueprint identifier</span>
 		</label>
-		{#if $page.form && $page.form.invalid && $page.form.identifier}
-			<output class="mt-2 inline-block font-medium italic text-red-700"
-				>Blueprint identifier is invalid</output
-			>
-		{/if}
-		<button class="button primary w-full" title="Update blueprint" type="submit">Update</button>
+		<button class="btn btn-primary join-item" title="Update blueprint" type="submit">Update</button>
 	</form>
 
 	{#if $page.form && $page.form.success && $page.form.identifier}
 		<div
-			class="group relative mt-4 rounded-4xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 px-6 pt-6 shadow-lg"
+			class="mt-16 relative group"
 		>
-			<p class="h-80 overflow-y-auto break-words">
+			<p class="h-80 textarea textarea-lg textarea-bordered break-words overflow-y-auto">
 				{$page.form.identifier}
 			</p>
 			<div
-				class="absolute right-12 top-6 opacity-0 transition focus-within:opacity-100 group-hover:opacity-100"
+				class="absolute right-8 top-4 opacity-0 transition focus-within:opacity-100 group-hover:opacity-100"
 			>
-				<CopyButton value={$page.form.identifier} color="light" />
+				<CopyButton value={$page.form.identifier} />
 			</div>
 		</div>
 	{/if}

@@ -14,14 +14,14 @@
 	<aside>
 		<nav>
 			{#key $page.url}
-				<ul class="space-y-2 pr-8">
+				<ul class="menu pr-4 pl-0 py-0">
 					{#each data.pages as page}
 						<li>
 							<a
-								class={`inline-block w-full rounded-2xl border-2 outline-none transition-colors px-4 py-2 ${
+								class={`${
 									isCurrent(page.path)
-										? 'border-cyan-800 bg-cyan-800 bg-opacity-70 hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-opacity-50'
-										: 'border-neutral-800 bg-neutral-800 bg-opacity-50 hover:bg-opacity-80 focus-visible:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30'
+										? 'bg-base-300 bg-opacity-20'
+										: ''
 								}`}
 								href={page.path}>{capitalize(page.name)}</a
 							>
@@ -31,10 +31,11 @@
 			{/key}
 		</nav>
 	</aside>
+
 	<div>
 		{#if $page.data.seo}
 			<header
-				class="mb-12 flex w-full items-end space-x-4 border-b-2 border-neutral-800 border-opacity-50 px-6 pb-4"
+				class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
 			>
 				<h2 class="text-lg font-bold">
 					{$page.data.seo.title}

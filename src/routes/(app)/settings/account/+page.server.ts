@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (() => {
@@ -13,16 +13,16 @@ export const load = (() => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    verification: async ({ locals }) => {
+    requestVerification: async ({ locals }) => {
         if (!locals.user) {
-            redirect(303, 'login');
+            return fail(401);
         }
         await locals.pb.collection('users').requestVerification(locals.user.email);
         return { success: true };
     },
-    email: async ({ locals, request }) => {
+    requestEmail: async ({ locals, request }) => {
         if (!locals.user) {
-            redirect(303, 'login');
+            return fail(401);
         }
         const formData = await request.formData();
         const entries = Object.fromEntries(formData);

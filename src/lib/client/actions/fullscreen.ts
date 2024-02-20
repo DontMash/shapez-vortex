@@ -1,7 +1,7 @@
 import screenfull from 'screenfull';
 import type { Action, ActionReturn } from 'svelte/action';
 
-import { ToastType, add } from '$lib/client/toast/toast.service';
+import { add } from '$lib/client/toast/toast.service';
 
 type Parameters = { fullscreenElement: HTMLElement; };
 type Attributes = {
@@ -17,13 +17,13 @@ export const fullscreen: Action<HTMLButtonElement, Parameters> = (button, params
         button.dispatchEvent(new CustomEvent('change', { detail: screenfull.isFullscreen }));
     });
     screenfull.on('error', () => {
-        add('Fullscreen error', 3000, ToastType.Error);
+        add('Fullscreen error', 3000, 'ERROR');
     });
 
     function toggle() {
         screenfull.isEnabled
             ? screenfull.toggle(fullscreenElement)
-            : add('Fullscreen not available', 3000, ToastType.Error);
+            : add('Fullscreen not available', 3000, 'ERROR');
     }
 
     return {

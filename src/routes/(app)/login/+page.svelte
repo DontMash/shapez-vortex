@@ -19,12 +19,10 @@
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b-2 border-neutral-800 border-opacity-50 px-6 pb-4"
-	>
+	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4">
 		<hgroup>
 			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6 fill-stone-100">
+				<span class="inline-block h-6 w-6">
 					<LoginIcon />
 				</span>
 				<span>
@@ -34,93 +32,90 @@
 		</hgroup>
 	</header>
 
-	<form
-		class="grid auto-rows-auto grid-cols-2 gap-x-6 gap-y-2 rounded-4xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-30 p-6 shadow-lg"
-		method="post"
-		action="?/login"
+	<div
+		class="card card-bordered mx-auto w-96 border-base-content border-opacity-20 bg-base-200 shadow-lg"
 	>
-		{#if getRedirectParam($page)}
-			<input type="hidden" name="redirect" value={getRedirectParam($page)} />
-		{/if}
-		<label
-			class="relative mt-6 flex h-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 leading-none transition-colors focus-within:bg-opacity-80 hover:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
-			for="username"
-		>
-			<span class="absolute left-0 top-0 -translate-y-full pb-1.5 pl-3">Username</span>
-			<span
-				class="inline-block h-full w-14 shrink-0 border-r-2 border-neutral-800 fill-stone-100 p-3"
-			>
-				<PersonIcon />
-			</span>
-			<input
-				class="peer h-full w-full bg-transparent pl-3 pr-10 outline-none"
-				type="text"
-				name="username"
-				id="username"
-				required
-				value={$page.form && !$page.form.success ? $page.form.data.username : null}
-				pattern={USERNAME_REGEX.source}
-			/>
-		</label>
-		<label
-			class="relative mt-6 flex h-14 rounded-2xl border-2 border-neutral-800 bg-neutral-800 bg-opacity-50 leading-none transition-colors focus-within:bg-opacity-80 hover:bg-opacity-80 active:bg-neutral-900 active:bg-opacity-30"
-			for="password"
-		>
-			<span class="absolute left-0 top-0 -translate-y-full pb-1.5 pl-3">Password</span>
-			<span
-				class="inline-block h-full w-14 shrink-0 border-r-2 border-neutral-800 fill-stone-100 p-3"
-			>
-				<PasswordIcon />
-			</span>
-			<input
-				class="peer h-full w-full bg-transparent pl-3 pr-12 outline-none"
-				type={isPasswordHidden ? 'password' : 'text'}
-				name="password"
-				id="password"
-				value={$page.form && !$page.form.success ? $page.form.data.password : null}
-				placeholder=""
-				required
-				minlength={PASSWORD_MIN_LENGTH}
-			/>
-			<button
-				class="absolute right-0 top-1/2 mr-3 w-6 -translate-y-1/2 fill-stone-100 peer-placeholder-shown:hidden"
-				type="button"
-				title={isPasswordHidden ? 'Show password' : 'Hide password'}
-				on:click={() => (isPasswordHidden = !isPasswordHidden)}
-			>
-				<span class="sr-only">{isPasswordHidden ? 'Show' : 'Hide'}</span>
-				{#if isPasswordHidden}
-					<VisibilityIcon />
-				{:else}
-					<VisibilityOffIcon />
-				{/if}
-			</button>
-		</label>
-		<button class="button primary col-span-2 mt-6">Login</button>
-		{#if $page.form && !$page.form.success && $page.form.issues}
-			<ul class="inline-block px-3 font-medium italic text-red-700">
-				{#each $page.form.issues as issue}
-					<li>
-						{issue.message}
-					</li>
-				{/each}
-			</ul>
-		{/if}
-		<span class="px-3 pt-3">
-			<a
-				class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
-				href="/register"
-			>
-				Create an account?
-			</a>
-		</span>
-		<span class="px-3 pt-3 text-right">
-			<a
-				class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
-				href="/password-reset"
-			>
-				Forgot your password?
-			</a>
-		</span>
-	</form>
+		<form class="card-body" action="?/login" method="post">
+			{#if getRedirectParam($page)}
+				<input type="hidden" name="redirect" value={getRedirectParam($page)} />
+			{/if}
+
+			<label class="form-control" for="username">
+				<div class="label">
+					<span class="label-text">Username</span>
+				</div>
+				<div class="join">
+					<span
+						class="join-item inline-flex h-12 w-12 items-center justify-center border border-base-content border-opacity-20 bg-base-100 p-2.5"
+					>
+						<PersonIcon />
+					</span>
+					<input
+						class="input join-item input-bordered w-full"
+						type="text"
+						name="username"
+						id="username"
+						required
+						value={$page.form && !$page.form.success ? $page.form.data.username : null}
+						pattern={USERNAME_REGEX.source}
+					/>
+				</div>
+			</label>
+
+			<label class="form-control" for="password">
+				<div class="label">
+					<span class="label-text">Password</span>
+				</div>
+				<div class="join relative">
+					<span
+						class="join-item inline-flex h-12 w-12 items-center justify-center border border-base-content border-opacity-20 bg-base-100 p-2.5"
+					>
+						<PasswordIcon />
+					</span>
+					<input
+						class="input join-item input-bordered w-full !rounded-r-btn pr-12"
+						type={isPasswordHidden ? 'password' : 'text'}
+						name="password"
+						id="password"
+						value={$page.form && !$page.form.success ? $page.form.data.password : null}
+						placeholder=""
+						required
+						minlength={PASSWORD_MIN_LENGTH}
+					/>
+					<div class="absolute right-2 top-1/2 -translate-y-1/2">
+						<button
+							class="btn btn-square btn-ghost btn-sm"
+							type="button"
+							title={isPasswordHidden ? 'Show password' : 'Hide password'}
+							on:click={() => (isPasswordHidden = !isPasswordHidden)}
+						>
+							<span class="sr-only">{isPasswordHidden ? 'Show' : 'Hide'}</span>
+							<span class="inline-block h-6 w-6">
+								{#if isPasswordHidden}
+									<VisibilityOffIcon />
+								{:else}
+									<VisibilityIcon />
+								{/if}
+							</span>
+						</button>
+					</div>
+				</div>
+			</label>
+
+			{#if $page.form && !$page.form.success && $page.form.issues}
+				<ul class="inline-block font-medium italic text-error">
+					{#each $page.form.issues as issue}
+						<li>
+							{issue.message}
+						</li>
+					{/each}
+				</ul>
+			{/if}
+
+			<button class="btn btn-primary my-4">Login</button>
+
+			<a class="link link-accent" href="/register"> Create an account? </a>
+			<a class="link link-accent" href="/password-reset"> Forgot your password? </a>
+		</form>
+	</div>
 </section>

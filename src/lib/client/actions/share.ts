@@ -1,5 +1,5 @@
 import type { Action, ActionReturn } from 'svelte/action';
-import { ToastType, add } from '../toast/toast.service';
+import { add } from '../toast/toast.service';
 
 const TOAST_DURATION = 3000;
 
@@ -9,7 +9,7 @@ type ShareParameters = {
 type ShareAttributes = {
     'on:share': (e: CustomEvent<string>) => void;
 };
-export const share: Action<HTMLButtonElement, ShareParameters> = (button, params) => {
+export const share: Action<HTMLButtonElement, ShareParameters | undefined> = (button, params) => {
     button.addEventListener('click', () => onShare());
 
     function onShare() {
@@ -21,7 +21,7 @@ export const share: Action<HTMLButtonElement, ShareParameters> = (button, params
                 button.dispatchEvent(new CustomEvent('share', { detail: link }));
             })
             .catch(() => {
-                add('Cannot copy link!', TOAST_DURATION, ToastType.Error);
+                add('Cannot copy link!', TOAST_DURATION, 'ERROR');
             });
     }
 

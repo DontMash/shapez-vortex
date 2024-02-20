@@ -1,14 +1,15 @@
 <script lang="ts">
+	import '../app.css';
 	import { page } from '$app/stores';
+	import { add } from '$lib/client/toast/toast.service';
 
-	import '../../app.css';
-	import { ToastType, add } from '$lib/client/toast/toast.service';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
+	import Toaster from '$lib/components/toast/Toaster.svelte';
 
 	function onError(event: Event) {
 		const errorEvent = event as ErrorEvent;
-		add(errorEvent.error.message, 3000, ToastType.Error);
+		add(errorEvent.message ?? 'Error', 3000, 'ERROR');
 	}
 	const BASE_KEYWORDS = new Set(['Shapez', 'Shapez 2', 'Visualization', 'Tools']);
 	function getKeywords(pageKeywords: Array<string>): Array<string> {
@@ -47,7 +48,7 @@
 
 <Header />
 <main
-	class="flex min-h-[calc(100vh_-_8rem)] flex-col overflow-y-auto overflow-x-hidden px-4 pb-32 pt-8"
+	class="flex min-h-[calc(100vh_-_116px)] flex-col overflow-y-auto overflow-x-hidden px-4 pb-32 pt-8"
 >
 	{#key $page.data}
 		{#if $page.data.seo?.title}
@@ -57,4 +58,5 @@
 
 	<slot />
 </main>
+<Toaster />
 <Footer />

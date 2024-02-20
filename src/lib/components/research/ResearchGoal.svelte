@@ -4,7 +4,7 @@
 	export let data: ResearchGoal;
 </script>
 
-<figure class="space-y-2">
+<div class="space-y-2">
 	<div class="flex space-x-4">
 		<a class="min-w-fit" title="View shape" href={`/shape?identifier=${data.GoalShape}`}>
 			<img width="96" height="96" src="/placeholder.png" alt={`Shape: ${data.GoalShape}`} />
@@ -18,7 +18,7 @@
 			{/if}
 			{#if data.GoalShape}
 				<a
-					class="break-all font-medium text-cyan-500 underline hover:text-cyan-400 focus-visible:text-cyan-400 active:text-cyan-600 transition-colors"
+					class="link link-primary break-all"
 					title="View shape"
 					href={`/shape?identifier=${data.GoalShape}`}
 				>
@@ -27,7 +27,7 @@
 			{/if}
 		</div>
 	</div>
-	<p class="text-neutral-600">
+	<p class="text-base-300">
 		{@html data.Description}
 	</p>
-</figure>
+</div>

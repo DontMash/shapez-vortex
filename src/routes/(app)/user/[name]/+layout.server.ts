@@ -4,7 +4,7 @@ import type { User } from '$lib/user.types';
 
 export const load = (async ({ locals, params }) => {
     try {
-        const user = await locals.pb.collection('users').getFirstListItem<User>(`username="${params.name}"`);
+        const user = await locals.pb.collection('users').getFirstListItem<User>(`username="${params.name}"`, { expand: 'blueprints,blueprints.tags' });
         return {
             seo: {
                 title: user.displayname,
@@ -14,7 +14,6 @@ export const load = (async ({ locals, params }) => {
             profile: user,
         };
     } catch (err) {
-        console.error(err);
         error(404, 'User not found');
     }
 }) satisfies LayoutServerLoad;

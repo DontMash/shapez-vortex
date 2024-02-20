@@ -1,4 +1,4 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { z } from 'zod';
 import { USERNAME_REGEX } from '$lib/user.types';
@@ -14,9 +14,9 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-    displayname: async ({ locals, request }) => {
+    updateDisplayname: async ({ locals, request }) => {
         if (!locals.user) {
-            redirect(303, 'login');
+            return fail(401);
         }
         if (!locals.user.verified) {
             return fail(400, { invalid: true, issues: [{ message: 'User not verified' }] });

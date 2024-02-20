@@ -1,87 +1,115 @@
 <script lang="ts">
 	import { version } from '$app/environment';
 
-	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
 	import DiscordIcon from '$lib/components/icons/DiscordIcon.svelte';
+	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
+	import NorthIcon from '$lib/components/icons/NorthIcon.svelte';
 	import SteamIcon from '$lib/components/icons/SteamIcon.svelte';
 
 	import RESEARCH_DATA from '$lib/assets/data/research-metadata.json';
 </script>
 
-<footer class="mx-auto grid w-full max-w-5xl grid-cols-3 gap-2 p-4 text-xs" id="footer">
-	<div class="flex items-center">
-		<span>Visit shapez 2 on</span>
-		<ul class="flex divide-x divide-stone-100 leading-none">
-			<li>
-				<a
-					class="inline-flex h-6 w-10 fill-stone-100 px-2 transition-colors hover:fill-cyan-400 focus-visible:fill-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
-					title="Discord"
-					href="https://discord.gg/shapez-2-1000343719314198548"
-					target="_blank"
-					rel="noreferrer"
-				>
-					<span class="sr-only">Discord</span>
-					<DiscordIcon />
-				</a>
-			</li>
-			<li>
-				<a
-					class="inline-flex h-6 w-10 fill-stone-100 px-2 transition-colors hover:fill-cyan-400 focus-visible:fill-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
-					title="Steam"
-					href="https://store.steampowered.com/app/2162800/shapez_2/"
-					target="_blank"
-					rel="noreferrer"
-				>
-					<span class="sr-only">Steam</span>
-					<SteamIcon />
-				</a>
-			</li>
-		</ul>
-	</div>
-	<div class="flex items-center justify-center space-x-[0.25ch]">
-		<span> Created with </span>
-		<figure class="inline-block w-4 fill-stone-100">
-			<span class="sr-only">heart</span>
-			<FavoriteFilledIcon />
-		</figure>
-		<span> by </span>
-		<a
-			class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
-			href="https://soren.codes"
-			target="_blank"
-			rel="noreferrer"
-		>
-			@DontMash
-		</a>
-	</div>
-	<i class="flex space-x-1 items-center justify-end">
-		<a
-			class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
-			title="Github - DontMash - shapez-visualizer"
-			href="https://github.com/DontMash/shapez-visualizer"
-			target="_blank"
-			rel="noreferrer"
-		>
-			v{version}
-		</a>
-		<span>- Game Version {RESEARCH_DATA.GameVersion}</span>
-	</i>
-	<ul class="space-y-1">
-		<li>
+<footer class="bg-base-200 p-10 text-base-content" id="footer">
+	<div class="footer mx-auto max-w-5xl px-4">
+		<nav>
+			<h6 class="footer-title">Features</h6>
+			<a class="link-hover link transition-colors hover:text-primary" href="/shape">Shape Viewer</a>
+			<a class="link-hover link transition-colors hover:text-primary" href="/blueprint"
+				>Blueprint Viewer</a
+			>
+			<a class="link-hover link transition-colors hover:text-primary" href="/research"
+				>Research Overview</a
+			>
+		</nav>
+		<nav>
+			<h6 class="footer-title">Legal</h6>
 			<a
-				class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
+				class="link-hover link transition-colors hover:text-primary"
 				href="https://tobspr.io/imprint"
 				target="_blank"
-				rel="noreferrer">Imprint</a
+				rel="noreferrer"
 			>
-		</li>
-		<li>
+				Terms of use
+			</a>
 			<a
-				class="underline transition-colors hover:text-cyan-400 focus-visible:text-cyan-400 focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-stone-100"
+				class="link-hover link transition-colors hover:text-primary"
 				href="https://tobspr.io/privacy"
 				target="_blank"
-				rel="noreferrer">Privacy</a
+				rel="noreferrer"
 			>
-		</li>
-	</ul>
+				Privacy policy
+			</a>
+		</nav>
+		<nav>
+			<h6 class="footer-title">About</h6>
+			<div>
+				Visit shapez 2 on
+				<span class="ml-1 space-x-1 divide-x-2">
+					<a
+						class="inline-block fill-base-content transition-colors hover:fill-primary"
+						title="Discord"
+						href="https://discord.gg/shapez-2-1000343719314198548"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="sr-only">Discord</span>
+						<span class="inline-flex h-6 w-6 items-center justify-center align-middle">
+							<DiscordIcon />
+						</span>
+					</a>
+					<a
+						class="inline-block fill-base-content pl-2 transition-colors hover:fill-primary"
+						title="Steam"
+						href="https://store.steampowered.com/app/2162800/shapez_2/"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="sr-only">Steam</span>
+						<span class="inline-flex h-6 w-6 items-center justify-center align-middle">
+							<SteamIcon />
+						</span>
+					</a>
+				</span>
+			</div>
+			<p>
+				Created with
+				<span class="inline-block h-4 w-4 align-middle">
+					<span class="sr-only">heart</span>
+					<FavoriteFilledIcon />
+				</span>
+				by
+				<a
+					class="link-hover link transition-colors hover:text-primary"
+					href="https://soren.codes"
+					target="_blank"
+					rel="noreferrer"
+				>
+					@DontMash
+				</a>
+			</p>
+			<i>
+				<a
+					class="link-hover link transition-colors hover:text-primary"
+					title="Github - DontMash - shapez-visualizer"
+					href="https://github.com/DontMash/shapez-visualizer"
+					target="_blank"
+					rel="noreferrer"
+				>
+					v{version}
+				</a>
+				<span>- Game Version {RESEARCH_DATA.GameVersion}</span>
+			</i>
+		</nav>
+		<aside class="place-self-center">
+			<a
+				class="btn btn-circle btn-ghost btn-lg border-2 border-base-content fill-base-content"
+				title="To top"
+				href="#top"
+			>
+				<span class="inline-block h-8 w-8">
+					<NorthIcon />
+				</span>
+			</a>
+		</aside>
+	</div>
 </footer>

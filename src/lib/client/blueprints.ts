@@ -186,6 +186,7 @@ const BUILDINGS: Record<BuildingIdentifier, string> = {
 
 type Parameters = {
     blueprint: Blueprint;
+    enableZoom?: boolean | undefined;
     isCenter?: boolean | undefined;
 };
 type Attributes = { 'on:load': (e: CustomEvent<void>) => void; center: () => void; };
@@ -193,7 +194,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
     if (!params) {
         throw new Error('[BLUEPRINT-VIEW] No blueprint view parameters provided');
     }
-    const { blueprint } = params;
+    const { blueprint, enableZoom } = params;
 
     const scene = new Scene();
     const lights = createLights();
@@ -239,6 +240,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
     }
     function createControls(camera: Camera, element: HTMLElement): OrbitControls {
         const controls = new OrbitControls(camera, element);
+        controls.enableZoom = enableZoom !== false;
         controls.enableDamping = true;
         controls.maxPolarAngle = Math.PI * 0.4;
         controls.minDistance = 5;
@@ -477,7 +479,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
 
     return {
         update(params) {
-            const { blueprint: updateBlueprint, isCenter } = params;
+            const { blueprint: updateBlueprint, enableZoom, isCenter } = params;
 
             if (updateBlueprint !== blueprint) {
                 assign(updateBlueprint);
@@ -486,6 +488,7 @@ export const view: Action<HTMLCanvasElement, Parameters, Attributes> = (canvas, 
             if (isCenter) {
                 reset();
             }
+            controls.enableZoom = !!enableZoom;
         },
         destroy() {
             resizeObserver.disconnect();
