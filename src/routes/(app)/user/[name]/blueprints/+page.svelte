@@ -24,10 +24,10 @@
 		</h2>
 	</header>
 
-	{#if data.blueprints.length > 0}
+	{#if data.blueprints && data.blueprints.length > 0}
 		<ol class="space-y-8">
 			{#each data.blueprints as blueprint}
-				{@const preview = data.images[blueprint.id]}
+				{@const preview = data.images && data.images[blueprint.id]}
 				<li>
 					<article
 						class="grid grid-cols-3 divide-x divide-base-content divide-opacity-20 overflow-hidden rounded-box border border-base-content border-opacity-20 bg-base-200 shadow-lg"

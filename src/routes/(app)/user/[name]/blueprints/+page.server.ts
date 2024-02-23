@@ -4,8 +4,8 @@ import type { PageServerLoad } from './$types';
 export const load = (async ({ locals, parent }) => {
     const { profile } = await parent();
     const isYou = profile.id === locals.user?.id;
-    const blueprints = profile.expand?.blueprints as Array<BlueprintData>;
-    const images = blueprints.reduce<Record<string, string>>((result, current) => {
+    const blueprints = profile.expand?.blueprints as Array<BlueprintData> | undefined;
+    const images = blueprints?.reduce<Record<string, string>>((result, current) => {
         if (current.images.length <= 0) return result;
         result[current.id] = locals.pb.files.getUrl(current, current.images[0], { thumb: '600x400' });
         return result;

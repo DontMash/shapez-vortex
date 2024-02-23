@@ -54,10 +54,10 @@ export const BLUEPRINT_TAG_MIN_LENGTH = 3;
 export const BLUEPRINT_TAG_MAX_LENGTH = 16;
 export const BLUEPRINT_TAGS_MAX = 8;
 export const BLUEPRINT_TAGS_REGEX = new RegExp(`^\\s*(\\w{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}}(\\s*,+\\s*\\w{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}})*)?\\s*$`);
-const BLUEPRINT_IMAGE_MAX_FILE_SIZE = 5242880;
+export const BLUEPRINT_IMAGE_MAX_FILE_SIZE = 1048576;
 const BLUEPRINT_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'] as const;
 type BlueprintImageType = typeof BLUEPRINT_IMAGE_TYPES[number];
-export const BLUEPRINT_IMAGES_MAX = 8;
+export const BLUEPRINT_IMAGES_MAX = 4;
 export const BLUEPRINT_UPLOAD_FORM_SCHEMA = z.object({
     title: z.string().regex(BLUEPRINT_TITLE_REGEX),
     description: z.string().max(BLUEPRINT_DESCRIPTION_MAX_LENGTH).optional(),

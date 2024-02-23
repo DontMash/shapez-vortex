@@ -42,7 +42,7 @@
 		</nav>
 		<nav>
 			<h6 class="footer-title">About</h6>
-			<div>
+			<p>
 				Visit shapez 2 on
 				<span class="ml-1 space-x-1 divide-x-2">
 					<a
@@ -53,7 +53,7 @@
 						rel="noreferrer"
 					>
 						<span class="sr-only">Discord</span>
-						<span class="inline-flex h-6 w-6 items-center justify-center align-middle">
+						<span class="inline-flex h-5 w-5 items-center justify-center align-middle">
 							<DiscordIcon />
 						</span>
 					</a>
@@ -65,15 +65,23 @@
 						rel="noreferrer"
 					>
 						<span class="sr-only">Steam</span>
-						<span class="inline-flex h-6 w-6 items-center justify-center align-middle">
+						<span class="inline-flex h-5 w-5 items-center justify-center align-middle">
 							<SteamIcon />
 						</span>
 					</a>
 				</span>
-			</div>
+			</p>
+			<a
+				class="link-hover link transition-colors hover:text-primary"
+				href="https://github.com/DontMash/shapez-vortex/issues"
+				target="_blank"
+				rel="noreferrer"
+			>
+				Report an issue
+			</a>
 			<p>
 				Created with
-				<span class="inline-block h-4 w-4 align-middle">
+				<span class="inline-block h-5 w-5 align-middle">
 					<span class="sr-only">heart</span>
 					<FavoriteFilledIcon />
 				</span>
@@ -87,7 +95,18 @@
 					@DontMash
 				</a>
 			</p>
-			<i>
+		</nav>
+		<aside class="h-full">
+			<a
+				class="btn btn-circle btn-ghost btn-lg place-self-center border-2 border-base-content fill-base-content"
+				title="To top"
+				href="#top"
+			>
+				<span class="inline-block h-8 w-8">
+					<NorthIcon />
+				</span>
+			</a>
+			<i class="mt-auto">
 				<a
 					class="link-hover link transition-colors hover:text-primary"
 					title="Github - DontMash - shapez-visualizer"
@@ -99,17 +118,6 @@
 				</a>
 				<span>- Game Version {RESEARCH_DATA.GameVersion}</span>
 			</i>
-		</nav>
-		<aside class="place-self-center">
-			<a
-				class="btn btn-circle btn-ghost btn-lg border-2 border-base-content fill-base-content"
-				title="To top"
-				href="#top"
-			>
-				<span class="inline-block h-8 w-8">
-					<NorthIcon />
-				</span>
-			</a>
 		</aside>
 	</div>
 </footer>

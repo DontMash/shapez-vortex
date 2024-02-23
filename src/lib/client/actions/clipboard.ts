@@ -20,7 +20,7 @@ export const copy: Action<HTMLButtonElement, CopyParameters> = (button, params) 
 
     function onCopy() {
         const content = typeof copyValue !== 'object' ? copyValue : JSON.stringify(copyValue, null, 4);
-        const onSuccess = () => add('Content copied', TOAST_DURATION);
+        const onSuccess = () => add('Content copied');
         const onFailure = () => add('Cannot copy content!', TOAST_DURATION, 'ERROR');
         const onFinal = () => button.dispatchEvent(new CustomEvent('copy'));
         if (hasCopyClipboard) {

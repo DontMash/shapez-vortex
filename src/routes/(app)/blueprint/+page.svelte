@@ -14,12 +14,13 @@
 	function onFileChange(event: Event) {
 		const input = event.target as HTMLInputElement;
 		input.form?.submit();
-		input.form?.reset();
 	}
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4">
+	<header
+		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
+	>
 		<hgroup>
 			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
 				<span class="inline-block h-6 w-6">
@@ -38,15 +39,22 @@
 	<form action="?/view" method="post">
 		<label class="form-control h-80" for="blueprint-identifier">
 			<div class="label">
-				<span class="label-text sr-only">Blueprint identifier</span>
+				<span class="label-text">Blueprint identifier</span>
+				<i class="label-text-alt">
+					max. 12500 characters
+					<a class="link-hover link transition-colors hover:!text-primary" href="/blueprint/upload"
+						>(limitless)</a
+					>
+				</i>
 			</div>
 			<textarea
-				class={`textarea textarea-bordered textarea-lg h-full w-full resize-none ${
+				class={`textarea textarea-bordered h-full w-full resize-none ${
 					$page.form && $page.form.invalid && $page.form.identifier && 'textarea-error'
 				}`}
 				name="identifier"
 				id="blueprint-identifier"
-				placeholder="Blueprint identifier..."
+				placeholder="SHAPEZ-2 ... $"
+				maxlength="12500"
 				required
 			/>
 			<div class="label">
@@ -61,7 +69,7 @@
 		<div class="join flex">
 			<div class="form-control join-item justify-center bg-secondary">
 				<label class="label cursor-pointer space-x-4 px-4" for="blueprint-update">
-					<span class="label-text shrink-0 text-secondary-content font-bold">Update</span>
+					<span class="label-text shrink-0 font-bold text-secondary-content">Update</span>
 					<span class="sr-only">blueprint to current game version</span>
 					<input type="checkbox" class="toggle" id="blueprint-update" checked />
 				</label>

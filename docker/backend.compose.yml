@@ -1,0 +1,7 @@
+services:
+  backend:
+    container_name: shapez-vortex
+    image: shapez-vortex
+    build: .
+    depends_on:
+      - db

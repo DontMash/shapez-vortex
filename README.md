@@ -161,6 +161,7 @@ To setup, install & develop you will need some tools:
     * Layers
       * Select
       * Toggle
+    * Instancing
     * Overview
       * Building count
       * Island count
@@ -216,7 +217,6 @@ To setup, install & develop you will need some tools:
   * Command+K
   * Better form responses & errors
   * Content filters (Profanity, ...)
-  * Link to github issues
   * Responsiveness (Device/Platform)
   * Accessibility
     * WCAG v2.2

@@ -2,10 +2,12 @@
 	import { page } from '$app/stores';
 	import type { ShapeData } from '$lib/shape.types';
 	import { view } from '$lib/client/shapes';
+	import { capture } from '$lib/client/actions/capture';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
 
 	import ArrowRightAltIcon from '$lib/components/icons/ArrowRightAltIcon.svelte';
+	import CircleIcon from '$lib/components/icons/CircleIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 	import FullscreenIcon from '$lib/components/icons/FullscreenIcon.svelte';
@@ -14,16 +16,53 @@
 	import LayersFilledIcon from '$lib/components/icons/LayersFilledIcon.svelte';
 	import LayersClearFilledIcon from '$lib/components/icons/LayersClearFilledIcon.svelte';
 	import LayersClearIcon from '$lib/components/icons/LayersClearIcon.svelte';
+	import PhotoCameraIcon from '$lib/components/icons/PhotoCameraIcon.svelte';
 	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
 	import ShuffleIcon from '$lib/components/icons/ShuffleIcon.svelte';
+	import { add } from '$lib/client/toast/toast.service';
 
 	export let data: ShapeData;
 	export let isExtended = false;
 	export let isExpanded = false;
 
 	let viewer: HTMLElement;
+	let canvas: HTMLCanvasElement;
 	let isLoading = true;
 	let isFullscreen = false;
+	let isReset = false;
+	let isTop = false;
+
+	$: {
+		if (isTop || isReset) {
+			setTimeout(() => {
+				isReset = false;
+				isTop = false;
+			}, 100);
+		}
+	}
+
+	function onCapture() {
+		canvas.toBlob(
+			(blob) => {
+				if (!blob) return;
+
+				const items = { [blob.type]: blob };
+				const clipboardItem = new ClipboardItem(items);
+				navigator.clipboard
+					.write([clipboardItem])
+					.then(() => add('Copied shape image'))
+					.catch(() => add('Error while creating shape image', 3000));
+			},
+			'image/png',
+			1
+		);
+	}
+	function onReset() {
+		isReset = true;
+	}
+	function onTop() {
+		isTop = true;
+	}
 </script>
 
 <figure class="relative" bind:this={viewer}>
@@ -55,11 +94,7 @@
 					{/if}
 				</button>
 			</form>
-			<form
-				class="btn btn-square btn-primary join-item"
-				method="post"
-				action="/shape/?/random"
-			>
+			<form class="btn btn-square btn-primary join-item" method="post" action="/shape/?/random">
 				<button class="h-full w-full p-2.5" title="Randomize shape" type="submit">
 					<span class="sr-only">Randomize shape</span>
 					<ShuffleIcon />
@@ -78,6 +113,14 @@
 			</button>
 			<button
 				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+				title="Capture shape"
+				on:click={onCapture}
+			>
+				<span class="sr-only">Capture shape</span>
+				<PhotoCameraIcon />
+			</button>
+			<button
+				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
 				type="button"
 				title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
 				use:fullscreen={{ fullscreenElement: viewer }}
@@ -90,12 +133,18 @@
 					<FullscreenExitIcon />
 				{/if}
 			</button>
-			<form
-				class="btn btn-square btn-secondary join-item fill-secondary-content"
-				action="/shape"
+			<button
+				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+				type="button"
+				title="View top down"
+				on:click={onTop}
 			>
+				<span class="sr-only">View top down</span>
+				<CircleIcon />
+			</button>
+			<form class="btn btn-square btn-secondary join-item fill-secondary-content" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
-				<button class="h-full w-full p-2.5" title="Reset controls" type="submit">
+				<button class="h-full w-full p-2.5" title="Reset controls" type="submit" on:click={onReset}>
 					<span class="sr-only">Reset controls</span>
 					<RestartAltIcon />
 				</button>
@@ -140,8 +189,9 @@
 			class="bg-neutral-900 outline-none data-[loading=true]:pointer-events-none"
 			tabindex="-1"
 			data-loading={isLoading}
-			use:view={{ data: data.data, isExtended, isExpanded }}
+			use:view={{ data: data.data, isExtended, isExpanded, isReset, isTop }}
 			on:load={() => (isLoading = false)}
+			bind:this={canvas}
 		/>
 	</div>
 

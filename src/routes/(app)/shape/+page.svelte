@@ -7,5 +7,9 @@
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<ShapeViewer data={data.shape} isExtended={data.extend} isExpanded={data.expand} />
+	<ShapeViewer
+		data={data.shape}
+		isExtended={data.extend}
+		isExpanded={data.expand}
+	/>
 </section>

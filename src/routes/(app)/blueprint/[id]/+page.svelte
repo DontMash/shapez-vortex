@@ -66,21 +66,23 @@
 										<span class="sr-only">Open detail view</span>
 									</span>
 								</button>
-								<div
-									class="absolute left-2 right-2 top-1/2 flex -translate-y-1/2 transform justify-between opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
-								>
-									<a
-										class="btn btn-circle btn-neutral btn-sm fill-neutral-content"
-										href={previousId}
+								{#if images.length > 1}
+									<div
+										class="absolute left-2 right-2 top-1/2 flex -translate-y-1/2 transform justify-between opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
 									>
-										<ChevronLeftIcon />
-										<span class="sr-only">Previous</span>
-									</a>
-									<a class="btn btn-circle btn-neutral btn-sm fill-neutral-content" href={nextId}>
-										<ChevronRightIcon />
-										<span class="sr-only">Next</span>
-									</a>
-								</div>
+										<a
+											class="btn btn-circle btn-neutral btn-sm fill-neutral-content"
+											href={previousId}
+										>
+											<ChevronLeftIcon />
+											<span class="sr-only">Previous</span>
+										</a>
+										<a class="btn btn-circle btn-neutral btn-sm fill-neutral-content" href={nextId}>
+											<ChevronRightIcon />
+											<span class="sr-only">Next</span>
+										</a>
+									</div>
+								{/if}
 							</div>
 
 							<dialog class="modal backdrop-blur" id={modalId} bind:this={modals[index]}>
@@ -101,21 +103,23 @@
 							</dialog>
 						{/each}
 					</div>
-					<div
-						class="badge badge-neutral badge-sm absolute bottom-2 left-1/2 hidden -translate-x-1/2 space-x-1 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 lg:flex"
-					>
-						{#each images as _, index}
-							{@const link = `#image${index + 1}`}
-							{@const name = `Image #${index}`}
-							<a
-								class="relative inline-block h-1.5 w-1.5 rounded-full bg-accent outline-accent transition-transform before:absolute before:-inset-0.5 hover:scale-125 focus-visible:scale-125 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-								href={link}
-								title={name}
-							>
-								<span class="sr-only">{name}</span>
-							</a>
-						{/each}
-					</div>
+					{#if images.length > 1}
+						<div
+							class="badge badge-neutral badge-sm absolute bottom-2 left-1/2 hidden -translate-x-1/2 space-x-1 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 lg:flex"
+						>
+							{#each images as _, index}
+								{@const link = `#image${index + 1}`}
+								{@const name = `Image #${index}`}
+								<a
+									class="relative inline-block h-1.5 w-1.5 rounded-full bg-accent outline-accent transition-transform before:absolute before:-inset-0.5 hover:scale-125 focus-visible:scale-125 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+									href={link}
+									title={name}
+								>
+									<span class="sr-only">{name}</span>
+								</a>
+							{/each}
+						</div>
+					{/if}
 				</div>
 			{/if}
 
@@ -188,7 +192,7 @@
 				<div class="flex items-center justify-between">
 					{#if data.blueprint.entry.expand && data.blueprint.entry.expand['creator']}
 						<span class="badge badge-accent text-xs">
-							@{data.blueprint.entry.expand['creator'].username}
+							@{data.blueprint.entry.expand['creator'].displayname}
 						</span>
 					{/if}
 					<div class="flex space-x-1">

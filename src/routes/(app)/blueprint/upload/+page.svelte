@@ -4,6 +4,7 @@
 	import {
 		BLUEPRINT_IDENTIFIER_REGEX,
 		BLUEPRINT_IMAGES_MAX,
+		BLUEPRINT_IMAGE_MAX_FILE_SIZE,
 		BLUEPRINT_TAGS_REGEX,
 		BLUEPRINT_TITLE_MAX_LENGTH,
 		BLUEPRINT_TITLE_MIN_LENGTH,
@@ -14,6 +15,7 @@
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import UploadIcon from '$lib/components/icons/UploadIcon.svelte';
+	import { add } from '$lib/client/toast/toast.service';
 
 	export let data: PageData;
 
@@ -25,10 +27,20 @@
 		if (!inputElement || !inputElement.files) return;
 
 		const list = new DataTransfer();
-		const files = Array.from(inputElement.files).slice(0, BLUEPRINT_IMAGES_MAX);
-		files.forEach((file) => {
-			list.items.add(file);
-		});
+		const files = Array.from(inputElement.files)
+			.slice(0, BLUEPRINT_IMAGES_MAX)
+			.filter((file) => {
+				if (file.size > BLUEPRINT_IMAGE_MAX_FILE_SIZE) {
+					const maxSizeMb = Math.round(BLUEPRINT_IMAGE_MAX_FILE_SIZE / 1024 / 1024);
+					add(`Size of image is too large (max. ${maxSizeMb}MB) - ${file.name}`, 3000, 'ERROR');
+					return false;
+				}
+				return true;
+			});
+		if (inputElement.files.length > BLUEPRINT_IMAGES_MAX) {
+			add(`Max. ${BLUEPRINT_IMAGES_MAX} images allowed.`, 3000, 'WARNING');
+		}
+		files.forEach((file) => list.items.add(file));
 		inputElement.files = list.files;
 
 		updatePreviewImages(inputElement);
@@ -237,7 +249,7 @@
 						<span class="label-text">
 							Images <span class="text-xs text-base-300">(optional)</span>
 						</span>
-						<i class="label-text-alt">max. 8 images</i>
+						<i class="label-text-alt">max. {BLUEPRINT_IMAGES_MAX} images</i>
 					</div>
 					{#if $page.form && $page.form.invalid}
 						<input

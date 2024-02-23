@@ -1,0 +1,13 @@
+include:
+  - volumes.compose.yml
+
+name: shapez-vortex
+services:
+  nginx:
+    extends:
+      file: nginx.compose.yml
+      service: nginx
+  db:
+    extends:
+      file: pocketbase.compose.yml
+      service: pocketbase
