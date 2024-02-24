@@ -4,10 +4,15 @@
 	import { share } from '$lib/client/actions/share';
 
 	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
+	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import DeleteIcon from '$lib/components/icons/DeleteIcon.svelte';
 	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
+	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 
 	export let data: PageData;
+
+	const deleteModals: Array<HTMLDialogElement> = [];
+	const bookmarkModals: Array<HTMLDialogElement> = [];
 </script>
 
 <section class="relative mx-auto w-full max-w-5xl">
@@ -26,7 +31,7 @@
 
 	{#if data.blueprints && data.blueprints.length > 0}
 		<ol class="space-y-8">
-			{#each data.blueprints as blueprint}
+			{#each data.blueprints as blueprint, index}
 				{@const preview = data.images && data.images[blueprint.id]}
 				<li>
 					<article
@@ -54,7 +59,7 @@
 									</h3>
 								</a>
 
-								<div>
+								<div class="flex items-center space-x-1">
 									<button
 										class="btn btn-square btn-ghost btn-sm fill-neutral-content p-0.5"
 										use:share
@@ -62,27 +67,19 @@
 										<ShareFilledIcon />
 									</button>
 									{#if data.user && data.user.id !== blueprint.creator}
-										<form
-											class="inline"
-											action="/blueprint/{blueprint.id}?/updateBookmark"
-											method="post"
-											use:enhance
+										<button
+											class="btn btn-square btn-ghost btn-sm fill-neutral-content p-0.5"
+											on:click={() => bookmarkModals[index].showModal()}
 										>
-											<button class="btn btn-square btn-ghost btn-sm fill-neutral-content p-0.5">
-												<BookmarkFilledIcon />
-											</button>
-										</form>
+											<BookmarkFilledIcon />
+										</button>
 									{:else}
-										<form
-											class="inline"
-											action="/blueprint/{blueprint.id}?/deleteBlueprint"
-											method="post"
-											use:enhance
+										<button
+											class="btn btn-square btn-error btn-sm fill-neutral-content p-0.5"
+											on:click={() => deleteModals[index].showModal()}
 										>
-											<button class="btn btn-square btn-error btn-sm fill-neutral-content p-0.5">
-												<DeleteIcon />
-											</button>
-										</form>
+											<DeleteIcon />
+										</button>
 									{/if}
 								</div>
 							</div>
@@ -100,6 +97,92 @@
 								</ul>
 							{/if}
 						</div>
+
+						<dialog class="modal backdrop-blur" bind:this={deleteModals[index]}>
+							<div class="modal-box">
+								<form method="dialog">
+									<button class="btn btn-circle btn-neutral btn-sm absolute right-2 top-2 p-1">
+										<CloseIcon />
+										<span class="sr-only">Close</span>
+									</button>
+								</form>
+
+								<h4 class="mb-16 text-3xl font-bold">
+									Do you want to delete <br />
+									{blueprint.title}?
+								</h4>
+								<div class="flex items-center justify-end space-x-2">
+									<form
+										class="inline"
+										action="/blueprint/{blueprint.id}?/deleteBlueprint"
+										method="post"
+										use:enhance
+										on:submit={() => deleteModals[index].close()}
+									>
+										<button class="btn btn-error">
+											<span class="inline-block h-6 w-6">
+												<DeleteIcon />
+											</span>
+											Delete
+										</button>
+									</form>
+									<form method="dialog">
+										<button class="btn btn-neutral">
+											<span class="inline-block h-6 w-6">
+												<CloseIcon />
+											</span>
+											Close
+										</button>
+									</form>
+								</div>
+							</div>
+							<form class="modal-backdrop" method="dialog">
+								<button>Close</button>
+							</form>
+						</dialog>
+
+						<dialog class="modal backdrop-blur" bind:this={bookmarkModals[index]}>
+							<div class="modal-box">
+								<form method="dialog">
+									<button class="btn btn-circle btn-neutral btn-sm absolute right-2 top-2 p-1">
+										<CloseIcon />
+										<span class="sr-only">Close</span>
+									</button>
+								</form>
+
+								<h4 class="mb-16 text-3xl font-bold">
+									Do you want to remove your bookmark of <br />
+									{blueprint.title}?
+								</h4>
+								<div class="flex items-center justify-end space-x-2">
+									<form
+										class="inline"
+										action="/blueprint/{blueprint.id}?/updateBookmark"
+										method="post"
+										use:enhance
+										on:submit={() => bookmarkModals[index].close()}
+									>
+										<button class="btn btn-primary">
+											<span class="inline-block h-6 w-6">
+												<BookmarkIcon />
+											</span>
+											Remove
+										</button>
+									</form>
+									<form method="dialog">
+										<button class="btn btn-neutral">
+											<span class="inline-block h-6 w-6">
+												<CloseIcon />
+											</span>
+											Close
+										</button>
+									</form>
+								</div>
+							</div>
+							<form class="modal-backdrop" method="dialog">
+								<button>Close</button>
+							</form>
+						</dialog>
 					</article>
 				</li>
 			{/each}

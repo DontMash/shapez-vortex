@@ -13,8 +13,8 @@ export const load = (async ({ locals, parent }) => {
 
     return {
         seo: {
-            title: `${isYou ? 'Your' : `${profile.username}'s`} blueprint library`,
-            description: `View ${isYou ? 'your' : `${profile.username}'s`} collection of blueprints.`,
+            title: `${isYou ? 'Your' : `${profile.displayname}'s`} blueprint library`,
+            description: `View ${isYou ? 'your' : `${profile.displayname}'s`} collection of blueprints.`,
             keywords: ['Blueprint', 'Library'],
         },
         blueprints,

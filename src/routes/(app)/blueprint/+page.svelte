@@ -42,9 +42,12 @@
 				<span class="label-text">Blueprint identifier</span>
 				<i class="label-text-alt">
 					max. 12500 characters
-					<a class="link-hover link transition-colors hover:!text-primary" href="/blueprint/upload"
-						>(limitless)</a
+					<a
+						class="link-hover link font-bold transition-colors hover:!text-primary"
+						href="/blueprint/upload"
 					>
+						(limitless)
+					</a>
 				</i>
 			</div>
 			<textarea
