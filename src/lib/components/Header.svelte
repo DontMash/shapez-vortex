@@ -90,6 +90,7 @@
 					(os.name === OPERATING_SYSTEMS[0] && event.metaKey) ||
 					((os.name === OPERATING_SYSTEMS[1] || os.name === OPERATING_SYSTEMS[2]) && event.ctrlKey)
 				) {
+					event.preventDefault();
 					searchModal.show();
 				}
 				break;
@@ -118,7 +119,7 @@
 				<span class="inline-block size-6">
 					<SearchIcon />
 				</span>
-				Search ...
+				Search
 				{#if os && os.name && OPERATING_SYSTEMS.find((value) => value === os?.name)}
 					<span>
 						{#if os.name === OPERATING_SYSTEMS[0]}
