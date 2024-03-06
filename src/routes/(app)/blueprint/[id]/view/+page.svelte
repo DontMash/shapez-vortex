@@ -8,8 +8,8 @@
 
 <section class="relative mx-auto w-full max-w-5xl">
 	<BlueprintViewer
-		identifier={data.blueprint.identifier}
+		identifier={data.blueprint.entry.data}
 		blueprint={data.blueprint.data}
-		controls={{ download: true, upload: true, zoom: true, utils: true }}
+		controls={{ download: data.user && data.user.verified, upload: true, zoom: true, utils: true }}
 	/>
 </section>

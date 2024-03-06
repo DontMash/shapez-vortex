@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/DontMash/shapez-visualizer">
+  <a href="https://github.com/DontMash/shapez-vortex">
     <img src="static/favicon.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -16,9 +16,9 @@
     <br />
     <a href="https://shapez.soren.codes">Website</a>
     ·
-    <a href="https://github.com/DontMash/shapez-visualizer/issues">Report Bug</a>
+    <a href="https://github.com/DontMash/shapez-vortex/issues">Report Bug</a>
     ·
-    <a href="https://github.com/DontMash/shapez-visualizer/issues">Request Feature</a>
+    <a href="https://github.com/DontMash/shapez-vortex/issues">Request Feature</a>
   </p>
 </div>
 
@@ -87,46 +87,23 @@ In the current state it provides the following features:
 
 ### Prerequisites
 
-To setup, install & develop you will need some tools:
+To setup, install & develop you may need some tools:
 
-* [Node.js (>= v16)](https://nodejs.org/en) **(using [nvm](https://github.com/nvm-sh/nvm))**
-
-  _if you already installed nvm this step is not needed_
-
-  ```sh
-  # Windows
-  winget install CoreyButler.NVMforWindows
-  ```
-
-  ```sh
-  # MacOS
-  brew install nvm
-  ```
-
-  ```sh
-  # Linux
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-  ```
-
-  _After the installation you probably need to source or restart your terminal to load nvm_
-
-  ```sh
-  nvm install 16
-  ```
+* [Bun (JavaScript runtime & toolkit)](https://bun.sh/)
+* [Docker (Test & Deployment)](https://docs.docker.com/get-docker/)
 
 ### Installation
 
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/DontMash/shapez-visualizer.git
+   git clone https://github.com/DontMash/shapez-vortex.git
    ```
 
-2. Install NPM packages
+2. Install packages
 
     ```sh
-      # nvm use
-      npm install
+      bun install
     ```
 
 3. Visit [localhost:5173](http://localhost:5173)
@@ -139,7 +116,7 @@ To setup, install & develop you will need some tools:
 
 * User
   * Report
-  * Following
+  * Follow?
   * Settings
     * Research-Upgrades
   * Recommended/Popular
@@ -147,7 +124,8 @@ To setup, install & develop you will need some tools:
   * Upload
     * Combobox for tags
     * Richtext for description
-    * Search/List
+    * Search blueprints by tags (clickable blueprint tags)
+    * bookmarks as query
     * Update
     * Report
   * Library
@@ -229,6 +207,7 @@ To setup, install & develop you will need some tools:
     * Code coverage
     * Visuals
 * KO-FI
+* Shapez-Vortex Logo
 
 See the [open issues][issues-url] for a full list of proposed features (and known issues).
 
@@ -271,17 +250,17 @@ Sören Maschmann - [E-Mail](mailto:work@soren.codes)
 
 <!-- MARKDOWN LINKS -->
 <!-- IMAGES -->
-[repo-url]: https://github.com/DontMash/shapez-visualizer
+[repo-url]: https://github.com/DontMash/shapez-vortex
 [product-url]: https://shapez.soren.codes
 [product-image]: resources/images/product.png
 
 <!-- SHIELDS -->
-[stars-shield]: https://img.shields.io/github/stars/DontMash/shapez-visualizer.svg?style=for-the-badge
-[stars-url]: https://github.com/DontMash/shapez-visualizer/stargazers
-[issues-shield]: https://img.shields.io/github/issues/DontMash/shapez-visualizer.svg?style=for-the-badge
-[issues-url]: https://github.com/DontMash/shapez-visualizer/issues
-[license-shield]: https://img.shields.io/github/license/DontMash/shapez-visualizer.svg?style=for-the-badge
-[license-url]: https://github.com/DontMash/shapez-visualizer/blob/main/LICENSE
+[stars-shield]: https://img.shields.io/github/stars/DontMash/shapez-vortex.svg?style=for-the-badge
+[stars-url]: https://github.com/DontMash/shapez-vortex/stargazers
+[issues-shield]: https://img.shields.io/github/issues/DontMash/shapez-vortex.svg?style=for-the-badge
+[issues-url]: https://github.com/DontMash/shapez-vortex/issues
+[license-shield]: https://img.shields.io/github/license/DontMash/shapez-vortex.svg?style=for-the-badge
+[license-url]: https://github.com/DontMash/shapez-vortex/blob/main/LICENSE
 
 <!-- BADGES -->
 [Tailwind-badge]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white

@@ -10,9 +10,6 @@ export const BLUEPRINT_EMPTY_DATA = '//8=';
 export const BLUEPRINT_GRID_SIZE = 1001;
 export const BLUEPRINT_GRID_COLOR = 0x444444;
 
-/**
- * buildings as json-string of @type {Record<BuildingIdentifier, number>}
- */
 export interface BlueprintData extends RecordModel {
     title: string,
     description: string,
@@ -26,8 +23,9 @@ export interface BlueprintData extends RecordModel {
     buildingCount: number,
     islandCount: number,
     creator: string,
-    bookmarkCount: number,
+    viewCount: number,
     downloadCount: number,
+    bookmarkCount: number,
     version: number,
 }
 export interface BlueprintTag extends RecordModel {

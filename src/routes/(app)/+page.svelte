@@ -32,6 +32,7 @@
 				title="Shape Viewer"
 			>
 				Start
+				<span class="sr-only"> shape viewer</span>
 			</a>
 		</div>
 
@@ -57,6 +58,7 @@
 				title="Blueprint Viewer"
 			>
 				Start
+				<span class="sr-only"> blueprint viewer</span>
 			</a>
 		</div>
 
@@ -82,6 +84,7 @@
 				title="Research Overview"
 			>
 				Start
+				<span class="sr-only"> research overview</span>
 			</a>
 		</div>
 	</article>

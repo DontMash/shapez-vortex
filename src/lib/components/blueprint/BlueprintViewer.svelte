@@ -19,11 +19,22 @@
 	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
 	import { onMount } from 'svelte';
 
+	type ControlOptions = {
+		download?: boolean;
+		upload?: boolean;
+		zoom?: boolean;
+		utils?: boolean;
+	};
+
 	export let identifier: BlueprintIdentifier;
 	export let blueprint: Blueprint;
 	export let title: string = 'Untitled blueprint';
-	export let controls: boolean = false;
-	export let enableZoom: boolean = true;
+	export let controls: ControlOptions = {
+		download: false,
+		upload: false,
+		zoom: true,
+		utils: true,
+	};
 
 	let viewer: HTMLElement;
 	let canvas: HTMLCanvasElement;
@@ -59,88 +70,100 @@
 <figure class="relative" bind:this={viewer}>
 	{#if controls}
 		<div class="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 justify-center space-x-4 p-4">
+			{#if controls.upload || controls.download}
 			<div class="join">
-				<form
-					class="btn btn-square btn-primary join-item"
-					method="post"
-					action="/blueprint/view/?/upload"
-					enctype="multipart/form-data"
-				>
-					<label class="h-full w-full p-2.5" for="blueprint-file">
-						<input
-							class="sr-only"
-							id="blueprint-file"
-							name="file"
-							type="file"
-							accept={BLUEPRINT_FILE_FORMAT}
-							required
-							on:change={(event) => onFileChange(event)}
-						/>
-						<span class="sr-only">Load blueprint</span>
-						<FileUploadIcon />
-					</label>
-				</form>
-				<form class="btn btn-square btn-primary join-item" action="/blueprint/download">
-					<input name="identifier" type="hidden" value={identifier} required />
-					<button class="h-full w-full p-2.5" title="Download blueprint" type="submit">
-						<span class="sr-only">Download blueprint</span>
-						<FileDownloadIcon />
-					</button>
-				</form>
-				<form class="btn btn-square btn-primary join-item">
-					<input name="identifier" type="hidden" required />
-					<button
-						class="h-full w-full p-2.5"
-						title="Paste blueprint"
-						type="button"
-						use:paste
-						on:paste={(event) => onPaste(event)}
+				{#if controls.upload}
+					<form
+						class="btn btn-square btn-primary join-item"
+						method="post"
+						action="/blueprint/view/?/upload"
+						enctype="multipart/form-data"
 					>
-						<span class="sr-only">Paste blueprint</span>
-						<PasteIcon />
+						<label class="h-full w-full p-2.5" for="blueprint-file">
+							<input
+								class="sr-only"
+								id="blueprint-file"
+								name="file"
+								type="file"
+								accept={BLUEPRINT_FILE_FORMAT}
+								required
+								on:change={(event) => onFileChange(event)}
+							/>
+							<span class="sr-only">Load blueprint</span>
+							<FileUploadIcon />
+						</label>
+					</form>
+				{/if}
+				{#if controls.download}
+					<form class="btn btn-square btn-primary join-item" action="/api/v1/blueprint/download">
+						<input name="identifier" type="hidden" value={identifier} required />
+						<button class="h-full w-full p-2.5" title="Download blueprint" type="submit">
+							<span class="sr-only">Download blueprint</span>
+							<FileDownloadIcon />
+						</button>
+					</form>
+				{/if}
+				{#if controls.upload}
+					<form class="btn btn-square btn-primary join-item">
+						<input name="identifier" type="hidden" required />
+						<button
+							class="h-full w-full p-2.5"
+							title="Paste blueprint"
+							type="button"
+							use:paste
+							on:paste={(event) => onPaste(event)}
+						>
+							<span class="sr-only">Paste blueprint</span>
+							<PasteIcon />
+						</button>
+					</form>
+				{/if}
+				{#if controls.download}
+					<button
+						class="btn btn-square btn-primary join-item p-2.5"
+						title="Copy blueprint"
+						use:copy={{ value: identifier }}
+					>
+						<span class="sr-only">Copy blueprint</span>
+						<CopyIcon />
 					</button>
-				</form>
-				<button
-					class="btn btn-square btn-primary join-item p-2.5"
-					title="Copy blueprint"
-					use:copy={{ value: identifier }}
-				>
-					<span class="sr-only">Copy blueprint</span>
-					<CopyIcon />
-				</button>
+				{/if}
 			</div>
+			{/if}
 
-			<div class="join">
-				<button
-					class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
-					title="Capture blueprint"
-					use:capture={{ captureElement: canvas, filename: title }}
-				>
-					<span class="sr-only">Capture blueprint</span>
-					<PhotoCameraIcon />
-				</button>
-				<button
-					class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
-					title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
-					use:fullscreen={{ fullscreenElement: viewer }}
-					on:change={(event) => (isFullscreen = event.detail)}
-				>
-					<span class="sr-only">Turn fullscreen {isFullscreen ? 'off' : 'on'}</span>
-					{#if !isFullscreen}
-						<FullscreenIcon />
-					{:else}
-						<FullscreenExitIcon />
-					{/if}
-				</button>
-				<button
-					class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
-					title="Reset controls"
-					on:click={() => reset()}
-				>
-					<span class="sr-only">Reset controls</span>
-					<RestartAltIcon />
-				</button>
-			</div>
+			{#if controls.utils}
+				<div class="join">
+					<button
+						class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+						title="Capture blueprint"
+						use:capture={{ captureElement: canvas, filename: title }}
+					>
+						<span class="sr-only">Capture blueprint</span>
+						<PhotoCameraIcon />
+					</button>
+					<button
+						class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+						title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
+						use:fullscreen={{ fullscreenElement: viewer }}
+						on:change={(event) => (isFullscreen = event.detail)}
+					>
+						<span class="sr-only">Turn fullscreen {isFullscreen ? 'off' : 'on'}</span>
+						{#if !isFullscreen}
+							<FullscreenIcon />
+						{:else}
+							<FullscreenExitIcon />
+						{/if}
+					</button>
+					<button
+						class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+						title="Reset controls"
+						on:click={() => reset()}
+					>
+						<span class="sr-only">Reset controls</span>
+						<RestartAltIcon />
+					</button>
+				</div>
+			{/if}
 		</div>
 	{/if}
 
@@ -155,7 +178,7 @@
 			on:load={() => {
 				isLoading = false;
 			}}
-			use:view={{ blueprint, enableZoom, isCenter }}
+			use:view={{ blueprint, enableZoom: controls?.zoom, isCenter }}
 		/>
 	</div>
 

@@ -43,7 +43,7 @@
 				<i class="label-text-alt">
 					max. 12500 characters
 					<a
-						class="link-hover link font-bold transition-colors hover:!text-primary"
+						class="link font-bold transition-colors hover:!text-primary"
 						href="/blueprint/upload"
 					>
 						(limitless)
@@ -106,7 +106,7 @@
 	</form>
 </section>
 
-<section class="mx-auto mt-32 grid w-full max-w-5xl grid-cols-2 gap-8" id="more-features">
+<section class="mx-auto mt-32 grid w-full max-w-5xl grid-cols-2 gap-8 px-6" id="more-features">
 	<div class="indicator w-full">
 		<span
 			class="indicator-item indicator-start indicator-top h-12 w-12 rounded-btn bg-secondary fill-secondary-content p-2"

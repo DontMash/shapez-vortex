@@ -4,7 +4,12 @@ import type { User } from '$lib/user.types';
 
 export const load = (async ({ locals, params }) => {
     try {
-        const user = await locals.pb.collection('users').getFirstListItem<User>(`username="${params.name}"`, { expand: 'blueprints,blueprints.tags' });
+        const user = await locals.pb.collection('users')
+            .getFirstListItem<Pick<User, 'id' | 'username' | 'displayname'>>(
+                `username="${params.name}"`,
+                { fields: 'id,username,displayname', }
+            );
+
         return {
             seo: {
                 title: user.displayname,

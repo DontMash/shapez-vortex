@@ -11,14 +11,13 @@ import {
     SHAPE_TYPE_IDENTIFIERS,
     SHAPE_MAX_LAYERS,
     SHAPE_MAX_QUARTERS,
+    isShapeIdentifier,
 } from '$lib/shape.types';
 
 const SHAPE_LAYER_IDENTIFIER_SEPERATOR = ':';
 const SHAPE_QUARTER_REGEX = /(..?)/g;
 const SHAPE_QUARTER_PARAMETERS_REGEX = /(.?)/g;
-const SHAPE_IDENTIFIER_REGEX = /^([CRSWPc-][rgbcpykwu-]){1,4}(:([CRSWPc-][rgbcpykwu-]){1,4}){0,3}$/;
 
-export const isShapeIdentifier = (identifier: ShapeIdentifier): boolean => !!identifier.match(SHAPE_IDENTIFIER_REGEX);
 export const parse = (identifier: ShapeIdentifier): Shape => {
     if (!isShapeIdentifier(identifier)) {
         throw new Error(`Invalid shape identifier '${identifier}'`);

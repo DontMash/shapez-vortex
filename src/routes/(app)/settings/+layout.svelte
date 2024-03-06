@@ -14,7 +14,7 @@
 	<aside>
 		<nav>
 			{#key $page.url}
-				<ul class="menu pr-4 pl-0 py-0">
+				<ul class="menu pr-4 pl-0 py-0 space-y-2">
 					{#each data.pages as page}
 						<li>
 							<a

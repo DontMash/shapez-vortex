@@ -1,4 +1,5 @@
 import PocketBase from 'pocketbase';
+import UAParser from 'ua-parser-js';
 import type { User } from '$lib/user.types';
 
 // See https://kit.svelte.dev/docs/types#app
@@ -21,6 +22,7 @@ declare global {
 				};
 			};
 			user: User | undefined;
+			agent: UAParser.IResult | undefined;
 		}
 		interface PageState {
 			modal: boolean;

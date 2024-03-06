@@ -9,24 +9,24 @@
 	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
-	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 	import CurrencyBitcoinIcon from '$lib/components/icons/CurrencyBitcoinIcon.svelte';
 	import DashboardCustomizeFilledIcon from '$lib/components/icons/DashboardCustomizeFilledIcon.svelte';
+	import Dialog from '$lib/components/Dialog.svelte';
 	import DomainIcon from '$lib/components/icons/DomainIcon.svelte';
 	import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
 	import EditIcon from '$lib/components/icons/EditIcon.svelte';
+	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 	import OpenInNewIcon from '$lib/components/icons/OpenInNewIcon.svelte';
 	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
 	import TitleIcon from '$lib/components/icons/TitleIcon.svelte';
 	import UpdateIcon from '$lib/components/icons/UpdateIcon.svelte';
 	import VisibilityIcon from '$lib/components/icons/VisibilityIcon.svelte';
-	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 
 	export let data: PageData;
 
 	const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
-	const modals: Array<HTMLDialogElement> = [];
+	const modals: Array<Dialog> = [];
 
 	function onBookmark(event: Event) {
 		const form = event.target as HTMLFormElement;
@@ -48,7 +48,6 @@
 					<div class="carousel carousel-center flex">
 						{#each images as image, index}
 							{@const id = `image${index + 1}`}
-							{@const modalId = `${id}_modal`}
 							{@const name = `Image #${index}`}
 							{@const previousId = `#image${((index + images.length - 1) % images.length) + 1}`}
 							{@const nextId = `#image${((index + images.length + 1) % images.length) + 1}`}
@@ -59,7 +58,7 @@
 								</figure>
 								<button
 									class="btn btn-circle btn-neutral btn-sm absolute right-2 top-2 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
-									on:click={() => modals[index].showModal()}
+									on:click={() => modals[index].show()}
 								>
 									<span class="inline-block h-6 w-6">
 										<OpenInNewIcon />
@@ -85,27 +84,16 @@
 								{/if}
 							</div>
 
-							<dialog class="modal backdrop-blur" id={modalId} bind:this={modals[index]}>
-								<div class="modal-box w-full max-w-5xl p-0">
-									<figure class="aspect-h-2 aspect-w-3">
-										<img class="object-fit" src={image.src} alt={name} />
-									</figure>
-									<form method="dialog">
-										<button class="btn btn-circle btn-neutral btn-sm absolute right-2 top-2 p-1">
-											<CloseIcon />
-											<span class="sr-only">Close</span>
-										</button>
-									</form>
-								</div>
-								<form method="dialog" class="modal-backdrop">
-									<button>Close</button>
-								</form>
-							</dialog>
+							<Dialog width="full" bind:this={modals[index]}>
+								<figure class="aspect-h-2 aspect-w-3">
+									<img class="object-fit" src={image.src} alt={name} />
+								</figure>
+							</Dialog>
 						{/each}
 					</div>
 					{#if images.length > 1}
 						<div
-							class="badge badge-neutral badge-sm absolute bottom-2 left-1/2 hidden -translate-x-1/2 space-x-1 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 lg:flex"
+							class="badge badge-neutral badge-sm absolute bottom-2 left-1/2 flex -translate-x-1/2 space-x-1 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
 						>
 							{#each images as _, index}
 								{@const link = `#image${index + 1}`}
@@ -168,11 +156,24 @@
 				</div>
 				<div class="flex items-center space-x-4 pt-4">
 					<span class="inline-block h-6 w-6">
+						<VisibilityIcon />
+					</span>
+					<span>
+						<span class="font-medium">{data.blueprint.entry.viewCount || '-'}</span>
+						<span class="text-sm text-base-300">
+							{data.blueprint.entry.viewCount > 1 ? 'views' : 'view'}
+						</span>
+					</span>
+				</div>
+				<div class="flex items-center space-x-4">
+					<span class="inline-block h-6 w-6">
 						<DownloadIcon />
 					</span>
 					<span>
 						<span class="font-medium">{data.blueprint.entry.downloadCount || '-'}</span>
-						<span class="text-sm text-base-300">downloads</span>
+						<span class="text-sm text-base-300">
+							{data.blueprint.entry.downloadCount > 1 ? 'downloads' : 'download'}
+						</span>
 					</span>
 				</div>
 				<div class="flex items-center space-x-4">
@@ -181,7 +182,9 @@
 					</span>
 					<span>
 						<span class="font-medium">{data.blueprint.entry.bookmarkCount || '-'}</span>
-						<span class="text-sm text-base-300">bookmarks</span>
+						<span class="text-sm text-base-300">
+							{data.blueprint.entry.bookmarkCount > 1 ? 'bookmarks' : 'bookmark'}
+						</span>
 					</span>
 				</div>
 			</div>
@@ -262,28 +265,32 @@
 
 			<div class="grow">{@html data.blueprint.entry.description}</div>
 
-			<div class="grid grid-cols-3 gap-2">
-				<a class="btn btn-primary" href={`/blueprint/view?id=${data.blueprint.entry.id}`}>
+			<div class="flex items-center justify-end space-x-2">
+				{#if !data.user || !data.user.verified}
+					<span class="mr-auto text-xs text-base-300">
+						(Verified login required for download/copy)
+					</span>
+				{/if}
+				<a class="btn btn-primary" href={`/blueprint/${data.blueprint.entry.id}/view`}>
 					<span class="inline-block h-6 w-6 fill-primary-content">
 						<VisibilityIcon />
 					</span>
 					View
 				</a>
-				<form class="inline" action="/blueprint/download">
-					<input type="hidden" name="id" value={data.blueprint.entry.id} />
-					<button class="btn btn-secondary w-full">
+				{#if data.user && data.user.verified}
+					<a class="btn btn-secondary" href={`/blueprint/${data.blueprint.entry.id}/download`} download>
 						<span class="inline-block h-6 w-6 fill-secondary-content">
 							<DownloadIcon />
 						</span>
 						Download
+					</a>
+					<button class="btn btn-accent" use:copy={{ value: data.blueprint.entry.data }}>
+						<span class="inline-block h-6 w-6 fill-secondary-content">
+							<CopyIcon />
+						</span>
+						Copy
 					</button>
-				</form>
-				<button class="btn btn-accent" use:copy={{ value: data.blueprint.entry.data }}>
-					<span class="inline-block h-6 w-6 fill-secondary-content">
-						<CopyIcon />
-					</span>
-					Copy
-				</button>
+				{/if}
 			</div>
 		</div>
 	</article>
@@ -291,6 +298,7 @@
 	<BlueprintViewer
 		identifier={data.blueprint.entry.data}
 		blueprint={data.blueprint.data}
-		enableZoom={false}
+		title={data.blueprint.entry.title}
+		controls={{ zoom: false }}
 	/>
 </section>

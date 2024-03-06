@@ -68,8 +68,9 @@ export const actions = {
         blueprintFormData.append('buildingCount', buildingCount.toString());
         blueprintFormData.append('islandCount', getIslandCount(blueprint).toString());
         blueprintFormData.append('creator', locals.user?.id);
-        blueprintFormData.append('bookmarkCount', String(1));
+        blueprintFormData.append('viewCount', String(1));
         blueprintFormData.append('downloadCount', String(1));
+        blueprintFormData.append('bookmarkCount', String(1));
         blueprintFormData.append('version', String(1));
 
         const record = await locals.pb.collection('blueprints').create(blueprintFormData);

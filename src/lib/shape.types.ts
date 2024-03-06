@@ -1,4 +1,5 @@
 import { Material, MeshBasicMaterial, Vector3 } from 'three';
+import { z } from 'zod';
 
 export const SHAPE: ShapeIdentifier = 'CwRwCwCw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
 
@@ -71,3 +72,6 @@ export type ShapeQuarterData = {
     type: ShapeTypeIdentifier;
     color: ShapeColorIdentifier;
 };
+
+const SHAPE_IDENTIFIER_REGEX = /^([CRSWPc-][rgbcpykwu-]){1,4}(:([CRSWPc-][rgbcpykwu-]){1,4}){0,3}$/;
+export const isShapeIdentifier = (identifier: ShapeIdentifier): boolean => z.string().regex(SHAPE_IDENTIFIER_REGEX).safeParse(identifier).success;
