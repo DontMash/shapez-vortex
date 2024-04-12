@@ -20,6 +20,7 @@
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/gl": "^6.0.2",
+    "@types/lodash": "^4.17.0",
     "@types/pako": "^2.0.0",
     "@types/three": "^0.160.0",
     "@types/ua-parser-js": "^0.7.39",
@@ -48,6 +49,7 @@
   "type": "module",
   "dependencies": {
     "cmdk-sv": "^0.0.13",
+    "lodash": "^4.17.21",
     "pako": "^2.1.0",
     "screenfull": "^6.0.2",
     "three": "^0.160.0",

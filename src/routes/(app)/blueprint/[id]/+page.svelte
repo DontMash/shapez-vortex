@@ -230,21 +230,30 @@
 						<button class="btn btn-square btn-ghost btn-sm p-0.5" use:share>
 							<ShareFilledIcon />
 						</button>
-						{#if data.user && data.user.id !== data.blueprint.entry.creator}
-							<form
-								class="inline-flex"
-								action="?/updateBookmark"
-								method="post"
-								on:submit|preventDefault={onBookmark}
-							>
-								<button class="btn btn-square btn-ghost btn-sm p-0.5">
-									{#if data.blueprint.isBookmarked}
-										<BookmarkFilledIcon />
-									{:else}
-										<BookmarkIcon />
-									{/if}
-								</button>
-							</form>
+						{#if data.user}
+							{#if data.user.id !== data.blueprint.entry.creator}
+								<form
+									class="inline-flex"
+									action="?/updateBookmark"
+									method="post"
+									on:submit|preventDefault={onBookmark}
+								>
+									<button class="btn btn-square btn-ghost btn-sm p-0.5">
+										{#if data.blueprint.isBookmarked}
+											<BookmarkFilledIcon />
+										{:else}
+											<BookmarkIcon />
+										{/if}
+									</button>
+								</form>
+							{:else}
+								<a
+									class="btn btn-square btn-secondary btn-sm fill-secondary-content p-0.5"
+									href={`/blueprint/${data.blueprint.entry.id}/edit`}
+								>
+									<EditIcon />
+								</a>
+							{/if}
 						{/if}
 					</div>
 				</div>
@@ -278,7 +287,11 @@
 					View
 				</a>
 				{#if data.user && data.user.verified}
-					<a class="btn btn-secondary" href={`/blueprint/${data.blueprint.entry.id}/download`} download>
+					<a
+						class="btn btn-secondary"
+						href={`/blueprint/${data.blueprint.entry.id}/download`}
+						download
+					>
 						<span class="inline-block h-6 w-6 fill-secondary-content">
 							<DownloadIcon />
 						</span>

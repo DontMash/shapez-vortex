@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { BlueprintData } from '$lib/blueprint.types';
+	import type { BlueprintRecord } from '$lib/blueprint.types';
 	import { share } from '$lib/client/actions/share';
 
 	import Dialog from '$lib/components/Dialog.svelte';
@@ -8,9 +8,10 @@
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import DeleteIcon from '$lib/components/icons/DeleteIcon.svelte';
+	import EditIcon from '../icons/EditIcon.svelte';
 	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
 
-	export let data: Partial<BlueprintData>;
+	export let data: Partial<BlueprintRecord>;
 	export let image: string;
 	export let url: string;
 	export let isEditable: boolean = false;
@@ -58,6 +59,12 @@
 					<ShareFilledIcon />
 				</button>
 				{#if isEditable}
+					<a
+						class="btn btn-square btn-secondary btn-sm fill-secondary-content p-0.5"
+						href={`/blueprint/${data.id}/edit`}
+					>
+						<EditIcon />
+					</a>
 					<button
 						class="btn btn-square btn-error btn-sm fill-neutral-content p-0.5"
 						on:click={() => deleteDialog.show()}

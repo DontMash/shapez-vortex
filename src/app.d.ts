@@ -24,9 +24,6 @@ declare global {
 			user: User | undefined;
 			agent: UAParser.IResult | undefined;
 		}
-		interface PageState {
-			modal: boolean;
-		}
 		// interface Platform {}
 	}
 }

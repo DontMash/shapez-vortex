@@ -121,13 +121,18 @@ To setup, install & develop you may need some tools:
     * Research-Upgrades
   * Recommended/Popular
 * Blueprints
+    * Search blueprints by tags (clickable blueprint tags)
+    * Clickable user tags
+    * Report
   * Upload
     * Combobox for tags
     * Richtext for description
-    * Search blueprints by tags (clickable blueprint tags)
     * bookmarks as query
-    * Update
-    * Report
+    * Spoiler (Option/Warning)
+    * Guidelines
+      1. Don't be a jerk!
+      2. No sexual content
+      3. Respectful
   * Library
     * Search
     * Filter
@@ -192,7 +197,6 @@ To setup, install & develop you may need some tools:
   * Inputs/Outputs for blueprint
   * Process chain
 * Quality Assurance
-  * Command+K
   * Better form responses & errors
   * Content filters (Profanity, ...)
   * Responsiveness (Device/Platform)

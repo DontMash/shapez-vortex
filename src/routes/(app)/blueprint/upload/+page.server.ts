@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { BLUEPRINT_UPLOAD_FORM_SCHEMA, type BlueprintTag } from '$lib/blueprint.types';
+import { BLUEPRINT_CREATE_SCHEMA, type BlueprintTag } from '$lib/blueprint.types';
 import { decode, getBuildingCount, getBuildings, getCost, getIslandCount } from '$lib/server/blueprint';
 import type { User } from '$lib/user.types';
 
@@ -29,7 +29,7 @@ export const actions = {
 
         const formData = await request.formData();
         const entries = { ...Object.fromEntries(formData), images: formData.getAll('images') };
-        const result = BLUEPRINT_UPLOAD_FORM_SCHEMA.safeParse(entries);
+        const result = BLUEPRINT_CREATE_SCHEMA.safeParse(entries);
         if (!result.success) {
             const issues = result.error.issues.reduce<Record<string, string>>((result, current) => {
                 result[current.path[0]] = current.message;

@@ -11,6 +11,9 @@
 	export function close() {
 		dialog?.close();
 	}
+	export function getReturnValue(): string {
+		return dialog?.returnValue ?? '';
+	}
 </script>
 
 <dialog class="modal backdrop-blur" on:close bind:this={dialog}>

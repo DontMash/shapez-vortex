@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { debounce } from '$lib/utils';
-	import type { BlueprintData } from '$lib/blueprint.types';
+	import type { BlueprintRecord } from '$lib/blueprint.types';
 	import type { User } from '$lib/user.types';
 	import { TOAST_TYPE, add } from '$lib/client/toast/toast.service';
 
@@ -28,7 +28,7 @@
 	let searchValue = '';
 	let searchLoading = false;
 
-	let blueprints: Array<Pick<BlueprintData, 'id' | 'title' | 'expand'>> = [];
+	let blueprints: Array<Pick<BlueprintRecord, 'id' | 'title' | 'expand'>> = [];
 	let users: Array<Pick<User, 'username' | 'displayname'>> = [];
 	$: {
 		searchLoading = true;

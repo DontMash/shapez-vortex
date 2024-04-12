@@ -25,7 +25,7 @@
 	</header>
 
 	<div
-		class="card card-bordered mx-auto w-96 border-base-content border-opacity-20 bg-base-200 shadow-lg"
+		class="card card-bordered mx-auto max-w-lg border-base-content border-opacity-20 bg-base-200 shadow-lg"
 	>
 		<form class="card-body" method="post" action="?/reset">
 			<label class="form-control" for="email">

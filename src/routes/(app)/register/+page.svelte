@@ -33,7 +33,7 @@
 	</header>
 
 	<div
-		class="card card-bordered mx-auto w-96 border-base-content border-opacity-20 bg-base-200 shadow-lg"
+		class="card card-bordered mx-auto max-w-lg border-base-content border-opacity-20 bg-base-200 shadow-lg"
 	>
 		<form class="card-body" action="?/register" method="post">
 			<label class="form-control" for="username">

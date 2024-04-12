@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import {
@@ -8,19 +10,84 @@
 		BLUEPRINT_TAGS_REGEX,
 		BLUEPRINT_TITLE_MAX_LENGTH,
 		BLUEPRINT_TITLE_MIN_LENGTH,
-		BLUEPRINT_TITLE_REGEX
+		BLUEPRINT_TITLE_REGEX,
+		type BlueprintTag
 	} from '$lib/blueprint.types';
+	import { add } from '$lib/client/toast/toast.service';
 
+	import Dialog from '$lib/components/Dialog.svelte';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import UploadIcon from '$lib/components/icons/UploadIcon.svelte';
-	import { add } from '$lib/client/toast/toast.service';
 
 	export let data: PageData;
 
 	let imagesFileinputElement: HTMLInputElement;
+	let isSubmit: boolean = false;
+	let leaveDialog: Dialog;
+
+	beforeNavigate((navigation) => {
+		if (isSubmit === true || navigation.type === 'form' || navigation.type === 'goto') {
+			isSubmit = false;
+			return;
+		}
+
+		navigation.cancel();
+
+		if (navigation.type !== 'leave') {
+			leaveDialog.show();
+			leaveDialog.$on('close', (event) => {
+				leaveDialog.close();
+				if (leaveDialog.getReturnValue() !== 'confirm') return;
+
+				if (!navigation.to) return;
+				goto(navigation.to.url);
+			});
+		}
+	});
+
+	let tags: Array<string> = [];
 	let previewImages: Array<File> = [];
+	$: {
+		const dataTags = data.blueprint.entry.expand?.tags as Array<BlueprintTag> | undefined;
+		tags = dataTags?.map((tag) => tag.name) ?? [];
+
+		const updatePreview = async (
+			images: Array<{ src: string; thumbnail: string }>
+		): Promise<void> =>
+			new Promise<void>((resolve, reject) => {
+				if (!browser) return resolve();
+
+				const promises = images.map<Promise<File>>(
+					(image, index) =>
+						new Promise<File>((resolve, reject) => {
+							fetch(image.src)
+								.then((response) =>
+									response
+										.blob()
+										.then((blob) =>
+											resolve(
+												new File([blob], `${data.blueprint.entry.images[index]}`, {
+													type: blob.type
+												})
+											)
+										)
+										.catch(reject)
+								)
+								.catch(reject);
+						})
+				);
+				Promise.all(promises)
+					.then((files) => {
+						imagesFileinputElement.files = toFileList(files);
+						updatePreviewImages();
+						resolve();
+					})
+					.catch(reject);
+			});
+		updatePreview(data.blueprint.images);
+	}
 
 	function onPreviewImageFileChange(event: Event) {
 		const inputElement = event.target as HTMLInputElement;
@@ -43,35 +110,41 @@
 		inputElement.value = '';
 		imagesFileinputElement.files = list.files;
 
-		updatePreviewImages(imagesFileinputElement);
+		updatePreviewImages();
 	}
-	function updatePreviewImages(input: HTMLInputElement) {
-		if (!input.files) return;
+	function updatePreviewImages() {
+		if (!imagesFileinputElement.files) return;
 
-		previewImages = Array.from(input.files);
-	}
-	function updateFileinputImages(input: HTMLInputElement) {
-		const list = new DataTransfer();
-		previewImages.forEach((image) => {
-			list.items.add(image);
-		});
-		input.files = list.files;
-
-		updatePreviewImages(input);
+		previewImages = Array.from(imagesFileinputElement.files);
 	}
 	function onRemoveImage(index: number) {
-		if (!imagesFileinputElement) return;
+		if (!imagesFileinputElement.files) return;
 
-		previewImages = previewImages.filter((_, imageIndex) => imageIndex !== index);
+		const list = new DataTransfer();
+		const files = Array.from(imagesFileinputElement.files);
+		files.forEach((file, fileIndex) => {
+			if (index === fileIndex) return;
+			list.items.add(file);
+		});
+		imagesFileinputElement.files = list.files;
 
-		updateFileinputImages(imagesFileinputElement);
+		updatePreviewImages();
 	}
 	function swapImage(from: number, to: number) {
-		const tmp = previewImages[to];
-		previewImages[to] = previewImages[from];
-		previewImages[from] = tmp;
+		if (!imagesFileinputElement.files) return;
 
-		updateFileinputImages(imagesFileinputElement);
+		const images = Array.from(imagesFileinputElement.files);
+		const tmp = images[to];
+		images[to] = images[from];
+		images[from] = tmp;
+		imagesFileinputElement.files = toFileList(images);
+
+		updatePreviewImages();
+	}
+	function toFileList(files: Array<File>): FileList {
+		const list = new DataTransfer();
+		files.forEach((file) => list.items.add(file));
+		return list.files;
 	}
 </script>
 
@@ -94,7 +167,12 @@
 		</hgroup>
 	</header>
 
-	<form method="post" enctype="multipart/form-data">
+	<form method="post" enctype="multipart/form-data" on:submit={() => (isSubmit = true)}>
+		<input type="hidden" name="id" id="id" value={data.blueprint.entry.id} />
+		{#if $page.form && $page.form.invalid && $page.form.issues['unmodified']}
+			<span class="label-text-alt italic text-warning">{$page.form.issues['unmodified']}</span>
+		{/if}
+
 		<label class="form-control" for="title">
 			<div class="label">
 				<span class="label-text">Title</span>
@@ -125,6 +203,7 @@
 					type="text"
 					name="title"
 					id="title"
+					value={data.blueprint.entry.title}
 					placeholder="My blueprint ..."
 					minlength={BLUEPRINT_TITLE_MIN_LENGTH}
 					maxlength={BLUEPRINT_TITLE_MAX_LENGTH}
@@ -162,6 +241,7 @@
 					type="text"
 					name="data"
 					id="data"
+					value={data.blueprint.entry.data}
 					placeholder="SHAPEZ-2 ... $"
 					pattern={BLUEPRINT_IDENTIFIER_REGEX.source}
 					required
@@ -169,7 +249,7 @@
 			{/if}
 		</label>
 
-		<details class="collapse collapse-arrow mt-4 rounded-btn bg-base-200">
+		<details class="collapse collapse-arrow mt-4 rounded-btn bg-base-200" open>
 			<summary class="collapse-title !flex cursor-pointer items-center text-sm">
 				Additional information
 			</summary>
@@ -204,6 +284,7 @@
 							type="text"
 							name="tags"
 							id="tags"
+							value={tags.join(', ')}
 							placeholder="efficient, compact, ..."
 							pattern={BLUEPRINT_TAGS_REGEX.source}
 						/>
@@ -229,9 +310,9 @@
 						/>
 						{#if $page.form.issues['description']}
 							<div class="label">
-								<span class="label-text-alt italic text-error"
-									>{$page.form.issues['description']}</span
-								>
+								<span class="label-text-alt italic text-error">
+									{$page.form.issues['description']}
+								</span>
 							</div>
 						{/if}
 					{:else}
@@ -239,6 +320,7 @@
 							class="textarea textarea-bordered h-full resize-none placeholder:italic"
 							name="description"
 							id="description"
+							value={data.blueprint.entry.description}
 							placeholder="Reimagine shape processing ..."
 						/>
 					{/if}
@@ -269,7 +351,7 @@
 						accept="image/png,image/jpeg,image/gif"
 						on:change={onPreviewImageFileChange}
 					/>
-					{#if $page.form && $page.form.invalid}
+					{#if $page.form && $page.form.invalid && $page.form.issues['images']}
 						<div class="label">
 							<span class="label-text-alt italic text-error">{$page.form.issues['images']}</span>
 						</div>
@@ -334,6 +416,23 @@
 			</div>
 		</details>
 
-		<button class="btn btn-primary btn-block mt-4">Upload</button>
+		<button class="btn btn-primary btn-block mt-4">Update</button>
 	</form>
+
+	<Dialog bind:this={leaveDialog}>
+		<div class="p-6">
+			<h4 class="mb-16 pr-8 text-2xl font-bold">
+				Are you sure you want to leave? <br />
+				Unsaved changes will be lost.
+			</h4>
+			<div class="flex items-center justify-end space-x-2">
+				<form method="dialog">
+					<button class="btn btn-primary" value="confirm"> Confirm </button>
+				</form>
+				<form method="dialog">
+					<button class="btn btn-neutral"> Cancel </button>
+				</form>
+			</div>
+		</div>
+	</Dialog>
 </section>
