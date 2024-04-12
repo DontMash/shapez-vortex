@@ -107,10 +107,13 @@ export const actions = {
 		blueprintFormData.append('buildings', JSON.stringify(Object.fromEntries(buildings)));
 		blueprintFormData.append('buildingCount', buildingCount.toString());
 		blueprintFormData.append('islandCount', getIslandCount(blueprint).toString());
+		blueprintFormData.append('viewCount', String(blueprintRecord.viewCount));
+		blueprintFormData.append('downloadCount', String(blueprintRecord.downloadCount));
+		blueprintFormData.append('bookmarkCount', String(blueprintRecord.bookmarkCount));
+		blueprintFormData.append('version', String(blueprintRecord.version + 1));
 		blueprintFormData.append('description', result.data.description ?? '');
 		result.data.images?.forEach((image) => blueprintFormData.append('images', image));
 		tags.forEach((tag) => blueprintFormData.append('tags', tag.id));
-		blueprintFormData.append('version', String(blueprintRecord.version + 1));
 
 		await locals.pb.collection('blueprints').update(result.data.id, { images: null });
 		const record = await locals.pb
