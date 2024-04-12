@@ -272,38 +272,31 @@
 				</ul>
 			{/if}
 
-			<div class="grow">{@html data.blueprint.entry.description}</div>
+			<div class="prose grow">{@html data.blueprint.entry.description}</div>
 
 			<div class="flex items-center justify-end space-x-2">
-				{#if !data.user || !data.user.verified}
-					<span class="mr-auto text-xs text-base-300">
-						(Verified login required for download/copy)
-					</span>
-				{/if}
 				<a class="btn btn-primary" href={`/blueprint/${data.blueprint.entry.id}/view`}>
 					<span class="inline-block h-6 w-6 fill-primary-content">
 						<VisibilityIcon />
 					</span>
 					View
 				</a>
-				{#if data.user && data.user.verified}
-					<a
-						class="btn btn-secondary"
-						href={`/blueprint/${data.blueprint.entry.id}/download`}
-						download
-					>
-						<span class="inline-block h-6 w-6 fill-secondary-content">
-							<DownloadIcon />
-						</span>
-						Download
-					</a>
-					<button class="btn btn-accent" use:copy={{ value: data.blueprint.entry.data }}>
-						<span class="inline-block h-6 w-6 fill-secondary-content">
-							<CopyIcon />
-						</span>
-						Copy
-					</button>
-				{/if}
+				<a
+					class="btn btn-secondary"
+					href={`/blueprint/${data.blueprint.entry.id}/download`}
+					download
+				>
+					<span class="inline-block h-6 w-6 fill-secondary-content">
+						<DownloadIcon />
+					</span>
+					Download
+				</a>
+				<button class="btn btn-accent" use:copy={{ value: data.blueprint.entry.data }}>
+					<span class="inline-block h-6 w-6 fill-secondary-content">
+						<CopyIcon />
+					</span>
+					Copy
+				</button>
 			</div>
 		</div>
 	</article>

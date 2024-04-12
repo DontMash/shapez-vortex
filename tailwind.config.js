@@ -3,6 +3,7 @@ export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   plugins: [
     require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/typography'),
     require('tailwind-scrollbar-hide'),
     require('daisyui'),
   ],
