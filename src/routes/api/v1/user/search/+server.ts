@@ -5,6 +5,6 @@ export const GET: RequestHandler = async ({ locals, url }) => {
     if (!displayname) {
         return new Response(JSON.stringify({ items: [] }));
     }
-    const users = await locals.pb.collection('users').getList(1, 20, { fields: 'username,displayname', filter: `displayname~"${displayname}"` });
+    const users = await locals.pb.collection('users').getList(1, 20, { fields: 'displayname', filter: `displayname~"${displayname}"` });
     return new Response(JSON.stringify(users));
 };

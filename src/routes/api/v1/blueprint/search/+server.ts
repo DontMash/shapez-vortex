@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
     let filter = '';
     const query = url.searchParams.get('query');
     if (query) {
-        filter += `(title~"${query}"||description~"${query}")`;
+        filter += `title~"${query}"`;
     }
     const refine = url.searchParams.get('filter');
     if (refine) {
@@ -22,7 +22,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 
     const page = parseInt(url.searchParams.get('page') ?? "1");
     const expand: Array<string> = ['tags', 'creator'];
-    const fields = ['collectionId', 'id', 'title', 'images', 'creator', 'expand.tags.id', 'expand.tags.name', 'expand.creator.displayname', 'expand.creator.username'];
+    const fields = ['collectionId', 'id', 'title', 'images', 'creator', 'expand.tags.id', 'expand.tags.name', 'expand.creator.displayname'];
     const blueprints = await locals.pb.collection('blueprints').getList(page, MAX_PAGE_ENTRIES,
         {
             expand: expand.join(','),

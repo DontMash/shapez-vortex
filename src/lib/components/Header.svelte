@@ -29,7 +29,7 @@
 	let searchLoading = false;
 
 	let blueprints: Array<Pick<BlueprintRecord, 'id' | 'title' | 'expand'>> = [];
-	let users: Array<Pick<User, 'username' | 'displayname'>> = [];
+	let users: Array<Pick<User, 'displayname'>> = [];
 	$: {
 		searchLoading = true;
 		searchValue;
@@ -44,7 +44,10 @@
 		searchLoading = false;
 	}, 500);
 	async function updateBlueprints(search: string) {
-		if (!browser || !search) return [];
+		if (!browser || !search) {
+			blueprints = [];
+			return;
+		}
 
 		const url = new URL('/api/v1/blueprint/search', $page.url.origin);
 		url.searchParams.append('query', search);
@@ -58,7 +61,10 @@
 		}
 	}
 	async function updateUsers(search: string) {
-		if (!browser || !search) return [];
+		if (!browser || !search) {
+			users = [];
+			return;
+		}
 
 		const url = new URL('/api/v1/user/search', $page.url.origin);
 		url.searchParams.append('displayname', search);
@@ -231,6 +237,7 @@
 						{#each blueprints.slice(0, MAX_ENTRIES) as blueprint}
 							<Command.Item
 								class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
+								value={blueprint.title + blueprint.id}
 								onSelect={() => command(() => goto(`/blueprint/${blueprint.id}`))}
 							>
 								<span class="inline-block size-6">
@@ -264,7 +271,7 @@
 						{#each users.slice(0, MAX_ENTRIES) as user}
 							<Command.Item
 								class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-								onSelect={() => command(() => goto(`/user/${user.username}`))}
+								onSelect={() => command(() => goto(`/user/@${user.displayname}`))}
 							>
 								<span class="inline-block size-6">
 									<PersonIcon />
@@ -277,25 +284,25 @@
 
 				<Command.Group class="[&>[data-cmdk-group-heading]]:text-xs" heading="Features">
 					{#if isShapeIdentifier(searchValue)}
-					<Command.Item
-						class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-						onSelect={() => command(() => goto(`/shape?identifier=${searchValue}`))}
-					>
-						<span class="inline-block size-6">
-							<CategoryIcon />
-						</span>
-						View Shape - {searchValue}
-					</Command.Item>
+						<Command.Item
+							class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
+							onSelect={() => command(() => goto(`/shape?identifier=${searchValue}`))}
+						>
+							<span class="inline-block size-6">
+								<CategoryIcon />
+							</span>
+							View Shape - {searchValue}
+						</Command.Item>
 					{:else}
-					<Command.Item
-						class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-						onSelect={() => command(() => goto('/shape'))}
-					>
-						<span class="inline-block size-6">
-							<CategoryIcon />
-						</span>
-						Shape Viewer
-					</Command.Item>
+						<Command.Item
+							class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
+							onSelect={() => command(() => goto('/shape'))}
+						>
+							<span class="inline-block size-6">
+								<CategoryIcon />
+							</span>
+							Shape Viewer
+						</Command.Item>
 					{/if}
 					<Command.Item
 						class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"

@@ -22,7 +22,7 @@
 
 	<ul class="flex flex-col items-center justify-center space-y-4">
 		<li>
-			<a class="underline" href={`/user/${data.profile.username}/blueprints`}>Blueprints</a>
+			<a class="underline" href={`/user/@${data.profile.displayname}/blueprints`}>Blueprints</a>
 		</li>
 	</ul>
 </section>
