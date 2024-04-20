@@ -121,18 +121,14 @@ To setup, install & develop you may need some tools:
     * Research-Upgrades
   * Recommended/Popular
 * Blueprints
-    * Search blueprints by tags (clickable blueprint tags)
-    * Clickable user tags
-    * Report
+  * Clickable blueprint tags
+  * Clickable user tags
+  * Report
   * Upload
     * Combobox for tags
     * Richtext for description
-    * bookmarks as query
+    * bookmarks as view collection in pb
     * Spoiler (Option/Warning)
-    * Guidelines
-      1. Don't be a jerk!
-      2. No sexual content
-      3. Respectful
   * Library
     * Search
     * Filter

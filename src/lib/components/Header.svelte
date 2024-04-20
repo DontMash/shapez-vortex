@@ -44,10 +44,10 @@
 		searchLoading = false;
 	}, 500);
 	async function updateBlueprints(search: string) {
-		if (!browser) return [];
+		if (!browser || !search) return [];
 
 		const url = new URL('/api/v1/blueprint/search', $page.url.origin);
-		url.searchParams.append('title', search);
+		url.searchParams.append('query', search);
 		try {
 			const response = await fetch(url.href);
 			const result = await response.json();
@@ -58,7 +58,7 @@
 		}
 	}
 	async function updateUsers(search: string) {
-		if (!browser) return [];
+		if (!browser || !search) return [];
 
 		const url = new URL('/api/v1/user/search', $page.url.origin);
 		url.searchParams.append('displayname', search);
@@ -73,7 +73,7 @@
 	}
 	function searchBlueprints(search: string) {
 		const url = new URL('/blueprint/search', $page.url.origin);
-		url.searchParams.append('title', search);
+		url.searchParams.append('query', search);
 		goto(url.href);
 	}
 	function command(callback: () => void) {
@@ -123,12 +123,12 @@
 				{#if os && os.name && OPERATING_SYSTEMS.find((value) => value === os?.name)}
 					<span>
 						{#if os.name === OPERATING_SYSTEMS[0]}
-							<kbd class="kbd rounded-md">⌘</kbd>
+							<kbd class="kbd kbd-sm rounded-md">⌘</kbd>
 						{/if}
 						{#if os.name === OPERATING_SYSTEMS[1] || os.name === OPERATING_SYSTEMS[2]}
-							<kbd class="kbd rounded-md">Ctrl</kbd>
+							<kbd class="kbd kbd-sm rounded-md">Ctrl</kbd>
 						{/if}
-						<kbd class="kbd rounded-md">K</kbd>
+						<kbd class="kbd kbd-sm rounded-md">K</kbd>
 					</span>
 				{/if}
 			</button>
