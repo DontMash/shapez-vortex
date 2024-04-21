@@ -18,6 +18,7 @@ export const load = (async ({ fetch, locals, url }) => {
     const query = url.searchParams.get('query');
     const filter = url.searchParams.get('filter');
     const sort = url.searchParams.get('sort');
+    const order = url.searchParams.get('order');
 
     return {
         seo: {
@@ -30,5 +31,6 @@ export const load = (async ({ fetch, locals, url }) => {
         query,
         filter,
         sort,
+        order,
     };
 }) satisfies PageServerLoad;

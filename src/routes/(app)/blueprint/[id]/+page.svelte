@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
+	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { share } from '$lib/client/actions/share';
+	import { REPORT_REASONS } from '$lib/report.types';
 
 	import BlueprintViewer from '$lib/components/blueprint/BlueprintViewer.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
+	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 	import CurrencyBitcoinIcon from '$lib/components/icons/CurrencyBitcoinIcon.svelte';
 	import DashboardCustomizeFilledIcon from '$lib/components/icons/DashboardCustomizeFilledIcon.svelte';
@@ -16,6 +19,7 @@
 	import DomainIcon from '$lib/components/icons/DomainIcon.svelte';
 	import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
 	import EditIcon from '$lib/components/icons/EditIcon.svelte';
+	import FlagIcon from '$lib/components/icons/FlagIcon.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 	import OpenInNewIcon from '$lib/components/icons/OpenInNewIcon.svelte';
 	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
@@ -26,7 +30,8 @@
 	export let data: PageData;
 
 	const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
-	const modals: Array<Dialog> = [];
+	const imageModals: Array<Dialog> = [];
+	let reportModal: Dialog;
 
 	function onBookmark(event: Event) {
 		const form = event.target as HTMLFormElement;
@@ -58,7 +63,7 @@
 								</figure>
 								<button
 									class="btn btn-circle btn-neutral btn-sm absolute right-2 top-2 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
-									on:click={() => modals[index].show()}
+									on:click={() => imageModals[index].show()}
 								>
 									<span class="inline-block h-6 w-6">
 										<OpenInNewIcon />
@@ -84,7 +89,7 @@
 								{/if}
 							</div>
 
-							<Dialog width="full" bind:this={modals[index]}>
+							<Dialog width="full" bind:this={imageModals[index]}>
 								<figure class="aspect-h-2 aspect-w-3">
 									<img class="object-fit" src={image.src} alt={name} />
 								</figure>
@@ -227,6 +232,14 @@
 						{data.blueprint.entry.title}
 					</h2>
 					<div>
+						{#if data.user && data.user.verified}
+							<button
+								class="btn btn-square btn-ghost btn-sm p-0.5"
+								on:click={() => reportModal.show()}
+							>
+								<FlagIcon />
+							</button>
+						{/if}
 						<button class="btn btn-square btn-ghost btn-sm p-0.5" use:share>
 							<ShareFilledIcon />
 						</button>
@@ -255,6 +268,89 @@
 								</a>
 							{/if}
 						{/if}
+
+						<Dialog bind:this={reportModal}>
+							<div class="p-6">
+								<h3 class="mb-4 text-xl font-bold">
+									Report “{data.blueprint.entry.title}”
+								</h3>
+								<form class="space-y-2" action="?/reportBlueprint" method="post">
+									<input type="hidden" name="entry" value={data.blueprint.entry.id} />
+
+									<label class="form-control" for="reason">
+										<div class="label">
+											<span class="label-text">Reason</span>
+										</div>
+										<select class="select select-bordered" name="reason" id="reason" required>
+											{#each REPORT_REASONS as reason}
+												<option
+													selected={$page.form &&
+														$page.form.invalid &&
+														$page.form.issues['reason'] &&
+														$page.form.data['reason'] === reason}
+													value={reason}
+												>
+													{reason}
+												</option>
+											{/each}
+										</select>
+									</label>
+
+									<label class="form-control h-64" for="message">
+										<div class="label">
+											<span class="label-text">Message</span>
+											<i class="label-text-alt">max. 256 characters</i>
+										</div>
+										{#if $page.form && $page.form.invalid}
+											<textarea
+												class={`textarea textarea-bordered h-full resize-none placeholder:italic ${
+													$page.form.issues['message'] ? 'textarea-error' : ''
+												}`}
+												name="message"
+												id="message"
+												value={$page.form.data['message']}
+												placeholder="This entry contains ..."
+												required
+												maxlength="256"
+											/>
+											{#if $page.form.issues['message']}
+												<div class="label">
+													<span class="label-text-alt italic text-error">
+														{$page.form.issues['message']}
+													</span>
+												</div>
+											{/if}
+										{:else}
+											<textarea
+												class="textarea textarea-bordered h-full resize-none placeholder:italic"
+												name="message"
+												id="message"
+												placeholder="This entry contains ..."
+												required
+												maxlength="256"
+											/>
+										{/if}
+									</label>
+
+									<div class="flex items-center justify-end space-x-2 pt-4">
+										<button class="btn btn-error">
+											<span class="inline-block size-6">
+												<FlagIcon />
+											</span>
+											Report
+										</button>
+										<form method="dialog">
+											<button class="btn btn-neutral">
+												<span class="inline-block size-6">
+													<CloseIcon />
+												</span>
+												Cancel
+											</button>
+										</form>
+									</div>
+								</form>
+							</div>
+						</Dialog>
 					</div>
 				</div>
 			</header>

@@ -19,7 +19,7 @@
 	}
 	function getPageUrl(page: number) {
 		const url = new URL($page.url);
-		url.searchParams.set('page', String(page));
+		url.searchParams.append('page', String(page));
 		return url.href;
 	}
 </script>
@@ -38,7 +38,7 @@
 		</h2>
 	</header>
 
-	<form class="mb-8 flex items-end justify-end space-x-4">
+	<form class="mb-8 flex items-end justify-end space-x-2">
 		<label class="input input-sm input-bordered flex grow items-center space-x-2" for="query">
 			<span class="inline-block size-4">
 				<SearchIcon />
@@ -53,7 +53,7 @@
 			/>
 		</label>
 
-		<label class="form-control w-full max-w-32" for="sort">
+		<label class="form-control w-full max-w-36" for="sort">
 			<div class="label">
 				<span class="label-text text-xs">Filter by tag:</span>
 			</div>
@@ -67,25 +67,31 @@
 			</select>
 		</label>
 
-		<label class="form-control w-full max-w-32" for="sort">
+		<label class="form-control w-full max-w-36" for="sort">
 			<div class="label">
 				<span class="label-text text-xs">Sort by:</span>
 			</div>
 			<select class="select select-bordered select-sm" id="sort" name="sort">
-				<optgroup label="Ascending">
-					<option value="created" selected={!data.sort || data.sort === 'created'}>↑ Created</option
-					>
-					<option value="updated" selected={data.sort === 'updated'}>↑ Updated</option>
-					<option value="title" selected={data.sort === 'title'}>↑ Title</option>
-					<option value="version" selected={data.sort === 'version'}>↑ Version</option>
-				</optgroup>
-				<hr />
-				<optgroup label="Descending">
-					<option value="-created" selected={data.sort === '-created'}>↓ Created</option>
-					<option value="-updated" selected={data.sort === '-updated'}>↓ Updated</option>
-					<option value="-title" selected={data.sort === '-title'}>↓ Title</option>
-					<option value="-version" selected={data.sort === '-version'}>↓ Version</option>
-				</optgroup>
+				<option value="created" selected={!data.sort || data.sort === 'created'}>Created</option>
+				<option value="updated" selected={data.sort === 'updated'}>Updated</option>
+				<option value="title" selected={data.sort === 'title'}>Title</option>
+				<option value="version" selected={data.sort === 'version'}>Version</option>
+				<option value="cost" selected={data.sort === 'cost'}>Points</option>
+				<option value="buildingCount" selected={data.sort === 'buildingCount'}>Buildings</option>
+				<option value="islandCount" selected={data.sort === 'islandCount'}>Islands</option>
+				<option value="viewCount" selected={data.sort === 'viewCount'}>Views</option>
+				<option value="downloadCount" selected={data.sort === 'downloadCount'}>Downloads</option>
+				<option value="bookmarkCount" selected={data.sort === 'bookmarkCount'}>Bookmarks</option>
+			</select>
+		</label>
+
+		<label class="form-control w-full max-w-36" for="order">
+			<div class="label">
+				<span class="label-text text-xs">Order in:</span>
+			</div>
+			<select class="select select-bordered select-sm" id="order" name="order">
+				<option value="asc" selected={!data.order || data.order === 'asc'}>↑ Ascending</option>
+				<option value="desc" selected={data.order === 'desc'}> ↓ Descending</option>
 			</select>
 		</label>
 

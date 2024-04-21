@@ -18,7 +18,6 @@ export const load = (async ({ locals, params }) => {
         if (!user) {
             error(404, 'User not found');
         }
-        console.log(user.id);
 
         return {
             seo: {

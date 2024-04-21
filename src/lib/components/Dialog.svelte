@@ -17,7 +17,7 @@
 </script>
 
 <dialog class="modal backdrop-blur" on:close bind:this={dialog}>
-	<div class={`modal-box border border-base-200 p-0 ${width === 'full' ? 'max-w-none' : ''}`}>
+	<div class={`modal-box border border-base-200 min-h-16 p-0 ${width === 'full' ? 'max-w-none' : ''}`}>
 		<slot />
 
 		<form method="dialog">

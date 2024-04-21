@@ -123,16 +123,16 @@ To setup, install & develop you may need some tools:
 * Blueprints
   * Clickable blueprint tags
   * Clickable user tags
-  * Report
   * Upload
     * Combobox for tags
-    * Richtext for description
+    * Richtext-Editor for description
     * bookmarks as view collection in pb
     * Spoiler (Option/Warning)
   * Library
     * Search
     * Filter
     * Sort
+    * Pagination
   * Blueprint Viewer
     * Instructions
       * How to

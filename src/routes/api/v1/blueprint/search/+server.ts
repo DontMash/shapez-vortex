@@ -4,16 +4,17 @@ const MAX_PAGE_ENTRIES = 10;
 
 export const GET: RequestHandler = async ({ locals, url }) => {
     const sort = ['id'];
-    const order = url.searchParams.get('sort');
-    sort.unshift(order ?? 'created');
+    const sortParams = url.searchParams.get('sort');
+    const orderParams = url.searchParams.get('order');
+    sort.unshift(`${orderParams === 'desc' ? '-' : ''}${sortParams}` ?? 'created');
     let filter = '';
     const query = url.searchParams.get('query');
     if (query) {
         filter += `title~"${query}"`;
     }
-    const refine = url.searchParams.get('filter');
-    if (refine) {
-        const options = refine.split(',');
+    const filterParams = url.searchParams.get('filter');
+    if (filterParams) {
+        const options = filterParams.split(',');
         options.forEach(option => {
             const [key, value] = option.split('=');
             filter += `&&${key}?~"${value}"`;
