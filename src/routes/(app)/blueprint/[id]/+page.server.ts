@@ -2,7 +2,8 @@ import PocketBase from 'pocketbase';
 import { fail } from '@sveltejs/kit';
 import { ADMIN_EMAIL, ADMIN_PASSWORD, POCKETBASE_URL } from '$env/static/private';
 import type { Actions, PageServerLoad } from './$types';
-import { REPORT_CREATE_SCHEMA, type ReportRecord } from '$lib/report.types';
+import { REPORT_CREATE_SCHEMA } from '$lib/report.types';
+import type { BlueprintRecord } from '$lib/blueprint.types';
 
 export const load = (async () => {
     return {};
@@ -47,6 +48,9 @@ export const actions = {
         if (!locals.user.verified) {
             return fail(403);
         }
+        if (!locals.user.verified) {
+            return fail(403);
+        }
 
         const formData = await request.formData();
         const entries = Object.fromEntries(formData);
@@ -56,8 +60,13 @@ export const actions = {
                 result[current.path[0]] = current.message;
                 return result;
             }, {});
-            
+
             return fail(400, { data: entries, issues, invalid: true });
+        }
+
+        const blueprint = await locals.pb.collection<BlueprintRecord>('blueprints').getOne(result.data.entry);
+        if (locals.user.id === blueprint.creator) {
+            return fail(403);
         }
 
         await locals.pb.collection('reports').create({ ...result.data, user: locals.user.id });

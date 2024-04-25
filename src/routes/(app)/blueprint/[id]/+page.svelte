@@ -232,7 +232,7 @@
 						{data.blueprint.entry.title}
 					</h2>
 					<div>
-						{#if data.user && data.user.verified}
+						{#if data.user && data.user.verified && data.user.id !== data.blueprint.entry.creator}
 							<button
 								class="btn btn-square btn-ghost btn-sm p-0.5"
 								on:click={() => reportModal.show()}
