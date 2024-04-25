@@ -6,7 +6,9 @@
 	import { share } from '$lib/client/actions/share';
 	import { REPORT_REASONS } from '$lib/report.types';
 
+	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
 	import BlueprintViewer from '$lib/components/blueprint/BlueprintViewer.svelte';
+	import UserTag from '$lib/components/UserTag.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
@@ -199,9 +201,7 @@
 			<header class="space-y-2 border-b border-base-content border-opacity-20 pb-4">
 				<div class="flex items-center justify-between">
 					{#if data.blueprint.entry.expand && data.blueprint.entry.expand['creator']}
-						<span class="badge badge-accent text-xs">
-							@{data.blueprint.entry.expand['creator'].displayname}
-						</span>
+						<UserTag name={data.blueprint.entry.expand['creator'].displayname} />
 					{/if}
 					<div class="flex space-x-1">
 						<span class="badge badge-neutral text-xs">
@@ -360,9 +360,7 @@
 				<ul>
 					{#each tags as tag}
 						<li class="inline">
-							<span class="badge badge-primary badge-outline">
-								#{tag.name}
-							</span>
+							<BlueprintTag data={tag} />
 						</li>
 					{/each}
 				</ul>

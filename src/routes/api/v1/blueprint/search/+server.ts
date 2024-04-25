@@ -7,11 +7,8 @@ export const GET: RequestHandler = async ({ locals, url }) => {
     const sortParams = url.searchParams.get('sort');
     const orderParams = url.searchParams.get('order');
     sort.unshift(sortParams ? `${orderParams === 'desc' ? '-' : ''}${sortParams}` : 'created');
-    let filter = '';
     const query = url.searchParams.get('query');
-    if (query) {
-        filter += `title~"${query}"`;
-    }
+    let filter = `title~"${query ?? ''}"`;
     const filterParams = url.searchParams.get('filter');
     if (filterParams) {
         const options = filterParams.split(',');

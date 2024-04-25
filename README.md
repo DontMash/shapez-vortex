@@ -121,8 +121,6 @@ To setup, install & develop you may need some tools:
     * Research-Upgrades
   * Recommended/Popular
 * Blueprints
-  * Clickable blueprint tags
-  * Clickable user tags
   * Upload
     * Combobox for tags
     * Richtext-Editor for description

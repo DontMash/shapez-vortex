@@ -3,7 +3,9 @@
 	import type { BlueprintRecord } from '$lib/blueprint.types';
 	import { share } from '$lib/client/actions/share';
 
+	import BlueprintTag from './BlueprintTag.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
+	import UserTag from '$lib/components/UserTag.svelte';
 	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
@@ -46,9 +48,7 @@
 			</a>
 
 			{#if data.expand && data.expand['creator']}
-				<span class="badge badge-accent text-xs">
-					@{data.expand['creator'].displayname}
-				</span>
+				<UserTag name={data.expand['creator'].displayname} />
 			{/if}
 
 			<div class="!ml-auto flex items-center space-x-1">
@@ -86,9 +86,7 @@
 			<ul>
 				{#each data.expand['tags'] as tag}
 					<li class="inline">
-						<span class="badge badge-primary badge-outline">
-							#{tag.name}
-						</span>
+						<BlueprintTag data={tag} />
 					</li>
 				{/each}
 			</ul>

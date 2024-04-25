@@ -28,6 +28,7 @@ export default {
     colors: {},
   },
   daisyui: {
+    logs: false,
     themes: [
       {
         light: {
