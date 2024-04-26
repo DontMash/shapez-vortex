@@ -4,7 +4,7 @@ import type { User } from '$lib/user.types';
 
 export const load = (async ({ locals, params }) => {
     try {
-        let user: Pick<User, 'id' | 'displayname'> | undefined;
+        let user: Pick<User, 'id' | 'displayname'>;
         if (params.slug.startsWith('@')) {
             user = await locals.pb.collection('users')
             .getFirstListItem(
@@ -13,10 +13,6 @@ export const load = (async ({ locals, params }) => {
             );
         } else {
             user = await locals.pb.collection('users').getOne(params.slug);
-        }
-        
-        if (!user) {
-            error(404, 'User not found');
         }
 
         return {
@@ -28,6 +24,6 @@ export const load = (async ({ locals, params }) => {
             profile: user,
         };
     } catch (err) {
-        error(500, 'Cannot find user');
+        error(404, 'User not found');
     }
 }) satisfies LayoutServerLoad;
