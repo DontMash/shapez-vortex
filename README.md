@@ -191,6 +191,7 @@ To setup, install & develop you may need some tools:
   * Inputs/Outputs for blueprint
   * Process chain
 * Quality Assurance
+  * Feedback
   * Custom PocketBase verification/email pages
   * Better form responses & errors
   * Content filters (Profanity, ...)

@@ -7,7 +7,7 @@
 	export let data: Array<ResearchEntry>;
 </script>
 
-<ol class="flex items-start space-x-16">
+<ol class="slider items-start space-x-16">
 	{#each data.slice(1) as entry, index}
 		<li>
 			<article class="card relative w-[30rem] shrink-0 bg-base-200 shadow-lg">
@@ -23,9 +23,9 @@
 
 					<ResearchGoal data={entry.Node} />
 					{#if entry.SideGoals.length > 0}
-						<ul class="mt-4 join join-vertical">
+						<ul class="join join-vertical mt-4">
 							{#each entry.SideGoals as node}
-								<li class="rounded-btn border border-base-content border-opacity-20 p-8 join-item">
+								<li class="join-item rounded-btn border border-base-content border-opacity-20 p-8">
 									<ResearchGoal data={node} />
 								</li>
 							{/each}

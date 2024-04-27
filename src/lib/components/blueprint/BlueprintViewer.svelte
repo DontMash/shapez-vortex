@@ -4,7 +4,7 @@
 		type Blueprint,
 		type BlueprintIdentifier
 	} from '$lib/blueprint.types';
-	import { view } from '$lib/client/blueprints';
+	import { view } from '$lib/client/actions/blueprint/blueprint-view';
 	import { capture } from '$lib/client/actions/capture';
 	import { copy, paste } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';

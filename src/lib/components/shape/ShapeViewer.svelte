@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import type { ShapeData } from '$lib/shape.types';
-	import { view } from '$lib/client/shapes';
-	import { capture } from '$lib/client/actions/capture';
+	import { view } from '$lib/client/actions/shape/shape-view';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
 
@@ -19,7 +18,7 @@
 	import PhotoCameraIcon from '$lib/components/icons/PhotoCameraIcon.svelte';
 	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
 	import ShuffleIcon from '$lib/components/icons/ShuffleIcon.svelte';
-	import { add } from '$lib/client/toast/toast.service';
+	import { TOAST_TYPE, add } from '$lib/client/toast/toast.service';
 
 	export let data: ShapeData;
 	export let isExtended = false;
@@ -51,7 +50,7 @@
 				navigator.clipboard
 					.write([clipboardItem])
 					.then(() => add('Copied shape image'))
-					.catch(() => add('Error while creating shape image', 3000));
+					.catch(() => add('Error while creating shape image', 3000, TOAST_TYPE.ERROR));
 			},
 			'image/png',
 			1

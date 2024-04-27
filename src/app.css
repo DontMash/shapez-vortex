@@ -7,3 +7,18 @@
 		@apply scroll-pt-64 scroll-smooth fill-base-content;
 	}
 }
+
+@layer components {
+	.slider {
+		@apply flex overflow-x-auto px-[calc((100%_-_theme(maxWidth.5xl))_*_0.5)] scrollbar-hide;
+	}
+}
+
+@layer utilities {
+	.writing-vertical {
+		writing-mode: vertical-rl;
+	}
+	.text-orientation-mixed {
+		text-orientation: mixed;
+	}
+}

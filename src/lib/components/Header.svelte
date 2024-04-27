@@ -17,6 +17,7 @@
 	import ScienceIcon from '$lib/components/icons/ScienceIcon.svelte';
 	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
 	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
+	import TimelineIcon from '$lib/components/icons/TimelineIcon.svelte';
 	import UploadIcon from '$lib/components/icons/UploadIcon.svelte';
 	import { isShapeIdentifier } from '$lib/shape.types';
 
@@ -153,7 +154,7 @@
 			{:else}
 				{#if $page.data.user.verified}
 					<a
-						class="btn btn-square btn-primary btn-md fill-primary-content"
+						class="btn btn-square btn-primary"
 						title="Upload"
 						href="/blueprint/upload"
 					>
@@ -321,6 +322,15 @@
 							<ScienceIcon />
 						</span>
 						Research Overview
+					</Command.Item>
+					<Command.Item
+						class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
+						onSelect={() => command(() => goto('/progression'))}
+					>
+						<span class="inline-block size-6">
+							<TimelineIcon />
+						</span>
+						Progression Editor
 					</Command.Item>
 
 					{#if $page.data.user}

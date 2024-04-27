@@ -13,6 +13,7 @@ export default {
         '15': '3.75rem',
       },
       borderRadius: {
+        'inherit': 'inherit',
         '4xl': '2rem',
       },
       animation: {

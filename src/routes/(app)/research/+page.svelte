@@ -2,7 +2,6 @@
 	import type { PageData } from './$types';
 
 	import Research from '$lib/components/research/Research.svelte';
-	import Slider from '$lib/components/Slider.svelte';
 	import ScienceIcon from '$lib/components/icons/ScienceIcon.svelte';
 
 	export let data: PageData;
@@ -10,11 +9,11 @@
 
 <section>
 	<header
-		class="max-w-5xl mx-auto mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
+		class="mx-auto mb-12 flex w-full max-w-5xl items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
 	>
 		<hgroup>
 			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6 fill-stone-100">
+				<span class="fill-stone-100 inline-block h-6 w-6">
 					<ScienceIcon />
 				</span>
 				<span>
@@ -28,8 +27,6 @@
 	</header>
 
 	<div class="-mx-4">
-		<Slider>
-			<Research data={data.research} />
-		</Slider>
+		<Research data={data.research} />
 	</div>
 </section>

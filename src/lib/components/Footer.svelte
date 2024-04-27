@@ -20,6 +20,9 @@
 			<a class="link-hover link transition-colors hover:text-primary" href="/research"
 				>Research Overview</a
 			>
+			<a class="link-hover link transition-colors hover:text-primary" href="/progression"
+				>Progression Editor</a
+			>
 		</nav>
 		<nav>
 			<h6 class="footer-title">Legal</h6>

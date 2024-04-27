@@ -38,7 +38,7 @@ export const SHAPE_COLOR_MATERIALS: Record<ShapeColorIdentifier, Material> = {
     g: SHAPE_COLOR_GREEN_MATERIAL,
     b: SHAPE_COLOR_BLUE_MATERIAL,
     c: SHAPE_COLOR_CYAN_MATERIAL,
-    p: SHAPE_COLOR_PURPLE_MATERIAL,
+    m: SHAPE_COLOR_PURPLE_MATERIAL,
     y: SHAPE_COLOR_YELLOW_MATERIAL,
     k: SHAPE_COLOR_BLACK_MATERIAL,
     w: SHAPE_COLOR_WHITE_MATERIAL,
@@ -62,7 +62,7 @@ export const SHAPE_TYPES = ['C', 'R', 'S', 'W', 'P', 'c'] as const;
 export type ShapeType = typeof SHAPE_TYPES[number];
 export const SHAPE_TYPE_IDENTIFIERS = [...SHAPE_TYPES, '-'] as const;
 export type ShapeTypeIdentifier = typeof SHAPE_TYPE_IDENTIFIERS[number];
-export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'p', 'y', 'k', 'w'] as const;
+export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'm', 'y', 'k', 'w'] as const;
 export type ShapeColor = typeof SHAPE_COLORS[number];
 export const SHAPE_COLOR_IDENTIFIERS = [...SHAPE_COLORS, 'u', '-'] as const;
 export type ShapeColorIdentifier = typeof SHAPE_COLOR_IDENTIFIERS[number];
@@ -73,5 +73,5 @@ export type ShapeQuarterData = {
     color: ShapeColorIdentifier;
 };
 
-const SHAPE_IDENTIFIER_REGEX = /^([CRSWPc-][rgbcpykwu-]){1,4}(:([CRSWPc-][rgbcpykwu-]){1,4}){0,3}$/;
+const SHAPE_IDENTIFIER_REGEX = /^([CRSWPc-][rgbcmykwu-]){1,4}(:([CRSWPc-][rgbcmykwu-]){1,4}){0,3}$/;
 export const isShapeIdentifier = (identifier: ShapeIdentifier): boolean => z.string().regex(SHAPE_IDENTIFIER_REGEX).safeParse(identifier).success;

@@ -1,7 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { SHAPE, type ShapeData } from '$lib/shape.types';
-import { getColors, getLayerCount, parse, getQuarterCount, getTypes, random } from '$lib/server/shape';
+import { getColors, getLayerCount, parse, getQuarterCount, getTypes, random } from '$lib/shape';
 
 export const load = (({ url }) => {
     try {
