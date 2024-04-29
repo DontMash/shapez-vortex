@@ -21,6 +21,7 @@ export const actions = {
         if (!locals.user.verified) {
             return fail(400, { invalid: true, issues: [{ message: 'User not verified' }] });
         }
+
         const formData = await request.formData();
         const entries = Object.fromEntries(formData);
         const schema = z.object({ newDisplayname: z.string().regex(USERNAME_REGEX) });
@@ -28,6 +29,7 @@ export const actions = {
         if (!result.success) {
             return fail(400, { data: entries, issues: result.error.issues, invalid: true });
         }
+
         await locals.pb.collection('users').update(locals.user.id, { displayname: result.data.newDisplayname });
         return { success: true };
     },

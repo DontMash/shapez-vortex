@@ -1,11 +1,13 @@
 <script lang="ts">
+	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
+	import { TOAST_TYPE, add } from '$lib/client/toast/toast.service';
 
-	import DoneIcon from '$lib/components/icons/DoneIcon.svelte';
 	import MailIcon from '$lib/components/icons/MailIcon.svelte';
 
 	export let data: PageData;
+	let emailInputValue: string | undefined = $page.data.user?.email;
 
 	$: isVerificationSuccess =
 		$page.form && $page.form.success && $page.url.search.includes('verification');
@@ -17,31 +19,29 @@
 	{#if data.user && data.user.verified}
 		<form action="/password-reset/?/reset" method="post">
 			<input type="hidden" name="email" value={data.user.email} />
-			<button class="btn btn-primary btn-block" disabled={isVerificationSuccess}>
-				{#if isResetSuccess}
-					<span class="inline-block h-6 w-6">
-						<DoneIcon />
-					</span>
-				{:else}
-					Request password reset
-				{/if}
+			<button class="btn btn-primary btn-block" disabled={isResetSuccess}>
+				Request password reset
 			</button>
 		</form>
 	{:else}
 		<form action="?/requestVerification" method="post">
 			<button class="btn btn-secondary btn-block" disabled={isVerificationSuccess}>
-				{#if isVerificationSuccess}
-					<span class="inline-block h-6 w-6">
-						<DoneIcon />
-					</span>
-				{:else}
-					Request verification
-				{/if}
+				Request verification
 			</button>
 		</form>
 	{/if}
 
-	<form class="flex items-end space-x-4" action="?/requestEmail" method="post">
+	<form
+		class="flex items-end space-x-4"
+		action="?/requestEmail"
+		method="post"
+		use:enhance={() => {
+			return async ({ result }) => {
+				add('Your email change has been requested!', 3000, TOAST_TYPE.WARNING);
+				applyAction(result);
+			};
+		}}
+	>
 		<label class="form-control grow" for="newEmail">
 			<div class="label">
 				<span class="label-text">Email</span>
@@ -58,18 +58,16 @@
 					name="newEmail"
 					id="newEmail"
 					required
+					bind:value={emailInputValue}
 				/>
 			</div>
 		</label>
 
-		<button class="btn btn-primary join-item self-end" disabled={isEmailSuccess}>
-			{#if isEmailSuccess}
-				<span class="inline-block h-6 w-6">
-					<DoneIcon />
-				</span>
-			{:else}
-				Update
-			{/if}
+		<button
+			class="btn btn-primary join-item self-end"
+			disabled={emailInputValue === $page.data.user?.email || isEmailSuccess}
+		>
+			Update
 		</button>
 	</form>
 
