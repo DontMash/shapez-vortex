@@ -10,7 +10,7 @@
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 	import DeleteIcon from '$lib/components/icons/DeleteIcon.svelte';
-	import EditIcon from '../icons/EditIcon.svelte';
+	import EditIcon from '$lib/components/icons/EditIcon.svelte';
 	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
 
 	export let data: Partial<BlueprintRecord>;

@@ -6,7 +6,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
     const sort = ['id'];
     const sortParams = url.searchParams.get('sort');
     const orderParams = url.searchParams.get('order');
-    sort.unshift(sortParams ? `${orderParams === 'desc' ? '-' : ''}${sortParams}` : 'created');
+    sort.unshift(sortParams ? `${orderParams === 'desc' ? '-' : ''}${sortParams}` : '-created');
     const query = url.searchParams.get('query');
     let filter = `title~"${query ?? ''}"`;
     const filterParams = url.searchParams.get('filter');

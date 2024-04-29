@@ -150,7 +150,8 @@
 						<LoginIcon />
 					</span>
 				</a>
-			{:else}
+			{/if}
+			{#if $page.data.user}
 				<a
 					class="btn btn-square btn-primary btn-md fill-primary-content"
 					title="Upload"
@@ -161,6 +162,18 @@
 						<UploadIcon />
 					</span>
 				</a>
+			{/if}
+			<a
+				class="btn btn-square btn-ghost border border-base-content border-opacity-20 fill-base-content"
+				title="Browse blueprints"
+				href="/blueprint/search"
+			>
+				<span class="sr-only">Browse blueprints</span>
+				<span class="inline-block size-6 fill-base-content">
+					<DomainIcon />
+				</span>
+			</a>
+			{#if $page.data.user}
 				<div class="dropdown dropdown-end">
 					<div
 						tabindex="0"
@@ -249,7 +262,7 @@
 								{/if}
 							</Command.Item>
 						{/each}
-						{#if blueprints.length > MAX_ENTRIES}
+						{#if blueprints.length > 0}
 							<Command.Item
 								class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
 								value={searchValue}
