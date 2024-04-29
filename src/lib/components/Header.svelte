@@ -151,18 +151,16 @@
 					</span>
 				</a>
 			{:else}
-				{#if $page.data.user.verified}
-					<a
-						class="btn btn-square btn-primary btn-md fill-primary-content"
-						title="Upload"
-						href="/blueprint/upload"
-					>
-						<span class="sr-only">Upload</span>
-						<span class="inline-block size-6 fill-primary-content">
-							<UploadIcon />
-						</span>
-					</a>
-				{/if}
+				<a
+					class="btn btn-square btn-primary btn-md fill-primary-content"
+					title="Upload"
+					href="/blueprint/upload"
+				>
+					<span class="sr-only">Upload</span>
+					<span class="inline-block size-6 fill-primary-content">
+						<UploadIcon />
+					</span>
+				</a>
 				<div class="dropdown dropdown-end">
 					<div
 						tabindex="0"
