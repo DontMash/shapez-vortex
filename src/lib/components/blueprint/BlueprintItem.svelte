@@ -25,7 +25,7 @@
 <article
 	class="grid grid-cols-3 divide-x divide-base-content divide-opacity-20 overflow-hidden rounded-box border border-base-content border-opacity-20 bg-base-200 shadow-lg"
 >
-	<a class="" href="/blueprint/{data.id}">
+	<a href="/blueprint/{data.id}">
 		<figure class="aspect-h-2 aspect-w-3">
 			{#if image}
 				<img class="object-cover" src={image} alt="Preview of {data.title}" />

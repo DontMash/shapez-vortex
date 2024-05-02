@@ -139,18 +139,6 @@
 				{/if}
 			</button>
 
-			{#if !$page.data.user}
-				<a
-					class="btn btn-square btn-ghost border border-base-content border-opacity-20 fill-base-content"
-					title="Login"
-					href="/login"
-				>
-					<span class="sr-only">Login</span>
-					<span class="inline-block size-6 fill-base-content">
-						<LoginIcon />
-					</span>
-				</a>
-			{/if}
 			{#if $page.data.user}
 				<a
 					class="btn btn-square btn-primary btn-md fill-primary-content"
@@ -173,6 +161,18 @@
 					<DomainIcon />
 				</span>
 			</a>
+			{#if !$page.data.user}
+				<a
+					class="btn btn-square btn-primary btn-md fill-primary-content"
+					title="Login"
+					href="/login"
+				>
+					<span class="sr-only">Login</span>
+					<span class="inline-block size-6 fill-base-content">
+						<LoginIcon />
+					</span>
+				</a>
+			{/if}
 			{#if $page.data.user}
 				<div class="dropdown dropdown-end">
 					<div
