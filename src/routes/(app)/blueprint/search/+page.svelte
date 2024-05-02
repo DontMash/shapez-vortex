@@ -90,8 +90,8 @@
 				<span class="label-text text-xs">Order in:</span>
 			</div>
 			<select class="select select-bordered select-sm" id="order" name="order">
-				<option value="asc" selected={!data.order || data.order === 'asc'}>↑ Ascending</option>
-				<option value="desc" selected={data.order === 'desc'}> ↓ Descending</option>
+				<option value="asc" selected={data.order === 'asc'}>↑ Ascending</option>
+				<option value="desc" selected={!data.order || data.order === 'desc'}> ↓ Descending</option>
 			</select>
 		</label>
 
