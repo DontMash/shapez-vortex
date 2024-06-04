@@ -9,6 +9,58 @@ export type Progression = {
     SideQuestGroups: Array<ProgressionSideGoalGroup>;
     SideUpgrades: Array<ProgressionSideUpgrade>;
     LinearUpgrades: Array<ProgressionLinearUpgrade>;
+    Mechanics: Array<ProgressionMechanic>;
+};
+
+export const PROGRESSION_MECHANICS: Array<ProgressionMechanic> = [
+    {
+        "Id": "RULayer2",
+        "Title": "@research.RULayer2.title",
+        "Description": "@research.RULayer2.description",
+        "IconId": "GenericLayerUnlock"
+    },
+    {
+        "Id": "RULayer3",
+        "Title": "@research.RULayer3.title",
+        "Description": "@research.RULayer3.description",
+        "IconId": "GenericLayerUnlock"
+    },
+    {
+        "Id": "RUBlueprints",
+        "Title": "@research.RUBlueprints.title",
+        "Description": "@research.RUBlueprints.description",
+        "IconId": "Blueprints"
+    },
+    {
+        "Id": "RUIslandPlacement",
+        "Title": "@research.RUIslandPlacement.title",
+        "Description": "@research.RUIslandPlacement.description",
+        "IconId": "IslandPlacement"
+    },
+    {
+        "Id": "RURailManagement",
+        "Title": "@research.RURailManagement.title",
+        "Description": "@research.RURailManagement.description",
+        "IconId": "Trains"
+    },
+    {
+        "Id": "RUFluids",
+        "Title": "@research.RUFluids.title",
+        "Description": "@research.RUFluids.description",
+        "IconId": "Fluids"
+    },
+    {
+        "Id": "RUWires",
+        "Title": "@research.RUWires.title",
+        "Description": "@research.RUWires.description",
+        "IconId": "Wires"
+    }
+] as const;
+type ProgressionMechanic = {
+    Id: string;
+    Title: TranslationString;
+    Description: TranslationString;
+    IconId: string;
 };
 
 export type ProgressionMilestone = {
@@ -57,6 +109,7 @@ const PROGRESSION_BUILDING_REWARDS: Array<ProgressionBuildingReward> = BUILDINGS
 const PROGRESSION_MECHANIC_REWARDS: Array<ProgressionUnlockReward> = MECHANICS.map(mechanic => ({ $type: PROGRESSION_REWARD_TYPES.MECHANIC, MechanicId: mechanic }));
 const PROGRESSION_ISLAND_LAYOUT_REWARDS: Array<ProgressionIslandLayoutReward> = ISLAND_LAYOUTS.map(layout => ({ $type: PROGRESSION_REWARD_TYPES.ISLAND_LAYOUT, LayoutId: layout }));
 export const PROGRESSION_REWARDS: Array<ProgressionReward> = [...PROGRESSION_WIKI_ENTRY_REWARDS, ...PROGRESSION_BUILDING_REWARDS, ...PROGRESSION_MECHANIC_REWARDS, ...PROGRESSION_ISLAND_LAYOUT_REWARDS];
+export const PROGRESSION_REWARD_IDS: Array<string> = [...WIKI_ENTRIES, ...BUILDINGS_VARIANTS, ...MECHANICS, ...ISLAND_LAYOUTS];
 
 export type ProgressionGoal = {
     Shapes: Array<ProgressionGoalShape>;

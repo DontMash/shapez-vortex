@@ -7,8 +7,10 @@
 	import { TOAST_TYPE, add } from '$lib/client/toast/toast.service';
 	import type { Scenario } from '$lib/game.types';
 	import {
+		PROGRESSION_MECHANICS,
 		PROGRESSION_MILESTONE_CREATE_SCHEMA,
 		PROGRESSION_REWARDS,
+		PROGRESSION_REWARD_IDS,
 		PROGRESSION_REWARD_TYPES,
 		type Progression,
 		type ProgressionGoal,
@@ -71,49 +73,34 @@
 	let milestoneIndex: number | undefined;
 	let rewardDialog: Dialog | undefined;
 
-	let availableRewards: Array<
-		ProgressionReward | ProgressionSideUpgrade | ProgressionLinearUpgrade
-	> = [];
+	let usedRewards: Array<string> = [];
+	let availableRewards: Array<string> = [];
 	$: {
-		const usedRewards = milestoneItems.flatMap((milestoneItem) =>
-			milestoneItem.rewards.map((rewardItem) => rewardItem.ref)
+		usedRewards = milestoneItems.flatMap((milestoneItem) =>
+			milestoneItem.rewards
+				.map((rewardItem) => {
+					if (!('$type' in rewardItem.ref)) {
+						return undefined;
+					}
+					switch (rewardItem.ref.$type) {
+						case 'WikiEntryReward':
+							return rewardItem.ref.EntryId;
+						case 'BuildingReward':
+							return rewardItem.ref.BuildingVariantId;
+						case 'MechanicReward':
+							return rewardItem.ref.MechanicId;
+						case 'IslandLayoutReward':
+							return rewardItem.ref.LayoutId;
+						case 'BlueprintCurrencyReward':
+						case 'ChunkLimitReward':
+						case 'ResearchPointsReward':
+						default:
+							return undefined;
+					}
+				})
+				.filter((item): item is string => typeof item !== undefined)
 		);
-		availableRewards = PROGRESSION_REWARDS.filter((reward) => {
-			return usedRewards.filter((usedReward) => {
-				if (!('$type' in usedReward) || reward.$type !== usedReward.$type) {
-					return false;
-				}
-				if (
-					reward.$type === 'BuildingReward' &&
-					usedReward.$type === 'BuildingReward' &&
-					reward.BuildingVariantId === usedReward.BuildingVariantId
-				) {
-					return false;
-				}
-				if (
-					reward.$type === 'IslandLayoutReward' &&
-					usedReward.$type === 'IslandLayoutReward' &&
-					reward.LayoutId === usedReward.LayoutId
-				) {
-					return false;
-				}
-				if (
-					reward.$type === 'MechanicReward' &&
-					usedReward.$type === 'MechanicReward' &&
-					reward.MechanicId === usedReward.MechanicId
-				) {
-					return false;
-				}
-				if (
-					reward.$type === 'WikiEntryReward' &&
-					usedReward.$type === 'WikiEntryReward' &&
-					reward.EntryId === usedReward.EntryId
-				) {
-					return false;
-				}
-				return true;
-			}).length;
-		});
+		availableRewards = PROGRESSION_REWARD_IDS.filter((reward) => usedRewards.includes(reward));
 	}
 
 	function onFileLoad(event: Event) {
@@ -239,10 +226,14 @@
 				Levels: [],
 				SideQuestGroups: [],
 				SideUpgrades: [],
-				LinearUpgrades: []
+				LinearUpgrades: [],
+				Mechanics: PROGRESSION_MECHANICS
 			}
 		);
-		const newScenario: Scenario = { ...scenario, Progression: progression };
+		const newScenario: Scenario = {
+			...scenario,
+			Progression: progression
+		};
 		const content = JSON.stringify(newScenario, undefined, 4);
 		const file = new Blob([content], { type: 'application/json' });
 		const link = document.createElement('a');
@@ -431,7 +422,7 @@
 	</div>
 
 	<ol
-		class="slider items-start space-x-8 rounded-2xl py-1 -my-1"
+		class="slider -my-1 items-start space-x-8 rounded-2xl py-1"
 		aria-label="Milestones"
 		use:dndzone={{
 			items: milestoneItems,
@@ -447,7 +438,7 @@
 		{#each milestoneItems as milestoneItem, milestoneIndex (milestoneItem.id)}
 			{@const milestoneLabel = `Milestone ${milestoneItem.ref.Title} (${milestoneItem.ref.Id})`}
 			<li
-				class="w-full max-w-[32rem] rounded-2xl shrink-0 shadow-lg"
+				class="w-full max-w-[32rem] shrink-0 rounded-2xl shadow-lg"
 				aria-label={milestoneLabel}
 				animate:flip={{ duration: FLIP_ANIMATION_DURATION_MS }}
 			>
@@ -719,14 +710,15 @@
 		<header class="mb-4 pr-8">
 			<span class="text-2xl font-bold">Add reward</span>
 		</header>
-		<ul class="p-1 -m-1 max-h-[22.5rem] space-y-2 overflow-y-auto rounded-btn">
-			{#each availableRewards as reward}
+		<ul class="-m-1 max-h-[22.5rem] space-y-2 overflow-y-auto rounded-btn p-1">
+			{#each PROGRESSION_REWARDS as reward, rewardIndex}
 				<li>
-					<button class="btn btn-block justify-start">
+					<button
+						class="btn btn-block justify-start"
+						disabled={usedRewards.includes(PROGRESSION_REWARD_IDS[rewardIndex])}
+					>
 						<span class="overflow-hidden text-ellipsis whitespace-nowrap">
-							{#if !('$type' in reward)}
-								[UPGRADE] {reward.Id}
-							{:else if reward.$type === PROGRESSION_REWARD_TYPES.BUILDING}
+							{#if reward.$type === PROGRESSION_REWARD_TYPES.BUILDING}
 								[BUILDING] {reward.BuildingVariantId}
 							{:else if reward.$type === PROGRESSION_REWARD_TYPES.ISLAND_LAYOUT}
 								[LAYOUT] {reward.LayoutId}
