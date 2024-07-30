@@ -1,0 +1,11 @@
+{
+  "Version": "1",
+  "UniqueId": "difficulty-preset.relaxed",
+  "Title": "@difficulty-preset.relaxed.title",
+
+  "Parameters": {
+    "ResearchShapeCostMultiplier": 60,
+    "ChunkLimitMultiplier": 0,
+    "BlueprintCostMultiplier": 0
+  }
+}

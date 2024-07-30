@@ -5,8 +5,6 @@
 	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
 	import NorthIcon from '$lib/components/icons/NorthIcon.svelte';
 	import SteamIcon from '$lib/components/icons/SteamIcon.svelte';
-
-	import RESEARCH_DATA from '$lib/assets/data/research-metadata.json';
 </script>
 
 <footer class="bg-base-200 p-10 text-base-content" id="footer">
@@ -16,9 +14,6 @@
 			<a class="link-hover link transition-colors hover:text-primary" href="/shape">Shape Viewer</a>
 			<a class="link-hover link transition-colors hover:text-primary" href="/blueprint"
 				>Blueprint Viewer</a
-			>
-			<a class="link-hover link transition-colors hover:text-primary" href="/research"
-				>Research Overview</a
 			>
 		</nav>
 		<nav>
@@ -116,7 +111,7 @@
 				>
 					v{version}
 				</a>
-				<span>- Game Version {RESEARCH_DATA.GameVersion}</span>
+				<span>- Game Version 1090</span>
 			</i>
 		</aside>
 	</div>

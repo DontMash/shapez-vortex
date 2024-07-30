@@ -1,0 +1,1074 @@
+{
+  "type": "object",
+  "properties": {
+    "FormatVersion": {
+      "required": true,
+      "type": "integer"
+    },
+    "GameVersion": {
+      "required": true,
+      "type": "integer"
+    },
+    "UniqueId": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "SupportedGameModes": {
+      "required": true,
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "ExampleShapes": {
+      "required": true,
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "BasedOnScenarioId": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "FollowupScenarioIds": {
+      "required": true,
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "RecommendedScenarioIdsToCompleteBefore": {
+      "required": true,
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "Title": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Description": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "PreviewImageId": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Config": {
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "BaseChunkLimitMultiplier": {
+          "required": true,
+          "type": "integer"
+        },
+        "MaxShapeLayers": {
+          "required": true,
+          "type": "integer"
+        },
+        "InitialResearchPoints": {
+          "required": true,
+          "type": "integer"
+        },
+        "LayerMechanicIds": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "BlueprintsMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "RailsMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "IslandManagementMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "PlayerLevelMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "TrainHubDeliveryMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ShapesConfigurationId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ColorSchemeConfigurationId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "BlueprintCurrencyShapes": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Shape": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "RequiredUpgradeId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Amount": {
+                "required": true,
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "HubInputSizeUpgradeId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "SpeedsToLinearUpgradeMappings": {
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "IntroductionWikiEntryId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiallyUnlockedUpgrades": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "TutorialConfig": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "PlayerLevelConfig": {
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "IconicLevelShapes": {
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "IconicLevelShapeInterval": {
+              "required": true,
+              "type": "integer"
+            },
+            "GoalLines": {
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "Id": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "Randomized": {
+                    "required": true,
+                    "type": "boolean"
+                  },
+                  "Shape": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "StartingAmount": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "ExponentialGrowthPercentPerLevel": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "RequiredUpgrade": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            },
+            "Rewards": {
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "MinimumLevel": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "Rewards": {
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Progression": {
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Levels": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Id": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Rewards": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {}
+                }
+              },
+              "VideoId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "PreviewImageId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Title": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Description": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "WikiEntryId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Lines": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "ReusedAtNextMilestone": {
+                      "required": true,
+                      "type": "boolean"
+                    },
+                    "ReusedAtNextMilestoneOffset": {
+                      "required": true,
+                      "type": "integer"
+                    },
+                    "ReusedAtSameMilestone": {
+                      "required": true,
+                      "type": "boolean"
+                    },
+                    "ReusedAtSameMilestoneOffset": {
+                      "required": true,
+                      "type": "integer"
+                    },
+                    "ReusedForPlayerLevel": {
+                      "required": true,
+                      "type": "boolean"
+                    },
+                    "StartingOffset": {
+                      "required": true,
+                      "type": "integer"
+                    },
+                    "Shapes": {
+                      "required": true,
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "properties": {
+                          "Shape": {
+                            "required": true,
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "Amount": {
+                            "required": true,
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SideQuestGroups": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Title": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "RequiredUpgradeIds": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "SideQuests": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "Id": {
+                      "required": true,
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "IsFollowupForLevel": {
+                      "required": true,
+                      "type": "boolean"
+                    },
+                    "Rewards": {
+                      "required": true,
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "properties": {}
+                      }
+                    },
+                    "Costs": {
+                      "required": true,
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {
+                        "type": [
+                          "object",
+                          "null"
+                        ],
+                        "properties": {
+                          "Shape": {
+                            "required": true,
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "Amount": {
+                            "required": true,
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SideUpgrades": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Id": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "PreviewImageId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "VideoId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Title": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Description": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Hidden": {
+                "required": true,
+                "type": "boolean"
+              },
+              "RequiredUpgradeIds": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "Rewards": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {}
+                }
+              },
+              "Costs": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "LinearUpgrades": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Id": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Title": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Levels": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "Value": {
+                      "required": true,
+                      "type": "integer"
+                    },
+                    "Cost": {
+                      "required": true,
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {}
+                    }
+                  }
+                }
+              },
+              "RequiredUpgradeId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "Mechanics": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Id": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Title": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Description": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "IconId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "StartingLocation": {
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Hub": {
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "Position_GC": {
+              "required": true,
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "required": true,
+                  "type": "integer"
+                },
+                "y": {
+                  "required": true,
+                  "type": "integer"
+                }
+              }
+            },
+            "Rotation": {
+              "required": true,
+              "type": "integer"
+            },
+            "LayoutId": {
+              "required": true,
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "InitialViewport": {
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "PositionX": {
+              "required": true,
+              "type": "number"
+            },
+            "PositionY": {
+              "required": true,
+              "type": "number"
+            },
+            "Zoom": {
+              "required": true,
+              "type": "number"
+            },
+            "RotationDegrees": {
+              "required": true,
+              "type": "number"
+            },
+            "Angle": {
+              "required": true,
+              "type": "number"
+            },
+            "Layer": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShowAllLayers": {
+              "required": true,
+              "type": "boolean"
+            }
+          }
+        },
+        "InitialIslands": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "Position_GC": {
+                "required": true,
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "x": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "y": {
+                    "required": true,
+                    "type": "integer"
+                  }
+                }
+              },
+              "Rotation": {
+                "required": true,
+                "type": "integer"
+              },
+              "LayoutId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "FixedPatches": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Shape": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Position_LC": {
+                "required": true,
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "x": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "y": {
+                    "required": true,
+                    "type": "integer"
+                  }
+                }
+              },
+              "LocalTiles": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "x": {
+                      "required": true,
+                      "type": "integer"
+                    },
+                    "y": {
+                      "required": true,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "StartingChunks": {
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "SuperChunk": {
+                "required": true,
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "x": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "y": {
+                    "required": true,
+                    "type": "integer"
+                  }
+                }
+              },
+              "GuaranteedShapePatches": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "GuaranteedColorPatches": {
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "DoNotGenerateOtherResources": {
+                "required": true,
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

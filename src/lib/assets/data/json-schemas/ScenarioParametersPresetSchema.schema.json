@@ -1,0 +1,178 @@
+{
+  "type": "object",
+  "properties": {
+    "Version": {
+      "required": true,
+      "type": "integer"
+    },
+    "UniqueId": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Title": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Description": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Parameters": {
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "MapGenerationParameters": {
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "FluidsSpawnPrimaryColors": {
+              "required": true,
+              "type": "boolean"
+            },
+            "FluidsSpawnSecondaryColors": {
+              "required": true,
+              "type": "boolean"
+            },
+            "FluidsSpawnTertiaryColors": {
+              "required": true,
+              "type": "boolean"
+            },
+            "FluidPatchLikelinessPercent": {
+              "required": true,
+              "type": "integer"
+            },
+            "FluidPatchBaseSize": {
+              "required": true,
+              "type": "integer"
+            },
+            "FluidPatchSizeGrowPercentPerChunk": {
+              "required": true,
+              "type": "integer"
+            },
+            "FluidPatchMaxSize": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShapePatchLikelinessPercent": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShapePatchBaseSize": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShapePatchSizeGrowPercentPerChunk": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShapePatchMaxSize": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShapePatchShapeColorfulnessPercent": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShapePatchRareShapeLikelinessPercent": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShapePatchVeryRareShapeLikelinessPercent": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShapePatchGenerationLikeliness": {
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "GenerationType": {
+                    "required": true,
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15
+                    ]
+                  },
+                  "MinimumDistanceToOrigin": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "LikelinessPerMille": {
+                    "required": true,
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "GameRuleParameters": {
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "RuleIds": {
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "ScenarioId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

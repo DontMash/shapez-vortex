@@ -13,7 +13,7 @@ import {
     BLUEPRINT_IDENTIFIER_VERSION,
     BLUEPRINT_IDENTIFIER_REGEX,
     BLUEPRINT_TYPES,
-    type BuildingIdentifier,
+    type BlueprintBuildingIdentifier,
 } from '$lib/blueprint.types';
 
 const BLUEPRINT_SCHEMA = z.object({
@@ -101,17 +101,17 @@ export function getIslandCount(blueprint: Blueprint): number {
     }
     return blueprint.BP.Entries.length;
 }
-export function getBuildings(blueprint: Blueprint): Map<BuildingIdentifier, number> {
+export function getBuildings(blueprint: Blueprint): Map<BlueprintBuildingIdentifier, number> {
     if (blueprint.BP.$type === 'Island') {
-        return blueprint.BP.Entries.reduce<Map<BuildingIdentifier, number>>((result, current) => {
+        return blueprint.BP.Entries.reduce<Map<BlueprintBuildingIdentifier, number>>((result, current) => {
             getBuildingTypes(current.B).forEach((value, key) => result.set(key, (result.get(key) ?? 0) + value));
             return result;
         }, new Map());
     }
     return getBuildingTypes(blueprint.BP);
 };
-function getBuildingTypes(blueprint: BlueprintBuilding): Map<BuildingIdentifier, number> {
-    return blueprint.Entries.reduce<Map<BuildingIdentifier, number>>((result, current) => {
+function getBuildingTypes(blueprint: BlueprintBuilding): Map<BlueprintBuildingIdentifier, number> {
+    return blueprint.Entries.reduce<Map<BlueprintBuildingIdentifier, number>>((result, current) => {
         result.set(current.T, (result.get(current.T) ?? 0) + 1);
         return result;
     }, new Map());

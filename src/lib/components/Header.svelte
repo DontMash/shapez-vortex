@@ -324,15 +324,6 @@
 						</span>
 						Blueprint Viewer
 					</Command.Item>
-					<Command.Item
-						class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-						onSelect={() => command(() => goto('/research'))}
-					>
-						<span class="inline-block size-6">
-							<ScienceIcon />
-						</span>
-						Research Overview
-					</Command.Item>
 
 					{#if $page.data.user}
 						{#if $page.data.user.verified}

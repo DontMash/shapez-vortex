@@ -19,7 +19,7 @@
 	}
 	function getPageUrl(page: number) {
 		const url = new URL($page.url);
-		url.searchParams.append('page', String(page));
+		url.searchParams.set('page', String(page));
 		return url.href;
 	}
 </script>

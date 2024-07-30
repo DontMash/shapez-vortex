@@ -1,0 +1,11 @@
+{
+  "Version": "1",
+  "UniqueId": "difficulty-preset.regular",
+  "Title": "@difficulty-preset.normal.title",
+
+  "Parameters": {
+    "ResearchShapeCostMultiplier": 100,
+    "ChunkLimitMultiplier": 100,
+    "BlueprintCostMultiplier": 0
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "Version": {
+      "required": true,
+      "type": "integer"
+    },
+    "UniqueId": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Title": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Parameters": {
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "ResearchShapeCostMultiplier": {
+          "required": true,
+          "type": "integer"
+        },
+        "ChunkLimitMultiplier": {
+          "required": true,
+          "type": "integer"
+        },
+        "BlueprintCostMultiplier": {
+          "required": true,
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

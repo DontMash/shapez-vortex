@@ -66,8 +66,8 @@ You can also share content related to the game with other users.
 In the current state it provides the following features:
 
 * [shape-viewer](https://shapez.soren.codes/shape) - visualize shapes by their identifier
-* [blueprint-transformer](https://shapez.soren.codes/blueprint) - modify blueprint data with multiple
-* [research-overview](https://shapez.soren.codes/research) - browse the ingame research data
+* [blueprint-codec](https://shapez.soren.codes/blueprint) - modify blueprint data
+* [blueprint-viewer](https://shapez.soren.codes/blueprint) - visualize blueprints
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -118,7 +118,7 @@ To setup, install & develop you may need some tools:
   * Report
   * Follow?
   * Settings
-    * Research-Upgrades
+    * Linear-Upgrades
   * Recommended/Popular
 * Blueprints
   * Upload
@@ -154,7 +154,7 @@ To setup, install & develop you may need some tools:
     * Step by Step?
   * Builder?
   * Steam Workshop link
-* Reseach Overview
+* Progression Overview
   * Shape images
   * Share entry
   * Unlocks
