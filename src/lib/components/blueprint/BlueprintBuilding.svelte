@@ -12,7 +12,7 @@
 		type Mesh
 	} from 'three';
 	import { Suspense } from '@threlte/extras';
-	import CustomShaderMaterial from 'three-custom-shader-material/vanilla';
+	import CustomShaderMaterial from 'three-custom-shader-material/vanilla/dist/three-custom-shader-material-vanilla.cjs';
 	import type { BlueprintBuildingEntry } from '$lib/blueprint.types';
 
 	import COLOR_MAP from '$lib/assets/images/MaterialLUT.png';
