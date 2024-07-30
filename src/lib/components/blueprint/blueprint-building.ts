@@ -498,44 +498,87 @@ export const getBlueprintBuildingModel = (type: BlueprintBuildingIdentifier) => 
 	return model;
 };
 const getBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => {
+	const compatible = getCompatibleBlueprintBuildingType(type);
+	const mirrored = getMirroredBlueprintBuildingType(compatible);
+	return mirrored;
+};
+export const COMPATIBLE_MIRRORED_BUILDING_TYPES = [
+	'BeltDefaultRightInternalVariant',
+	'Splitter1To2RInternalVariant',
+	'Merger2To1RInternalVariant',
+	'Lift1UpRightInternalVariant',
+	'Lift1DownRightInternalVariant',
+	'Lift2UpRightInternalVariant',
+	'Lift2DownRightInternalVariant',
+	'PipeRightInternalVariant',
+	'PipeUpRightInternalVariant',
+	'Pipe2UpRightInternalVariant',
+	'WireDefaultRightInternalVariant',
+	'WireDefault1UpRightInternalVariant',
+	'WireDefault2UpRightInternalVariant',
+	'CutterMirroredInternalVariant'
+];
+const getCompatibleBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => {
 	switch (type) {
 		case 'BeltDefaultRightInternalVariant':
+			return 'BeltDefaultLeftInternalVariantMirrored';
+		case 'Splitter1To2RInternalVariant':
+			return 'Splitter1To2LInternalVariantMirrored';
+		case 'Merger2To1RInternalVariant':
+			return 'Merger2To1LInternalVariantMirrored';
+		case 'Lift1UpRightInternalVariant':
+			return 'Lift1UpLeftInternalVariantMirrored';
+		case 'Lift1DownRightInternalVariant':
+			return 'Lift1DownLeftInternalVariantMirrored';
+		case 'Lift2UpRightInternalVariant':
+			return 'Lift2UpLeftInternalVariantMirrored';
+		case 'Lift2DownRightInternalVariant':
+			return 'Lift2DownLeftInternalVariantMirrored';
+		case 'PipeRightInternalVariant':
+			return 'PipeLeftInternalVariantMirrored';
+		case 'PipeUpRightInternalVariant':
+			return 'PipeUpLeftInternalVariantMirrored';
+		case 'Pipe2UpRightInternalVariant':
+			return 'Pipe2UpLeftInternalVariantMirrored';
+		case 'WireDefaultRightInternalVariant':
+			return 'WireDefaultLeftInternalVariantMirrored';
+		case 'WireDefault1UpRightInternalVariant':
+			return 'WireDefault1UpLeftInternalVariantMirrored';
+		case 'WireDefault2UpRightInternalVariant':
+			return 'WireDefault2UpLeftInternalVariantMirrored';
+		case 'CutterMirroredInternalVariant':
+			return 'CutterDefaultInternalVariantMirrored';
+
+		default:
+			return type;
+	}
+};
+const getMirroredBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => {
+	switch (type) {
 		case 'BeltDefaultLeftInternalVariantMirrored':
 			return 'BeltDefaultLeftInternalVariant';
-		case 'Splitter1To2RInternalVariant':
 		case 'Splitter1To2LInternalVariantMirrored':
 			return 'Splitter1To2LInternalVariant';
-		case 'Merger2To1RInternalVariant':
 		case 'Merger2To1LInternalVariantMirrored':
 			return 'Merger2To1LInternalVariant';
-		case 'Lift1UpRightInternalVariant':
 		case 'Lift1UpLeftInternalVariantMirrored':
 			return 'Lift1UpLeftInternalVariant';
-		case 'Lift1DownRightInternalVariant':
 		case 'Lift1DownLeftInternalVariantMirrored':
 			return 'Lift1DownLeftInternalVariant';
-		case 'Lift2UpRightInternalVariant':
 		case 'Lift2UpLeftInternalVariantMirrored':
 			return 'Lift2UpLeftInternalVariant';
-		case 'Lift2DownRightInternalVariant':
 		case 'Lift2DownLeftInternalVariantMirrored':
 			return 'Lift2DownLeftInternalVariant';
-		case 'PipeRightInternalVariant':
 		case 'PipeLeftInternalVariantMirrored':
 			return 'PipeLeftInternalVariant';
-		case 'PipeUpRightInternalVariant':
 		case 'PipeUpLeftInternalVariantMirrored':
 			return 'PipeUpLeftInternalVariant';
-		case 'Pipe2UpRightInternalVariant':
 		case 'Pipe2UpLeftInternalVariantMirrored':
 			return 'Pipe2UpLeftInternalVariant';
-		case 'WireDefaultRightInternalVariant':
 		case 'WireDefaultLeftInternalVariantMirrored':
 			return 'WireDefaultLeftInternalVariant';
-		case 'WireDefault1UpRightInternalVariant':
 		case 'WireDefault1UpLeftInternalVariantMirrored':
 			return 'WireDefault1UpLeftInternalVariant';
-		case 'WireDefault2UpRightInternalVariant':
 		case 'WireDefault2UpLeftInternalVariantMirrored':
 			return 'WireDefault2UpLeftInternalVariant';
 		case 'LogicGateIfInternalVariantMirrored':
@@ -556,7 +599,6 @@ const getBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => {
 			return 'BeltFilterDefaultInternalVariant';
 		case 'BeltReaderDefaultInternalVariantMirrored':
 			return 'BeltReaderDefaultInternalVariant';
-		case 'CutterMirroredInternalVariant':
 		case 'CutterDefaultInternalVariantMirrored':
 			return 'CutterDefaultInternalVariant';
 		case 'StackerDefaultInternalVariantMirrored':
@@ -569,6 +611,7 @@ const getBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => {
 			return 'FluidStorageDefaultInternalVariant';
 		case 'CrystalGeneratorDefaultInternalVariantMirrored':
 			return 'CrystalGeneratorDefaultInternalVariant';
+
 		default:
 			return type;
 	}

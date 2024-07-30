@@ -18,7 +18,10 @@
 	import COLOR_MAP from '$lib/assets/images/MaterialLUT.png';
 	import BUILDING_VERTEXSHADER from '$lib/assets/shaders/building/building.vs?raw';
 	import BUILDING_FRAGMENTSHADER from '$lib/assets/shaders/building/building.fs?raw';
-	import { getBlueprintBuildingModel } from '$lib/components/blueprint/blueprint-building';
+	import {
+		COMPATIBLE_MIRRORED_BUILDING_TYPES,
+		getBlueprintBuildingModel
+	} from '$lib/components/blueprint/blueprint-building';
 
 	const textureLoader = new TextureLoader();
 	textureLoader.loadAsync(COLOR_MAP).then((texture) => {
@@ -97,8 +100,11 @@
 	<svelte:component
 		this={buildingModel.layers ? buildingModel.layers[entry.L ?? 0] : buildingModel.base}
 		position={[entry.X ?? 0, entry.L ?? 0, entry.Y ?? 0]}
-		rotation.y={(entry.R ?? 0) * 0.5 * Math.PI}
-		scale.z={entry.T.toLowerCase().includes('mirrored') ? -1 : 1}
+		rotation.y={(entry.R ?? 0) * -0.5 * Math.PI + Math.PI}
+		scale.z={entry.T.toLowerCase().includes('mirrored') ||
+		COMPATIBLE_MIRRORED_BUILDING_TYPES.includes(entry.T)
+			? -1
+			: 1}
 		bind:this={componentModel}
 	/>
 </Suspense>
