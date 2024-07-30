@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { Canvas, T, type ThrelteContext } from '@threlte/core';
 	import { OrbitControls } from '@threlte/extras';
 	import { MOUSE } from 'three';
+	import { OrbitControls as ThreeOrbitControls } from 'three/addons/controls/OrbitControls.js';
 	import {
 		BLUEPRINT_FILE_FORMAT,
 		BLUEPRINT_GRID_COLOR,
@@ -46,9 +46,17 @@
 
 	let ctx: ThrelteContext | undefined;
 	let viewer: HTMLElement | undefined;
+	let orbitControls: OrbitControls | undefined;
 	let isFullscreen = false;
 
-	function reset() {}
+	function reset() {
+		if (!orbitControls) return;
+
+		const ref = orbitControls.ref as ThreeOrbitControls;
+		ref.enableDamping = false;
+		ref.reset();
+		ref.enableDamping = true;
+	}
 	function onFileChange(event: Event) {
 		const input = event.target as HTMLInputElement;
 		input.form?.submit();
@@ -197,6 +205,7 @@
 						LEFT: MOUSE.PAN,
 						RIGHT: MOUSE.ROTATE
 					}}
+					bind:this={orbitControls}
 				/>
 			</T.PerspectiveCamera>
 

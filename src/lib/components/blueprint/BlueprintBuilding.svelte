@@ -5,18 +5,26 @@
 		MeshBasicMaterial,
 		MeshStandardMaterial,
 		Object3D,
+		Texture,
+		TextureLoader,
 		UniformsUtils,
+		type IUniform,
 		type Mesh
 	} from 'three';
 	import { Suspense } from '@threlte/extras';
 	import CustomShaderMaterial from 'three-custom-shader-material/vanilla';
 	import type { BlueprintBuildingEntry } from '$lib/blueprint.types';
 
+	import COLOR_MAP from '$lib/assets/images/MaterialLUT.png';
 	import BUILDING_VERTEXSHADER from '$lib/assets/shaders/building/building.vs?raw';
 	import BUILDING_FRAGMENTSHADER from '$lib/assets/shaders/building/building.fs?raw';
 	import { getBlueprintBuildingModel } from '$lib/components/blueprint/blueprint-building';
-	import { T } from '@threlte/core';
 
+	const textureLoader = new TextureLoader();
+	textureLoader.loadAsync(COLOR_MAP).then((texture) => {
+		const uniforms = { lutTexture: { value: texture } } satisfies Record<string, IUniform<Texture>>;
+		BUILDING_MATERIAL.uniforms = UniformsUtils.merge([BUILDING_MATERIAL.uniforms, uniforms]);
+	});
 	const BUILDING_MATERIAL = new CustomShaderMaterial({
 		baseMaterial: MeshStandardMaterial,
 		vertexShader: BUILDING_VERTEXSHADER,
