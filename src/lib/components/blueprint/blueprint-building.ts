@@ -105,6 +105,7 @@ import ButtonDefaultInternalVariant from '$lib/components/models/buildings/Butto
 import SandboxItemProducerDefaultInternalVariant from '$lib/components/models/buildings/SandboxItemProducerDefaultInternalVariant.svelte';
 import SandboxFluidProducerDefaultInternalVariant from '$lib/components/models/buildings/SandboxFluidProducerDefaultInternalVariant.svelte';
 import LabelDefaultInternalVariant from '$lib/components/models/buildings/LabelDefaultInternalVariant.svelte';
+import TrashDefaultInternalVariant from '$lib/components/models/buildings/TrashDefaultInternalVariant.svelte';
 import ExtractorDefaultInternalVariant from '$lib/components/models/buildings/ExtractorDefaultInternalVariant.svelte';
 import RotatorOneQuadInternalVariant from '$lib/components/models/buildings/RotatorOneQuadInternalVariant.svelte';
 import RotatorOneQuadCCWInternalVariant from '$lib/components/models/buildings/RotatorOneQuadCCWInternalVariant.svelte';
@@ -440,6 +441,9 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
 	LabelDefaultInternalVariant: {
 		base: LabelDefaultInternalVariant
 	},
+	TrashDefaultInternalVariant: {
+		base: TrashDefaultInternalVariant
+	},
 	ExtractorDefaultInternalVariant: {
 		base: ExtractorDefaultInternalVariant
 	},
@@ -502,22 +506,6 @@ const getBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => {
 	const mirrored = getMirroredBlueprintBuildingType(compatible);
 	return mirrored;
 };
-export const COMPATIBLE_MIRRORED_BUILDING_TYPES = [
-	'BeltDefaultRightInternalVariant',
-	'Splitter1To2RInternalVariant',
-	'Merger2To1RInternalVariant',
-	'Lift1UpRightInternalVariant',
-	'Lift1DownRightInternalVariant',
-	'Lift2UpRightInternalVariant',
-	'Lift2DownRightInternalVariant',
-	'PipeRightInternalVariant',
-	'PipeUpRightInternalVariant',
-	'Pipe2UpRightInternalVariant',
-	'WireDefaultRightInternalVariant',
-	'WireDefault1UpRightInternalVariant',
-	'WireDefault2UpRightInternalVariant',
-	'CutterMirroredInternalVariant'
-];
 const getCompatibleBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => {
 	switch (type) {
 		case 'BeltDefaultRightInternalVariant':

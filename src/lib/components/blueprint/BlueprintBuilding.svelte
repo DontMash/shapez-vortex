@@ -13,15 +13,12 @@
 	} from 'three';
 	import { Suspense } from '@threlte/extras';
 	import CustomShaderMaterial from 'three-custom-shader-material/vanilla/dist/three-custom-shader-material-vanilla.cjs';
-	import type { BlueprintBuildingEntry } from '$lib/blueprint.types';
+	import type { BlueprintBuildingEntry, BlueprintBuildingIdentifier } from '$lib/blueprint.types';
 
 	import COLOR_MAP from '$lib/assets/images/MaterialLUT.png';
 	import BUILDING_VERTEXSHADER from '$lib/assets/shaders/building/building.vs?raw';
 	import BUILDING_FRAGMENTSHADER from '$lib/assets/shaders/building/building.fs?raw';
-	import {
-		COMPATIBLE_MIRRORED_BUILDING_TYPES,
-		getBlueprintBuildingModel
-	} from '$lib/components/blueprint/blueprint-building';
+	import { getBlueprintBuildingModel } from '$lib/components/blueprint/blueprint-building';
 
 	const textureLoader = new TextureLoader();
 	textureLoader.loadAsync(COLOR_MAP).then((texture) => {
@@ -48,6 +45,25 @@
 
 	let componentModel: SvelteComponent<any, any, any> | undefined = undefined;
 
+	export const MIRRORED_BUILDINGS = [
+		'BeltDefaultRightInternalVariant',
+		'Splitter1To2RInternalVariant',
+		'Merger2To1RInternalVariant',
+		'Lift1UpRightInternalVariant',
+		'Lift1DownRightInternalVariant',
+		'Lift2UpRightInternalVariant',
+		'Lift2DownRightInternalVariant',
+		'PipeRightInternalVariant',
+		'PipeUpRightInternalVariant',
+		'Pipe2UpRightInternalVariant',
+		'WireDefaultRightInternalVariant',
+		'WireDefault1UpRightInternalVariant',
+		'WireDefault2UpRightInternalVariant',
+		'CutterMirroredInternalVariant'
+	];
+	const isMirrored = (type: BlueprintBuildingIdentifier) => {
+		return entry.T.toLowerCase().includes('mirrored') || MIRRORED_BUILDINGS.includes(entry.T);
+	};
 	const setMaterial = (entry: BlueprintBuildingEntry, object: Object3D) => {
 		const mesh = object as Mesh;
 		if (mesh.isMesh) {
@@ -101,10 +117,7 @@
 		this={buildingModel.layers ? buildingModel.layers[entry.L ?? 0] : buildingModel.base}
 		position={[entry.X ?? 0, entry.L ?? 0, entry.Y ?? 0]}
 		rotation.y={(entry.R ?? 0) * -0.5 * Math.PI + Math.PI}
-		scale.z={entry.T.toLowerCase().includes('mirrored') ||
-		COMPATIBLE_MIRRORED_BUILDING_TYPES.includes(entry.T)
-			? -1
-			: 1}
+		scale.z={isMirrored(entry.T) ? -1 : 1}
 		bind:this={componentModel}
 	/>
 </Suspense>

@@ -31,8 +31,8 @@ void main() {
     }
     // Metal coated
     if (xIndex == 5) {
-        csm_Roughness = 0.1;
-        csm_Metalness = 0.6;
+        csm_Roughness = 0.5;
+        csm_Metalness = 0.2;
     }
     // Plastic
     if (xIndex == 6) {
