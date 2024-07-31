@@ -3,6 +3,7 @@
   "version": "0.6.2",
   "private": true,
   "scripts": {
+    "prepare:models": "bash resources/scripts/model-pipeline.sh",
     "dev": "ORIGIN=http://localhost:5173 vite dev",
     "build": "vite build",
     "preview": "vite preview",
@@ -10,9 +11,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "vitest",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write .",
-    "generate:buildings-schema": "cd src/lib/assets/data && echo -E \"declare const schema: $(cat buildings-metadata.json); export default schema;\" > buildings-metadata.json.d.ts",
-    "generate:research-schema": "cd src/lib/assets/data && echo -E \"declare const schema: $(cat research-metadata.json); export default schema;\" > research-metadata.json.d.ts"
+    "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",
@@ -20,6 +19,7 @@
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.12",
+    "@threlte/gltf": "^2.0.3",
     "@types/gl": "^6.0.2",
     "@types/lodash": "^4.17.0",
     "@types/pako": "^2.0.0",
@@ -28,11 +28,10 @@
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "autoprefixer": "^10.4.14",
-    "daisyui": "latest",
+    "daisyui": "^4.12.10",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte": "^2.30.0",
-    "pocketbase": "^0.21.0",
     "postcss": "^8.4.24",
     "postcss-nesting": "^12.0.2",
     "prettier": "^2.8.8",
@@ -49,11 +48,14 @@
   },
   "type": "module",
   "dependencies": {
+    "@threlte/core": "^7.3.1",
+    "@threlte/extras": "^8.11.4",
     "cmdk-sv": "^0.0.13",
     "lodash": "^4.17.21",
     "pako": "^2.1.0",
+    "pocketbase": "^0.21.0",
     "screenfull": "^6.0.2",
-    "three": "^0.160.0",
+    "three": "^0.166.1",
     "three-custom-shader-material": "^5.4.0",
     "ua-parser-js": "^1.0.37",
     "zod": "^3.22.4"

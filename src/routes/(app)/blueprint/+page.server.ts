@@ -16,15 +16,15 @@ export const load = (() => {
 export const actions = {
     view: async ({ request, url }) => {
         const data = await request.formData();
-        const identifier = data.get('identifier') as BlueprintIdentifier;
+        const identifier = data.get('identifier')?.toString().trim();;
         const isUpdate = (data.get('update') ?? 'off') === 'on';
         if (!identifier)
             return fail(400, { identifier, missing: true });
 
-        let updatedIdentifier = identifier;
+        let updatedIdentifier = identifier as BlueprintIdentifier;
         if (isUpdate) {
             try {
-                updatedIdentifier = update(identifier);
+                updatedIdentifier = update(updatedIdentifier);
             } catch (err) {
                 return fail(400, { identifier, invalid: true });
             }

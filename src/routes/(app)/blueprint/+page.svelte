@@ -36,37 +36,42 @@
 		</hgroup>
 	</header>
 
-	<form action="?/view" method="post">
+	<form class="space-y-4" action="?/view" method="post">
 		<label class="form-control h-80" for="blueprint-identifier">
 			<div class="label">
 				<span class="label-text">Blueprint identifier</span>
 				<i class="label-text-alt">
 					max. 12500 characters
-					<a
-						class="link font-bold transition-colors hover:!text-primary"
-						href="/blueprint/upload"
-					>
+					<a class="link font-bold transition-colors hover:!text-primary" href="/blueprint/upload">
 						(limitless)
 					</a>
 				</i>
 			</div>
-			<textarea
-				class={`textarea textarea-bordered h-full w-full resize-none ${
-					$page.form && $page.form.invalid && $page.form.identifier && 'textarea-error'
-				}`}
-				name="identifier"
-				id="blueprint-identifier"
-				placeholder="SHAPEZ-2 ... $"
-				maxlength="12500"
-				required
-			/>
-			<div class="label">
-				{#if $page.form && $page.form.invalid && $page.form.identifier}
+			{#if $page.form && $page.form.invalid && $page.form.identifier}
+				<textarea
+					class="textarea textarea-bordered textarea-error h-full w-full resize-none"
+					name="identifier"
+					id="blueprint-identifier"
+					placeholder="SHAPEZ-2 ... $"
+					maxlength="12500"
+					required
+					value={$page.form.identifier ?? null}
+				/>
+				<div class="label">
 					<span class="label-text-alt font-medium italic text-error">
 						Blueprint data is invalid
 					</span>
-				{/if}
-			</div>
+				</div>
+			{:else}
+				<textarea
+					class="textarea textarea-bordered h-full w-full resize-none"
+					name="identifier"
+					id="blueprint-identifier"
+					placeholder="SHAPEZ-2 ... $"
+					maxlength="12500"
+					required
+				/>
+			{/if}
 		</label>
 
 		<div class="join flex">

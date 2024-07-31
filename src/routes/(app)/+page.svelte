@@ -32,7 +32,7 @@
 				title="Shape Viewer"
 			>
 				Start
-				<span class="sr-only"> shape viewer</span>
+				<span class="sr-only"> Shape Viewer</span>
 			</a>
 		</div>
 
@@ -58,33 +58,29 @@
 				title="Blueprint Viewer"
 			>
 				Start
-				<span class="sr-only"> blueprint viewer</span>
+				<span class="sr-only"> Blueprint Viewer</span>
 			</a>
 		</div>
 
 		<div class="card card-bordered bg-base-200 shadow-xl">
 			<figure>
-				<a class="w-full" href="/research" title="Reseach Overview">
-					<img
-						class="h-64 w-full object-cover"
-						src="/research-overview-example.png"
-						alt="Example of the reseach overview"
-					/>
+				<a class="flex h-64 w-full flex-col justify-center items-center" href="/blueprint/search" title="Browse blueprints">
+					<img class="w-32" src="/favicon.png" alt="Blueprint Icon" />
 				</a>
 			</figure>
 
 			<div class="card-body">
-				<h2 class="card-title">Research Overview</h2>
-				<p>Inspect a visual representation of the research progression.</p>
+				<h2 class="card-title">Browse blueprints</h2>
+				<p>Search an infinite collection of community made blueprints.</p>
 			</div>
 
 			<a
 				class="btn btn-primary no-animation btn-block rounded-t-none"
-				href="/research"
-				title="Research Overview"
+				href="/blueprint/search"
+				title="Browse blueprints"
 			>
 				Start
-				<span class="sr-only"> research overview</span>
+				<span class="sr-only"> blueprint search </span>
 			</a>
 		</div>
 	</article>

@@ -139,26 +139,14 @@
 				{/if}
 			</button>
 
-			{#if $page.data.user}
-				<a
-					class="btn btn-square btn-primary btn-md fill-primary-content"
-					title="Upload"
-					href="/blueprint/upload"
-				>
-					<span class="sr-only">Upload</span>
-					<span class="inline-block size-6 fill-primary-content">
-						<UploadIcon />
-					</span>
-				</a>
-			{/if}
 			<a
-				class="btn btn-square btn-ghost border border-base-content border-opacity-20 fill-base-content"
-				title="Browse blueprints"
-				href="/blueprint/search"
+				class="btn btn-square btn-primary btn-md fill-primary-content"
+				title="Upload"
+				href="/blueprint/upload"
 			>
-				<span class="sr-only">Browse blueprints</span>
-				<span class="inline-block size-6 fill-base-content">
-					<DomainIcon />
+				<span class="sr-only">Upload</span>
+				<span class="inline-block size-6 fill-primary-content">
+					<UploadIcon />
 				</span>
 			</a>
 			{#if !$page.data.user}
@@ -323,15 +311,6 @@
 							<DomainIcon />
 						</span>
 						Blueprint Viewer
-					</Command.Item>
-					<Command.Item
-						class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-						onSelect={() => command(() => goto('/research'))}
-					>
-						<span class="inline-block size-6">
-							<ScienceIcon />
-						</span>
-						Research Overview
 					</Command.Item>
 
 					{#if $page.data.user}

@@ -7,7 +7,7 @@
 	import { REPORT_REASONS } from '$lib/report.types';
 
 	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
-	import BlueprintViewer from '$lib/components/blueprint/BlueprintViewer.svelte';
+	import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
 	import UserTag from '$lib/components/UserTag.svelte';
 	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
 	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
@@ -395,7 +395,7 @@
 		</div>
 	</article>
 
-	<BlueprintViewer
+	<BlueprintView
 		identifier={data.blueprint.entry.data}
 		blueprint={data.blueprint.data}
 		title={data.blueprint.entry.title}

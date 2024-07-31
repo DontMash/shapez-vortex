@@ -1,0 +1,11 @@
+{
+  "Version": "1",
+  "UniqueId": "difficulty-preset.challenge",
+  "Title": "@difficulty-preset.challenge.title",
+
+  "Parameters": {
+    "ResearchShapeCostMultiplier": 150,
+    "ChunkLimitMultiplier": 80,
+    "BlueprintCostMultiplier": 100
+  }
+}

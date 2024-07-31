@@ -1,0 +1,4097 @@
+{
+  "FormatVersion": 1,
+  "GameVersion": 1058,
+  "UniqueId": "default-scenario",
+  "SupportedGameModes": ["RegularGameMode"],
+  "Title": "@scenario.default.title",
+  "Description": "@scenario.default.description",
+  "PreviewImageId": "RNBlueprints",
+  "BasedOnScenarioId": "onboarding-scenario",
+  "RecommendedScenarioIdsToCompleteBefore": ["onboarding-scenario"],
+  "ExampleShapes": [
+    "RbRbRbRb:CrCrCrCr",
+    "RuRgRuRg:SbSbSbSb",
+    "RbCbCbCb:RuCuCuCu",
+    "SuP-P-Su:P-P-P-P-:RbCgCgRb",
+    "RyP-RyP-:SwRuSwRu"
+  ],
+  "Config": {
+    "BaseChunkLimitMultiplier": 150,
+    "InitialResearchPoints": 0,
+    "LayerMechanicIds": ["RULayer2", "RULayer3"],
+    "BlueprintsMechanicId": "RUBlueprints",
+    "RailsMechanicId": "RURailManagement",
+    "PlayerLevelMechanicId": "RUPlayerLevel",
+    "IslandManagementMechanicId": "RUIslandPlacement",
+    "TrainHubDeliveryMechanicId": "RUTrainHubDelivery",
+    "BlueprintCurrencyShapes": [
+      {
+        "Shape": "CuRuCuCu",
+        "RequiredUpgradeId": "RNBlueprints",
+        "Amount": 1
+      },
+      {
+        "Shape": "CuRuCuCu:CuCuCuCu",
+        "RequiredUpgradeId": "RNBlueprints",
+        "Amount": 2
+      },
+      {
+        "Shape": "CuRuCuCu:CbCbCbCb",
+        "RequiredUpgradeId": "RNFluids",
+        "Amount": 5
+      },
+      {
+        "Shape": "CuRuCuCu:P-P-P-P-:CbCbCbCb",
+        "RequiredUpgradeId": "RNPinPusher",
+        "Amount": 10
+      },
+      {
+        "Shape": "CwRwCwCw:P-P-P-P-:CcCcCcCc",
+        "RequiredUpgradeId": "RNColorMixing",
+        "Amount": 20
+      }
+    ],
+    "HubInputSizeUpgradeId": "LRUHubInputSize",
+    "ShapesConfigurationId": "DefaultShapesQuadConfiguration",
+    "ColorSchemeConfigurationId": "DefaultColorSchemeRGBFlex",
+    "SpeedsToLinearUpgradeMappings": {
+      "BeltSpeed": "LRUBeltSpeed",
+      "CutterSpeed": "LRUCuttingSpeed",
+      "StackerSpeed": "LRUStackingSpeed",
+      "PainterSpeed": "LRUPaintingSpeed",
+      "TrainSpeed": "LRUTrainSpeed",
+      "TrainCapacity": "LRUTrainCapacity"
+    },
+    "IntroductionWikiEntryId": "WKWelcome",
+    "InitiallyUnlockedUpgrades": [
+      "RNInitial",
+      "RNStackerLayer2",
+      "RNBlueprints",
+      "RNIslandBuilding",
+      "SG_Stacker_3_1",
+      "SG_Stacker_3_2",
+      "SG_Stacker_3_3",
+      "SG_Stacker_3_4",
+      "SG_Stacker_2_1",
+      "SG_Stacker_2_2",
+      "SG_Stacker_2_3",
+      "SG_Stacker_2_4",
+      "SG_Stacker_4_1",
+      "SG_Stacker_4_2"
+    ],
+    "TutorialConfig": "TCMainTutorial",
+    "PlayerLevelConfig": {
+      "IconicLevelShapes": [
+        "RbCuCrCu",
+        "RgCuCgCu",
+        "RyCuCyCu",
+        "RmCuCmCu",
+        "RcCuCcCu",
+        "RuCuCuCu:Rb--Cr--",
+        "RuCuCuCu:Rg--Cg--",
+        "RuCuCuCu:Ry--Cy--",
+        "RuCuCuCu:Rm--Cm--",
+        "RuCuCuCu:Rc--Cc--",
+        "RuCuCuRu:RbWuWrRu",
+        "RuCuCuRu:RgWuWgRu",
+        "RuCuCuRu:RyWuWyRu",
+        "RuCuCuRu:RmWuWmRu",
+        "RuCuCuRu:RcWuWcRu",
+        "RuCbP-Cr:----Ru--",
+        "RuCgP-Cy:----Ru--",
+        "RuCmP-Cm:----Ru--",
+        "RuCcP-Cc:----Ru--",
+        "RuCwP-Cw:----Ru--",
+        "CbCbCbRb:CwCwCwCw",
+        "CrCrCrRr:CwCwCwCw",
+        "CgCgCyRy:CwCwCwCw",
+        "CmCmCmRm:CwCwCwCw",
+        "CcCcCcRc:CwCwCwCw",
+        "RyWyCyCy:Rr--Cr--",
+        "RyWyCyCy:Rb--Cb--",
+        "RyWyCyCy:Rg--Cg--",
+        "RyWyCyCy:Rm--Cm--",
+        "RyWyCyCy:Rc--Cc--",
+        "RyCyCyRy:RuWuWrRr",
+        "RyCyCyRy:RrWrWbRb",
+        "RyCyCyRy:RbWbWgRg",
+        "RyCyCyRy:RgWgWmRm",
+        "RyCyCyRy:RmWmWcRc",
+        "RwCwRwCw:Rr--Cy--",
+        "RwCwRwCw:Rb--Cy--",
+        "RwCwRwCw:Rg--Cy--",
+        "RwCwRwCw:Rm--Cy--",
+        "RwCwRwCw:Rc--Cy--",
+        "RwCwCwRw:RyCyCrRr",
+        "RwCwCwRw:RyCyCbRb",
+        "RwCwCwRw:RyCyCgRg",
+        "RwCwCwRw:RyCyCmRm",
+        "RwCwCwRw:RyCyCcRc",
+        "--SuSu--:CuRuRuCu:Cw----Cw",
+        "--SrSr--:CrRrRrCr:Cw----Cw",
+        "--SbSb--:CbRbRbCb:Cw----Cw",
+        "--SgSg--:CgRgRgCg:Cw----Cw",
+        "--SySy--:CyRyRyCy:Cw----Cw",
+        "--SmSm--:CmRmRmCm:Cw----Cw",
+        "--ScSc--:CcRcRcCc:Cw----Cw",
+        "--SuSu--:SrRuRuCu:----CwCw",
+        "--SySy--:SrRyRyCy:----CwCw",
+        "--ScSc--:SrRcRcCc:----CwCw",
+        "CrWuCrCr:WuWuWuCu:WbWbWbCb",
+        "CgWuCgCg:WuWuWuCu:WrWrWrCr",
+        "CyWuCyCy:WuWuWuCu:WgWgWgCg",
+        "CmWuCmCm:WuWuWuCu:WyWyWyCy",
+        "CcWuCcCc:WuWuWuCu:WmWmWmCm",
+        "RyCyCyCy:RwCwCwCw:Rr--Cm--",
+        "RyCyCyCy:RwCwCwCw:Rb--Cm--",
+        "RyCyCyCy:RwCwCwCw:Rg--Cm--",
+        "RyCyCyCy:RwCwCwCw:Ry--Cm--",
+        "RyCyCyCy:RwCwCwCw:Rc--Cm--",
+        "RyCyCyRy:RwCwCwRw:WmCmCrWr",
+        "RyCyCyRy:RwCwCwRw:WmCmCbWb",
+        "RyCyCyRy:RwCwCwRw:WmCmCgWg",
+        "RyCyCyRy:RwCwCwRw:WmCmCyWy",
+        "RyCyCyRy:RwCwCwRw:WmCmCcWc",
+        "SwCrSwCr:--CwRbCw:RwCwRwCw",
+        "SwCbSwCb:--CwRyCw:RwCwRwCw",
+        "SwCgSwCg:--CwRyCw:RwCwRwCw",
+        "SwCmSwCm:--CwRyCw:RwCwRwCw",
+        "SwCcSwCc:--CwRmCw:RwCwRwCw",
+        "CwRwCwCw:P-P-P-P-:CbCbCrCr",
+        "CwRwCwCw:P-P-P-P-:CgCgCgCg",
+        "CwRwCwCw:P-P-P-P-:CyCyCyCy",
+        "CwRwCwCw:P-P-P-P-:CmCmCmCm",
+        "CwRwCwCw:P-P-P-P-:CcCcCcCc",
+        "SyP-SyP-:CbCbCbCb:P-CyP-Cy:SySySySy",
+        "SyP-SyP-:CrCrCrCr:P-CyP-Cy:SySySySy",
+        "SyP-SyP-:CgCgCgCg:P-CyP-Cy:SySySySy",
+        "SyP-SyP-:CmCmCmCm:P-CyP-Cy:SySySySy",
+        "SyP-SyP-:CcCcCcCc:P-CyP-Cy:SySySySy",
+        "WrCrWrRr:RwCwRwRw:WrWrWrRr:CbWbCbRb",
+        "WbCbWbRb:RwCwRwRw:WbWbWbRb:CgWgCgRg",
+        "WyCyWyRy:RwCwRwRw:WyWyWyRy:CgWgCgRg",
+        "WmCmWmRm:RwCwRwRw:WmWmWmRm:CyWyCyRy",
+        "WcCcWcRc:RwCwRwRw:WcWcWcRc:CmWmCmRm",
+        "RmWmRmWm:RwWwRwWw:RcP-RrP-:--Cc--Cr",
+        "RmWmRmWm:RwWwRwWw:RcP-RbP-:--Cc--Cb",
+        "RmWmRmWm:RwWwRwWw:RcP-RgP-:--Cc--Cg",
+        "RmWmRmWm:RwWwRwWw:RcP-RyP-:--Cc--Cy",
+        "RmWmRmWm:RwWwRwWw:RcP-RmP-:--Cc--Cm",
+        "CrCwCwCr:P-P-P-P-:CuCuCuCu:CwCwCwCw",
+        "CbCwCwCb:P-P-P-P-:CuCuCuCu:CwCwCwCw",
+        "CyCwCwCg:P-P-P-P-:CuCuCuCu:CwCwCwCw",
+        "CmCwCwCm:P-P-P-P-:CuCuCuCu:CwCwCwCw",
+        "CcCwCwCc:P-P-P-P-:CuCuCuCu:CwCwCwCw",
+        "P-SwSwP-:CrWrWrCr:CbWbWbCb:Cw----Cw",
+        "P-SwSwP-:CgWgWgCg:CrWrWrCr:Cw----Cw",
+        "P-SwSwP-:CyWyWyCy:CgWgWgCg:Cw----Cw",
+        "P-SwSwP-:CmWmWmCm:CyWyWyCy:Cw----Cw",
+        "P-SwSwP-:CcWcWcCc:CmWmWmCm:Cw----Cw",
+        "--WySyWy:RySwWwSw:CwWwWbWw:CbWbSwWb",
+        "--WySyWy:RySwWwSw:CwWwWrWw:CrWrSwWr",
+        "--WySyWy:RySwWwSw:CwWwWgWw:CgWgSwWg",
+        "--WySyWy:RySwWwSw:CwWwWmWw:CmWmSwWm",
+        "--WySyWy:RySwWwSw:CwWwWcWw:CcWcSwWc",
+        "RcCcCcRc:RwCwCwRw:CrCrCrCr:P-CwCwP-",
+        "RcCcCcRc:RwCwCwRw:CbCbCbCb:P-CwCwP-",
+        "RcCcCcRc:RwCwCwRw:CgCgCgCg:P-CwCwP-",
+        "RcCcCcRc:RwCwCwRw:CyCyCyCy:P-CwCwP-",
+        "RcCcCcRc:RwCwCwRw:CcCcCcCc:P-CwCwP-",
+        "RwWbRbWw:P-P-P---:RbWwRw--:--WbRbWb",
+        "RwWrRrWw:P-P-P---:RrWwRw--:--WrRrWr",
+        "RwWgRgWw:P-P-P---:RgWwRw--:--WgRgWg",
+        "RwWyRyWw:P-P-P---:RyWwRw--:--WyRyWy",
+        "RwWmRmWw:P-P-P---:RmWwRw--:--WmRmWm",
+        "RwCwCwRw:SrP-P-Sr:CrCrCrCr:P-CwCwP-",
+        "RwCwCwRw:SbP-P-Sb:CbCbCbCb:P-CwCwP-",
+        "RwCwCwRw:SgP-P-Sg:CgCgCgCg:P-CwCwP-",
+        "RwCwCwRw:SyP-P-Sy:CyCyCyCy:P-CwCwP-",
+        "RwCwCwRw:ScP-P-Sm:CcCcCmCm:P-CwCwP-",
+        "CrCwCrCw:CwCrCwCr:CrCwCrCw:CwCrCwCr",
+        "CbCwCgCw:CwCbCwCg:CbCwCgCw:CwCbCwCg",
+        "CyCwCyCw:CwCyCwCy:CyCwCyCw:CwCyCwCy",
+        "CmCwCmCw:CwCmCwCm:CmCwCmCw:CwCmCwCm",
+        "CcCwCcCw:CwCcCwCc:CcCwCcCw:CwCcCwCc",
+        "RwCwCwRw:SrWrWrSr:WbCbCwWr:--CbCr--",
+        "RwCwCwRw:SrWrWrSr:WgCgCgWg:--CgCg--",
+        "RwCwCwRw:SrWrWrSr:WyCyCyWy:--CyCy--",
+        "RwCwCwRw:SrWrWrSr:WmCmCmWm:--CmCm--",
+        "RwCwCwRw:SrWrWrSr:WcCcCcWc:--CcCc--",
+        "CbCbCbCb:P-CrCrP-:P-P-P-P-:WbRwRwWb",
+        "CgCgCgCg:P-CrCrP-:P-P-P-P-:WgRwRwWg",
+        "CyCyCyCy:P-CrCrP-:P-P-P-P-:WyRwRwWy",
+        "CmCmCmCm:P-CrCrP-:P-P-P-P-:WmRwRwWm",
+        "CcCcCcCc:P-CrCrP-:P-P-P-P-:WcRwRwWc",
+        "P-CwRwCw:CbP-P-P-:P-CrRrCr:WwCwRwCw",
+        "P-CwRwCw:CgP-P-P-:P-CgRgCg:WwCwRwCw",
+        "P-CwRwCw:CyP-P-P-:P-CyRyCy:WwCwRwCw",
+        "P-CwRwCw:CmP-P-P-:P-CmRmCm:WwCwRwCw",
+        "P-CwRwCw:CcP-P-P-:P-CcRcCc:WwCwRwCw",
+        "CrRrRrCr:P-CwCwCw:--CyCyCy:------P-",
+        "CbRbRbCb:P-CwCwCw:--CyCyCy:------P-",
+        "CgRgRgCg:P-CwCwCw:--CyCyCy:------P-",
+        "CmRmRmCm:P-CwCwCw:--CyCyCy:------P-",
+        "CcRcRcCc:P-CwCwCw:--CyCyCy:------P-",
+        "RyCyRyCy:Cr--Cr--:CwCwCwCw:cbcbcbcb",
+        "RyCyRyCy:Cb--Cb--:CwCwCwCw:crcrcrcr",
+        "RyCyRyCy:Cr--Cr--:CwCwCwCw:cgcgcgcg",
+        "RyCyRyCy:Cr--Cr--:CwCwCwCw:cmcmcmcm",
+        "RyCyRyCy:Cm--Cm--:CwCwCwCw:cccccccc",
+        "Sr--Sb--:P-P-P-P-:P-P-P-P-:--Cr--Cb:CwCwCwCw",
+        "Sg--Sy--:P-P-P-P-:P-P-P-P-:--Cg--Cy:CwCwCwCw",
+        "Sm--Sm--:P-P-P-P-:P-P-P-P-:--Cm--Cm:CwCwCwCw",
+        "Sc--Sc--:P-P-P-P-:P-P-P-P-:--Cc--Cc:CwCwCwCw",
+        "Sw--Sw--:P-P-P-P-:P-P-P-P-:--Cw--Cw:CcCcCcCc",
+        "SwSwSwSw:WrWrWrWr:CrCrCrCr:WbWbWbWb:CwCwCwCw",
+        "SwSwSwSw:WbWbWbWb:CbCbCbCb:WgWgWgWg:CwCwCwCw",
+        "SwSwSwSw:WyWyWyWy:CyCyCyCy:WmWmWmWm:CwCwCwCw",
+        "SwSwSwSw:WmWmWmWm:CmCmCmCm:WcWcWcWc:CwCwCwCw",
+        "SwSwSwSw:WcWcWcWc:CcCcCcCc:WmWmWmWm:CwCwCwCw",
+        "P-P-P-P-:SbWgWgSb:CbP-P-Cb:CgRbRbCg:P-----P-",
+        "P-P-P-P-:SrWgWgSr:CrP-P-Cr:CgRrRrCg:P-----P-",
+        "P-P-P-P-:SyWgWgSy:CyP-P-Cy:CgRyRyCg:P-----P-",
+        "P-P-P-P-:SmWgWgSm:CmP-P-Cm:CgRmRmCg:P-----P-",
+        "P-P-P-P-:ScWgWgSc:CcP-P-Cc:CgRcRcCg:P-----P-",
+        "SuWwWwSu:CwWuWuCw:CbRwRwCb:P-RuRuP-:--P-P---",
+        "SbWwWwSb:CwWbWbCw:CyRwRwCy:P-RuRuP-:--P-P---",
+        "SrWwWwSr:CwWrWrCw:CyRwRwCy:P-RuRuP-:--P-P---",
+        "SgWwWwSg:CwWgWgCw:CyRwRwCy:P-RuRuP-:--P-P---",
+        "SmWwWwSm:CwWmWmCw:CcRwRwCc:P-RuRuP-:--P-P---",
+        "Sw----Sw:WwWcWcWw:CcSwSwCc:CwCwCwCw:WrWrWrWr",
+        "Sw----Sw:WwWcWcWw:CcSwSwCc:CwCwCwCw:WbWbWbWb",
+        "Sw----Sw:WwWcWcWw:CcSwSwCc:CwCwCwCw:WgWgWgWg",
+        "Sw----Sw:WwWcWcWw:CcSwSwCc:CwCwCwCw:WyWyWyWy",
+        "Sw----Sw:WwWcWcWw:CcSwSwCc:CwCwCwCw:WmWmWmWm",
+        "RrCrRrCr:RwCwRwCw:CbCbCbCb:P-P-P-P-:WuCuWuCu",
+        "RbCbRbCb:RwCwRwCw:CgCgCgCg:P-P-P-P-:WuCuWuCu",
+        "RgCgRgCg:RwCwRwCw:CyCyCyCy:P-P-P-P-:WuCuWuCu",
+        "RmCmRmCm:RwCwRwCw:CcCcCcCc:P-P-P-P-:WuCuWuCu",
+        "RwCwRwCw:RmCmRmCm:CwCwCwCw:P-P-P-P-:WcCcWcCc",
+        "Rr--Rr--:cy--cy--:cyRwcyRw:--Cm--Cm:--cb--cb",
+        "Rg--Rg--:cy--cy--:cyRwcyRw:--Cm--Cm:--cg--cg",
+        "Rc--Rc--:cm--cm--:cmRwcmRw:--Cy--Cy:--cr--cr",
+        "Rc--Rc--:cm--cm--:cmRwcmRw:--Cy--Cy:--cb--cb",
+        "Rm--Rm--:cc--cc--:ccRwccRw:--Cy--Cy:--cr--cr",
+        "CbCuCbCu:SrP-P-P-:P-P-SrP-:P-CrP-Cr:CwCwCwCw",
+        "CgCuCgCu:SyP-P-P-:P-P-SyP-:P-CyP-Cy:CwCwCwCw",
+        "CyCuCyCu:SmP-P-P-:P-P-SmP-:P-CmP-Cm:CwCwCwCw",
+        "CmCuCmCu:ScP-P-P-:P-P-ScP-:P-CcP-Cc:CwCwCwCw",
+        "CcCuCcCu:SwP-P-P-:P-P-SwP-:P-CwP-Cw:CcCcCcCc",
+        "RbCbCuCb:SwP-P-P-:P-P-P-P-:--CrP-Cr:--CwWrCw",
+        "RrCrCuCr:SwP-P-P-:P-P-P-P-:--CyP-Cy:--CwWyCw",
+        "RyCyCuCy:SwP-P-P-:P-P-P-P-:--CmP-Cm:--CwWmCw",
+        "RmCmCuCm:SwP-P-P-:P-P-P-P-:--CcP-Cc:--CwWcCw",
+        "RcCcCuCc:SwP-P-P-:P-P-P-P-:--CmP-Cm:--CwWmCw"
+      ],
+      "IconicLevelShapeInterval": 1,
+      "Rewards": [
+        {
+          "MinimumLevel": 25,
+          "Rewards": [
+            {
+              "$type": "ChunkLimitReward",
+              "Amount": 100
+            },
+            {
+              "$type": "BlueprintCurrencyReward",
+              "Amount": 100000
+            },
+            {
+              "$type": "ResearchPointsReward",
+              "Amount": 10
+            }
+          ]
+        },
+        {
+          "MinimumLevel": 10,
+          "Rewards": [
+            {
+              "$type": "ChunkLimitReward",
+              "Amount": 50
+            },
+            {
+              "$type": "BlueprintCurrencyReward",
+              "Amount": 50000
+            },
+            {
+              "$type": "ResearchPointsReward",
+              "Amount": 4
+            }
+          ]
+        },
+        {
+          "MinimumLevel": 1,
+          "Rewards": [
+            {
+              "$type": "ChunkLimitReward",
+              "Amount": 25
+            },
+            {
+              "$type": "BlueprintCurrencyReward",
+              "Amount": 25000
+            },
+            {
+              "$type": "ResearchPointsReward",
+              "Amount": 2
+            }
+          ]
+        }
+      ],
+      "GoalLines": [
+        {
+          "Id": "Reuse_Fluids",
+          "Shape": "RbRbRbRb:CrCrCrCr",
+          "StartingAmount": 15000,
+          "ExponentialGrowthPercentPerLevel": 18,
+          "RequiredUpgrade": "RNFluids"
+        },
+        {
+          "Id": "Reuse_Trains",
+          "Shape": "RuRgRuRg:SbSbSbSb",
+          "StartingAmount": 12000,
+          "ExponentialGrowthPercentPerLevel": 17,
+          "RequiredUpgrade": "RNTrains"
+        },
+        {
+          "Id": "Reuse_PinPusher",
+          "Shape": "RbCbCbCb:RuCuCuCu:WgWrWgWr",
+          "StartingAmount": 10000,
+          "ExponentialGrowthPercentPerLevel": 16,
+          "RequiredUpgrade": "RNPinPusher"
+        },
+        {
+          "Id": "Reuse_Mixing",
+          "Shape": "SuP-P-Su:P-P-P-P-:RbCgCgRb",
+          "StartingAmount": 8000,
+          "ExponentialGrowthPercentPerLevel": 16,
+          "RequiredUpgrade": "RNColorMixing"
+        },
+        {
+          "Id": "Reuse_Crystals",
+          "Shape": "RyP-RyP-:SwRuSwRu",
+          "StartingAmount": 8000,
+          "ExponentialGrowthPercentPerLevel": 15,
+          "RequiredUpgrade": "RNCrystals"
+        },
+        {
+          "Id": "Reuse_Final",
+          "Shape": "RucrRucr:cbcbcbcb:CwCwCwCw",
+          "StartingAmount": 8000,
+          "ExponentialGrowthPercentPerLevel": 15,
+          "RequiredUpgrade": "RNEndOfGame"
+        },
+        {
+          "Id": "Random1",
+          "Randomized": true,
+          "StartingAmount": 1000,
+          "ExponentialGrowthPercentPerLevel": 5,
+          "RequiredUpgrade": "RNEndOfGame"
+        }
+      ]
+    }
+  },
+  "Progression": {
+    "Levels": [
+      {
+        "Id": "RNFluids",
+        "Rewards": [
+          {
+            "$type": "ChunkLimitReward",
+            "Amount": 500
+          },
+          {
+            "$type": "BlueprintCurrencyReward",
+            "Amount": 2000
+          },
+          {
+            "$type": "MechanicReward",
+            "MechanicId": "RUFluids"
+          },
+          {
+            "$type": "MechanicReward",
+            "MechanicId": "RUPlayerLevel"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_FluidMiner"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_SpacePipeNode"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_SpacePipeTunnel_Entrance"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_SpacePipeTunnel_Exit"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "PainterDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "PumpDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "PipeDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "Pipe1LayerVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "FluidPortSenderVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "FluidPortReceiverVariant"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKFluids"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKOperatorLevel"
+          }
+        ],
+        "WikiEntryId": "WKFluids",
+        "PreviewImageId": "RNFluids",
+        "VideoId": "Milestone_FluidsVD",
+        "Title": "@research.RNFluids.title",
+        "Description": "@research.RNFluids.description",
+        "Lines": [
+          {
+            "Shapes": [
+              {
+                "Shape": "CrCr----",
+                "Amount": 1200
+              },
+              {
+                "Shape": "CrCrCrCr",
+                "Amount": 2000
+              },
+              {
+                "Shape": "RbRbRbRb:CrCrCrCr",
+                "Amount": 8000
+              }
+            ],
+            "ReusedForPlayerLevel": true
+          },
+          {
+            "Shapes": [
+              {
+                "Shape": "Rb------",
+                "Amount": 1200
+              },
+              {
+                "Shape": "RbRb----",
+                "Amount": 2000
+              }
+            ],
+            "ReusedAtSameMilestone": true,
+            "ReusedAtSameMilestoneOffset": -1
+          }
+        ]
+      },
+      {
+        "Id": "RNTrains",
+        "Rewards": [
+          {
+            "$type": "ChunkLimitReward",
+            "Amount": 500
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_RailNode"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_RailPath_Universal"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_RailPath_Red"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainStation"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainProducer_Red"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainShapeWagonExtension"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainLoader_Shapes"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainLoader_Shapes_Flipped"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainUnloader_Shapes"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainUnloader_Shapes_Flipped"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainLauncher"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainCatcher"
+          },
+          {
+            "$type": "MechanicReward",
+            "MechanicId": "RURailManagement"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKTrains"
+          }
+        ],
+        "PreviewImageId": "RNTrains",
+        "WikiEntryId": "WKTrains",
+        "VideoId": "Milestone_TrainsVD",
+        "Title": "@research.RNTrains.title",
+        "Description": "@research.RNTrains.description",
+        "Lines": [
+          {
+            "Shapes": [
+              {
+                "Shape": "RgRgRgRg",
+                "Amount": 3000
+              },
+              {
+                "Shape": "RuRgRuRg",
+                "Amount": 4000
+              },
+              {
+                "Shape": "RuRgRuRg:SbSbSbSb",
+                "Amount": 14000
+              }
+            ],
+            "ReusedForPlayerLevel": true
+          },
+          {
+            "Shapes": [
+              {
+                "Shape": "SuSuSuSu",
+                "Amount": 3000
+              },
+              {
+                "Shape": "SbSbSbSb",
+                "Amount": 4000
+              }
+            ],
+            "ReusedAtSameMilestone": true,
+            "ReusedAtSameMilestoneOffset": -1
+          }
+        ]
+      },
+      {
+        "Id": "RNPinPusher",
+        "Rewards": [
+          {
+            "$type": "ChunkLimitReward",
+            "Amount": 500
+          },
+          {
+            "$type": "BlueprintCurrencyReward",
+            "Amount": 750
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKPinPusher"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "PinPusherDefaultVariant"
+          }
+        ],
+        "PreviewImageId": "RNPinPusher",
+        "Title": "@research.RNPinPusher.title",
+        "WikiEntryId": "WKPinPusher",
+        "VideoId": "Milestone_PinPusherVD",
+        "Description": "@research.RNPinPusher.description",
+        "Lines": [
+          {
+            "Shapes": [
+              {
+                "Shape": "--Wr--Wr",
+                "Amount": 4000
+              },
+              {
+                "Shape": "WgWrWgWr",
+                "Amount": 5000
+              },
+              {
+                "Shape": "RbCbCbCb:RuCuCuCu:WgWrWgWr",
+                "Amount": 30000
+              }
+            ],
+            "ReusedForPlayerLevel": true
+          },
+          {
+            "Shapes": [
+              {
+                "Shape": "RbCbCbCb",
+                "Amount": 4000
+              },
+              {
+                "Shape": "RbCbCbCb:RuCuCuCu",
+                "Amount": 5000
+              }
+            ],
+            "ReusedAtSameMilestone": true,
+            "ReusedAtSameMilestoneOffset": -1
+          }
+        ]
+      },
+      {
+        "Id": "RNColorMixing",
+        "Rewards": [
+          {
+            "$type": "ChunkLimitReward",
+            "Amount": 500
+          },
+          {
+            "$type": "BlueprintCurrencyReward",
+            "Amount": 2500
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "MixerDefaultVariant"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKMixing"
+          }
+        ],
+        "VideoId": "Milestone_MixerVD",
+        "PreviewImageId": "RNColorMixing",
+        "Title": "@research.RNColorMixing.title",
+        "WikiEntryId": "WKMixing",
+        "Description": "@research.RNColorMixing.description",
+        "Lines": [
+          {
+            "Shapes": [
+              {
+                "Shape": "P-P-P-P-:RbRbRbRb",
+                "Amount": 6000
+              },
+              {
+                "Shape": "Su----Su:P-----P-:Rb----Rb",
+                "Amount": 8000
+              },
+              {
+                "Shape": "SuP-P-Su:P-P-P-P-:RbCgCgRb",
+                "Amount": 35000
+              }
+            ],
+            "ReusedForPlayerLevel": true
+          },
+          {
+            "Shapes": [
+              {
+                "Shape": "--P-P---:--CgCg--",
+                "Amount": 6000
+              },
+              {
+                "Shape": "--P-P---:--P-P---:--CgCg--",
+                "Amount": 8000
+              }
+            ],
+            "ReusedAtSameMilestone": true,
+            "ReusedAtSameMilestoneOffset": -1
+          }
+        ]
+      },
+      {
+        "Id": "RNCrystals",
+        "Rewards": [
+          {
+            "$type": "ChunkLimitReward",
+            "Amount": 500
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "CrystalGeneratorDefaultVariant"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKCrystals"
+          }
+        ],
+        "PreviewImageId": "RNCrystals",
+        "Title": "@research.RNCrystals.title",
+        "VideoId": "Milestone_CrystalsVD",
+        "WikiEntryId": "WKCrystals",
+        "Description": "@research.RNCrystals.description",
+        "Lines": [
+          {
+            "Shapes": [
+              {
+                "Shape": "Ry--Ry--",
+                "Amount": 9000
+              },
+              {
+                "Shape": "RyP-RyP-:--Ru--Ru",
+                "Amount": 12000
+              },
+              {
+                "Shape": "RyP-RyP-:SwRuSwRu",
+                "Amount": 40000
+              }
+            ],
+            "ReusedForPlayerLevel": true
+          },
+          {
+            "Shapes": [
+              {
+                "Shape": "Sb--Sb--",
+                "Amount": 9000
+              },
+              {
+                "Shape": "Sm--Sm--",
+                "Amount": 12000
+              }
+            ],
+            "ReusedAtSameMilestone": true,
+            "ReusedAtSameMilestoneOffset": -1
+          }
+        ]
+      },
+      {
+        "Id": "RNEndOfGame",
+        "Rewards": [
+          {
+            "$type": "ChunkLimitReward",
+            "Amount": 2000
+          },
+          {
+            "$type": "BlueprintCurrencyReward",
+            "Amount": 50000
+          },
+          {
+            "$type": "ResearchPointsReward",
+            "Amount": 50
+          }
+        ],
+        "PreviewImageId": "RNPlaceholder",
+        "Title": "@research.RNEndOfGame.title",
+        "Description": "@research.RNEndOfGame.description",
+        "VideoId": "Milestone_FinalVD",
+        "Lines": [
+          {
+            "Shapes": [
+              {
+                "Shape": "RucrRucr",
+                "Amount": 8000
+              },
+              {
+                "Shape": "RucrRucr:P-P-P-P-:CwCwCwCw",
+                "Amount": 10000
+              },
+              {
+                "Shape": "RucrRucr:cbcbcbcb:CwCwCwCw",
+                "Amount": 55000
+              }
+            ],
+            "ReusedForPlayerLevel": true
+          },
+          {
+            "Shapes": [
+              {
+                "Shape": "P-P-P-P-:CwCwCwCw",
+                "Amount": 5000
+              }
+            ],
+            "ReusedAtSameMilestone": true,
+            "ReusedAtSameMilestoneOffset": -1
+          }
+        ]
+      }
+    ],
+    "SideQuestGroups": [
+      {
+        "Title": "@side-goal.mushroom",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "SideQuests": [
+          {
+            "Id": "SG_Islands_1_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 1
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 20
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "--SuSu--",
+                "Amount": 750
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_1_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CuSuSuCu",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_1_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CuSuSuCu:CuCuCuCu",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_1_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 8
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuRuRuRu:CuSuSuCu:CuCuCuCu",
+                "Amount": 1800
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.gray-with-red",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "SideQuests": [
+          {
+            "Id": "SG_Islands_2_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 1
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 20
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCu----",
+                "Amount": 750
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_2_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCu----:CuCu----",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_2_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCuRuRu:CuCu----",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_2_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCuRuRu:CuCuCuCu",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_2_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 8
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCuRuRu:CrCuCuCu",
+                "Amount": 1800
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.rotated-stacking",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "SideQuests": [
+          {
+            "Id": "SG_Islands_3_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 1
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 20
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RbRu----",
+                "Amount": 750
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_3_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RbRu----:--RbRu--",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_3_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RbRu----:--RbRu--:----RbRu",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_3_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 8
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RbRu----:--RbRu--:----RbRu:Ru----Rb",
+                "Amount": 1800
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.colorful-star",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "SideQuests": [
+          {
+            "Id": "SG_Islands_4_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 1
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 20
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "----SuCr",
+                "Amount": 750
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_4_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Su--SuCr",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_4_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SuSuSuCr",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_4_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SuSuSuCr:--Rb----",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Islands_4_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 8
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SuSuSuCr:--Rb--Cr",
+                "Amount": 1800
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.stack-cut-cut",
+        "RequiredUpgradeIds": ["RNFluids"],
+        "SideQuests": [
+          {
+            "Id": "SG_Fluids_1_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 1
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RbRbRbRb",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_1_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RbRbRbRb:CuCuCuCu",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_1_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RbRb----:CuCu----",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_1_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 4
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Rb------:Cu------",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_1_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 12
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Rb--Rb--:Cu--Cu--",
+                "Amount": 2500
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.painting-basics",
+        "RequiredUpgradeIds": ["RNFluids"],
+        "SideQuests": [
+          {
+            "Id": "SG_Fluids_2_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 1
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RrRrRrRr",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_2_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RrRrRrRr:RgRgRgRg",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_2_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RrRr----:RgRg----",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_2_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 4
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RrRrRgRg",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_2_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 12
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RrRrRgRg:CuCuCuCu",
+                "Amount": 2500
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.emerald",
+        "RequiredUpgradeIds": ["RNFluids"],
+        "SideQuests": [
+          {
+            "Id": "SG_Fluids_3_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 1
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Wu------",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_3_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "WuWu----",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_3_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "WuWuWuWu",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_3_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 4
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "WgWgWgWg",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_3_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 12
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuRuRuRu:WgWgWgWg",
+                "Amount": 2500
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.red-fly",
+        "RequiredUpgradeIds": ["RNFluids"],
+        "SideQuests": [
+          {
+            "Id": "SG_Fluids_4_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 1
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Sr------",
+                "Amount": 1200
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_4_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 30
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Sr--Sr--",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_4_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SrCuSrCu",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_4_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 4
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuRuRuRu:SrCuSrCu",
+                "Amount": 2000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Fluids_4_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 12
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RgRgRgRg:SrCuSrCu",
+                "Amount": 2500
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.alternating-parts",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "SideQuests": [
+          {
+            "Id": "SG_Trains_1_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Wu--Wu--",
+                "Amount": 3000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_1_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "WuCuWuCu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_1_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "WrCuWrCu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_1_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 5
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuRuRuRu:WrCuWrCu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_1_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 14
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RbRbRbRb:WrCuWrCu",
+                "Amount": 10000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.circle-star-rect",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "SideQuests": [
+          {
+            "Id": "SG_Trains_2_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CbCbCbCb",
+                "Amount": 3000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_2_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CbCbCbCb:SuSuSuSu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_2_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CbCbCbCb:SrSrSrSr",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_2_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 5
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuRuRuRu:CbCbCbCb:SrSrSrSr",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_2_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 14
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RgRgRgRg:CbCbCbCb:SrSrSrSr",
+                "Amount": 10000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.slicing-a-melon",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "SideQuests": [
+          {
+            "Id": "SG_Trains_3_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CgCgCgCg",
+                "Amount": 3000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_3_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CgCgCgCg:CrCrCrCr",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_3_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 5
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CgCg----:CrCr----",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_3_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 14
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Cg------:Cr------",
+                "Amount": 10000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.green-blue-checker",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "SideQuests": [
+          {
+            "Id": "SG_Trains_4_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Rg--Rg--",
+                "Amount": 3000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_4_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RgCuRgCu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_4_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RgCbRgCb",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_4_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 5
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RgCbRgCb:Cb--Cb--",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_4_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 14
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RgCbRgCb:CbCgCbCg",
+                "Amount": 10000
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "Title": "@side-goal.mushroom-2",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "SideQuests": [
+          {
+            "Id": "SG_Trains_6_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 40
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "--SbSb--",
+                "Amount": 3000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_6_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CuSbSbCu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_6_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrSbSbCr",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_6_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 5
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrSbSbCr:Cu----Cu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Trains_6_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 14
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrSbSbCr:Cr----Cr",
+                "Amount": 10000
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "Title": "@side-goal.shrinking-circle",
+        "RequiredUpgradeIds": ["RNPinPusher"],
+        "SideQuests": [
+          {
+            "Id": "SG_PinPusher_2_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:CuCuCuCu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_2_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:CgCgCgCg",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_2_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:P-P-P-P-:CgCgCgCg",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_2_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 12
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:P-P-P-P-:P-P-P-P-:CgCgCgCg",
+                "Amount": 12000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.pin-experiments",
+        "RequiredUpgradeIds": ["RNPinPusher"],
+        "SideQuests": [
+          {
+            "Id": "SG_PinPusher_3_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:RrRrRrRr",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_3_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P---P---:Rr--Rr--",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_3_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-CuP-Cu:Rr--Rr--",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_3_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-CuP-Cu:RrP-RrP-:--Ru--Ru",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_3_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 12
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-CuP-Cu:RrP-RrP-:--Rb--Rb",
+                "Amount": 12000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.exploring-layer-limit",
+        "RequiredUpgradeIds": ["RNPinPusher"],
+        "SideQuests": [
+          {
+            "Id": "SG_PinPusher_4_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:SuSuSuSu",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_4_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CuCuCuCu:P-P-P-P-:SuSuSuSu",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_4_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CuCuCuCu:CuCuCuCu:P-P-P-P-:SuSuSuSu",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_4_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 12
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 60
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CuCuCuCu:CuCuCuCu:CuCuCuCu:P-P-P-P-",
+                "Amount": 12000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.building-a-minion",
+        "RequiredUpgradeIds": ["RNPinPusher"],
+        "SideQuests": [
+          {
+            "Id": "SG_PinPusher_5_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "--P-P---:--WbWb--",
+                "Amount": 4000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_5_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SbP-P-Sb:--WbWb--",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_5_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SbP-P-Sb:--WbWb--:CuCuCuCu",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_5_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 4
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 50
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SbP-P-Sb:--WbWb--:CuCuCuCu:--CbCb--",
+                "Amount": 5000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_5_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 20
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SbP-P-Sb:--WbWb--:CuCuCuCu:P-CbCbP-",
+                "Amount": 12000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.yellow-bug",
+        "RequiredUpgradeIds": ["RNColorMixing"],
+        "SideQuests": [
+          {
+            "Id": "SG_Mixing_1_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "--Wy--Wy",
+                "Amount": 6000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_1_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RyWyRyWy",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_1_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-WyP-Wy:Ry--Ry--",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_1_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 6
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-WyP-Wy:Ry--Ry--:CuCuCuCu",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_1_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 16
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 100
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-WyP-Wy:Ry--Ry--:CbCbCbCb",
+                "Amount": 14000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.tertiary-colors",
+        "RequiredUpgradeIds": ["RNColorMixing"],
+        "SideQuests": [
+          {
+            "Id": "SG_Mixing_2_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SrSrSrSr",
+                "Amount": 6000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_2_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SySySySy",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_2_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 6
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SwSwSwSw",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_2_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 16
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 100
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuRuRuRu:SwSwSwSw",
+                "Amount": 14000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.shapez-1-logo",
+        "RequiredUpgradeIds": ["RNColorMixing"],
+        "SideQuests": [
+          {
+            "Id": "SG_Mixing_3_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuCu--Cu",
+                "Amount": 6000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_3_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 6
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuCuP-Cu:----Ru--",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_3_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 15
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 100
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "RuCwP-Cw:----Ru--",
+                "Amount": 14000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.shapez-2-logo",
+        "RequiredUpgradeIds": ["RNColorMixing"],
+        "SideQuests": [
+          {
+            "Id": "SG_Mixing_4_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CcCcCcCc",
+                "Amount": 6000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_4_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:CcCcCcCc",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_4_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 6
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CuRuCuCu:P-P-P-P-:CcCcCcCc",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_4_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 20
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 150
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CwRwCwCw:P-P-P-P-:CcCcCcCc",
+                "Amount": 16000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.legacy-1",
+        "RequiredUpgradeIds": ["RNColorMixing"],
+        "SideQuests": [
+          {
+            "Id": "SG_Mixing_5_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CyCyCyCy",
+                "Amount": 6000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_5_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SrSrSrSr:CyCyCyCy",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_5_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SrSrSrSr:CyCyCyCy:SuSuSuSu",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_5_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 6
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SrSrSrSr:CyCyCyCy:SwSwSwSw",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_5_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 16
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 100
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SrSrSrSr:CyCyCyCy:P-P-P-P-:SwSwSwSw",
+                "Amount": 14000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.legacy-2",
+        "RequiredUpgradeIds": ["RNColorMixing"],
+        "SideQuests": [
+          {
+            "Id": "SG_Mixing_6_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Sg----Sg",
+                "Amount": 6000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_6_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Sg----Sg:CuCuCuCu",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_6_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Sg----Sg:CgCgCgCg",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_6_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 6
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Sg----Sg:CgCgCgCg:--CyCy--",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_6_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 16
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 100
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Sw----Sw:CgCgCgCg:--CwCw--",
+                "Amount": 14000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.legacy-3",
+        "RequiredUpgradeIds": ["RNColorMixing"],
+        "SideQuests": [
+          {
+            "Id": "SG_Mixing_7_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCuCrCu",
+                "Amount": 6000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_7_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCwCrCw",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_7_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCwCrCw:CwCrCwCr",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_7_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 6
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCwCrCw:CwCrCwCr:CrCwCrCw",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Mixing_7_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 16
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 100
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CrCwCrCw:CwCrCwCr:CrCwCrCw:CwCrCwCr",
+                "Amount": 14000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.crystals-using-pins",
+        "RequiredUpgradeIds": ["RNCrystals"],
+        "SideQuests": [
+          {
+            "Id": "SG_Crystals_1_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:WuWuWuWu",
+                "Amount": 9000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_1_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "crcrcrcr:WuWuWuWu",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_1_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:crcrcrcr:WuWuWuWu",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_1_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 7
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "cbcbcbcb:crcrcrcr:WuWuWuWu",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_1_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 18
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 120
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "cgcgcgcg:cbcbcbcb:crcrcrcr:WuWuWuWu",
+                "Amount": 20000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.crystals-use-halves-swapper",
+        "RequiredUpgradeIds": ["RNCrystals"],
+        "SideQuests": [
+          {
+            "Id": "SG_Crystals_2_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "CuCucrcr",
+                "Amount": 9000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_2_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "----crcr",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_2_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "cbcbcrcr",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_2_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 7
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "cbcbcrcr:P-P-P-P-:CuCuCuCu",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_2_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 18
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 120
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "cbcbcrcr:cgcgcgcg:CuCuCuCu",
+                "Amount": 20000
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Title": "@side-goal.crystals-dont-need-pins",
+        "RequiredUpgradeIds": ["RNCrystals"],
+        "SideQuests": [
+          {
+            "Id": "SG_Crystals_3_1",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 2
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "Su--Su--:CuCuCuCu",
+                "Amount": 9000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_3_2",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SucgSucg:CuCuCuCu",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_3_3",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 3
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "SucgSucg:CwCwCwCw",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_3_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 7
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 80
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "P-P-P-P-:SucgSucg:CwCwCwCw",
+                "Amount": 12000
+              }
+            ]
+          },
+          {
+            "Id": "SG_Crystals_3_5",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 18
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 120
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "cbcbcbcb:SucgSucg:CwCwCwCw",
+                "Amount": 20000
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "SideUpgrades": [
+      {
+        "Id": "RNIslandLayouts1",
+        "PreviewImageId": "Shop_PlatformLayouts1",
+        "Title": "@research.RNIslandLayouts1.title",
+        "Description": "@research.RNIslandLayouts1.description",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_Normal_3_L"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 6
+          }
+        ]
+      },
+      {
+        "Id": "RNIslandLayouts2",
+        "PreviewImageId": "Shop_PlatformLayouts2",
+        "Title": "@research.RNIslandLayouts2.title",
+        "Description": "@research.RNIslandLayouts2.description",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_Normal_4_T"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 12
+          }
+        ]
+      },
+      {
+        "Id": "RNIslandLayouts3",
+        "PreviewImageId": "Shop_PlatformLayouts3",
+        "Title": "@research.RNIslandLayouts3.title",
+        "Description": "@research.RNIslandLayouts3.description",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_Normal_4_2x2"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_Normal_5_Cross"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 20
+          }
+        ]
+      },
+      {
+        "Id": "RNIslandLayouts4",
+        "PreviewImageId": "Shop_PlatformLayouts4",
+        "Title": "@research.RNIslandLayouts4.title",
+        "Description": "@research.RNIslandLayouts4.description",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_Normal_9_3x3"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 90
+          }
+        ]
+      },
+      {
+        "Id": "RNWireBasics",
+        "PreviewImageId": "Shop_WireBasics",
+        "Title": "@research.RNWireBasics.title",
+        "Description": "@research.RNWireBasics.description",
+        "RequiredUpgradeIds": ["RNIslandBuilding"],
+        "Rewards": [
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "WireDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "ConstantSignalDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "BeltFilterDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "BeltReaderDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "DisplayDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "ButtonDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "WireBridgeVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "WireTransmitterSenderVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "WireTransmitterReceiverVariant"
+          },
+          {
+            "$type": "MechanicReward",
+            "MechanicId": "RUWires"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 15
+          }
+        ]
+      },
+      {
+        "Id": "RNWireLogicGates",
+        "PreviewImageId": "Shop_LogicGates",
+        "Title": "@research.RNWireLogicGates.title",
+        "Description": "@research.RNWireLogicGates.description",
+        "RequiredUpgradeIds": ["RNWireBasics"],
+        "Rewards": [
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "LogicGateAndVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "LogicGateOrVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "LogicGateIfVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "LogicGateXOrVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "LogicGateNotVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "LogicGateCompareVariant"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 10
+          }
+        ]
+      },
+      {
+        "Id": "RNWireVirtualProcessing",
+        "PreviewImageId": "Shop_VirtualProcessors",
+        "Title": "@research.RNWireVirtualProcessing.title",
+        "Description": "@research.RNWireVirtualProcessing.description",
+        "RequiredUpgradeIds": ["RNWireBasics"],
+        "Rewards": [
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualRotatorDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualAnalyzerDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualUnstackerDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualStackerDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualHalfCutterDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualPainterDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualCrystalGeneratorDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualHalvesSwapperDefaultVariant"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 10
+          }
+        ]
+      },
+      {
+        "Id": "RNWireTransmission",
+        "PreviewImageId": "Shop_GlobalWireTransmitter",
+        "Title": "@research.RNWireTransmission.title",
+        "Description": "@research.RNWireTransmission.description",
+        "RequiredUpgradeIds": ["RNWireBasics", "RNLayer3"],
+        "Rewards": [
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "WireGlobalTransmitterReceiverVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "WireGlobalTransmitterSenderVariant"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 10
+          }
+        ]
+      },
+      {
+        "Id": "RNFluidTank",
+        "PreviewImageId": "Shop_FluidTank",
+        "VideoId": "Fluid_Tank",
+        "Title": "@research.RNFluidTank.title",
+        "Description": "@research.RNFluidTank.description",
+        "RequiredUpgradeIds": ["RNFluids"],
+        "Rewards": [
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "FluidStorageDefaultVariant"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 10
+          }
+        ]
+      },
+      {
+        "Id": "RNFluidMinerExtension",
+        "PreviewImageId": "Shop_FluidMinerExtension",
+        "Title": "@research.RNFluidMinerExtension.title",
+        "Description": "@research.RNFluidMinerExtension.description",
+        "RequiredUpgradeIds": ["RNFluids"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_FluidMinerExtension"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 25
+          }
+        ]
+      },
+      {
+        "Id": "RNTrainsGreen",
+        "PreviewImageId": "Shop_TrainsGreen",
+        "Title": "@research.RNTrainsGreen.title",
+        "Description": "@research.RNTrainsGreen.description",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_RailPath_Green"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainProducer_Green"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 12
+          }
+        ]
+      },
+      {
+        "Id": "RNTrainsBlue",
+        "PreviewImageId": "Shop_TrainsBlue",
+        "Title": "@research.RNTrainsBlue.title",
+        "Description": "@research.RNTrainsBlue.description",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_RailPath_Blue"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainProducer_Blue"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 12
+          }
+        ]
+      },
+      {
+        "Id": "RNTrainsWhite",
+        "PreviewImageId": "Shop_TrainsWhite",
+        "Title": "@research.RNTrainsWhite.title",
+        "Description": "@research.RNTrainsWhite.description",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_RailPath_White"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainProducer_White"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 12
+          }
+        ]
+      },
+      {
+        "Id": "RNTrainHubDelivery",
+        "PreviewImageId": "Shop_TrainHubDelivery",
+        "Title": "@research.RNTrainHubDelivery.title",
+        "Description": "@research.RNTrainHubDelivery.description",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "Rewards": [
+          {
+            "$type": "MechanicReward",
+            "MechanicId": "RUTrainHubDelivery"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 60
+          }
+        ]
+      },
+      {
+        "Id": "RNTrainsFillerWagon",
+        "PreviewImageId": "Shop_TrainsFillerWagon",
+        "Title": "@research.RNTrainsFillerWagon.title",
+        "Description": "@research.RNTrainsFillerWagon.description",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainFillerWagonExtension"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 6
+          }
+        ]
+      },
+      {
+        "Id": "RNTrainsFluidWagons",
+        "PreviewImageId": "Shop_TrainsFluidWagons",
+        "Title": "@research.RNTrainsFluidWagons.title",
+        "Description": "@research.RNTrainsFluidWagons.description",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainFluidWagonExtension"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainLoader_Fluids"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainLoader_Fluids_Flipped"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainUnloader_Fluids"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainUnloader_Fluids_Flipped"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 25
+          }
+        ]
+      },
+      {
+        "Id": "RNRailRollerCoasterDLCContent",
+        "PreviewImageId": "Shop_TrainsRollerCoaster",
+        "Title": "@research.RNRailRollerCoasterDLCContent.title",
+        "Description": "@research.RNRailRollerCoasterDLCContent.description",
+        "RequiredUpgradeIds": ["RNTrains"],
+        "Rewards": [
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainTwister"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainRollerCoasterLoop"
+          }
+        ],
+        "Costs": [
+          {
+            "$type": "ResearchPointsCost",
+            "Amount": 5
+          }
+        ]
+      }
+    ],
+    "LinearUpgrades": [],
+    "Mechanics": []
+  },
+  "StartingLocation": {
+    "Hub": {
+      "Position_GC": {
+        "x": -1
+      },
+      "LayoutId": "Layout_HUB"
+    },
+    "InitialViewport": {
+      "PositionX": -49.08,
+      "PositionY": -11.76,
+      "Zoom": 12.02,
+      "Angle": 67.27,
+      "ShowAllLayers": true
+    },
+    "InitialIslands": [
+      {
+        "Position_GC": {
+          "x": -3
+        },
+        "LayoutId": "Layout_ShapeMiner"
+      },
+      {
+        "Position_GC": {
+          "x": -1,
+          "y": 2
+        },
+        "Rotation": 3,
+        "LayoutId": "Layout_ShapeMiner"
+      },
+      {
+        "Position_GC": {
+          "x": 1
+        },
+        "Rotation": 2,
+        "LayoutId": "Layout_ShapeMiner"
+      },
+      {
+        "Position_GC": {
+          "x": -1,
+          "y": -2
+        },
+        "Rotation": 1,
+        "LayoutId": "Layout_ShapeMiner"
+      },
+      {
+        "Position_GC": {
+          "x": -5
+        },
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": -4,
+          "y": -1
+        },
+        "Rotation": 1,
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": -4
+        },
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": -2,
+          "y": -4
+        },
+        "Rotation": 1,
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": -2,
+          "y": -3
+        },
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": -2,
+          "y": 3
+        },
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": -2,
+          "y": 4
+        },
+        "Rotation": 3,
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": -1,
+          "y": -3
+        },
+        "Rotation": 1,
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": -1,
+          "y": 3
+        },
+        "Rotation": 3,
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": 1,
+          "y": -1
+        },
+        "Rotation": 1,
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": 1,
+          "y": 1
+        },
+        "Rotation": 3,
+        "LayoutId": "Layout_ShapeMinerExtension"
+      },
+      {
+        "Position_GC": {
+          "x": 2
+        },
+        "Rotation": 2,
+        "LayoutId": "Layout_ShapeMinerExtension"
+      }
+    ],
+    "FixedPatches": [
+      {
+        "Shape": "RuRuRuRu",
+        "Position_LC": {
+          "x": 31,
+          "y": 30
+        },
+        "LocalTiles": [
+          {},
+          {
+            "x": -1,
+            "y": -2
+          },
+          {
+            "y": -1
+          },
+          {
+            "x": -1,
+            "y": -1
+          }
+        ]
+      },
+      {
+        "Shape": "RuRuRuRu",
+        "Position_LC": {
+          "x": 31,
+          "y": 34
+        },
+        "LocalTiles": [
+          {},
+          {
+            "y": 1
+          },
+          {
+            "x": -1,
+            "y": 1
+          },
+          {
+            "x": -1,
+            "y": 2
+          }
+        ]
+      },
+      {
+        "Shape": "CuCuCuCu",
+        "Position_LC": {
+          "x": 29,
+          "y": 32
+        },
+        "LocalTiles": [
+          {},
+          {
+            "x": -1
+          },
+          {
+            "x": -1,
+            "y": -1
+          },
+          {
+            "x": -2
+          }
+        ]
+      },
+      {
+        "Shape": "CuCuCuCu",
+        "Position_LC": {
+          "x": 33,
+          "y": 32
+        },
+        "LocalTiles": [
+          {},
+          {
+            "x": 1
+          },
+          {
+            "y": 1
+          },
+          {
+            "y": -1
+          }
+        ]
+      }
+    ],
+    "StartingChunks": [
+      {
+        "GuaranteedShapePatches": [
+          "RbRuRbRu",
+          "CrCrCrCu",
+          "CrCuCuCu",
+          "RuSuRu--",
+          "RuRuRuRu",
+          "--CuCuCu",
+          "SuSuCu--",
+          "--RbSuCr",
+          "CuCuCuCu"
+        ],
+        "GuaranteedColorPatches": ["r", "b"]
+      },
+      {
+        "SuperChunk": {
+          "x": -1
+        },
+        "GuaranteedColorPatches": ["g"]
+      },
+      {
+        "SuperChunk": {
+          "x": 1,
+          "y": 1
+        },
+        "GuaranteedShapePatches": ["--WuWuCu"],
+        "GuaranteedColorPatches": ["g"]
+      },
+      {
+        "SuperChunk": {
+          "x": -1,
+          "y": -1
+        },
+        "GuaranteedShapePatches": ["--WuCu--"]
+      }
+    ]
+  }
+}

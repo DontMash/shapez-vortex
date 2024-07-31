@@ -1,10 +1,11 @@
+import type { ComponentType } from 'svelte';
 import _ from 'lodash';
 import type { RecordModel } from 'pocketbase';
 import { z } from 'zod';
 
-import type BUILDINGS_METADATA from '$lib/assets/data/buildings-metadata.json';
+import GAME_IDENTIFIERS from '$lib/assets/data/identifiers.json';
 
-export const GAME_VERSION = 1033;
+export const GAME_VERSION = 1090;
 
 export const BLUEPRINT_FILE_FORMAT = '.spz2bp' as const;
 export const BLUEPRINT_EMPTY_DATA = '//8=';
@@ -28,18 +29,18 @@ type BlueprintData = {
 	downloadCount: number;
 	bookmarkCount: number;
 	version: number;
-}
+};
 export type BlueprintRecord = RecordModel & BlueprintData;
 export interface BlueprintTag extends RecordModel {
 	name: string;
 }
 
 export function isLike(a: Partial<BlueprintData>, b: Partial<BlueprintData>): boolean {
-    if (a.title !== b.title) return false;
-    if (a.data !== b.data) return false;
-    if (!_.isEqual(a.tags, b.tags)) return false;
-    if (!_.isEqual(a.images, b.images)) return false;
-    if (a.description !== b.description) return false;
+	if (a.title !== b.title) return false;
+	if (a.data !== b.data) return false;
+	if (!_.isEqual(a.tags, b.tags)) return false;
+	if (!_.isEqual(a.images, b.images)) return false;
+	if (a.description !== b.description) return false;
 
 	return true;
 }
@@ -157,7 +158,7 @@ export type BlueprintBuilding = {
 };
 export type BlueprintBuildingEntry = {
 	// building identifier
-	T: BuildingIdentifier;
+	T: BlueprintBuildingIdentifier;
 	// relative x position
 	X?: number;
 	// relative y position
@@ -177,11 +178,13 @@ const BLUEPRINT_ENTRYROTATIONS = {
 type BlueprintEntryRotation =
 	(typeof BLUEPRINT_ENTRYROTATIONS)[keyof typeof BLUEPRINT_ENTRYROTATIONS];
 
-type BuildingIntervalVariant =
-	(typeof BUILDINGS_METADATA)[number]['Variants'][number]['InternalVariants'][number];
-export type BuildingIdentifier = BuildingIntervalVariant['Id'];
+export type BlueprintBuildingIdentifier = (typeof GAME_IDENTIFIERS)['BuildingInternalVariantIds'][number];
+export type BlueprintBuildingModel = {
+	base: ComponentType;
+	layers?: [ComponentType, ComponentType, ComponentType];
+};
 
-const ISLAND_PADDING_SIZE = 4;
+const ISLAND_PADDING_SIZE = 3;
 const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;
 const ISLAND_MIN_SIZE = 12;
 export const ISLAND_LAYOUT_UNIT = ISLAND_MIN_SIZE + ISLAND_GAP_SIZE;
