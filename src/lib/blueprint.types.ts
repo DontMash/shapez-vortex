@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 import GAME_IDENTIFIERS from '$lib/assets/data/identifiers.json';
 
-export const GAME_VERSION = 1090;
+export const GAME_VERSION = 1095;
 
 export const BLUEPRINT_FILE_FORMAT = '.spz2bp' as const;
 export const BLUEPRINT_EMPTY_DATA = '//8=';

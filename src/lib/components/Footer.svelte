@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { version } from '$app/environment';
+	import { GAME_VERSION } from '$lib/blueprint.types';
 
 	import DiscordIcon from '$lib/components/icons/DiscordIcon.svelte';
 	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
@@ -111,7 +112,7 @@
 				>
 					v{version}
 				</a>
-				<span>- Game Version 1090</span>
+				<span>- Game Version {GAME_VERSION}</span>
 			</i>
 		</aside>
 	</div>
