@@ -15,6 +15,7 @@
 	import { capture } from '$lib/client/actions/capture';
 	import { copy, paste } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
+	import { add } from '$lib/client/toast/toast.service';
 
 	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
 	import FileDownloadIcon from '$lib/components/icons/FileDownloadIcon.svelte';
@@ -129,6 +130,7 @@
 								type="button"
 								use:paste
 								on:paste={(event) => onPaste(event)}
+								on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 							>
 								<span class="sr-only">Paste blueprint</span>
 								<PasteIcon />
@@ -140,6 +142,8 @@
 							class="btn btn-square btn-primary join-item p-2.5"
 							title="Copy blueprint"
 							use:copy={{ value: identifier }}
+							on:copy={() => add({ message: 'Content copied' })}
+							on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 						>
 							<span class="sr-only">Copy blueprint</span>
 							<CopyIcon />
@@ -166,6 +170,7 @@
 						title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
 						use:fullscreen={{ fullscreenElement: viewer }}
 						on:change={(event) => (isFullscreen = event.detail)}
+						on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 					>
 						<span class="sr-only">Turn fullscreen {isFullscreen ? 'off' : 'on'}</span>
 						{#if !isFullscreen}

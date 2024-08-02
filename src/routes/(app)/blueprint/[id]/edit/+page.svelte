@@ -96,12 +96,15 @@
 		const list = new DataTransfer();
 		const files = Array.from([...(imagesFileinputElement.files ?? []), ...inputElement.files]);
 		if (files.length > BLUEPRINT_IMAGES_MAX) {
-			add(`Max. ${BLUEPRINT_IMAGES_MAX} images allowed.`, 3000, 'WARNING');
+			add({ message: `Max. ${BLUEPRINT_IMAGES_MAX} images allowed.`, type: 'WARNING' });
 		}
 		const filelist = files.slice(0, BLUEPRINT_IMAGES_MAX).filter((file) => {
 			if (file.size > BLUEPRINT_IMAGE_MAX_FILE_SIZE) {
 				const maxSizeMb = Math.round(BLUEPRINT_IMAGE_MAX_FILE_SIZE / 1024 / 1024);
-				add(`Size of image is too large (max. ${maxSizeMb}MB) - ${file.name}`, 3000, 'ERROR');
+				add({
+					message: `Size of image is too large (max. ${maxSizeMb}MB) - ${file.name}`,
+					type: 'ERROR'
+				});
 				return false;
 			}
 			return true;

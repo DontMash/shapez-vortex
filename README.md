@@ -146,7 +146,7 @@ To setup, install & develop you may need some tools:
       * Blueprint cost
     * Geometry details
       * Belt arrows
-      * Pipe supports
+      * Building decorations/props
       * Glass material
     * Drag & Drop to view file
   * Simulation?
@@ -154,7 +154,7 @@ To setup, install & develop you may need some tools:
     * Step by Step?
   * Builder?
   * Steam Workshop link
-* Progression Overview
+* Progression Editor
   * Shape images
   * Share entry
   * Unlocks
@@ -165,11 +165,6 @@ To setup, install & develop you may need some tools:
   * Filter
   * Sort
 * Shapes
-  * Upload
-  * Library
-    * Search
-    * Filter
-    * Sort
   * Viewer
     * Instructions (similar to [S1-Viewer](https://viewer.shapez.io))
       * How to
@@ -183,7 +178,6 @@ To setup, install & develop you may need some tools:
         * Quarters
       * Types
       * Colors
-    * New models
     * Builder?
 * Mods
 * Savegame editor
@@ -205,7 +199,6 @@ To setup, install & develop you may need some tools:
     * Client-Side
     * Code coverage
     * Visuals
-* KO-FI
 * Shapez-Vortex Logo
 
 See the [open issues][issues-url] for a full list of proposed features (and known issues).

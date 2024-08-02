@@ -4,9 +4,10 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { debounce } from '$lib/utils';
+	import { add } from '$lib/client/toast/toast.service';
 	import type { BlueprintRecord } from '$lib/blueprint.types';
+	import { isShapeIdentifier } from '$lib/shape.types';
 	import type { User } from '$lib/user.types';
-	import { TOAST_TYPE, add } from '$lib/client/toast/toast.service';
 
 	import Dialog from '$lib/components/Dialog.svelte';
 	import CategoryIcon from '$lib/components/icons/CategoryIcon.svelte';
@@ -14,11 +15,9 @@
 	import LoginIcon from '$lib/components/icons/LoginIcon.svelte';
 	import LogoutIcon from '$lib/components/icons/LogoutIcon.svelte';
 	import PersonIcon from '$lib/components/icons/PersonIcon.svelte';
-	import ScienceIcon from '$lib/components/icons/ScienceIcon.svelte';
 	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
 	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
 	import UploadIcon from '$lib/components/icons/UploadIcon.svelte';
-	import { isShapeIdentifier } from '$lib/shape.types';
 
 	const MAX_ENTRIES = 5;
 	const OPERATING_SYSTEMS = ['Mac OS', 'Windows', 'Linux'] as const;
@@ -57,7 +56,7 @@
 			blueprints = result.items;
 		} catch (err) {
 			blueprints = [];
-			add('Failed to search blueprints', 3000, TOAST_TYPE.ERROR);
+			add({ message: 'Failed to search blueprints', type: 'ERROR' });
 		}
 	}
 	async function updateUsers(search: string) {
@@ -74,7 +73,7 @@
 			users = result.items;
 		} catch (err) {
 			users = [];
-			add('Failed to search users', 3000, TOAST_TYPE.ERROR);
+			add({ message: 'Failed to search users', type: 'ERROR' });
 		}
 	}
 	function searchBlueprints(search: string) {

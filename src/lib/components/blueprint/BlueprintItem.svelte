@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { BlueprintRecord } from '$lib/blueprint.types';
-	import { share } from '$lib/client/actions/share';
+	import { copy } from '$lib/client/actions/clipboard';
 
 	import BlueprintTag from './BlueprintTag.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
@@ -12,6 +12,7 @@
 	import DeleteIcon from '$lib/components/icons/DeleteIcon.svelte';
 	import EditIcon from '$lib/components/icons/EditIcon.svelte';
 	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
+	import { add } from '$lib/client/toast/toast.service';
 
 	export let data: Partial<BlueprintRecord>;
 	export let image: string;
@@ -54,7 +55,9 @@
 			<div class="!ml-auto flex items-center space-x-1">
 				<button
 					class="btn btn-square btn-ghost btn-sm fill-neutral-content p-0.5"
-					use:share={{ href: url }}
+					use:copy={{ value: url }}
+					on:copy={() => add({ message: 'Link copied' })}
+					on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 				>
 					<ShareFilledIcon />
 				</button>

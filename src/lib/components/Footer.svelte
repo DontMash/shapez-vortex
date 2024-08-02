@@ -4,6 +4,7 @@
 
 	import DiscordIcon from '$lib/components/icons/DiscordIcon.svelte';
 	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
+	import KofiIcon from '$lib/components/icons/KofiIcon.svelte';
 	import NorthIcon from '$lib/components/icons/NorthIcon.svelte';
 	import SteamIcon from '$lib/components/icons/SteamIcon.svelte';
 </script>
@@ -91,6 +92,18 @@
 					@DontMash
 				</a>
 			</p>
+			<a
+				class="link-hover link transition-colors hover:text-primary"
+				href="https://ko-fi.com/smaschmann"
+				target="_blank"
+				rel="noreferrer"
+			>
+				Support me on
+				<span class="inline-block h-5 w-5 align-middle">
+					<span class="sr-only">Ko-fi</span>
+					<KofiIcon />
+				</span>
+			</a>
 		</nav>
 		<aside class="h-full">
 			<a

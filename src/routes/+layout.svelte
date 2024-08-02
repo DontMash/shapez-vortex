@@ -9,7 +9,7 @@
 
 	function onError(event: Event) {
 		const errorEvent = event as ErrorEvent;
-		add(errorEvent.message ?? 'Error', 3000, 'ERROR');
+		add({ message: errorEvent.message ?? 'Error', type: 'ERROR' });
 	}
 	const BASE_KEYWORDS = new Set(['Shapez', 'Shapez 2', 'Visualization', 'Tools']);
 	function getKeywords(pageKeywords: Array<string>): Array<string> {

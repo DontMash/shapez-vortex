@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import { copy } from '$lib/client/actions/clipboard';
-	import { share } from '$lib/client/actions/share';
+	import { add } from '$lib/client/toast/toast.service';
 	import { REPORT_REASONS } from '$lib/report.types';
 
 	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
@@ -240,7 +240,10 @@
 								<FlagIcon />
 							</button>
 						{/if}
-						<button class="btn btn-square btn-ghost btn-sm p-0.5" use:share>
+						<button
+							class="btn btn-square btn-ghost btn-sm p-0.5"
+							use:copy={{ value: window.location.href }}
+						>
 							<ShareFilledIcon />
 						</button>
 						{#if data.user}
@@ -385,7 +388,12 @@
 					</span>
 					Download
 				</a>
-				<button class="btn btn-accent" use:copy={{ value: data.blueprint.entry.data }}>
+				<button
+					class="btn btn-accent"
+					use:copy={{ value: JSON.stringify(data.blueprint.entry.data, null, 4) }}
+					on:copy={() => add({ message: 'Content copied' })}
+					on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
+				>
 					<span class="inline-block h-6 w-6 fill-secondary-content">
 						<CopyIcon />
 					</span>

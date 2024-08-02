@@ -1,24 +1,27 @@
 import { writable, type Writable } from 'svelte/store';
 
-export const TOAST_TYPE = {
+const TOAST_DURATION = 3000;
+const TOAST_TYPE = {
 	INFO: 'INFO',
 	SUCCESS: 'SUCCESS',
 	WARNING: 'WARNING',
-	ERROR: 'ERROR',
+	ERROR: 'ERROR'
 } as const;
-export type ToastType = typeof TOAST_TYPE[keyof typeof TOAST_TYPE];
+export type ToastType = (typeof TOAST_TYPE)[keyof typeof TOAST_TYPE];
 export type Toast = {
 	type: ToastType;
 	message: string;
 	duration: number;
 };
+type ToastOptions = Partial<Toast> & Pick<Toast, 'message'>;
 
 const queue: Array<Toast> = new Array<Toast>();
 export const toastStore: Writable<Array<Toast>> = writable<Array<Toast>>([]);
 let timeout: number | undefined;
 
 export const subscribe: Writable<Array<Toast>>['subscribe'] = toastStore.subscribe;
-export const add = (message: string, duration = 1000, type: ToastType = 'INFO') => {
+export const add = (options: ToastOptions) => {
+	const { message, type = 'INFO', duration = TOAST_DURATION } = options;
 	const toast: Toast = { type, message, duration };
 	queue.unshift(toast);
 	toastStore.update(() => [...queue]);

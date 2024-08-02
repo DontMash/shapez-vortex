@@ -2,7 +2,7 @@
 	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
-	import { TOAST_TYPE, add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast/toast.service';
 
 	import MailIcon from '$lib/components/icons/MailIcon.svelte';
 
@@ -37,7 +37,7 @@
 		method="post"
 		use:enhance={() => {
 			return async ({ result }) => {
-				add('Your email change has been requested!', 3000, TOAST_TYPE.WARNING);
+				add({ message: 'Your email change has been requested!', type: 'WARNING' });
 				applyAction(result);
 			};
 		}}

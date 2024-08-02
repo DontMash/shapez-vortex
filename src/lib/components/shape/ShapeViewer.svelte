@@ -50,8 +50,8 @@
 				const clipboardItem = new ClipboardItem(items);
 				navigator.clipboard
 					.write([clipboardItem])
-					.then(() => add('Copied shape image'))
-					.catch(() => add('Error while creating shape image', 3000));
+					.then(() => add({ message: 'Copied shape image' }))
+					.catch(() => add({ message: 'Error while creating shape image', type: 'ERROR' }));
 			},
 			'image/png',
 			1
@@ -107,6 +107,8 @@
 				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
 				title="Copy shape"
 				use:copy={{ value: data.identifier }}
+				on:copy={() => add({ message: 'Content copied' })}
+				on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 			>
 				<span class="sr-only">Copy shape</span>
 				<CopyIcon />
@@ -125,6 +127,7 @@
 				title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
 				use:fullscreen={{ fullscreenElement: viewer }}
 				on:change={(event) => (isFullscreen = event.detail)}
+				on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 			>
 				<span class="sr-only">Turn fullscreen {isFullscreen ? 'off' : 'on'}</span>
 				{#if !isFullscreen}

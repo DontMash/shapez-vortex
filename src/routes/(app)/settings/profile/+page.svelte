@@ -16,7 +16,7 @@
 		method="post"
 		use:enhance={() => {
 			return async ({ result }) => {
-				add('Your displayname has been updated!');
+				add({ message: 'Your displayname has been updated!' });
 				applyAction(result);
 			};
 		}}
