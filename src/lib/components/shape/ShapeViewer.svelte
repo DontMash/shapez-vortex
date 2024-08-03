@@ -2,23 +2,8 @@
 	import { page } from '$app/stores';
 	import type { ShapeData } from '$lib/shape.types';
 	import { view } from '$lib/client/shapes';
-	import { capture } from '$lib/client/actions/capture';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
-
-	import ArrowRightAltIcon from '$lib/components/icons/ArrowRightAltIcon.svelte';
-	import CircleIcon from '$lib/components/icons/CircleIcon.svelte';
-	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
-	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
-	import FullscreenIcon from '$lib/components/icons/FullscreenIcon.svelte';
-	import FullscreenExitIcon from '$lib/components/icons/FullscreenExitIcon.svelte';
-	import LayersIcon from '$lib/components/icons/LayersIcon.svelte';
-	import LayersFilledIcon from '$lib/components/icons/LayersFilledIcon.svelte';
-	import LayersClearFilledIcon from '$lib/components/icons/LayersClearFilledIcon.svelte';
-	import LayersClearIcon from '$lib/components/icons/LayersClearIcon.svelte';
-	import PhotoCameraIcon from '$lib/components/icons/PhotoCameraIcon.svelte';
-	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
-	import ShuffleIcon from '$lib/components/icons/ShuffleIcon.svelte';
 	import { add } from '$lib/client/toast/toast.service';
 
 	export let data: ShapeData;
@@ -72,12 +57,15 @@
 				<input name="identifier" type="hidden" value={data.identifier} />
 				<input name="extend" type="hidden" value={!isExtended} />
 				<input name="expand" type="hidden" value={isExpanded} />
-				<button class="h-full w-full p-2.5" title="Extend layers" type="submit">
-					<span class="sr-only">Extend layers</span>
+				<button
+					class="h-full w-full"
+					title="{isExtended ? 'Contract' : 'Extend'} layers"
+					type="submit"
+				>
 					{#if isExtended}
-						<LayersIcon />
+						<span class="icon-[tabler--stack-forward] align-text-bottom text-2xl" />
 					{:else}
-						<LayersFilledIcon />
+						<span class="icon-[tabler--stack] align-text-bottom text-2xl" />
 					{/if}
 				</button>
 			</form>
@@ -85,83 +73,80 @@
 				<input name="identifier" type="hidden" value={data.identifier} />
 				<input name="extend" type="hidden" value={isExtended} />
 				<input name="expand" type="hidden" value={!isExpanded} />
-				<button class="h-full w-full p-2.5" title="Expand quarters" type="submit">
-					<span class="sr-only">Expand quarters</span>
+				<button
+					class="h-full w-full"
+					title="{isExpanded ? 'Collapse' : 'Expand'} quarters"
+					type="submit"
+				>
 					{#if isExpanded}
-						<LayersClearIcon />
+						<span class="icon-[tabler--border-none] align-text-bottom text-2xl" />
 					{:else}
-						<LayersClearFilledIcon />
+						<span class="icon-[tabler--border-all] align-text-bottom text-2xl" />
 					{/if}
 				</button>
 			</form>
 			<form class="btn btn-square btn-primary join-item" method="post" action="/shape/?/random">
-				<button class="h-full w-full p-2.5" title="Randomize shape" type="submit">
-					<span class="sr-only">Randomize shape</span>
-					<ShuffleIcon />
+				<button class="h-full w-full" title="Randomize shape" type="submit">
+					<span class="icon-[tabler--arrows-shuffle] align-text-bottom text-2xl">Shuffle</span>
 				</button>
 			</form>
 		</div>
 
 		<div class="join">
 			<button
-				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+				class="btn btn-square btn-secondary join-item"
 				title="Copy shape"
 				use:copy={{ value: data.identifier }}
 				on:copy={() => add({ message: 'Content copied' })}
 				on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 			>
-				<span class="sr-only">Copy shape</span>
-				<CopyIcon />
+				<span class="icon-[tabler--copy] text-2xl" />
 			</button>
 			<button
-				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+				class="btn btn-square btn-secondary join-item"
 				title="Capture shape"
 				on:click={onCapture}
 			>
-				<span class="sr-only">Capture shape</span>
-				<PhotoCameraIcon />
+				<span class="icon-[tabler--camera] text-2xl" />
 			</button>
 			<button
-				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+				class="btn btn-square btn-secondary join-item"
 				type="button"
 				title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
 				use:fullscreen={{ fullscreenElement: viewer }}
 				on:change={(event) => (isFullscreen = event.detail)}
 				on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 			>
-				<span class="sr-only">Turn fullscreen {isFullscreen ? 'off' : 'on'}</span>
-				{#if !isFullscreen}
-					<FullscreenIcon />
+				{#if isFullscreen}
+					<span class="icon-[material-symbols--fullscreen-exit-rounded] text-2xl" />
 				{:else}
-					<FullscreenExitIcon />
+					<span class="icon-[material-symbols--fullscreen-rounded] text-2xl" />
 				{/if}
 			</button>
 			<button
-				class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+				class="btn btn-square btn-secondary join-item"
 				type="button"
 				title="View top down"
 				on:click={onTop}
 			>
-				<span class="sr-only">View top down</span>
-				<CircleIcon />
+				<span class="icon-[tabler--circle] text-2xl" />
 			</button>
-			<form class="btn btn-square btn-secondary join-item fill-secondary-content" action="/shape">
+			<form class="btn btn-square btn-secondary join-item" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
-				<button class="h-full w-full p-2.5" title="Reset controls" type="submit" on:click={onReset}>
-					<span class="sr-only">Reset controls</span>
-					<RestartAltIcon />
+				<button class="h-full w-full" title="Reset controls" type="submit" on:click={onReset}>
+					<span class="icon-[tabler--reload] align-text-bottom text-2xl" />
 				</button>
 			</form>
 		</div>
 
 		<form class="join">
 			<label
-				class="form-control join-item relative flex"
+				class="input join-item input-bordered flex items-center space-x-2"
 				for="shape-identifier"
 				aria-label="Shape identifier"
 			>
 				<input
-					class="peer input join-item input-bordered pr-12"
+					class="peer grow"
 					type="text"
 					id="shape-identifier"
 					name="identifier"
@@ -171,18 +156,17 @@
 					minlength="2"
 					maxlength="35"
 				/>
-				<div class="absolute right-2 top-1/2 -translate-y-1/2 peer-placeholder-shown:hidden">
-					<button
-						class="btn btn-square btn-ghost btn-sm p-1"
-						type="reset"
-						title="Clear shape input"
-					>
-						<CloseIcon />
-					</button>
-				</div>
+
+				<button
+					class="btn btn-square btn-ghost btn-sm peer-placeholder-shown:hidden"
+					type="reset"
+					title="Clear shape input"
+				>
+					<span class="icon-[tabler--x] text-lg" />
+				</button>
 			</label>
-			<button class="btn btn-square btn-accent join-item fill-accent-content p-2.5">
-				<ArrowRightAltIcon />
+			<button class="btn btn-square btn-accent join-item">
+				<span class="icon-[tabler--arrow-narrow-right] text-2xl" />
 			</button>
 		</form>
 	</div>

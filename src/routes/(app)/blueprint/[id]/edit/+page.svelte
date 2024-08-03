@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import { beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import type { PageData } from './$types';
+	import { add } from '$lib/client/toast/toast.service';
 	import {
 		BLUEPRINT_IDENTIFIER_REGEX,
 		BLUEPRINT_IMAGES_MAX,
@@ -13,13 +13,9 @@
 		BLUEPRINT_TITLE_REGEX,
 		type BlueprintTag
 	} from '$lib/blueprint.types';
-	import { add } from '$lib/client/toast/toast.service';
+	import type { PageData } from './$types';
 
 	import Dialog from '$lib/components/Dialog.svelte';
-	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
-	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
-	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
-	import UploadIcon from '$lib/components/icons/UploadIcon.svelte';
 
 	export let data: PageData;
 
@@ -156,13 +152,9 @@
 		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
 	>
 		<hgroup>
-			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6">
-					<UploadIcon />
-				</span>
-				<span>
-					{data.seo.title}
-				</span>
+			<h2 class="text-lg font-bold">
+				<span class="icon-[tabler--edit] align-text-bottom text-2xl">Edit</span>
+				{data.seo.title}
 			</h2>
 			<p>
 				{data.seo.description}
@@ -376,40 +368,37 @@
 									{index < 1 ? 'Preview' : `#${index}`}
 								</span>
 								<span
-									class={`absolute bottom-4 right-4 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 ${
+									class={`absolute top-4 right-4 ${
 										previewImages.length > 1 ? 'join border border-base-300' : ''
 									}`}
 								>
 									{#if index > 0}
 										<button
-											class="btn btn-square btn-accent join-item btn-sm fill-accent-content p-1"
+											class="btn btn-square btn-accent join-item btn-sm"
 											title="Move to previous position"
 											type="button"
 											on:click={() => swapImage(index, index - 1)}
 										>
-											<ChevronLeftIcon />
-											<span class="sr-only">Move to previous position</span>
+											<span class="icon-[tabler--chevron-left] text-2xl">Previous</span>
 										</button>
 									{/if}
 									{#if index < previewImages.length - 1}
 										<button
-											class="btn btn-square btn-accent join-item btn-sm fill-accent-content p-1"
+											class="btn btn-square btn-accent join-item btn-sm"
 											title="Move to next position"
 											type="button"
 											on:click={() => swapImage(index, index + 1)}
 										>
-											<ChevronRightIcon />
-											<span class="sr-only">Move to next position</span>
+											<span class="icon-[tabler--chevron-right] text-2xl">Next</span>
 										</button>
 									{/if}
 									<button
-										class="btn btn-square btn-error join-item btn-sm fill-error-content p-1"
+										class="btn btn-square btn-error join-item btn-sm"
 										title="Remove image"
 										type="button"
 										on:click={() => onRemoveImage(index)}
 									>
-										<CloseIcon />
-										<span class="sr-only">Remove image</span>
+										<span class="icon-[tabler--x] text-2xl">Remove</span>
 									</button>
 								</span>
 							</li>

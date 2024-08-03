@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { USERNAME_REGEX } from '$lib/user.types';
 	import { add } from '$lib/client/toast/toast.service';
-
-	import PersonChatIcon from '$lib/components/icons/PersonChatIcon.svelte';
+	import { USERNAME_REGEX } from '$lib/user.types';
 
 	let displaynameInputValue: string | undefined = $page.data.user?.displayname;
 </script>
@@ -25,14 +23,10 @@
 			<div class="label">
 				<span class="label-text">Displayname</span>
 			</div>
-			<div class="join">
-				<span
-					class="join-item inline-flex h-12 w-12 items-center justify-center !rounded-l-btn border border-base-content border-opacity-20 bg-base-100 p-2.5"
-				>
-					<PersonChatIcon />
-				</span>
+			<div class="input input-bordered flex items-center space-x-2">
+				<span class="icon-[tabler--message-user] text-2xl" />
 				<input
-					class="input join-item input-bordered w-full"
+					class="w-full"
 					type="text"
 					name="newDisplayname"
 					id="newDisplayname"

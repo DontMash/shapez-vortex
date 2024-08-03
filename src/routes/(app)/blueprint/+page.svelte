@@ -3,12 +3,6 @@
 	import type { PageData } from './$types';
 	import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
 
-	import DataObjectIcon from '$lib/components/icons/DataObjectIcon.svelte';
-	import DomainIcon from '$lib/components/icons/DomainIcon.svelte';
-	import FileUploadIcon from '$lib/components/icons/FileUploadIcon.svelte';
-	import SyncIcon from '$lib/components/icons/SyncIcon.svelte';
-	import VisibilityIcon from '$lib/components/icons/VisibilityIcon.svelte';
-
 	export let data: PageData;
 
 	function onFileChange(event: Event) {
@@ -22,13 +16,9 @@
 		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
 	>
 		<hgroup>
-			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6">
-					<DomainIcon />
-				</span>
-				<span>
-					{data.seo.title}
-				</span>
+			<h2 class="text-lg font-bold">
+				<span class="icon-[tabler--schema] align-text-bottom text-2xl" />
+				{data.seo.title}
 			</h2>
 			<p>
 				{data.seo.description}
@@ -43,7 +33,7 @@
 				<i class="label-text-alt">
 					max. 12500 characters
 					<a class="link font-bold transition-colors hover:!text-primary" href="/blueprint/upload">
-						(limitless)
+						(limitless?)
 					</a>
 				</i>
 			</div>
@@ -83,9 +73,7 @@
 				</label>
 			</div>
 			<button class="btn btn-secondary join-item flex-grow" title="View blueprint">
-				<span class="inline-block h-6 w-6 fill-secondary-content">
-					<VisibilityIcon />
-				</span>
+				<span class="icon-[tabler--eye] text-lg" />
 				View
 			</button>
 		</div>
@@ -102,9 +90,7 @@
 				required
 				on:change={(event) => onFileChange(event)}
 			/>
-			<span class="inline-block h-6 w-6">
-				<FileUploadIcon />
-			</span>
+			<span class="icon-[tabler--file-upload] text-lg" />
 			Load
 			<span class="sr-only">blueprint from file</span>
 		</label>
@@ -114,9 +100,9 @@
 <section class="mx-auto mt-32 grid w-full max-w-5xl grid-cols-2 gap-8 px-6" id="more-features">
 	<div class="indicator w-full">
 		<span
-			class="indicator-item indicator-start indicator-top h-12 w-12 rounded-btn bg-secondary fill-secondary-content p-2"
+			class="indicator-item indicator-start indicator-top flex h-12 w-12 items-center justify-center rounded-btn bg-secondary text-2xl text-secondary-content"
 		>
-			<DataObjectIcon />
+			<span class="icon-[tabler--braces]" />
 		</span>
 		<div class="card card-bordered w-full bg-base-200">
 			<div class="card-body items-center text-center">
@@ -136,9 +122,9 @@
 
 	<div class="indicator w-full">
 		<span
-			class="indicator-item indicator-start indicator-top h-12 w-12 rounded-btn bg-secondary fill-secondary-content p-2"
+			class="indicator-item indicator-start indicator-top flex h-12 w-12 items-center justify-center rounded-btn bg-secondary p-2 text-2xl text-secondary-content"
 		>
-			<SyncIcon />
+			<span class="icon-[tabler--refresh]" />
 		</span>
 		<div class="card card-bordered w-full bg-base-200">
 			<div class="card-body items-center text-center">

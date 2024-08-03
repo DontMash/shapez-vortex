@@ -1,12 +1,8 @@
+import { addDynamicIconSelectors } from '@iconify/tailwind';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/typography'),
-    require('tailwind-scrollbar-hide'),
-    require('daisyui'),
-  ],
   theme: {
     extend: {
       width: {
@@ -27,6 +23,13 @@ export default {
     },
     colors: {},
   },
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/typography'),
+    require('tailwind-scrollbar-hide'),
+    require('daisyui'),
+    addDynamicIconSelectors(),
+  ],
   daisyui: {
     logs: false,
     themes: [

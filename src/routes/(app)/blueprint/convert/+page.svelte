@@ -4,21 +4,18 @@
 	import { GAME_VERSION } from '$lib/blueprint.types';
 
 	import CopyButton from '$lib/components/CopyButton.svelte';
-	import DataObjectIcon from '$lib/components/icons/DataObjectIcon.svelte';
 
 	export let data: PageData;
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4">
+	<header
+		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
+	>
 		<hgroup>
-			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6">
-					<DataObjectIcon />
-				</span>
-				<span>
-					{data.seo.title}
-				</span>
+			<h2 class="text-lg font-bold">
+				<span class="icon-[tabler--braces] align-text-bottom text-2xl" />
+				{data.seo.title}
 			</h2>
 			<p>This tool modifies any blueprint to work in the current version of the game.</p>
 			<i class="text-xs">
@@ -37,21 +34,24 @@
 					</span>
 				{/if}
 			</div>
-			<input
-				class="input input-lg input-bordered rounded-b-none"
-				name="blueprint-version"
-				id="blueprint-version"
-				type="text"
-				inputmode="numeric"
-				value={GAME_VERSION}
-				pattern="^\d\d\d\d$"
-				required
-			/>
+			<div class="input input-lg input-bordered rounded-b-none flex items-center space-x-2">
+				<span class="icon-[tabler--square-rounded-letter-v] text-2xl" />
+				<input
+					class=""
+					name="blueprint-version"
+					id="blueprint-version"
+					type="text"
+					inputmode="numeric"
+					value={GAME_VERSION}
+					pattern="^\d\d\d\d$"
+					required
+				/>
+			</div>
 		</label>
 
 		<label class="form-control join-item h-80" for="blueprint-identifier-update">
 			<textarea
-				class="textarea textarea-bordered textarea-lg resize-none rounded-none h-full w-full"
+				class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-none"
 				name="blueprint-identifier"
 				id="blueprint-identifier-update"
 				placeholder="Blueprint identifier..."
@@ -66,17 +66,11 @@
 	</form>
 
 	{#if $page.form && $page.form.success && $page.form.identifier}
-		<div
-			class="mt-16 relative group"
-		>
-			<p class="h-80 textarea textarea-lg textarea-bordered break-words overflow-y-auto">
-				{$page.form.identifier}
-			</p>
-			<div
-				class="absolute right-8 top-4 opacity-0 transition focus-within:opacity-100 group-hover:opacity-100"
-			>
+		<p class="textarea textarea-bordered textarea-lg mt-16 h-80 overflow-y-auto break-words">
+			<span class="float-right">
 				<CopyButton value={$page.form.identifier} />
-			</div>
-		</div>
+			</span>
+			{$page.form.identifier}
+		</p>
 	{/if}
 </section>

@@ -8,26 +8,8 @@
 
 	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
 	import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
-	import UserTag from '$lib/components/UserTag.svelte';
-	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
-	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
-	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
-	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
-	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
-	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
-	import CurrencyBitcoinIcon from '$lib/components/icons/CurrencyBitcoinIcon.svelte';
-	import DashboardCustomizeFilledIcon from '$lib/components/icons/DashboardCustomizeFilledIcon.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
-	import DomainIcon from '$lib/components/icons/DomainIcon.svelte';
-	import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
-	import EditIcon from '$lib/components/icons/EditIcon.svelte';
-	import FlagIcon from '$lib/components/icons/FlagIcon.svelte';
-	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
-	import OpenInNewIcon from '$lib/components/icons/OpenInNewIcon.svelte';
-	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
-	import TitleIcon from '$lib/components/icons/TitleIcon.svelte';
-	import UpdateIcon from '$lib/components/icons/UpdateIcon.svelte';
-	import VisibilityIcon from '$lib/components/icons/VisibilityIcon.svelte';
+	import UserTag from '$lib/components/UserTag.svelte';
 
 	export let data: PageData;
 
@@ -67,25 +49,17 @@
 									class="btn btn-circle btn-neutral btn-sm absolute right-2 top-2 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
 									on:click={() => imageModals[index].show()}
 								>
-									<span class="inline-block h-6 w-6">
-										<OpenInNewIcon />
-										<span class="sr-only">Open detail view</span>
-									</span>
+									<span class="icon-[tabler--window-maximize] text-lg">Open detail view</span>
 								</button>
 								{#if images.length > 1}
 									<div
 										class="absolute left-2 right-2 top-1/2 flex -translate-y-1/2 transform justify-between opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
 									>
-										<a
-											class="btn btn-circle btn-neutral btn-sm fill-neutral-content"
-											href={previousId}
-										>
-											<ChevronLeftIcon />
-											<span class="sr-only">Previous</span>
+										<a class="btn btn-circle btn-neutral btn-sm" href={previousId}>
+											<span class="icon-[tabler--chevron-left] text-lg">Previous</span>
 										</a>
-										<a class="btn btn-circle btn-neutral btn-sm fill-neutral-content" href={nextId}>
-											<ChevronRightIcon />
-											<span class="sr-only">Next</span>
+										<a class="btn btn-circle btn-neutral btn-sm" href={nextId}>
+											<span class="icon-[tabler--chevron-right] text-lg">Next</span>
 										</a>
 									</div>
 								{/if}
@@ -120,8 +94,8 @@
 
 			<div class="grow space-y-2 p-4">
 				<div class="flex items-center space-x-4">
-					<span class="inline-block h-6 w-6 fill-primary">
-						<TitleIcon />
+					<span class="icon-[tabler--square-rounded-letter-t] text-2xl text-primary">
+						Blueprint Type
 					</span>
 					<span>
 						<span class="font-medium">
@@ -131,18 +105,15 @@
 					</span>
 				</div>
 				<div class="flex items-center space-x-4">
-					<span class="inline-block h-6 w-6 fill-secondary">
-						<CurrencyBitcoinIcon />
-					</span>
+					<span class="icon-[tabler--currency-bitcoin] text-2xl text-secondary">Blueprint cost</span
+					>
 					<span>
 						<span class="font-medium">{data.blueprint.entry.cost}</span>
 						<span class="text-sm text-base-300">points</span>
 					</span>
 				</div>
 				<div class="flex items-center space-x-4">
-					<span class="inline-block h-6 w-6">
-						<DomainIcon />
-					</span>
+					<span class="icon-[tabler--schema] text-2xl">Building count</span>
 					<span>
 						<span class="font-medium">{data.blueprint.entry.buildingCount}</span>
 						<span class="text-sm text-base-300">
@@ -151,9 +122,7 @@
 					</span>
 				</div>
 				<div class="flex items-center space-x-4">
-					<span class="inline-block h-6 w-6">
-						<DashboardCustomizeFilledIcon />
-					</span>
+					<span class="icon-[tabler--apps] text-2xl">Island count</span>
 					<span>
 						<span class="font-medium">{data.blueprint.entry.islandCount || '-'}</span>
 						<span class="text-sm text-base-300">
@@ -162,9 +131,7 @@
 					</span>
 				</div>
 				<div class="flex items-center space-x-4 pt-4">
-					<span class="inline-block h-6 w-6">
-						<VisibilityIcon />
-					</span>
+					<span class="icon-[tabler--eye] text-2xl">View count</span>
 					<span>
 						<span class="font-medium">{data.blueprint.entry.viewCount || '-'}</span>
 						<span class="text-sm text-base-300">
@@ -173,9 +140,7 @@
 					</span>
 				</div>
 				<div class="flex items-center space-x-4">
-					<span class="inline-block h-6 w-6">
-						<DownloadIcon />
-					</span>
+					<span class="icon-[tabler--download] text-2xl">Download count</span>
 					<span>
 						<span class="font-medium">{data.blueprint.entry.downloadCount || '-'}</span>
 						<span class="text-sm text-base-300">
@@ -184,9 +149,7 @@
 					</span>
 				</div>
 				<div class="flex items-center space-x-4">
-					<span class="inline-block h-6 w-6">
-						<BookmarkFilledIcon />
-					</span>
+					<span class="icon-[tabler--bookmark-filled] text-2xl">Bookmark count</span>
 					<span>
 						<span class="font-medium">{data.blueprint.entry.bookmarkCount || '-'}</span>
 						<span class="text-sm text-base-300">
@@ -204,25 +167,23 @@
 						<UserTag name={data.blueprint.entry.expand['creator'].displayname} />
 					{/if}
 					<div class="flex space-x-1">
-						<span class="badge badge-neutral text-xs">
-							<span class="mr-0.5 inline h-4 w-4">
-								<InfoIcon />
+						<span class="badge badge-neutral space-x-1">
+							<span class="icon-[tabler--info-circle]">Game version</span>
+							<span class="text-xs">
+								v{data.blueprint.entry.version}
 							</span>
-							v{data.blueprint.entry.version}
 						</span>
-						<span class="badge badge-neutral text-xs">
-							<span class="mr-0.5 inline h-4 w-4">
-								<UpdateIcon />
+						<span class="badge badge-neutral space-x-1">
+							<span class="icon-[tabler--clock-edit]">Updated on</span>
+							<span class="text-xs">
+								{dateFormatter.format(new Date(data.blueprint.entry.updated))}
 							</span>
-							<span class="sr-only">updated on</span>
-							{dateFormatter.format(new Date(data.blueprint.entry.updated))}
 						</span>
-						<span class="badge badge-neutral text-xs">
-							<span class="mr-0.5 inline h-4 w-4">
-								<EditIcon />
+						<span class="badge badge-neutral space-x-1">
+							<span class="icon-[tabler--clock-plus]">Created on</span>
+							<span class="text-xs">
+								{dateFormatter.format(new Date(data.blueprint.entry.created))}
 							</span>
-							<span class="sr-only">created on</span>
-							{dateFormatter.format(new Date(data.blueprint.entry.created))}
 						</span>
 					</div>
 				</div>
@@ -234,17 +195,19 @@
 					<div>
 						{#if data.user && data.user.verified && data.user.id !== data.blueprint.entry.creator}
 							<button
-								class="btn btn-square btn-ghost btn-sm p-0.5"
+								class="btn btn-square btn-ghost btn-sm"
+								title="Report blueprint"
 								on:click={() => reportModal.show()}
 							>
-								<FlagIcon />
+								<span class="icon-[tabler--flag] text-2xl">Report</span>
 							</button>
 						{/if}
 						<button
-							class="btn btn-square btn-ghost btn-sm p-0.5"
+							class="btn btn-square btn-ghost btn-sm"
+							title="Share blueprint"
 							use:copy={{ value: window.location.href }}
 						>
-							<ShareFilledIcon />
+							<span class="icon-[tabler--share] text-2xl">Share</span>
 						</button>
 						{#if data.user}
 							{#if data.user.id !== data.blueprint.entry.creator}
@@ -254,29 +217,33 @@
 									method="post"
 									on:submit|preventDefault={onBookmark}
 								>
-									<button class="btn btn-square btn-ghost btn-sm p-0.5">
+									<button
+										class="btn btn-square btn-ghost btn-sm"
+										title="{data.blueprint.isBookmarked ? 'Unbookmark' : 'Bookmark'} blueprint"
+									>
 										{#if data.blueprint.isBookmarked}
-											<BookmarkFilledIcon />
+											<span class="icon-[tabler--bookmark-filled] text-2xl">Bookmark</span>
 										{:else}
-											<BookmarkIcon />
+											<span class="icon-[tabler--bookmark] text-2xl">Bookmark</span>
 										{/if}
 									</button>
 								</form>
 							{:else}
 								<a
-									class="btn btn-square btn-secondary btn-sm fill-secondary-content p-0.5"
+									class="btn btn-square btn-secondary btn-sm text-secondary-content"
+									title="Edit blueprint"
 									href={`/blueprint/${data.blueprint.entry.id}/edit`}
 								>
-									<EditIcon />
+									<span class="icon-[tabler--edit] text-2xl">Edit</span>
 								</a>
 							{/if}
 						{/if}
 
 						<Dialog bind:this={reportModal}>
 							<div class="p-6">
-								<h3 class="mb-4 text-xl font-bold">
+								<h2 class="mb-4 text-xl font-bold">
 									Report “{data.blueprint.entry.title}”
-								</h3>
+								</h2>
 								<form class="space-y-2" action="?/reportBlueprint" method="post">
 									<input type="hidden" name="entry" value={data.blueprint.entry.id} />
 
@@ -336,17 +303,13 @@
 									</label>
 
 									<div class="flex items-center justify-end space-x-2 pt-4">
-										<button class="btn btn-error">
-											<span class="inline-block size-6">
-												<FlagIcon />
-											</span>
+										<button class="btn btn-error" title="Report blueprint">
+											<span class="icon-[tabler--flag] text-2xl" />
 											Report
 										</button>
 										<form method="dialog">
 											<button class="btn btn-neutral">
-												<span class="inline-block size-6">
-													<CloseIcon />
-												</span>
+												<span class="2xl icon-[tabler--x] text-2xl" />
 												Cancel
 											</button>
 										</form>
@@ -372,31 +335,31 @@
 			<div class="prose grow">{@html data.blueprint.entry.description}</div>
 
 			<div class="flex items-center justify-end space-x-2">
-				<a class="btn btn-primary" href={`/blueprint/${data.blueprint.entry.id}/view`}>
-					<span class="inline-block h-6 w-6 fill-primary-content">
-						<VisibilityIcon />
-					</span>
+				<a
+					class="btn btn-primary"
+					title="View blueprint"
+					href={`/blueprint/${data.blueprint.entry.id}/view`}
+				>
+					<span class="icon-[tabler--eye] text-2xl" />
 					View
 				</a>
 				<a
 					class="btn btn-secondary"
+					title="Download blueprint"
 					href={`/blueprint/${data.blueprint.entry.id}/download`}
 					download
 				>
-					<span class="inline-block h-6 w-6 fill-secondary-content">
-						<DownloadIcon />
-					</span>
+					<span class="icon-[tabler--download] text-2xl" />
 					Download
 				</a>
 				<button
 					class="btn btn-accent"
+					title="Copy blueprint"
 					use:copy={{ value: JSON.stringify(data.blueprint.entry.data, null, 4) }}
 					on:copy={() => add({ message: 'Content copied' })}
 					on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 				>
-					<span class="inline-block h-6 w-6 fill-secondary-content">
-						<CopyIcon />
-					</span>
+					<span class="icon-[tabler--copy] text-2xl" />
 					Copy
 				</button>
 			</div>

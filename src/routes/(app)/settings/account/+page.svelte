@@ -4,8 +4,6 @@
 	import type { PageData } from './$types';
 	import { add } from '$lib/client/toast/toast.service';
 
-	import MailIcon from '$lib/components/icons/MailIcon.svelte';
-
 	export let data: PageData;
 	let emailInputValue: string | undefined = $page.data.user?.email;
 
@@ -46,14 +44,10 @@
 			<div class="label">
 				<span class="label-text">Email</span>
 			</div>
-			<div class="join">
-				<span
-					class="join-item inline-flex h-12 w-12 items-center justify-center !rounded-l-btn border border-base-content border-opacity-20 bg-base-100 p-2.5"
-				>
-					<MailIcon />
-				</span>
+			<div class="input input-bordered flex items-center space-x-2">
+				<span class="icon-[tabler--mail] text-2xl" />
 				<input
-					class="input join-item input-bordered w-full"
+					class="w-full"
 					type="email"
 					name="newEmail"
 					id="newEmail"

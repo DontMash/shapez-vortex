@@ -2,21 +2,17 @@
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 
-	import DataObjectIcon from '$lib/components/icons/DataObjectIcon.svelte';
-
 	export let data: PageData;
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-4 pb-4">
+	<header
+		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-4 pb-4"
+	>
 		<hgroup>
-			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6">
-					<DataObjectIcon />
-				</span>
-				<span>
-					{data.seo.title}
-				</span>
+			<h2 class="text-lg font-bold">
+				<span class="icon-[tabler--braces] align-text-bottom text-2xl" />
+				{data.seo.title}
 			</h2>
 			<p>
 				This tool decodes any blueprint to a human-readable
@@ -68,16 +64,18 @@
 				title="Decode blueprint identifier"
 				type="submit"
 			>
+				<span class="icon-[tabler--code-dots] text-2xl" />
 				Decode
 			</button>
 		</form>
 
 		<form class="join-item" method="post" action="?/encode">
 			<button
-				class="btn btn-accent text-primary btn-block rounded-none"
+				class="btn btn-accent btn-block rounded-none text-primary"
 				title="Encode blueprint data"
 				type="submit"
 			>
+				<span class="icon-[tabler--code-minus] text-2xl" />
 				Encode
 			</button>
 			<label class="form-control h-80" for="blueprint-data-encode">
