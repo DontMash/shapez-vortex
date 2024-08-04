@@ -207,7 +207,7 @@
 				/>
 			</T.PerspectiveCamera>
 
-			<T.AmbientLight intensity={0.2} />
+			<T.AmbientLight intensity={1} />
 			<T.DirectionalLight
 				position={[1, 3, 1]}
 				intensity={2}
