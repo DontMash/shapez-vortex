@@ -7,7 +7,7 @@ export const load = (() => {
     return {
         seo: {
             title: 'Blueprint Viewer',
-            description: 'View and interact with the 3D visualization of a blueprint. Explore the blueprints\'s multiple layers and parts.',
+            description: 'View and interact with the 3D visualization of a blueprint. Explore the blueprint\'s multiple layers and parts.',
             keywords: ['Viewer', '3D', 'Blueprint'],
         },
     };

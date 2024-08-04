@@ -1,15 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import type { PageData } from './$types';
 	import { PASSWORD_MIN_LENGTH, USERNAME_REGEX } from '$lib/user.types';
-
-	import MailIcon from '$lib/components/icons/MailIcon.svelte';
-	import PasswordIcon from '$lib/components/icons/PasswordIcon.svelte';
-	import PersonIcon from '$lib/components/icons/PersonIcon.svelte';
-	import PersonChatIcon from '$lib/components/icons/PersonChatIcon.svelte';
-	import VisibilityIcon from '$lib/components/icons/VisibilityIcon.svelte';
-	import VisibilityOffIcon from '$lib/components/icons/VisibilityOffIcon.svelte';
-	import EditIcon from '$lib/components/icons/EditIcon.svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 
@@ -21,13 +13,9 @@
 		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
 	>
 		<hgroup>
-			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6">
-					<EditIcon />
-				</span>
-				<span>
-					{data.seo.title}
-				</span>
+			<h2 class="text-lg font-bold">
+				<span class="icon-[tabler--edit] align-text-bottom text-2xl" />
+				{data.seo.title}
 			</h2>
 		</hgroup>
 	</header>
@@ -40,14 +28,10 @@
 				<div class="label">
 					<span class="label-text">Username</span>
 				</div>
-				<div class="join">
-					<span
-						class="join-item inline-flex h-12 w-12 items-center justify-center border border-base-content border-opacity-20 bg-base-100 p-2.5"
-					>
-						<PersonIcon />
-					</span>
+				<div class="input input-bordered flex items-center space-x-2">
+					<span class="icon-[tabler--user] text-2xl" />
 					<input
-						class="input join-item input-bordered w-full"
+						class="w-full"
 						type="text"
 						name="username"
 						id="username"
@@ -62,14 +46,9 @@
 				<div class="label">
 					<span class="label-text">Displayname</span>
 				</div>
-				<div class="join">
-					<span
-						class="join-item inline-flex h-12 w-12 items-center justify-center border border-base-content border-opacity-20 bg-base-100 p-2.5"
-					>
-						<PersonChatIcon />
-					</span>
+				<div class="input input-bordered flex items-center space-x-2">
+					<span class="icon-[tabler--message-user] text-2xl" />
 					<input
-						class="input join-item input-bordered w-full"
 						type="text"
 						name="displayname"
 						id="displayname"
@@ -84,14 +63,10 @@
 				<div class="label">
 					<span class="label-text">Email</span>
 				</div>
-				<div class="join">
-					<span
-						class="join-item inline-flex h-12 w-12 items-center justify-center border border-base-content border-opacity-20 bg-base-100 p-2.5"
-					>
-						<MailIcon />
-					</span>
+				<div class="input input-bordered flex items-center space-x-2">
+					<span class="icon-[tabler--mail] text-2xl" />
 					<input
-						class="input join-item input-bordered w-full"
+						class="w-full"
 						type="email"
 						name="email"
 						id="email"
@@ -105,14 +80,10 @@
 				<div class="label">
 					<span class="label-text">Password</span>
 				</div>
-				<div class="join relative">
-					<span
-						class="join-item inline-flex h-12 w-12 items-center justify-center border border-base-content border-opacity-20 bg-base-100 p-2.5"
-					>
-						<PasswordIcon />
-					</span>
+				<div class="input input-bordered flex items-center space-x-2">
+					<span class="icon-[tabler--password] text-2xl" />
 					<input
-						class="input join-item input-bordered w-full !rounded-r-btn pr-12"
+						class="w-full"
 						type={isPasswordHidden ? 'password' : 'text'}
 						name="password"
 						id="password"
@@ -121,23 +92,19 @@
 						required
 						minlength={PASSWORD_MIN_LENGTH}
 					/>
-					<div class="absolute right-2 top-1/2 -translate-y-1/2">
-						<button
-							class="btn btn-square btn-ghost btn-sm"
-							type="button"
-							title={isPasswordHidden ? 'Show password' : 'Hide password'}
-							on:click={() => (isPasswordHidden = !isPasswordHidden)}
-						>
-							<span class="sr-only">{isPasswordHidden ? 'Show' : 'Hide'}</span>
-							<span class="inline-block h-6 w-6">
-								{#if isPasswordHidden}
-									<VisibilityOffIcon />
-								{:else}
-									<VisibilityIcon />
-								{/if}
-							</span>
-						</button>
-					</div>
+					<button
+						class="btn btn-square btn-ghost btn-sm"
+						type="button"
+						title={isPasswordHidden ? 'Show password' : 'Hide password'}
+						on:click={() => (isPasswordHidden = !isPasswordHidden)}
+					>
+						<span class="sr-only">{isPasswordHidden ? 'Show' : 'Hide'}</span>
+						{#if isPasswordHidden}
+							<span class="icon-[tabler--eye-off] text-lg">Password is shown</span>
+						{:else}
+							<span class="icon-[tabler--eye] text-lg">Password is hidden</span>
+						{/if}
+					</button>
 				</div>
 			</label>
 
@@ -151,14 +118,12 @@
 				</ul>
 			{/if}
 
-			<button class="btn btn-primary my-4">Register</button>
+			<button class="btn btn-primary my-4" title="Create your account">
+				<span class="icon-[tabler--edit] text-2xl" />
+				Register
+			</button>
 
-			<a
-				class="link link-accent"
-				href="/login"
-			>
-				Already have an account?
-			</a>
+			<a class="link link-accent" href="/login"> Already have an account? </a>
 		</form>
 	</div>
 </section>

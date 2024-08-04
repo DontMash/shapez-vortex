@@ -15,15 +15,7 @@
 	import { capture } from '$lib/client/actions/capture';
 	import { copy, paste } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
-
-	import CopyIcon from '$lib/components/icons/CopyIcon.svelte';
-	import FileDownloadIcon from '$lib/components/icons/FileDownloadIcon.svelte';
-	import FileUploadIcon from '$lib/components/icons/FileUploadIcon.svelte';
-	import FullscreenExitIcon from '$lib/components/icons/FullscreenExitIcon.svelte';
-	import FullscreenIcon from '$lib/components/icons/FullscreenIcon.svelte';
-	import PasteIcon from '$lib/components/icons/PasteIcon.svelte';
-	import PhotoCameraIcon from '$lib/components/icons/PhotoCameraIcon.svelte';
-	import RestartAltIcon from '$lib/components/icons/RestartAltIcon.svelte';
+	import { add } from '$lib/client/toast.service';
 
 	import BlueprintBuilding from './BlueprintBuilding.svelte';
 
@@ -96,7 +88,7 @@
 							action="/blueprint/view/?/upload"
 							enctype="multipart/form-data"
 						>
-							<label class="h-full w-full p-2.5" for="blueprint-file">
+							<label class="flex h-full w-full items-center justify-center" for="blueprint-file">
 								<input
 									class="sr-only"
 									id="blueprint-file"
@@ -106,17 +98,18 @@
 									required
 									on:change={(event) => onFileChange(event)}
 								/>
-								<span class="sr-only">Load blueprint</span>
-								<FileUploadIcon />
+								<span class="icon-[tabler--file-upload] align-text-bottom text-2xl"
+									>Load blueprint</span
+								>
 							</label>
 						</form>
 					{/if}
 					{#if controls.download}
 						<form class="btn btn-square btn-primary join-item" action="/api/v1/blueprint/download">
 							<input name="identifier" type="hidden" value={identifier} required />
-							<button class="h-full w-full p-2.5" title="Download blueprint" type="submit">
-								<span class="sr-only">Download blueprint</span>
-								<FileDownloadIcon />
+							<button class="h-full w-full" title="Download blueprint" type="submit">
+								<span class="icon-[tabler--file-download] align-text-bottom text-2xl">Download</span
+								>
 							</button>
 						</form>
 					{/if}
@@ -124,25 +117,26 @@
 						<form class="btn btn-square btn-primary join-item">
 							<input name="identifier" type="hidden" required />
 							<button
-								class="h-full w-full p-2.5"
+								class="h-full w-full"
 								title="Paste blueprint"
 								type="button"
 								use:paste
 								on:paste={(event) => onPaste(event)}
+								on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 							>
-								<span class="sr-only">Paste blueprint</span>
-								<PasteIcon />
+								<span class="icon-[tabler--clipboard-text] align-text-bottom text-2xl">Paste</span>
 							</button>
 						</form>
 					{/if}
 					{#if controls.download}
 						<button
-							class="btn btn-square btn-primary join-item p-2.5"
+							class="btn btn-square btn-primary join-item"
 							title="Copy blueprint"
 							use:copy={{ value: identifier }}
+							on:copy={() => add({ message: 'Content copied' })}
+							on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 						>
-							<span class="sr-only">Copy blueprint</span>
-							<CopyIcon />
+							<span class="icon-[tabler--copy] align-text-bottom text-2xl">Copy</span>
 						</button>
 					{/if}
 				</div>
@@ -151,36 +145,40 @@
 			{#if controls.utils}
 				<div class="join">
 					<button
-						class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+						class="btn btn-square btn-secondary join-item"
 						title="Capture blueprint"
 						use:capture={{
 							captureElement: ctx?.renderer.domElement ?? document.createElement('canvas'),
 							filename: title
 						}}
 					>
-						<span class="sr-only">Capture blueprint</span>
-						<PhotoCameraIcon />
+						<span class="icon-[tabler--camera] align-text-bottom text-2xl">Camera</span>
 					</button>
 					<button
-						class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+						class="btn btn-square btn-secondary join-item"
 						title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
 						use:fullscreen={{ fullscreenElement: viewer }}
 						on:change={(event) => (isFullscreen = event.detail)}
+						on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 					>
-						<span class="sr-only">Turn fullscreen {isFullscreen ? 'off' : 'on'}</span>
 						{#if !isFullscreen}
-							<FullscreenIcon />
+							<span class="icon-[material-symbols--fullscreen-rounded] align-text-bottom text-2xl">
+								Turn fullscreen on
+							</span>
 						{:else}
-							<FullscreenExitIcon />
+							<span
+								class="icon-[material-symbols--fullscreen-exit-rounded] align-text-bottom text-2xl"
+							>
+								Turn fullscreen off
+							</span>
 						{/if}
 					</button>
 					<button
-						class="btn btn-square btn-secondary join-item fill-secondary-content p-2.5"
+						class="btn btn-square btn-secondary join-item"
 						title="Reset controls"
 						on:click={() => reset()}
 					>
-						<span class="sr-only">Reset controls</span>
-						<RestartAltIcon />
+						<span class="icon-[tabler--reload] align-text-bottom text-2xl">Reset</span>
 					</button>
 				</div>
 			{/if}
@@ -188,7 +186,7 @@
 	{/if}
 
 	<div
-		class={`overflow-hidden border border-base-content border-opacity-20 bg-base-100 shadow-lg outline-none ${
+		class={`overflow-hidden border border-base-content/20 bg-base-100 shadow-lg outline-none ${
 			!isFullscreen ? 'rounded-4xl border' : ''
 		}`}
 	>
@@ -196,7 +194,7 @@
 			<T.PerspectiveCamera makeDefault position={[0, 15, 15]} fov={55}>
 				<OrbitControls
 					enableDamping
-					enableZoom
+					enableZoom={controls.zoom}
 					screenSpacePanning={false}
 					minDistance={5}
 					maxDistance={40}

@@ -1,40 +1,40 @@
 import screenfull from 'screenfull';
 import type { Action, ActionReturn } from 'svelte/action';
 
-import { add } from '$lib/client/toast/toast.service';
-
-type Parameters = { fullscreenElement: HTMLElement; };
+type Parameters = { fullscreenElement: HTMLElement };
 type Attributes = {
-    'on:change': (e: CustomEvent<boolean>) => void;
+	'on:change': (e: CustomEvent<boolean>) => void;
+	'on:error': (e: CustomEvent<Error>) => void;
 };
 
 export const fullscreen: Action<HTMLButtonElement, Parameters> = (button, params) => {
-    if (!screenfull.isEnabled) return;
+	if (!screenfull.isEnabled) return;
 
-    let fullscreenElement = params?.fullscreenElement;
-    button.addEventListener('click', () => toggle(), true);
-    screenfull.on('change', () => {
-        button.dispatchEvent(new CustomEvent('change', { detail: screenfull.isFullscreen }));
-    });
-    screenfull.on('error', () => {
-        add('Fullscreen error', 3000, 'ERROR');
-    });
+	const onSuccess = () =>
+		button.dispatchEvent(new CustomEvent('change', { detail: screenfull.isFullscreen }));
+	const onFailure = (message: string) =>
+		button.dispatchEvent(new CustomEvent<Error>('error', { detail: new Error(message) }));
 
-    function toggle() {
-        screenfull.isEnabled
-            ? screenfull.toggle(fullscreenElement)
-            : add('Fullscreen not available', 3000, 'ERROR');
-    }
+	let fullscreenElement = params?.fullscreenElement;
+	button.addEventListener('click', () => toggle(), true);
+	screenfull.on('change', () => onSuccess());
+	screenfull.on('error', () => onFailure('Fullscreen error'));
 
-    return {
-        update(params) {
-            fullscreenElement = params.fullscreenElement;
-        },
-        destroy() {
-            button.removeEventListener('click', () => toggle());
+	function toggle() {
+		screenfull.isEnabled
+			? screenfull.toggle(fullscreenElement)
+			: onFailure('Fullscreen not available');
+	}
 
-            screenfull.off('change', () => true);
-            screenfull.off('error', () => true);
-        },
-    } satisfies ActionReturn<Parameters, Attributes>;
+	return {
+		update(params) {
+			fullscreenElement = params.fullscreenElement;
+		},
+		destroy() {
+			button.removeEventListener('click', () => toggle());
+
+			screenfull.off('change', () => true);
+			screenfull.off('error', () => true);
+		}
+	} satisfies ActionReturn<Parameters, Attributes>;
 };

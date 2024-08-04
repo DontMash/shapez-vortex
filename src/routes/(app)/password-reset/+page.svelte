@@ -1,9 +1,6 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-
-	import LockResetIcon from '$lib/components/icons/LockResetIcon.svelte';
 	import { page } from '$app/stores';
-	import MailIcon from '$lib/components/icons/MailIcon.svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 </script>
@@ -13,13 +10,9 @@
 		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
 	>
 		<hgroup>
-			<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-				<span class="inline-block h-6 w-6">
-					<LockResetIcon />
-				</span>
-				<span>
-					{data.seo.title}
-				</span>
+			<h2 class="text-lg font-bold">
+				<span class="icon-[tabler--lock-access] align-text-bottom text-2xl" />
+				{data.seo.title}
 			</h2>
 		</hgroup>
 	</header>
@@ -32,14 +25,10 @@
 				<div class="label">
 					<span class="label-text">Email</span>
 				</div>
-				<div class="join">
-					<span
-						class="join-item inline-flex h-12 w-12 items-center justify-center border border-base-content border-opacity-20 bg-base-100 p-2.5"
-					>
-						<MailIcon />
-					</span>
+				<div class="input input-bordered flex items-center space-x-2">
+					<span class="icon-[tabler--mail] align-text-bottom text-2xl" />
 					<input
-						class="input join-item input-bordered w-full"
+						class="w-full"
 						type="email"
 						name="email"
 						id="email"
@@ -50,7 +39,7 @@
 			</label>
 
 			{#if $page.form && !$page.form.success && $page.form.issues}
-				<ul class="text-error inline-block font-medium italic">
+				<ul class="inline-block font-medium italic text-error">
 					{#each $page.form.issues as issue}
 						<li>
 							{issue.message}
@@ -59,7 +48,10 @@
 				</ul>
 			{/if}
 
-			<button class="btn btn-primary mt-4">Request</button>
+			<button class="btn btn-primary mt-4">
+				<span class="icon-[tabler--send-2] text-2xl" />
+				Request
+			</button>
 		</form>
 	</div>
 </section>

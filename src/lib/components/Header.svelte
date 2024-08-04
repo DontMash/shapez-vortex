@@ -4,21 +4,12 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { debounce } from '$lib/utils';
+	import { add } from '$lib/client/toast.service';
 	import type { BlueprintRecord } from '$lib/blueprint.types';
+	import { isShapeIdentifier } from '$lib/shape.types';
 	import type { User } from '$lib/user.types';
-	import { TOAST_TYPE, add } from '$lib/client/toast/toast.service';
 
 	import Dialog from '$lib/components/Dialog.svelte';
-	import CategoryIcon from '$lib/components/icons/CategoryIcon.svelte';
-	import DomainIcon from '$lib/components/icons/DomainIcon.svelte';
-	import LoginIcon from '$lib/components/icons/LoginIcon.svelte';
-	import LogoutIcon from '$lib/components/icons/LogoutIcon.svelte';
-	import PersonIcon from '$lib/components/icons/PersonIcon.svelte';
-	import ScienceIcon from '$lib/components/icons/ScienceIcon.svelte';
-	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
-	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
-	import UploadIcon from '$lib/components/icons/UploadIcon.svelte';
-	import { isShapeIdentifier } from '$lib/shape.types';
 
 	const MAX_ENTRIES = 5;
 	const OPERATING_SYSTEMS = ['Mac OS', 'Windows', 'Linux'] as const;
@@ -57,7 +48,7 @@
 			blueprints = result.items;
 		} catch (err) {
 			blueprints = [];
-			add('Failed to search blueprints', 3000, TOAST_TYPE.ERROR);
+			add({ message: 'Failed to search blueprints', type: 'ERROR' });
 		}
 	}
 	async function updateUsers(search: string) {
@@ -74,7 +65,7 @@
 			users = result.items;
 		} catch (err) {
 			users = [];
-			add('Failed to search users', 3000, TOAST_TYPE.ERROR);
+			add({ message: 'Failed to search users', type: 'ERROR' });
 		}
 	}
 	function searchBlueprints(search: string) {
@@ -119,12 +110,11 @@
 		<div class="mr-2 flex-none space-x-4">
 			<button
 				class="btn btn-ghost border border-base-content border-opacity-20"
+				title="Search Shapez Vortex"
 				type="button"
 				on:click={() => searchModal.show()}
 			>
-				<span class="inline-block size-6">
-					<SearchIcon />
-				</span>
+				<span class="icon-[tabler--search] text-2xl" />
 				Search
 				{#if os && os.name && OPERATING_SYSTEMS.find((value) => value === os?.name)}
 					<span>
@@ -141,13 +131,10 @@
 
 			<a
 				class="btn btn-square btn-primary btn-md fill-primary-content"
-				title="Upload"
+				title="Upload a blueprint"
 				href="/blueprint/upload"
 			>
-				<span class="sr-only">Upload</span>
-				<span class="inline-block size-6 fill-primary-content">
-					<UploadIcon />
-				</span>
+				<span class="icon-[tabler--upload] text-2xl">Upload</span>
 			</a>
 			{#if !$page.data.user}
 				<a
@@ -155,53 +142,42 @@
 					title="Login"
 					href="/login"
 				>
-					<span class="sr-only">Login</span>
-					<span class="inline-block size-6 fill-base-content">
-						<LoginIcon />
-					</span>
+					<span class="icon-[tabler--login-2] text-2xl">Login</span>
 				</a>
 			{/if}
 			{#if $page.data.user}
 				<div class="dropdown dropdown-end">
 					<div
 						tabindex="0"
+						title="Open user menu"
 						role="button"
 						class="btn btn-square btn-ghost border border-base-content border-opacity-20"
 					>
-						<span class="sr-only">Profile</span>
-						<span class="inline-block size-6 fill-base-content">
-							<PersonIcon />
-						</span>
+						<span class="icon-[tabler--user] text-2xl">User</span>
 					</div>
 					<ul
 						class="menu dropdown-content menu-sm relative z-10 mt-8 w-56 space-y-1 rounded-btn border border-base-content border-opacity-30 bg-base-200 bg-opacity-20 p-2 shadow before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:backdrop-blur-lg"
 					>
 						<li>
-							<a href="/user">
-								<span class="inline-block size-6 fill-base-content">
-									<PersonIcon />
-								</span>
+							<a title="Go to your user profile" href="/user">
+								<span class="icon-[tabler--user] text-lg" />
 								Profile
 							</a>
 						</li>
 						<li>
-							<a href="/settings">
-								<span class="inline-block size-6 fill-base-content">
-									<SettingsIcon />
-								</span>
+							<a title="Go to your user settings" href="/settings">
+								<span class="icon-[tabler--settings] text-lg" />
 								Settings
 							</a>
 						</li>
 						<li>
 							<form
-								class="focus-within:bg-base-content focus-within:bg-opacity-10"
+								class="focus-within:bg-base-content/10"
 								action="/logout"
 								method="post"
 							>
-								<span class="inline-block size-6 fill-base-content">
-									<LogoutIcon />
-								</span>
-								<button class="text-left outline-none" type="submit">Logout</button>
+								<span class="icon-[tabler--logout-2] text-lg" />
+								<button class="text-left outline-none" title="Logout" type="submit">Logout</button>
 							</form>
 						</li>
 					</ul>
@@ -214,9 +190,7 @@
 <Dialog on:close={() => (searchValue = '')} bind:this={searchModal}>
 	<Command.Root class="min-h-64" label="Search">
 		<div class="flex items-center border-b border-base-200 pb-4 pl-8 pt-6">
-			<span class="inline-block size-6">
-				<SearchIcon />
-			</span>
+			<span class="icon-[tabler--search] text-lg" />
 			<Command.Input
 				class="w-full bg-transparent pl-2 pr-16 outline-none"
 				placeholder="Search the vortex ..."
@@ -226,7 +200,7 @@
 		<Command.List class="p-4 [&_[data-cmdk-group]+[data-cmdk-group]]:mt-4">
 			{#if searchLoading}
 				<Command.Loading class="text-center">
-					<div class="loading loading-spinner" />
+					<span class="loading loading-spinner">Loading...</span>
 				</Command.Loading>
 			{:else}
 				<Command.Empty class="text-center">No results found.</Command.Empty>
@@ -239,9 +213,7 @@
 								value={blueprint.title + blueprint.id}
 								onSelect={() => command(() => goto(`/blueprint/${blueprint.id}`))}
 							>
-								<span class="inline-block size-6">
-									<DomainIcon />
-								</span>
+								<span class="icon-[tabler--schema] text-lg" />
 								{blueprint.title}
 								{#if blueprint.expand && blueprint.expand['creator']}
 									<span class="badge badge-accent badge-outline badge-sm">
@@ -256,10 +228,8 @@
 								value={searchValue}
 								onSelect={() => command(() => searchBlueprints(searchValue))}
 							>
-								<span class="inline-block size-6">
-									<SearchIcon />
-								</span>
-								Find more ...
+								<span class="icon-[tabler--search] text-lg" />
+								Browse more...
 							</Command.Item>
 						{/if}
 					</Command.Group>
@@ -272,9 +242,7 @@
 								class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
 								onSelect={() => command(() => goto(`/user/@${user.displayname}`))}
 							>
-								<span class="inline-block size-6">
-									<PersonIcon />
-								</span>
+								<span class="icon-[tabler--user] text-lg" />
 								{user.displayname}
 							</Command.Item>
 						{/each}
@@ -287,9 +255,7 @@
 							class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
 							onSelect={() => command(() => goto(`/shape?identifier=${searchValue}`))}
 						>
-							<span class="inline-block size-6">
-								<CategoryIcon />
-							</span>
+							<span class="icon-[tabler--stack] text-lg" />
 							View Shape - {searchValue}
 						</Command.Item>
 					{:else}
@@ -297,9 +263,7 @@
 							class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
 							onSelect={() => command(() => goto('/shape'))}
 						>
-							<span class="inline-block size-6">
-								<CategoryIcon />
-							</span>
+							<span class="icon-[tabler--stack] text-lg" />
 							Shape Viewer
 						</Command.Item>
 					{/if}
@@ -307,9 +271,7 @@
 						class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
 						onSelect={() => command(() => goto('/blueprint'))}
 					>
-						<span class="inline-block size-6">
-							<DomainIcon />
-						</span>
+						<span class="icon-[tabler--schema] text-lg" />
 						Blueprint Viewer
 					</Command.Item>
 
@@ -319,9 +281,7 @@
 								class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
 								onSelect={() => command(() => goto('/blueprint/upload'))}
 							>
-								<span class="inline-block size-6">
-									<UploadIcon />
-								</span>
+								<span class="icon-[tabler--upload] text-lg" />
 								Upload
 							</Command.Item>
 						{/if}
@@ -329,18 +289,14 @@
 							class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
 							onSelect={() => command(() => goto('/user'))}
 						>
-							<span class="inline-block size-6">
-								<PersonIcon />
-							</span>
+							<span class="icon-[tabler--user] text-lg" />
 							Profile
 						</Command.Item>
 						<Command.Item
 							class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
 							onSelect={() => command(() => goto('/settings'))}
 						>
-							<span class="inline-block size-6">
-								<SettingsIcon />
-							</span>
+							<span class="icon-[tabler--settings] text-lg" />
 							Settings
 						</Command.Item>
 					{/if}

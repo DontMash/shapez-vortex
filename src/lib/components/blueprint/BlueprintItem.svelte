@@ -1,17 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { BlueprintRecord } from '$lib/blueprint.types';
-	import { share } from '$lib/client/actions/share';
+	import { copy } from '$lib/client/actions/clipboard';
+	import { add } from '$lib/client/toast.service';
 
-	import BlueprintTag from './BlueprintTag.svelte';
+	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
 	import UserTag from '$lib/components/UserTag.svelte';
-	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
-	import BookmarkIcon from '$lib/components/icons/BookmarkIcon.svelte';
-	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
-	import DeleteIcon from '$lib/components/icons/DeleteIcon.svelte';
-	import EditIcon from '$lib/components/icons/EditIcon.svelte';
-	import ShareFilledIcon from '$lib/components/icons/ShareFilledIcon.svelte';
 
 	export let data: Partial<BlueprintRecord>;
 	export let image: string;
@@ -19,7 +14,6 @@
 	export let isEditable: boolean = false;
 
 	let deleteDialog: Dialog;
-	let bookmarkDialog: Dialog;
 </script>
 
 <article
@@ -53,30 +47,24 @@
 
 			<div class="!ml-auto flex items-center space-x-1">
 				<button
-					class="btn btn-square btn-ghost btn-sm fill-neutral-content p-0.5"
-					use:share={{ href: url }}
+					class="btn btn-square btn-ghost btn-sm"
+					title="Share blueprint"
+					use:copy={{ value: url }}
+					on:copy={() => add({ message: 'Link copied' })}
+					on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 				>
-					<ShareFilledIcon />
+					<span class="icon-[tabler--share] text-2xl" />
 				</button>
 				{#if isEditable}
 					<a
-						class="btn btn-square btn-secondary btn-sm fill-secondary-content p-0.5"
+						class="btn btn-square btn-secondary btn-sm"
+						title="Edit blueprint"
 						href={`/blueprint/${data.id}/edit`}
 					>
-						<EditIcon />
+						<span class="icon-[tabler--edit] text-2xl" />
 					</a>
-					<button
-						class="btn btn-square btn-error btn-sm fill-neutral-content p-0.5"
-						on:click={() => deleteDialog.show()}
-					>
-						<DeleteIcon />
-					</button>
-				{:else}
-					<button
-						class="btn btn-square btn-ghost btn-sm fill-neutral-content p-0.5"
-						on:click={() => bookmarkDialog.show()}
-					>
-						<BookmarkFilledIcon />
+					<button class="btn btn-square btn-error btn-sm" on:click={() => deleteDialog.show()}>
+						<span class="icon-[tabler--trash] text-2xl" />
 					</button>
 				{/if}
 			</div>
@@ -109,50 +97,13 @@
 						on:submit={() => deleteDialog.close()}
 					>
 						<button class="btn btn-error">
-							<span class="inline-block h-6 w-6">
-								<DeleteIcon />
-							</span>
+							<span class="icon-[tabler--trash] text-2xl" />
 							Delete
 						</button>
 					</form>
 					<form method="dialog">
 						<button class="btn btn-neutral">
-							<span class="inline-block h-6 w-6">
-								<CloseIcon />
-							</span>
-							Cancel
-						</button>
-					</form>
-				</div>
-			</div>
-		</Dialog>
-	{:else}
-		<Dialog bind:this={bookmarkDialog}>
-			<div class="p-6">
-				<h4 class="mb-16 text-3xl font-bold">
-					Do you want to remove your bookmark of <br />
-					{data.title}?
-				</h4>
-				<div class="flex items-center justify-end space-x-2">
-					<form
-						class="inline"
-						action="/blueprint/{data.id}?/updateBookmark"
-						method="post"
-						use:enhance
-						on:submit={() => bookmarkDialog.close()}
-					>
-						<button class="btn btn-primary">
-							<span class="inline-block h-6 w-6">
-								<BookmarkIcon />
-							</span>
-							Remove
-						</button>
-					</form>
-					<form method="dialog">
-						<button class="btn btn-neutral">
-							<span class="inline-block h-6 w-6">
-								<CloseIcon />
-							</span>
+							<span class="icon-[tabler--x] text-2xl" />
 							Cancel
 						</button>
 					</form>

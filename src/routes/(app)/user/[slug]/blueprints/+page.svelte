@@ -3,7 +3,6 @@
 	import type { PageData } from './$types';
 
 	import BlueprintItem from '$lib/components/blueprint/BlueprintItem.svelte';
-	import BookmarkFilledIcon from '$lib/components/icons/BookmarkFilledIcon.svelte';
 
 	export let data: PageData;
 
@@ -18,12 +17,8 @@
 		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-4 pb-4"
 	>
 		<h2 class="inline-flex flex-grow items-center space-x-2 text-lg font-bold">
-			<span class="inline-block h-6 w-6">
-				<BookmarkFilledIcon />
-			</span>
-			<span>
-				{data.seo.title}
-			</span>
+			<span class="icon-[tabler--bookmark-filled] align-text-bottom text-2xl" />
+			{data.seo.title}
 		</h2>
 	</header>
 

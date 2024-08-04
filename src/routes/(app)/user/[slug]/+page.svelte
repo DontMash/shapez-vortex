@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import PersonIcon from '$lib/components/icons/PersonIcon.svelte';
-
 	export let data: PageData;
 </script>
 
@@ -10,13 +8,9 @@
 	<header
 		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
 	>
-		<h2 class="inline-flex items-center space-x-2 text-lg font-bold">
-			<span class="inline-block h-6 w-6 fill-stone-100">
-				<PersonIcon />
-			</span>
-			<span>
-				{data.profile.displayname}
-			</span>
+		<h2 class="text-lg font-bold">
+			<span class="icon-[tabler--user] align-text-bottom text-2xl">User</span>
+			{data.profile.displayname}
 		</h2>
 	</header>
 

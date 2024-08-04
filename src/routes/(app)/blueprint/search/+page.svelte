@@ -3,13 +3,6 @@
 	import type { PageData } from './$types';
 
 	import BlueprintItem from '$lib/components/blueprint/BlueprintItem.svelte';
-	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
-	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
-	import DoubleChevronLeftIcon from '$lib/components/icons/DoubleChevronLeftIcon.svelte';
-	import DoubleChevronRightIcon from '$lib/components/icons/DoubleChevronRightIcon.svelte';
-	import ManageSearchIcon from '$lib/components/icons/ManageSearchIcon.svelte';
-	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
-	import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
 
 	export let data: PageData;
 
@@ -28,21 +21,15 @@
 	<header
 		class="mb-4 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-4 pb-4"
 	>
-		<h2 class="inline-flex flex-grow items-center space-x-2 text-lg font-bold">
-			<span class="inline-block size-6">
-				<SearchIcon />
-			</span>
-			<span>
-				{data.seo.title}
-			</span>
+		<h2 class="text-lg font-bold">
+			<span class="icon-[tabler--search] align-text-bottom text-2xl" />
+			{data.seo.title}
 		</h2>
 	</header>
 
 	<form class="mb-8 flex items-end justify-end space-x-2">
 		<label class="input input-sm input-bordered flex grow items-center space-x-2" for="query">
-			<span class="inline-block size-4">
-				<SearchIcon />
-			</span>
+			<span class="icon-[tabler--search] align-text-bottom text-lg" />
 			<input
 				class="grow bg-transparent"
 				type="text"
@@ -95,15 +82,11 @@
 			</select>
 		</label>
 
-		<button class="btn btn-square btn-sm" type="reset">
-			<span class="inline-block size-6">
-				<CloseIcon />
-			</span>
+		<button class="btn btn-square btn-sm" title="Clear search parameters" type="reset">
+			<span class="icon-[tabler--x]">Clear</span>
 		</button>
-		<button class="btn btn-primary btn-sm">
-			<span class="inline-block size-6">
-				<ManageSearchIcon />
-			</span>
+		<button class="btn btn-primary btn-sm" title="Apply search parameters">
+			<span class="icon-[tabler--list-search]" />
 			Apply
 		</button>
 	</form>
@@ -126,17 +109,21 @@
 		<div class="flex justify-center p-8">
 			<div class="join">
 				{#if data.result.totalPages > 5}
-					<a class="btn btn-square join-item" href={getPageUrl(1)}>
-						<span class="size-6 fill-base-content">
-							<DoubleChevronLeftIcon />
-						</span>
+					<a
+						class="btn btn-square join-item"
+						title="Go to the first page of results"
+						href={getPageUrl(1)}
+					>
+						<span class="icon-[tabler--chevrons-left] text-2xl">First</span>
 					</a>
 				{/if}
 				{#if data.result.totalPages > 1}
-					<a class="btn btn-square join-item" href={getPageUrl(Math.max(data.result.page - 1, 1))}>
-						<span class="size-6 fill-base-content">
-							<ChevronLeftIcon />
-						</span>
+					<a
+						class="btn btn-square join-item"
+						title="Go to the previous page of results"
+						href={getPageUrl(Math.max(data.result.page - 1, 1))}
+					>
+						<span class="icon-[tabler--chevron-left] text-2xl">Previous</span>
 					</a>
 				{/if}
 				{#each { length: data.result.totalPages } as _, index}
@@ -147,6 +134,7 @@
 							class={`btn btn-square ${data.result.totalPages > 1 ? 'join-item' : ''} ${
 								page === data.result.page ? 'btn-active' : ''
 							}`}
+							title="Go to page {page}}"
 							href={getPageUrl(page)}
 						>
 							{page}
@@ -156,18 +144,19 @@
 				{#if data.result.totalPages > 1}
 					<a
 						class="btn btn-square join-item"
+						title="Go to the next page of results"
 						href={getPageUrl(Math.min(data.result.page + 1, data.result.totalPages))}
 					>
-						<span class="size-6 fill-base-content">
-							<ChevronRightIcon />
-						</span>
+						<span class="icon-[tabler--chevron-right] text-2xl">Next</span>
 					</a>
 				{/if}
 				{#if data.result.totalPages > 5}
-					<a class="btn btn-square join-item" href={getPageUrl(data.result.totalPages)}>
-						<span class="size-6 fill-base-content">
-							<DoubleChevronRightIcon />
-						</span>
+					<a
+						class="btn btn-square join-item"
+						title="Go to the last page of results"
+						href={getPageUrl(data.result.totalPages)}
+					>
+						<span class="icon-[tabler--chevrons-right] text-2xl">Last</span>
 					</a>
 				{/if}
 			</div>

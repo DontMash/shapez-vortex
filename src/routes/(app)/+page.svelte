@@ -63,7 +63,7 @@
 		</div>
 
 		<div class="card card-bordered bg-base-200 shadow-xl">
-			<figure>
+			<figure class="bg-base-100">
 				<a class="flex h-64 w-full flex-col justify-center items-center" href="/blueprint/search" title="Browse blueprints">
 					<img class="w-32" src="/favicon.png" alt="Blueprint Icon" />
 				</a>

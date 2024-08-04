@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/stores';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
 
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
@@ -9,7 +9,7 @@
 
 	function onError(event: Event) {
 		const errorEvent = event as ErrorEvent;
-		add(errorEvent.message ?? 'Error', 3000, 'ERROR');
+		add({ message: errorEvent.message ?? 'Error', type: 'ERROR' });
 	}
 	const BASE_KEYWORDS = new Set(['Shapez', 'Shapez 2', 'Visualization', 'Tools']);
 	function getKeywords(pageKeywords: Array<string>): Array<string> {
@@ -47,9 +47,7 @@
 <svelte:window on:error={(event) => onError(event)} />
 
 <Header />
-<main
-	class="flex min-h-[calc(100vh_-_116px)] flex-col overflow-y-auto overflow-x-hidden px-4 pb-32 pt-8"
->
+<main class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden px-4 pb-32 pt-8">
 	{#key $page.data}
 		{#if $page.data.seo?.title}
 			<h1 class="sr-only">{$page.data.seo.title}</h1>

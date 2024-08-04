@@ -1,82 +1,79 @@
 import type { Action, ActionReturn } from 'svelte/action';
-import { add } from '../toast/toast.service';
-import { goto } from '$app/navigation';
 
-type CopyParameters = { value: any; };
+type CopyParameters = { value: string };
 type CopyAttributes = {
-    'on:copy': (e: CustomEvent<void>) => void;
+	'on:copy': (e: CustomEvent<string>) => void;
+	'on:error': (e: CustomEvent<Error>) => void;
 };
 export const copy: Action<HTMLButtonElement, CopyParameters> = (button, params) => {
-    if (!params) {
-        throw new Error('No copy parameters provided');
-    }
-    const TOAST_DURATION = 3000;
-    const hasClipboard = !!navigator.clipboard;
-    const hasCopyClipboard = hasClipboard && !!navigator.clipboard.writeText;
-    const { value } = params;
+	if (!params) {
+		throw new Error('No copy parameters provided');
+	}
+	const hasClipboard = !!navigator.clipboard;
+	const hasCopyClipboard = hasClipboard && !!navigator.clipboard.writeText;
+	const { value } = params;
 
-    let copyValue = value;
-    button.addEventListener('click', () => onCopy());
+	let copyValue = value;
+	button.addEventListener('click', () => onCopy());
 
-    function onCopy() {
-        const content = typeof copyValue !== 'object' ? copyValue : JSON.stringify(copyValue, null, 4);
-        const onSuccess = () => add('Content copied');
-        const onFailure = () => add('Cannot copy content!', TOAST_DURATION, 'ERROR');
-        const onFinal = () => button.dispatchEvent(new CustomEvent('copy'));
-        if (hasCopyClipboard) {
-            navigator.clipboard
-                .writeText(content)
-                .then(onSuccess)
-                .catch(onFailure)
-                .finally(onFinal);
-        } else {
-            try {
-                const success = document.execCommand('copy', false, content);
-                success ? onSuccess() : onFailure();
-            } catch (error) {
-                onFailure();
-            } finally {
-                onFinal();
-            }
-        }
-    }
+	function onCopy() {
+		const onSuccess = () =>
+			button.dispatchEvent(new CustomEvent<string>('copy', { detail: copyValue }));
+		const onFailure = (message: string) =>
+			button.dispatchEvent(new CustomEvent<Error>('error', { detail: new Error(message) }));
+		if (window.isSecureContext && hasCopyClipboard) {
+			navigator.clipboard.writeText(copyValue).then(onSuccess).catch(onFailure);
+		} else {
+			try {
+				const input = document.createElement('input');
+				document.body.appendChild(input);
+				input.value = copyValue;
+				input.select();
+				const success = document.execCommand('copy');
+				document.body.removeChild(input);
+				success ? onSuccess() : onFailure('Copy not successful');
+			} catch (error) {
+				onFailure(`Copy failed: ${error}`);
+			}
+		}
+	}
 
-    return {
-        update(params) {
-            const { value } = params;
-            copyValue = value;
-        },
-        destroy() {
-            button.removeEventListener('click', () => onCopy());
-        },
-    } satisfies ActionReturn<CopyParameters, CopyAttributes>;
+	return {
+		update(params) {
+			const { value } = params;
+			copyValue = value;
+		},
+		destroy() {
+			button.removeEventListener('click', () => onCopy());
+		}
+	} satisfies ActionReturn<CopyParameters, CopyAttributes>;
 };
 
 type PasteAttributes = {
-    'on:paste': (e: CustomEvent<string>) => void;
+	'on:paste': (e: CustomEvent<string>) => void;
+	'on:error': (e: CustomEvent<Error>) => void;
 };
-export const paste: Action<HTMLButtonElement, any> = (button) => {
-    const hasClipboard = !!navigator.clipboard;
-    const hasPasteClipboard = hasClipboard && !!navigator.clipboard.readText;
+export const paste: Action<HTMLButtonElement> = (button) => {
+	const hasClipboard = !!navigator.clipboard;
+	const hasPasteClipboard = hasClipboard && !!navigator.clipboard.readText;
 
-    button.addEventListener('click', () => onPaste());
+	button.addEventListener('click', () => onPaste());
 
-    function onPaste() {
-        const onSuccess = (value: string) => button.dispatchEvent(new CustomEvent<string>('paste', { detail: value }));
-        const onFailure = () => add('Cannot paste content!', 3000, 'ERROR');
-        if (hasPasteClipboard) {
-            navigator.clipboard
-                .readText()
-                .then(onSuccess)
-                .catch(onFailure);
-        } else {
-            goto('/blueprint');
-        }
-    }
+	function onPaste() {
+		const onSuccess = (value: string) =>
+			button.dispatchEvent(new CustomEvent<string>('paste', { detail: value }));
+		const onFailure = (message: string) =>
+			button.dispatchEvent(new CustomEvent<Error>('error', { detail: new Error(message) }));
+		if (window.isSecureContext && hasPasteClipboard) {
+			navigator.clipboard.readText().then(onSuccess).catch(onFailure);
+		} else {
+			onFailure(`Paste failed: browser not supported`);
+		}
+	}
 
-    return {
-        destroy() {
-            button.removeEventListener('click', () => onPaste());
-        },
-    } satisfies ActionReturn<undefined, PasteAttributes>;
+	return {
+		destroy() {
+			button.removeEventListener('click', () => onPaste());
+		}
+	} satisfies ActionReturn<undefined, PasteAttributes>;
 };

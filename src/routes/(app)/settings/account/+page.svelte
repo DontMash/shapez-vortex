@@ -2,9 +2,7 @@
 	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
-	import { TOAST_TYPE, add } from '$lib/client/toast/toast.service';
-
-	import MailIcon from '$lib/components/icons/MailIcon.svelte';
+	import { add } from '$lib/client/toast.service';
 
 	export let data: PageData;
 	let emailInputValue: string | undefined = $page.data.user?.email;
@@ -37,7 +35,7 @@
 		method="post"
 		use:enhance={() => {
 			return async ({ result }) => {
-				add('Your email change has been requested!', 3000, TOAST_TYPE.WARNING);
+				add({ message: 'Your email change has been requested!', type: 'WARNING' });
 				applyAction(result);
 			};
 		}}
@@ -46,14 +44,10 @@
 			<div class="label">
 				<span class="label-text">Email</span>
 			</div>
-			<div class="join">
-				<span
-					class="join-item inline-flex h-12 w-12 items-center justify-center !rounded-l-btn border border-base-content border-opacity-20 bg-base-100 p-2.5"
-				>
-					<MailIcon />
-				</span>
+			<div class="input input-bordered flex items-center space-x-2">
+				<span class="icon-[tabler--mail] text-2xl" />
 				<input
-					class="input join-item input-bordered w-full"
+					class="w-full"
 					type="email"
 					name="newEmail"
 					id="newEmail"

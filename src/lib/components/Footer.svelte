@@ -1,24 +1,20 @@
 <script lang="ts">
 	import { version } from '$app/environment';
 	import { GAME_VERSION } from '$lib/blueprint.types';
-
-	import DiscordIcon from '$lib/components/icons/DiscordIcon.svelte';
-	import FavoriteFilledIcon from '$lib/components/icons/FavoriteFilledIcon.svelte';
-	import NorthIcon from '$lib/components/icons/NorthIcon.svelte';
-	import SteamIcon from '$lib/components/icons/SteamIcon.svelte';
 </script>
 
 <footer class="bg-base-200 p-10 text-base-content" id="footer">
 	<div class="footer mx-auto max-w-5xl px-4">
 		<nav>
-			<h6 class="footer-title">Features</h6>
-			<a class="link-hover link transition-colors hover:text-primary" href="/shape">Shape Viewer</a>
-			<a class="link-hover link transition-colors hover:text-primary" href="/blueprint"
-				>Blueprint Viewer</a
-			>
-		</nav>
-		<nav>
-			<h6 class="footer-title">Legal</h6>
+			<h4 class="footer-title">Features</h4>
+			<a class="link-hover link transition-colors hover:text-primary" href="/shape">
+				<span class="icon-[tabler--stack] align-text-bottom text-lg" />
+				Shape Viewer
+			</a>
+			<a class="link-hover link transition-colors hover:text-primary" href="/blueprint">
+				<span class="icon-[tabler--schema] align-text-bottom text-lg" />
+				Blueprint Viewer
+			</a>
 			<a
 				class="link-hover link transition-colors hover:text-primary"
 				href="https://tobspr.io/imprint"
@@ -37,50 +33,121 @@
 			</a>
 		</nav>
 		<nav>
-			<h6 class="footer-title">About</h6>
+			<h4 class="footer-title">Game</h4>
 			<p>
-				Visit shapez 2 on
-				<span class="ml-1 space-x-1 divide-x-2">
+				Follow shapez 2
+				<span class="ml-1 inline-flex space-x-1.5 divide-x divide-base-content">
 					<a
-						class="inline-block fill-base-content transition-colors hover:fill-primary"
-						title="Discord"
+						class="link transition-colors hover:text-primary"
+						title="shapez 2 Website"
+						href="https://shapez2.com/"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="icon-[tabler--world] align-text-bottom text-lg">Website</span>
+					</a>
+					<a
+						class="link transition-colors hover:text-primary"
+						title="Discord Community"
 						href="https://discord.gg/shapez-2-1000343719314198548"
 						target="_blank"
 						rel="noreferrer"
 					>
-						<span class="sr-only">Discord</span>
-						<span class="inline-flex h-5 w-5 items-center justify-center align-middle">
-							<DiscordIcon />
-						</span>
+						<span class="icon-[simple-icons--discord] align-text-bottom text-lg">Discord</span>
 					</a>
 					<a
-						class="inline-block fill-base-content pl-2 transition-colors hover:fill-primary"
-						title="Steam"
+						class="link pl-1.5 transition-colors hover:text-primary"
+						title="Steam store-page"
 						href="https://store.steampowered.com/app/2162800/shapez_2/"
 						target="_blank"
 						rel="noreferrer"
 					>
-						<span class="sr-only">Steam</span>
-						<span class="inline-flex h-5 w-5 items-center justify-center align-middle">
-							<SteamIcon />
-						</span>
+						<span class="icon-[simple-icons--steam] align-text-bottom text-lg">Steam</span>
+					</a>
+					<a
+						class="link pl-1.5 transition-colors hover:text-primary"
+						title="r/shapezio"
+						href="https://www.reddit.com/r/shapezio/"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="icon-[simple-icons--reddit] align-text-bottom text-lg">Reddit</span>
 					</a>
 				</span>
 			</p>
+			<p>
+				Follow tobspr Games
+				<span class="ml-1 inline-flex space-x-1.5 divide-x divide-base-content">
+					<a
+						class="link transition-colors hover:text-primary"
+						title="tobspr Games Website"
+						href="https://tobspr.io/"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="icon-[tabler--world] align-text-bottom text-lg">Website</span>
+					</a>
+					<a
+						class="link pl-1.5 transition-colors hover:text-primary"
+						title="tobspr Games on X"
+						href="https://x.com/tobspr"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="icon-[simple-icons--x] align-text-bottom text-lg">X</span>
+					</a>
+					<a
+						class="link pl-1.5 transition-colors hover:text-primary"
+						title="tobspr Games YouTube"
+						href="https://www.youtube.com/@tobsprGames"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="icon-[simple-icons--youtube] align-text-bottom text-lg">YouTube</span>
+					</a>
+					<a
+						class="link pl-1.5 transition-colors hover:text-primary"
+						title="tobspr Games Patreon"
+						href="https://www.patreon.com/tobsprgamess"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="icon-[simple-icons--patreon] align-text-bottom text-lg">Patreon</span>
+					</a>
+				</span>
+			</p>
+			<a
+				class="link-hover link transition-colors hover:text-primary"
+				href="https://shapez2.wiki.gg/wiki/Shapez_2_Wiki"
+				target="_blank"
+				rel="noreferrer"
+			>
+				Visit shapez 2 Wiki
+			</a>
+		</nav>
+		<nav>
+			<h6 class="footer-title">About</h6>
 			<a
 				class="link-hover link transition-colors hover:text-primary"
 				href="https://github.com/DontMash/shapez-vortex/issues"
 				target="_blank"
 				rel="noreferrer"
 			>
+				<span class="icon-[simple-icons--github] align-text-bottom text-lg">GitHub</span>
 				Report an issue
+			</a>
+			<a
+				class="link-hover link transition-colors hover:text-primary"
+				href="https://ko-fi.com/smaschmann"
+				target="_blank"
+				rel="noreferrer"
+			>
+				<span class="icon-[simple-icons--kofi] align-text-bottom text-lg">Ko-fi</span>
+				Support me
 			</a>
 			<p>
 				Created with
-				<span class="inline-block h-5 w-5 align-middle">
-					<span class="sr-only">heart</span>
-					<FavoriteFilledIcon />
-				</span>
+				<span class="icon-[tabler--heart-filled] align-text-bottom text-lg">love</span>
 				by
 				<a
 					class="link-hover link transition-colors hover:text-primary"
@@ -98,9 +165,7 @@
 				title="To top"
 				href="#top"
 			>
-				<span class="inline-block h-8 w-8">
-					<NorthIcon />
-				</span>
+				<span class="icon-[tabler--arrow-narrow-up] text-3xl" />
 			</a>
 			<i class="mt-auto">
 				<a
