@@ -28,19 +28,17 @@
 				<meta name="keywords" content={getKeywords($page.data.seo.keywords).join(', ')} />
 			{/if}
 
-			{#if $page.data.seo.og}
-				<meta
-					property="og:title"
-					content={$page.data.seo.og.title ??
-						`${$page.data.seo.title} - ${$page.data.seo.description}`}
-				/>
-				<meta property="og:type" content="website" />
-				<meta
-					property="og:image"
-					content={$page.data.seo.og.image ?? `${$page.url.origin}/favicon.png`}
-				/>
-				<meta property="og:url" content={$page.url.href} />
-			{/if}
+			<meta
+				property="og:title"
+				content={$page.data.seo.og?.title ??
+					`${$page.data.seo.title} - ${$page.data.seo.description}`}
+			/>
+			<meta property="og:type" content="website" />
+			<meta
+				property="og:image"
+				content={$page.data.seo.og?.image ?? `${$page.url.origin}/favicon.png`}
+			/>
+			<meta property="og:url" content={$page.url.href} />
 		{/if}
 	{/key}
 </svelte:head>
