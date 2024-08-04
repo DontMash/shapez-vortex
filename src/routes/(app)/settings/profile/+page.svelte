@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
 	import { USERNAME_REGEX } from '$lib/user.types';
 
 	let displaynameInputValue: string | undefined = $page.data.user?.displayname;

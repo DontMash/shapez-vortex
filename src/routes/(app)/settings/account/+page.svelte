@@ -2,7 +2,7 @@
 	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
 
 	export let data: PageData;
 	let emailInputValue: string | undefined = $page.data.user?.email;

@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { debounce } from '$lib/utils';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
 	import type { BlueprintRecord } from '$lib/blueprint.types';
 	import { isShapeIdentifier } from '$lib/shape.types';
 	import type { User } from '$lib/user.types';

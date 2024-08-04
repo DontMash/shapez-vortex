@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { copy } from '$lib/client/actions/clipboard';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
 
 	export let value: string;
 

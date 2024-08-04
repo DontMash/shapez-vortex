@@ -8,7 +8,7 @@
 		<nav>
 			<h4 class="footer-title">Features</h4>
 			<a class="link-hover link transition-colors hover:text-primary" href="/shape">
-				<span class="icon-[tabler--stack] align-text-bottom text-lg" />	
+				<span class="icon-[tabler--stack] align-text-bottom text-lg" />
 				Shape Viewer
 			</a>
 			<a class="link-hover link transition-colors hover:text-primary" href="/blueprint">
@@ -37,6 +37,15 @@
 			<p>
 				Follow shapez 2
 				<span class="ml-1 inline-flex space-x-1.5 divide-x divide-base-content">
+					<a
+						class="link transition-colors hover:text-primary"
+						title="shapez 2 Website"
+						href="https://shapez2.com/"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="icon-[tabler--world] align-text-bottom text-lg">Website</span>
+					</a>
 					<a
 						class="link transition-colors hover:text-primary"
 						title="Discord Community"

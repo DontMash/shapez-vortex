@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { BlueprintRecord } from '$lib/blueprint.types';
 	import { copy } from '$lib/client/actions/clipboard';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
 
 	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';

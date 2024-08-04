@@ -3,7 +3,8 @@
   "version": "0.7.0",
   "private": true,
   "scripts": {
-    "prepare:models": "bash resources/scripts/model-pipeline.sh",
+    "prepare:buildings": "bash resources/scripts/buildings-pipeline.sh",
+    "prepare:shapes": "bash resources/scripts/shapes-pipeline.sh",
     "dev": "ORIGIN=http://localhost:5173 vite dev",
     "build": "vite build",
     "preview": "vite preview",

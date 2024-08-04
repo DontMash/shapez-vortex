@@ -15,7 +15,7 @@
 	import { capture } from '$lib/client/actions/capture';
 	import { copy, paste } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
 
 	import BlueprintBuilding from './BlueprintBuilding.svelte';
 
@@ -186,7 +186,7 @@
 	{/if}
 
 	<div
-		class={`overflow-hidden border border-base-content border-opacity-20 bg-base-100 shadow-lg outline-none ${
+		class={`overflow-hidden border border-base-content/20 bg-base-100 shadow-lg outline-none ${
 			!isFullscreen ? 'rounded-4xl border' : ''
 		}`}
 	>

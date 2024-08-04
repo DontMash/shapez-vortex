@@ -84,7 +84,7 @@
 
 	const onModelLoad = () => {
 		if (!componentModel) {
-			return console.error('model not loaded', entry);
+			throw new Error('[BLUEPRINTBUILDING] model not loaded');
 		}
 		const object = componentModel.ref as Object3D;
 		setMaterial(entry, object);

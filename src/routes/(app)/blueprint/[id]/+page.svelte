@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import { copy } from '$lib/client/actions/clipboard';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
 	import { REPORT_REASONS } from '$lib/report.types';
 
 	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';

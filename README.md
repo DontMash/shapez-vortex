@@ -172,12 +172,13 @@ To setup, install & develop you may need some tools:
       * Color (r,g,b,c,m,y,w,k)
       * Examples
     * Randomize
-      * Shuffle (keep quarters)
+      * Shuffle (keep parts)
       * Bias
         * Layers
-        * Quarters
+        * Parts
       * Types
       * Colors
+    * Accessibility Features
     * Builder?
 * Mods
 * Savegame editor

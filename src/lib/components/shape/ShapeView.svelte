@@ -1,33 +1,40 @@
 <script lang="ts">
+	import type { SvelteComponent } from 'svelte';
+	import { type Mesh, type Object3D } from 'three';
+	import { Canvas, T, type ThrelteContext } from '@threlte/core';
+	import { OrbitControls, Suspense } from '@threlte/extras';
 	import { page } from '$app/stores';
-	import type { ShapeData } from '$lib/shape.types';
-	import { view } from '$lib/client/shapes';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
-	import { add } from '$lib/client/toast/toast.service';
+	import { add } from '$lib/client/toast.service';
+	import {
+		isHexShapeIdentifier,
+		SHAPE_COLOR_BASE_MATERIAL,
+		type ShapeData
+	} from '$lib/shape.types';
+
+	import ShapePart from '$lib/components/shape/ShapePart.svelte';
+	import ShapeDefaultSupport from '$lib/components/models/shapes/ShapeDefaultSupport.svelte';
+
+	const SHAPE_LAYER_HEIGHT = 0.05;
+	const SHAPE_LAYER_SCALE = 0.2;
+	const SHAPE_LAYER_EXTEND_OFFSET = 0.15;
+	const SHAPE_PART_EXPAND_OFFSET = 0.15;
 
 	export let data: ShapeData;
 	export let isExtended = false;
 	export let isExpanded = false;
 
-	let viewer: HTMLElement;
-	let canvas: HTMLCanvasElement;
-	let isLoading = true;
-	let isFullscreen = false;
-	let isReset = false;
-	let isTop = false;
+	$: isHex = isHexShapeIdentifier(data.identifier);
 
-	$: {
-		if (isTop || isReset) {
-			setTimeout(() => {
-				isReset = false;
-				isTop = false;
-			}, 100);
-		}
-	}
+	let ctx: ThrelteContext | undefined;
+	let viewer: HTMLElement | undefined;
+	let orbitControls: OrbitControls | undefined;
+	let baseComponentModel: SvelteComponent | undefined;
+	let isFullscreen: boolean = false;
 
 	function onCapture() {
-		canvas.toBlob(
+		ctx?.renderer.domElement.toBlob(
 			(blob) => {
 				if (!blob) return;
 
@@ -43,15 +50,30 @@
 		);
 	}
 	function onReset() {
-		isReset = true;
+		if (!orbitControls) return;
+
+		orbitControls.ref.reset();
 	}
 	function onTop() {
-		isTop = true;
+		if (!orbitControls) return;
+
+		orbitControls.ref.object.position.set(0, 2.5, 0);
 	}
+
+	const onBaseModelLoad = () => {
+		if (!baseComponentModel) {
+			throw new Error('[SHAPEVIEW] model not loaded');
+		}
+		const object = baseComponentModel.ref as Object3D;
+		const mesh = object.children[0] as Mesh;
+		mesh.material = SHAPE_COLOR_BASE_MATERIAL;
+	};
 </script>
 
-<figure class="relative" bind:this={viewer}>
-	<div class="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 justify-center space-x-4 p-4">
+<figure class="{isFullscreen ? '' : 'aspect-h-1 aspect-w-1'} relative" bind:this={viewer}>
+	<div
+		class="absolute left-1/2 top-0 z-10 flex h-fit w-fit -translate-x-1/2 justify-center space-x-4 p-4"
+	>
 		<div class="join">
 			<form class="btn btn-square btn-primary join-item" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
@@ -75,7 +97,7 @@
 				<input name="expand" type="hidden" value={!isExpanded} />
 				<button
 					class="h-full w-full"
-					title="{isExpanded ? 'Collapse' : 'Expand'} quarters"
+					title="{isExpanded ? 'Collapse' : 'Expand'} Parts"
 					type="submit"
 				>
 					{#if isExpanded}
@@ -97,7 +119,7 @@
 				class="btn btn-square btn-secondary join-item"
 				title="Copy shape"
 				use:copy={{ value: data.identifier }}
-				on:copy={() => add({ message: 'Content copied' })}
+				on:copy={() => add({ message: 'Shape identifier copied' })}
 				on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 			>
 				<span class="icon-[tabler--copy] text-2xl" />
@@ -146,22 +168,18 @@
 				aria-label="Shape identifier"
 			>
 				<input
-					class="peer grow"
+					class="grow"
 					type="text"
 					id="shape-identifier"
 					name="identifier"
 					placeholder="Shape code..."
-					value={$page.data.shape?.identifier ?? ''}
+					value={$page.data.shape?.identifier ?? null}
 					required
 					minlength="2"
-					maxlength="35"
+					maxlength="51"
 				/>
 
-				<button
-					class="btn btn-square btn-ghost btn-sm peer-placeholder-shown:hidden"
-					type="reset"
-					title="Clear shape input"
-				>
+				<button class="btn btn-square btn-ghost btn-sm" type="reset" title="Clear shape input">
 					<span class="icon-[tabler--x] text-lg" />
 				</button>
 			</label>
@@ -171,24 +189,46 @@
 		</form>
 	</div>
 
-	<div class="aspect-h-3 aspect-w-4">
-		<canvas
-			class="bg-neutral-900 outline-none data-[loading=true]:pointer-events-none"
-			tabindex="-1"
-			data-loading={isLoading}
-			use:view={{ data: data.data, isExtended, isExpanded, isReset, isTop }}
-			on:load={() => (isLoading = false)}
-			bind:this={canvas}
-		/>
-	</div>
+	<div class="h-full bg-base-100">
+		<Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
+			<T.PerspectiveCamera makeDefault position={[0, 2, 1.5]} fov={55}>
+				<OrbitControls
+					enablePan={false}
+					enableZoom={false}
+					enableDamping
+					maxPolarAngle={Math.PI * 0.4}
+					bind:this={orbitControls}
+				/>
+			</T.PerspectiveCamera>
 
-	{#if isLoading}
-		<div
-			class="absolute bottom-auto left-1/2 right-auto top-1/2 h-auto w-auto -translate-x-1/2 -translate-y-1/2"
-		>
-			<span class="loading loading-spinner loading-lg" />
-		</div>
-	{/if}
+			<T.AmbientLight intensity={1} />
+			<T.DirectionalLight
+				position={[1, 3, 1]}
+				intensity={2}
+				castShadow
+				shadow.mapSize={[2048, 2048]}
+			/>
+
+			<Suspense on:load={onBaseModelLoad}>
+				<ShapeDefaultSupport position.y={-0.025} bind:this={baseComponentModel} />
+			</Suspense>
+			{#key data}
+				{#each data.data as layer, layerIndex}
+					{@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
+					{@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
+					{@const extendOffset = isExtended ? layerIndex * SHAPE_LAYER_EXTEND_OFFSET : 0}
+					{@const expandOffset = isExpanded ? SHAPE_PART_EXPAND_OFFSET : 0}
+					<T.Group position.y={layerPositionY + extendOffset} scale={[layerScale, 0.5, layerScale]}>
+						{#each layer as part, partIndex}
+							<T.Group rotation.y={partIndex * (isHex ? -1 / 3 : -0.5) * Math.PI + Math.PI}>
+								<ShapePart data={part} {isHex} offset={expandOffset} />
+							</T.Group>
+						{/each}
+					</T.Group>
+				{/each}
+			{/key}
+		</Canvas>
+	</div>
 
 	<figcaption class="sr-only">Shape Viewer: {data.identifier}</figcaption>
 </figure>
