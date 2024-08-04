@@ -47,7 +47,7 @@
 						<span class="icon-[tabler--world] align-text-bottom text-lg">Website</span>
 					</a>
 					<a
-						class="link transition-colors hover:text-primary"
+						class="link pl-1.5 transition-colors hover:text-primary"
 						title="Discord Community"
 						href="https://discord.gg/shapez-2-1000343719314198548"
 						target="_blank"
