@@ -10,7 +10,7 @@
 
 <section class="mx-auto w-full max-w-5xl">
 	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
+		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
 	>
 		<hgroup>
 			<h2 class="text-lg font-bold">
@@ -24,7 +24,7 @@
 		</hgroup>
 	</header>
 
-	<form class="join join-vertical w-full" method="post" action="?/update">
+	<form class="join join-vertical w-full px-4 lg:px-0" method="post" action="?/update">
 		<label class="form-control join-item" for="blueprint-version">
 			<div class="label">
 				<span class="label-text"> Blueprint version </span>
@@ -66,7 +66,7 @@
 	</form>
 
 	{#if $page.form && $page.form.success && $page.form.identifier}
-		<p class="textarea textarea-bordered textarea-lg mt-16 h-80 overflow-y-auto break-words">
+		<p class="textarea textarea-bordered textarea-lg mt-16 h-80 overflow-y-auto break-words px-4">
 			<span class="float-right">
 				<CopyButton value={$page.form.identifier} />
 			</span>

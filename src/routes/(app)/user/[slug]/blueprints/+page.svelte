@@ -14,7 +14,7 @@
 
 <section class="relative mx-auto w-full max-w-5xl">
 	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-4 pb-4"
+		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
 	>
 		<h2 class="inline-flex flex-grow items-center space-x-2 text-lg font-bold">
 			<span class="icon-[tabler--bookmark-filled] align-text-bottom text-2xl" />
@@ -23,7 +23,7 @@
 	</header>
 
 	{#if data.blueprints && data.blueprints.length > 0}
-		<ul class="space-y-8">
+		<ul class="space-y-8 px-4">
 			{#each data.blueprints as blueprint}
 				{@const preview = data.images && data.images[blueprint.id]}
 				<li>

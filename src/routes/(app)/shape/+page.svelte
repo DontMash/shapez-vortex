@@ -6,6 +6,6 @@
 	export let data: PageData;
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
+<section class="mx-auto w-full max-w-3xl">
 	<ShapeView data={data.shape} isExtended={data.extend} isExpanded={data.expand} />
 </section>

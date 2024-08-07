@@ -6,9 +6,7 @@
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-4 pb-4"
-	>
+	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4">
 		<hgroup>
 			<h2 class="text-lg font-bold">
 				<span class="icon-[tabler--braces] align-text-bottom text-2xl" />
@@ -29,7 +27,7 @@
 		</hgroup>
 	</header>
 
-	<div class="join join-vertical w-full">
+	<div class="join join-vertical w-full px-4 lg:px-0">
 		<form class="join-item" method="post" action="?/decode">
 			<label class="form-control h-80" for="blueprint-identifier-decode">
 				<div class="label">

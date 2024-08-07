@@ -99,7 +99,7 @@
 
 <header class="pointer-events-none sticky left-0 top-0 z-40 w-full p-4">
 	<nav
-		class="navbar pointer-events-auto relative mx-auto max-w-5xl rounded-4xl border border-base-content border-opacity-20 bg-base-200 bg-opacity-50 shadow-lg before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:backdrop-blur-lg"
+		class="navbar pointer-events-auto relative mx-auto max-w-5xl rounded-4xl border border-base-content/20 bg-base-200/50 shadow-lg before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:backdrop-blur-lg"
 	>
 		<div class="flex-1">
 			<a class="btn btn-square btn-ghost btn-lg rounded-3xl" title="Home" href="/">
@@ -109,7 +109,7 @@
 
 		<div class="mr-2 flex-none space-x-4">
 			<button
-				class="btn btn-ghost border border-base-content border-opacity-20"
+				class="btn btn-ghost border border-base-content/20"
 				title="Search Shapez Vortex"
 				type="button"
 				on:click={() => searchModal.show()}
@@ -117,7 +117,7 @@
 				<span class="icon-[tabler--search] text-2xl" />
 				Search
 				{#if os && os.name && OPERATING_SYSTEMS.find((value) => value === os?.name)}
-					<span>
+					<span class=" hidden sm:block">
 						{#if os.name === OPERATING_SYSTEMS[0]}
 							<kbd class="kbd kbd-sm rounded-md">⌘</kbd>
 						{/if}
@@ -151,12 +151,12 @@
 						tabindex="0"
 						title="Open user menu"
 						role="button"
-						class="btn btn-square btn-ghost border border-base-content border-opacity-20"
+						class="btn btn-square btn-ghost border border-base-content/20"
 					>
 						<span class="icon-[tabler--user] text-2xl">User</span>
 					</div>
 					<ul
-						class="menu dropdown-content menu-sm relative z-10 mt-8 w-56 space-y-1 rounded-btn border border-base-content border-opacity-30 bg-base-200 bg-opacity-20 p-2 shadow before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:backdrop-blur-lg"
+						class="menu dropdown-content menu-sm !-right-4 relative z-10 mt-8 w-56 space-y-1 rounded-btn border border-base-content/30 bg-base-200/20 p-2 shadow before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:backdrop-blur-lg"
 					>
 						<li>
 							<a title="Go to your user profile" href="/user">
@@ -171,11 +171,7 @@
 							</a>
 						</li>
 						<li>
-							<form
-								class="focus-within:bg-base-content/10"
-								action="/logout"
-								method="post"
-							>
+							<form class="focus-within:bg-base-content/10" action="/logout" method="post">
 								<span class="icon-[tabler--logout-2] text-lg" />
 								<button class="text-left outline-none" title="Logout" type="submit">Logout</button>
 							</form>

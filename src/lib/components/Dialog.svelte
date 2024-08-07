@@ -16,7 +16,9 @@
 
 <dialog class="modal backdrop-blur" on:close bind:this={dialog}>
 	<div
-		class={`modal-box min-h-16 border border-base-200 p-0 ${width === 'full' ? 'max-w-none' : ''}`}
+		class={`modal-box min-h-16 overflow-hidden border border-base-200 p-0 ${
+			width === 'full' ? 'max-w-none' : ''
+		}`}
 	>
 		<slot />
 

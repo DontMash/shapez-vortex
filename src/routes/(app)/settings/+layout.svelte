@@ -10,20 +10,17 @@
 	}
 </script>
 
-<section class="mx-auto grid w-full max-w-5xl grid-cols-[15rem_1fr]">
+<section
+	class="mx-auto grid w-full max-w-5xl grid-cols-1 gap-8 md:gap-4 px-4 md:grid-cols-[15rem_1fr] lg:px-0"
+>
 	<aside>
 		<nav>
 			{#key $page.url}
-				<ul class="menu pr-4 pl-0 py-0 space-y-2">
+				<ul class="menu space-y-2 py-0 pl-0 pr-4">
 					{#each data.pages as page}
 						<li>
-							<a
-								class={`${
-									isCurrent(page.path)
-										? 'bg-base-300 bg-opacity-20'
-										: ''
-								}`}
-								href={page.path}>{capitalize(page.name)}</a
+							<a class={isCurrent(page.path) ? 'bg-base-300/20' : ''} href={page.path}
+								>{capitalize(page.name)}</a
 							>
 						</li>
 					{/each}
@@ -35,7 +32,7 @@
 	<div>
 		{#if $page.data.seo}
 			<header
-				class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
+				class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
 			>
 				<h2 class="text-lg font-bold">
 					{$page.data.seo.title}

@@ -1,15 +1,38 @@
-<section class="hero mx-auto w-full max-w-5xl rounded-4xl bg-base-200 p-12" id="hero">
-	<div class="hero-content text-center">
-		<div class="max-w-lg">
-			<h1 class="text-5xl font-bold">Shapez Vortex</h1>
-			<p class="py-6 text-3xl">Discover, interact and share shapez 2 content with the community!</p>
-			<a class="btn btn-primary" href="#features">Get Started</a>
+<script lang="ts">
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+</script>
+
+<section class="mx-auto w-full max-w-5xl px-4" id="hero">
+	<div class="hero rounded-4xl bg-base-200 p-8 md:p-12">
+		<div class="hero-content text-center">
+			<div class="max-w-lg">
+				<h2 class="text-4xl font-bold md:text-5xl">Shapez Vortex</h2>
+				<p class="py-6 text-2xl md:text-3xl">
+					Discover, interact and share shapez 2 content with the community!
+				</p>
+				<ul class="flex justify-center space-x-4">
+					<li>
+						<a
+							class="btn btn-primary"
+							title={data.user ? 'Upload blueprint' : 'Create an account'}
+							href={data.user ? '/blueprint/upload' : '/register'}>Get Started</a
+						>
+					</li>
+					<li>
+						<a class="btn btn-secondary" href="#features">Features</a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </section>
 
-<section class="mx-auto mt-16 w-full max-w-5xl" id="features">
-	<article class="grid grid-cols-3 gap-8">
+<section class="mx-auto mt-16 w-full max-w-5xl px-4" id="features">
+	<div class="mx-auto grid max-w-screen-sm grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3 lg:gap-4">
+		<h2 class="sr-only">Features</h2>
+
 		<div class="card card-bordered bg-base-200 shadow-xl">
 			<figure>
 				<a class="w-full" href="/shape" title="Shape Viewer">
@@ -22,7 +45,7 @@
 			</figure>
 
 			<div class="card-body">
-				<h2 class="card-title">Shape Viewer</h2>
+				<h3 class="card-title">Shape Viewer</h3>
 				<p>Explore multiple layers and parts of a 3D visualization of a shape.</p>
 			</div>
 
@@ -32,7 +55,7 @@
 				title="Shape Viewer"
 			>
 				Start
-				<span class="sr-only"> Shape Viewer</span>
+				<span class="sr-only">Shape Viewer</span>
 			</a>
 		</div>
 
@@ -48,7 +71,7 @@
 			</figure>
 
 			<div class="card-body">
-				<h2 class="card-title">Blueprint Viewer</h2>
+				<h3 class="card-title">Blueprint Viewer</h3>
 				<p>View your blueprints in 3D and share them with others.</p>
 			</div>
 
@@ -64,13 +87,17 @@
 
 		<div class="card card-bordered bg-base-200 shadow-xl">
 			<figure class="bg-base-100">
-				<a class="flex h-64 w-full flex-col justify-center items-center" href="/blueprint/search" title="Browse blueprints">
+				<a
+					class="flex h-64 w-full flex-col items-center justify-center"
+					href="/blueprint/search"
+					title="Browse blueprints"
+				>
 					<img class="w-32" src="/favicon.png" alt="Blueprint Icon" />
 				</a>
 			</figure>
 
 			<div class="card-body">
-				<h2 class="card-title">Browse blueprints</h2>
+				<h3 class="card-title">Browse blueprints</h3>
 				<p>Search an infinite collection of community made blueprints.</p>
 			</div>
 
@@ -83,5 +110,5 @@
 				<span class="sr-only"> blueprint search </span>
 			</a>
 		</div>
-	</article>
+	</div>
 </section>

@@ -19,7 +19,7 @@
 
 <section class="mx-auto w-full max-w-5xl">
 	<header
-		class="mb-4 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-4 pb-4"
+		class="mb-4 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
 	>
 		<h2 class="text-lg font-bold">
 			<span class="icon-[tabler--search] align-text-bottom text-2xl" />
@@ -27,7 +27,7 @@
 		</h2>
 	</header>
 
-	<form class="mb-8 flex items-end justify-end space-x-2">
+	<form class="mb-8 flex flex-wrap items-end gap-2 px-4 lg:px-0">
 		<label class="input input-sm input-bordered flex grow items-center space-x-2" for="query">
 			<span class="icon-[tabler--search] align-text-bottom text-lg" />
 			<input
@@ -92,8 +92,8 @@
 	</form>
 
 	{#if data.result.items && data.result.items.length > 0}
-		<ul class="space-y-8">
-			{#each data.result.items as blueprint, index}
+		<ul class="space-y-8 px-4 lg:px-0">
+			{#each data.result.items as blueprint}
 				{@const preview = data.images && data.images[blueprint.id]}
 				<li>
 					<BlueprintItem
@@ -106,61 +106,63 @@
 			{/each}
 		</ul>
 
-		<div class="flex justify-center p-8">
-			<div class="join">
-				{#if data.result.totalPages > 5}
-					<a
-						class="btn btn-square join-item"
-						title="Go to the first page of results"
-						href={getPageUrl(1)}
-					>
-						<span class="icon-[tabler--chevrons-left] text-2xl">First</span>
-					</a>
-				{/if}
-				{#if data.result.totalPages > 1}
-					<a
-						class="btn btn-square join-item"
-						title="Go to the previous page of results"
-						href={getPageUrl(Math.max(data.result.page - 1, 1))}
-					>
-						<span class="icon-[tabler--chevron-left] text-2xl">Previous</span>
-					</a>
-				{/if}
-				{#each { length: data.result.totalPages } as _, index}
-					{@const page = index + 1}
-					{@const diff = data.result.page - page}
-					{#if diff < 3 && diff > -3}
+		{#key $page}
+			<div class="mt-8 flex justify-center">
+				<div class="join">
+					{#if data.result.totalPages > 5}
 						<a
-							class={`btn btn-square ${data.result.totalPages > 1 ? 'join-item' : ''} ${
-								page === data.result.page ? 'btn-active' : ''
-							}`}
-							title="Go to page {page}}"
-							href={getPageUrl(page)}
+							class="btn btn-square join-item"
+							title="Go to the first page of results"
+							href={getPageUrl(1)}
 						>
-							{page}
+							<span class="icon-[tabler--chevrons-left] text-2xl">First</span>
 						</a>
 					{/if}
-				{/each}
-				{#if data.result.totalPages > 1}
-					<a
-						class="btn btn-square join-item"
-						title="Go to the next page of results"
-						href={getPageUrl(Math.min(data.result.page + 1, data.result.totalPages))}
-					>
-						<span class="icon-[tabler--chevron-right] text-2xl">Next</span>
-					</a>
-				{/if}
-				{#if data.result.totalPages > 5}
-					<a
-						class="btn btn-square join-item"
-						title="Go to the last page of results"
-						href={getPageUrl(data.result.totalPages)}
-					>
-						<span class="icon-[tabler--chevrons-right] text-2xl">Last</span>
-					</a>
-				{/if}
+					{#if data.result.totalPages > 1}
+						<a
+							class="btn btn-square join-item"
+							title="Go to the previous page of results"
+							href={getPageUrl(Math.max(data.result.page - 1, 1))}
+						>
+							<span class="icon-[tabler--chevron-left] text-2xl">Previous</span>
+						</a>
+					{/if}
+					{#each { length: data.result.totalPages } as _, index}
+						{@const page = index + 1}
+						{@const diff = data.result.page - page}
+						{#if diff < 3 && diff > -3}
+							<a
+								class={`btn btn-square ${data.result.totalPages > 1 ? 'join-item' : ''} ${
+									page === data.result.page ? 'btn-active' : ''
+								}`}
+								title="Go to page {page}}"
+								href={getPageUrl(page)}
+							>
+								{page}
+							</a>
+						{/if}
+					{/each}
+					{#if data.result.totalPages > 1}
+						<a
+							class="btn btn-square join-item"
+							title="Go to the next page of results"
+							href={getPageUrl(Math.min(data.result.page + 1, data.result.totalPages))}
+						>
+							<span class="icon-[tabler--chevron-right] text-2xl">Next</span>
+						</a>
+					{/if}
+					{#if data.result.totalPages > 5}
+						<a
+							class="btn btn-square join-item"
+							title="Go to the last page of results"
+							href={getPageUrl(data.result.totalPages)}
+						>
+							<span class="icon-[tabler--chevrons-right] text-2xl">Last</span>
+						</a>
+					{/if}
+				</div>
 			</div>
-		</div>
+		{/key}
 	{:else}
 		<div class="flex items-center justify-center">
 			<span>No blueprints found</span>
