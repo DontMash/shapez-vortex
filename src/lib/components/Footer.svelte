@@ -3,8 +3,8 @@
 	import { GAME_VERSION } from '$lib/blueprint.types';
 </script>
 
-<footer class="bg-base-200 p-10 text-base-content" id="footer">
-	<div class="footer mx-auto max-w-5xl px-4">
+<footer class="bg-base-200 px-4 py-16 text-base-content" id="footer">
+	<div class="footer mx-auto max-w-5xl">
 		<nav>
 			<h4 class="footer-title">Features</h4>
 			<a class="link-hover link transition-colors hover:text-primary" href="/shape">
@@ -34,47 +34,55 @@
 		</nav>
 		<nav>
 			<h4 class="footer-title">Game</h4>
-			<p>
-				Follow shapez 2
-				<span class="ml-1 inline-flex space-x-1.5 divide-x divide-base-content">
-					<a
-						class="link transition-colors hover:text-primary"
-						title="shapez 2 Website"
-						href="https://shapez2.com/"
-						target="_blank"
-						rel="noreferrer"
-					>
-						<span class="icon-[tabler--world] align-text-bottom text-lg">Website</span>
-					</a>
-					<a
-						class="link pl-1.5 transition-colors hover:text-primary"
-						title="Discord Community"
-						href="https://discord.gg/shapez-2-1000343719314198548"
-						target="_blank"
-						rel="noreferrer"
-					>
-						<span class="icon-[simple-icons--discord] align-text-bottom text-lg">Discord</span>
-					</a>
-					<a
-						class="link pl-1.5 transition-colors hover:text-primary"
-						title="Steam store-page"
-						href="https://store.steampowered.com/app/2162800/shapez_2/"
-						target="_blank"
-						rel="noreferrer"
-					>
-						<span class="icon-[simple-icons--steam] align-text-bottom text-lg">Steam</span>
-					</a>
-					<a
-						class="link pl-1.5 transition-colors hover:text-primary"
-						title="r/shapezio"
-						href="https://www.reddit.com/r/shapezio/"
-						target="_blank"
-						rel="noreferrer"
-					>
-						<span class="icon-[simple-icons--reddit] align-text-bottom text-lg">Reddit</span>
-					</a>
-				</span>
-			</p>
+			<div>
+				<span> Follow shapez 2 </span>
+				<ul class="ml-1 inline-flex space-x-1.5 divide-x divide-base-content">
+					<li>
+						<a
+							class="link transition-colors hover:text-primary"
+							title="shapez 2 Website"
+							href="https://shapez2.com/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<span class="icon-[tabler--world] align-text-bottom text-lg">Website</span>
+						</a>
+					</li>
+					<li class="pl-1.5">
+						<a
+							class="link transition-colors hover:text-primary"
+							title="Discord Community"
+							href="https://discord.gg/shapez-2-1000343719314198548"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<span class="icon-[simple-icons--discord] align-text-bottom text-lg">Discord</span>
+						</a>
+					</li>
+					<li class="pl-1.5">
+						<a
+							class="link transition-colors hover:text-primary"
+							title="Steam store-page"
+							href="https://store.steampowered.com/app/2162800/shapez_2/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<span class="icon-[simple-icons--steam] align-text-bottom text-lg">Steam</span>
+						</a>
+					</li>
+					<li class="pl-1.5">
+						<a
+							class="link transition-colors hover:text-primary"
+							title="r/shapezio"
+							href="https://www.reddit.com/r/shapezio/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<span class="icon-[simple-icons--reddit] align-text-bottom text-lg">Reddit</span>
+						</a>
+					</li>
+				</ul>
+			</div>
 			<p>
 				Follow tobspr Games
 				<span class="ml-1 inline-flex space-x-1.5 divide-x divide-base-content">
@@ -159,7 +167,7 @@
 				</a>
 			</p>
 		</nav>
-		<aside class="h-full">
+		<aside class="h-full gap-4 md:justify-self-end">
 			<a
 				class="btn btn-circle btn-ghost btn-lg place-self-center border-2 border-base-content fill-base-content"
 				title="To top"

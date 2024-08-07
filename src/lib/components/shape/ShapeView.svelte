@@ -70,10 +70,9 @@
 	};
 </script>
 
-<figure class="{isFullscreen ? '' : 'aspect-h-1 aspect-w-1'} relative" bind:this={viewer}>
-	<div
-		class="absolute left-1/2 top-0 z-10 flex h-fit w-fit -translate-x-1/2 justify-center space-x-4 p-4"
-	>
+<figure class="{isFullscreen ? '' : ''} relative" bind:this={viewer}>
+
+	<div class="left-0 top-0 z-10 flex h-fit flex-wrap justify-center gap-4 sm:absolute">
 		<div class="join">
 			<form class="btn btn-square btn-primary join-item" action="/shape">
 				<input name="identifier" type="hidden" value={data.identifier} />
@@ -188,46 +187,51 @@
 			</button>
 		</form>
 	</div>
+	
+	<div class="aspect-h-1 aspect-w-1">
+		<div class="h-full bg-base-100">
+			<Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
+				<T.PerspectiveCamera makeDefault position={[0, 2, 1.5]} fov={55}>
+					<OrbitControls
+						enablePan={false}
+						enableZoom={false}
+						enableDamping
+						maxPolarAngle={Math.PI * 0.4}
+						bind:this={orbitControls}
+					/>
+				</T.PerspectiveCamera>
 
-	<div class="h-full bg-base-100">
-		<Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
-			<T.PerspectiveCamera makeDefault position={[0, 2, 1.5]} fov={55}>
-				<OrbitControls
-					enablePan={false}
-					enableZoom={false}
-					enableDamping
-					maxPolarAngle={Math.PI * 0.4}
-					bind:this={orbitControls}
+				<T.AmbientLight intensity={1} />
+				<T.DirectionalLight
+					position={[1, 3, 1]}
+					intensity={2}
+					castShadow
+					shadow.mapSize={[2048, 2048]}
 				/>
-			</T.PerspectiveCamera>
 
-			<T.AmbientLight intensity={1} />
-			<T.DirectionalLight
-				position={[1, 3, 1]}
-				intensity={2}
-				castShadow
-				shadow.mapSize={[2048, 2048]}
-			/>
-
-			<Suspense on:load={onBaseModelLoad}>
-				<ShapeDefaultSupport position.y={-0.025} bind:this={baseComponentModel} />
-			</Suspense>
-			{#key data}
-				{#each data.data as layer, layerIndex}
-					{@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
-					{@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
-					{@const extendOffset = isExtended ? layerIndex * SHAPE_LAYER_EXTEND_OFFSET : 0}
-					{@const expandOffset = isExpanded ? SHAPE_PART_EXPAND_OFFSET : 0}
-					<T.Group position.y={layerPositionY + extendOffset} scale={[layerScale, 0.5, layerScale]}>
-						{#each layer as part, partIndex}
-							<T.Group rotation.y={partIndex * (isHex ? -1 / 3 : -0.5) * Math.PI + Math.PI}>
-								<ShapePart data={part} {isHex} offset={expandOffset} />
-							</T.Group>
-						{/each}
-					</T.Group>
-				{/each}
-			{/key}
-		</Canvas>
+				<Suspense on:load={onBaseModelLoad}>
+					<ShapeDefaultSupport position.y={-0.025} bind:this={baseComponentModel} />
+				</Suspense>
+				{#key data}
+					{#each data.data as layer, layerIndex}
+						{@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
+						{@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
+						{@const extendOffset = isExtended ? layerIndex * SHAPE_LAYER_EXTEND_OFFSET : 0}
+						{@const expandOffset = isExpanded ? SHAPE_PART_EXPAND_OFFSET : 0}
+						<T.Group
+							position.y={layerPositionY + extendOffset}
+							scale={[layerScale, 0.5, layerScale]}
+						>
+							{#each layer as part, partIndex}
+								<T.Group rotation.y={partIndex * (isHex ? -1 / 3 : -0.5) * Math.PI + Math.PI}>
+									<ShapePart data={part} {isHex} offset={expandOffset} />
+								</T.Group>
+							{/each}
+						</T.Group>
+					{/each}
+				{/key}
+			</Canvas>
+		</div>
 	</div>
 
 	<figcaption class="sr-only">Shape Viewer: {data.identifier}</figcaption>

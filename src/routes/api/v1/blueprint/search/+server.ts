@@ -29,6 +29,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
             filter,
         }
     );
+    
 
     return new Response(JSON.stringify(blueprints));
 };

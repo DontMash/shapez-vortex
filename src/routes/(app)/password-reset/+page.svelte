@@ -7,7 +7,7 @@
 
 <section class="mx-auto w-full max-w-5xl">
 	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
+		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
 	>
 		<hgroup>
 			<h2 class="text-lg font-bold">
@@ -18,7 +18,7 @@
 	</header>
 
 	<div
-		class="card card-bordered mx-auto max-w-lg border-base-content border-opacity-20 bg-base-200 shadow-lg"
+		class="card rounded-none border-x-0 sm:border-x sm:rounded-box transition-[border-radius] card-bordered mx-auto max-w-screen-sm border-base-content/20 bg-base-200 shadow-lg"
 	>
 		<form class="card-body" method="post" action="?/reset">
 			<label class="form-control" for="email">

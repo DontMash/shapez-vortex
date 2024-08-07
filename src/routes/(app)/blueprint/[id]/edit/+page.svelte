@@ -147,9 +147,9 @@
 	}
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
+<section class="mx-auto w-full max-w-5xl px-4">
 	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
+		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
 	>
 		<hgroup>
 			<h2 class="text-lg font-bold">
@@ -353,12 +353,12 @@
 					{/if}
 				</label>
 				{#if previewImages.length > 0}
-					<ol class="mt-4 grid auto-rows-auto grid-cols-3 gap-4">
+					<ol class="mt-4 grid auto-rows-auto grid-cols-1 md:grid-cols-3 gap-4">
 						{#each previewImages as previewImage, index}
 							<li class="group relative">
 								<figure class="aspect-h-2 aspect-w-3">
 									<img
-										class="rounded-btn border border-base-content border-opacity-20 object-cover shadow-lg"
+										class="rounded-btn border border-base-content/20 object-cover shadow-lg"
 										src={URL.createObjectURL(previewImage)}
 										alt={`Preview image ${index} - ${previewImage.name}`}
 									/>

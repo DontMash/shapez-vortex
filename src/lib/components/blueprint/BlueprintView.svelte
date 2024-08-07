@@ -186,9 +186,9 @@
 	{/if}
 
 	<div
-		class={`overflow-hidden border border-base-content/20 bg-base-100 shadow-lg outline-none ${
-			!isFullscreen ? 'rounded-4xl border' : ''
-		}`}
+		class="overflow-hidden border-base-content/20 bg-base-100 shadow-lg outline-none transition-[border-radius] {!isFullscreen
+			? 'lg:rounded-4xl border'
+			: ''}"
 	>
 		<Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
 			<T.PerspectiveCamera makeDefault position={[0, 15, 15]} fov={55}>

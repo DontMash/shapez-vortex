@@ -13,7 +13,7 @@
 
 <section class="mx-auto w-full max-w-5xl">
 	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content border-opacity-20 px-6 pb-4"
+		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
 	>
 		<hgroup>
 			<h2 class="text-lg font-bold">
@@ -26,7 +26,7 @@
 		</hgroup>
 	</header>
 
-	<form class="space-y-4" action="?/view" method="post">
+	<form class="space-y-4 px-4 lg:px-0" action="?/view" method="post">
 		<label class="form-control h-80" for="blueprint-identifier">
 			<div class="label">
 				<span class="label-text">Blueprint identifier</span>
@@ -97,7 +97,7 @@
 	</form>
 </section>
 
-<section class="mx-auto mt-32 grid w-full max-w-5xl grid-cols-2 gap-8 px-6" id="more-features">
+<section class="mx-auto mt-32 grid w-full max-w-5xl grid-cols-1 md:grid-cols-2 gap-8 px-10" id="more-features">
 	<div class="indicator w-full">
 		<span
 			class="indicator-item indicator-start indicator-top flex h-12 w-12 items-center justify-center rounded-btn bg-secondary text-2xl text-secondary-content"

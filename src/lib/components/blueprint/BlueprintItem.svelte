@@ -17,10 +17,10 @@
 </script>
 
 <article
-	class="grid grid-cols-3 divide-x divide-base-content divide-opacity-20 overflow-hidden rounded-box border border-base-content border-opacity-20 bg-base-200 shadow-lg"
+	class="grid grid-cols-1 divide-x divide-base-content/20 overflow-hidden rounded-box border border-base-content/20 bg-base-200 shadow-lg md:grid-cols-3"
 >
 	<a href="/blueprint/{data.id}">
-		<figure class="aspect-h-2 aspect-w-3">
+		<figure class="aspect-h-4 aspect-w-6">
 			{#if image}
 				<img class="object-cover" src={image} alt="Preview of {data.title}" />
 			{:else}
@@ -35,12 +35,6 @@
 
 	<div class="col-span-2 space-y-2 p-4">
 		<div class="flex items-center space-x-2">
-			<a class="link-hover link transition-colors hover:text-primary" href="/blueprint/{data.id}">
-				<h3 class="text-3xl font-bold">
-					{data.title}
-				</h3>
-			</a>
-
 			{#if data.expand && data.expand['creator']}
 				<UserTag name={data.expand['creator'].displayname} />
 			{/if}
@@ -69,6 +63,12 @@
 				{/if}
 			</div>
 		</div>
+		
+		<a class="link-hover link transition-colors hover:text-primary" href="/blueprint/{data.id}">
+			<h3 class="text-3xl font-bold">
+				{data.title}
+			</h3>
+		</a>
 
 		{#if data.expand && data.expand['tags']}
 			<ul>
