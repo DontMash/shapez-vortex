@@ -60,7 +60,7 @@
     "pako": "^2.1.0",
     "pocketbase": "^0.21.0",
     "screenfull": "^6.0.2",
-    "three": "^0.166.1",
+    "three": "^0.167.1",
     "three-custom-shader-material": "^5.4.0",
     "ua-parser-js": "^1.0.37",
     "zod": "^3.22.4"
