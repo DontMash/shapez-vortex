@@ -1,6 +1,6 @@
 {
   "name": "shapez-visualizer",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "prepare:buildings": "bash resources/scripts/buildings-pipeline.sh",
