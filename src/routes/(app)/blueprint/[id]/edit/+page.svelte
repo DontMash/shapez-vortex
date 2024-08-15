@@ -148,9 +148,7 @@
 </script>
 
 <section class="mx-auto w-full max-w-5xl px-4">
-	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-	>
+	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4">
 		<hgroup>
 			<h2 class="text-lg font-bold">
 				<span class="icon-[tabler--edit] align-text-bottom text-2xl">Edit</span>
@@ -353,7 +351,7 @@
 					{/if}
 				</label>
 				{#if previewImages.length > 0}
-					<ol class="mt-4 grid auto-rows-auto grid-cols-1 md:grid-cols-3 gap-4">
+					<ol class="mt-4 grid auto-rows-auto grid-cols-1 gap-4 md:grid-cols-3">
 						{#each previewImages as previewImage, index}
 							<li class="group relative">
 								<figure class="aspect-h-2 aspect-w-3">
@@ -365,10 +363,10 @@
 								</figure>
 
 								<span class="badge badge-secondary badge-lg absolute left-4 top-4 font-bold">
-									{index < 1 ? 'Preview' : `#${index}`}
+									#{index}
 								</span>
 								<span
-									class={`absolute top-4 right-4 ${
+									class={`absolute right-4 top-4 ${
 										previewImages.length > 1 ? 'join border border-base-300' : ''
 									}`}
 								>

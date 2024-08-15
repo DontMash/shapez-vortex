@@ -27,7 +27,7 @@
 	};
 
 	export let identifier: BlueprintIdentifier;
-	export let blueprint: Blueprint;
+	export let blueprint: Blueprint | undefined;
 	export let title: string = 'Untitled blueprint';
 	export let controls: ControlOptions = {
 		download: false,
@@ -71,6 +71,10 @@
 		const offset = ISLAND_LAYOUT_UNIT * 0.5;
 
 		return [x * ISLAND_LAYOUT_UNIT - offset, 0, z * ISLAND_LAYOUT_UNIT - offset];
+	}
+
+	export function canvas() {
+		return ctx?.renderer.domElement;
 	}
 </script>
 
@@ -187,7 +191,7 @@
 
 	<div
 		class="overflow-hidden border-base-content/20 bg-base-100 shadow-lg outline-none transition-[border-radius] {!isFullscreen
-			? 'lg:rounded-4xl border'
+			? 'border lg:rounded-4xl'
 			: ''}"
 	>
 		<Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>

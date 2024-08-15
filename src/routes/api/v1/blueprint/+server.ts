@@ -6,7 +6,7 @@ import {
 	getBuildings,
 	getCost,
 	getIslandCount
-} from '$lib/server/blueprint';
+} from '$lib/blueprint';
 import {
 	BLUEPRINT_CREATE_SCHEMA,
 	BLUEPRINT_UPDATE_SCHEMA,

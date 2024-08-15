@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { add } from '$lib/client/toast.service';
+	import { decode, isBlueprintIdentifier } from '$lib/blueprint';
 	import {
 		BLUEPRINT_IDENTIFIER_REGEX,
 		BLUEPRINT_IMAGES_MAX,
@@ -8,25 +9,42 @@
 		BLUEPRINT_TAGS_REGEX,
 		BLUEPRINT_TITLE_MAX_LENGTH,
 		BLUEPRINT_TITLE_MIN_LENGTH,
-		BLUEPRINT_TITLE_REGEX
+		BLUEPRINT_TITLE_REGEX,
+		type Blueprint,
+		type BlueprintIdentifier
 	} from '$lib/blueprint.types';
 	import type { PageData } from './$types';
 
+	import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
+
 	export let data: PageData;
+
+	let identifier: BlueprintIdentifier;
+	let blueprint: Blueprint | undefined;
+	$: {
+		try {
+			blueprint = isBlueprintIdentifier(identifier) ? decode(identifier) : undefined;
+		} catch (error) {
+			blueprint = undefined;
+			add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
+		}
+	}
+	let view: BlueprintView;
 
 	let imagesFileinputElement: HTMLInputElement;
 	let previewImages: Array<File> = [];
 
+	const MAX_IMAGES = BLUEPRINT_IMAGES_MAX - 1;
 	function onPreviewImageFileChange(event: Event) {
 		const inputElement = event.target as HTMLInputElement;
 		if (!inputElement || !inputElement.files) return;
 
 		const list = new DataTransfer();
 		const files = Array.from([...(imagesFileinputElement.files ?? []), ...inputElement.files]);
-		if (files.length > BLUEPRINT_IMAGES_MAX) {
-			add({ message: `Max. ${BLUEPRINT_IMAGES_MAX} images allowed.`, type: 'WARNING' });
+		if (files.length > MAX_IMAGES) {
+			add({ message: `Max. ${MAX_IMAGES} images allowed.`, type: 'WARNING' });
 		}
-		const filelist = files.slice(0, BLUEPRINT_IMAGES_MAX).filter((file) => {
+		const filelist = files.slice(0, MAX_IMAGES).filter((file) => {
 			if (file.size > BLUEPRINT_IMAGE_MAX_FILE_SIZE) {
 				const maxSizeMb = Math.round(BLUEPRINT_IMAGE_MAX_FILE_SIZE / 1024 / 1024);
 				add({
@@ -74,9 +92,7 @@
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-	>
+	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4">
 		<hgroup>
 			<h2 class="text-lg font-bold">
 				<span class="icon-[tabler--upload] align-text-bottom text-2xl" />
@@ -88,7 +104,31 @@
 		</hgroup>
 	</header>
 
-	<form class="px-4 lg:px-0" method="post" enctype="multipart/form-data">
+	<form
+		class="px-4 lg:px-0"
+		method="post"
+		enctype="multipart/form-data"
+		on:submit|preventDefault={(event) => {
+			const canvas = view.canvas();
+			if (!canvas) {
+				return add({ message: 'Preview canvas unavailable', type: 'ERROR' });
+			}
+
+			const form = event.currentTarget;
+			canvas.toBlob((blob) => {
+				if (!blob) {
+					return add({ message: 'Cannot create preview image', type: 'ERROR' });
+				}
+
+				const list = new DataTransfer();
+				list.items.add(new File([blob], 'preview.png', { type: 'image/png' }));
+				previewImages.forEach((image) => list.items.add(image));
+				imagesFileinputElement.files = list.files;
+				
+				form.submit();
+			});
+		}}
+	>
 		<label class="form-control" for="title">
 			<div class="label">
 				<span class="label-text">Title</span>
@@ -132,34 +172,20 @@
 			<div class="label">
 				<span class="label-text">Blueprint identifier</span>
 			</div>
-			{#if $page.form && $page.form.invalid}
-				<input
-					class={`input input-bordered text-sm placeholder:italic ${
-						$page.form.issues['data'] ? 'input-error' : ''
-					}`}
-					type="text"
-					name="data"
-					id="data"
-					value={$page.form.data.data}
-					placeholder="SHAPEZ-2 ... $"
-					pattern={BLUEPRINT_IDENTIFIER_REGEX.source}
-					required
-				/>
-				{#if $page.form.issues['data']}
-					<div class="label">
-						<span class="label-text-alt italic text-error">{$page.form.issues['data']}</span>
-					</div>
-				{/if}
-			{:else}
-				<input
-					class="input input-bordered text-sm placeholder:italic"
-					type="text"
-					name="data"
-					id="data"
-					placeholder="SHAPEZ-2 ... $"
-					pattern={BLUEPRINT_IDENTIFIER_REGEX.source}
-					required
-				/>
+			<input
+				class="input input-bordered text-sm placeholder:italic"
+				type="text"
+				name="data"
+				id="data"
+				placeholder="SHAPEZ-2 ... $"
+				pattern={BLUEPRINT_IDENTIFIER_REGEX.source}
+				required
+				bind:value={identifier}
+			/>
+			{#if $page.form && $page.form.invalid && $page.form.issues['data']}
+				<div class="label">
+					<span class="label-text-alt italic text-error">{$page.form.issues['data']}</span>
+				</div>
 			{/if}
 		</label>
 
@@ -243,7 +269,7 @@
 						<span class="label-text">
 							Images <span class="text-xs text-base-300">(optional)</span>
 						</span>
-						<i class="label-text-alt">max. {BLUEPRINT_IMAGES_MAX} images</i>
+						<i class="label-text-alt">max. {MAX_IMAGES} images</i>
 					</div>
 
 					<input
@@ -269,6 +295,7 @@
 						</div>
 					{/if}
 				</label>
+
 				{#if previewImages.length > 0}
 					<ol class="mt-4 grid auto-rows-auto grid-cols-3 gap-4">
 						{#each previewImages as previewImage, index}
@@ -282,7 +309,7 @@
 								</figure>
 
 								<span class="badge badge-secondary badge-lg absolute left-4 top-4 font-bold">
-									{index < 1 ? 'Preview' : `#${index}`}
+									#{index}
 								</span>
 								<span
 									class={`absolute right-4 top-4 ${
@@ -324,6 +351,13 @@
 				{/if}
 			</div>
 		</details>
+
+		<div class="mt-2">
+			<div class="label ml-4">
+				<span class="label-text">Blueprint preview image</span>
+			</div>
+			<BlueprintView {identifier} {blueprint} controls={{}} bind:this={view} />
+		</div>
 
 		<button class="btn btn-primary btn-block mt-4">Upload</button>
 	</form>

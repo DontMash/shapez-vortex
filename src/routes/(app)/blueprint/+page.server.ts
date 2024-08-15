@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { BlueprintIdentifier } from '$lib/blueprint.types';
-import { decode, update } from '$lib/server/blueprint';
+import { decode, update } from '$lib/blueprint';
 
 export const load = (() => {
     return {

@@ -42,13 +42,7 @@
 						</span>
 					</span>
 					<span class="badge badge-neutral space-x-1">
-						<span class="icon-[tabler--clock-edit]">Updated on</span>
-						<span class="text-xs">
-							{dateFormatter.format(new Date(data.blueprint.entry.updated))}
-						</span>
-					</span>
-					<span class="badge badge-neutral space-x-1">
-						<span class="icon-[tabler--clock-plus]">Created on</span>
+						<span class="icon-[tabler--clock-edit]">Created on</span>
 						<span class="text-xs">
 							{dateFormatter.format(new Date(data.blueprint.entry.created))}
 						</span>
