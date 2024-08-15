@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { invalidate } from '$app/navigation';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import type { PageData } from './$types';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { add } from '$lib/client/toast.service';
 	import { REPORT_REASONS } from '$lib/report.types';
+	import type { PageData } from './$types';
 
 	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
 	import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
@@ -15,7 +15,8 @@
 
 	const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
 	const imageModals: Array<Dialog> = [];
-	let reportModal: Dialog;
+	let reportDialog: Dialog;
+	let deleteDialog: Dialog;
 
 	function onBookmark(event: Event) {
 		const form = event.target as HTMLFormElement;
@@ -64,10 +65,89 @@
 						<button
 							class="btn btn-square btn-ghost btn-sm"
 							title="Report blueprint"
-							on:click={() => reportModal.show()}
+							on:click={() => reportDialog.show()}
 						>
 							<span class="icon-[tabler--flag] text-2xl">Report</span>
 						</button>
+
+						<Dialog bind:this={reportDialog}>
+							<div class="p-6">
+								<h2 class="mb-4 text-xl font-bold">
+									Report “{data.blueprint.entry.title}”
+								</h2>
+								<form class="space-y-2" action="?/reportBlueprint" method="post">
+									<input type="hidden" name="entry" value={data.blueprint.entry.id} />
+
+									<label class="form-control" for="reason">
+										<div class="label">
+											<span class="label-text">Reason</span>
+										</div>
+										<select class="select select-bordered" name="reason" id="reason" required>
+											{#each REPORT_REASONS as reason}
+												<option
+													selected={$page.form &&
+														$page.form.invalid &&
+														$page.form.issues['reason'] &&
+														$page.form.data['reason'] === reason}
+													value={reason}
+												>
+													{reason}
+												</option>
+											{/each}
+										</select>
+									</label>
+
+									<label class="form-control h-64" for="message">
+										<div class="label">
+											<span class="label-text">Message</span>
+											<i class="label-text-alt">max. 256 characters</i>
+										</div>
+										{#if $page.form && $page.form.invalid}
+											<textarea
+												class={`textarea textarea-bordered h-full resize-none placeholder:italic ${
+													$page.form.issues['message'] ? 'textarea-error' : ''
+												}`}
+												name="message"
+												id="message"
+												value={$page.form.data['message']}
+												placeholder="This entry contains ..."
+												required
+												maxlength="256"
+											/>
+											{#if $page.form.issues['message']}
+												<div class="label">
+													<span class="label-text-alt italic text-error">
+														{$page.form.issues['message']}
+													</span>
+												</div>
+											{/if}
+										{:else}
+											<textarea
+												class="textarea textarea-bordered h-full resize-none placeholder:italic"
+												name="message"
+												id="message"
+												placeholder="This entry contains ..."
+												required
+												maxlength="256"
+											/>
+										{/if}
+									</label>
+
+									<div class="flex items-center justify-end space-x-2 pt-4">
+										<button class="btn btn-error" title="Report blueprint">
+											<span class="icon-[tabler--flag] text-2xl" />
+											Report
+										</button>
+										<form method="dialog">
+											<button class="btn btn-neutral">
+												<span class="2xl icon-[tabler--x] text-2xl" />
+												Cancel
+											</button>
+										</form>
+									</div>
+								</form>
+							</div>
+						</Dialog>
 					{/if}
 					<button
 						class="btn btn-square btn-ghost btn-sm"
@@ -103,87 +183,56 @@
 							>
 								<span class="icon-[tabler--edit] text-2xl">Edit</span>
 							</a>
+							<button class="btn btn-square btn-error btn-sm" on:click={() => deleteDialog.show()}>
+								<span class="icon-[tabler--trash] text-2xl" />
+							</button>
+
+							<Dialog bind:this={deleteDialog}>
+								<div class="p-6">
+									<h4 class="mb-16 text-3xl font-bold">
+										Do you want to delete <br />
+										{data.blueprint.entry.title}?
+									</h4>
+									<div class="flex items-center justify-end space-x-2">
+										<form
+											class="inline"
+											action="/api/v1/blueprint"
+											method="post"
+											on:submit|preventDefault={async (event) => {
+												deleteDialog.close();
+
+												const url = new URL(event.currentTarget.action, $page.url.origin);
+												const formData = new FormData(event.currentTarget);
+												try {
+													const response = await fetch(url, { method: 'delete', body: formData });
+													if (!response.ok) {
+														return add({ message: 'Failed to delete blueprint', type: 'ERROR' });
+													}
+
+													add({ message: 'Successfully deleted blueprint', type: 'SUCCESS' });
+													goto('/blueprint/search');
+												} catch (_) {
+													add({ message: 'Error while deleting blueprint', type: 'ERROR' });
+												}
+											}}
+										>
+											<input type="hidden" name="id" value={data.blueprint.entry.id} />
+											<button class="btn btn-error">
+												<span class="icon-[tabler--trash] text-2xl" />
+												Delete
+											</button>
+										</form>
+										<form method="dialog">
+											<button class="btn btn-neutral">
+												<span class="icon-[tabler--x] text-2xl" />
+												Cancel
+											</button>
+										</form>
+									</div>
+								</div>
+							</Dialog>
 						{/if}
 					{/if}
-
-					<Dialog bind:this={reportModal}>
-						<div class="p-6">
-							<h2 class="mb-4 text-xl font-bold">
-								Report “{data.blueprint.entry.title}”
-							</h2>
-							<form class="space-y-2" action="?/reportBlueprint" method="post">
-								<input type="hidden" name="entry" value={data.blueprint.entry.id} />
-
-								<label class="form-control" for="reason">
-									<div class="label">
-										<span class="label-text">Reason</span>
-									</div>
-									<select class="select select-bordered" name="reason" id="reason" required>
-										{#each REPORT_REASONS as reason}
-											<option
-												selected={$page.form &&
-													$page.form.invalid &&
-													$page.form.issues['reason'] &&
-													$page.form.data['reason'] === reason}
-												value={reason}
-											>
-												{reason}
-											</option>
-										{/each}
-									</select>
-								</label>
-
-								<label class="form-control h-64" for="message">
-									<div class="label">
-										<span class="label-text">Message</span>
-										<i class="label-text-alt">max. 256 characters</i>
-									</div>
-									{#if $page.form && $page.form.invalid}
-										<textarea
-											class={`textarea textarea-bordered h-full resize-none placeholder:italic ${
-												$page.form.issues['message'] ? 'textarea-error' : ''
-											}`}
-											name="message"
-											id="message"
-											value={$page.form.data['message']}
-											placeholder="This entry contains ..."
-											required
-											maxlength="256"
-										/>
-										{#if $page.form.issues['message']}
-											<div class="label">
-												<span class="label-text-alt italic text-error">
-													{$page.form.issues['message']}
-												</span>
-											</div>
-										{/if}
-									{:else}
-										<textarea
-											class="textarea textarea-bordered h-full resize-none placeholder:italic"
-											name="message"
-											id="message"
-											placeholder="This entry contains ..."
-											required
-											maxlength="256"
-										/>
-									{/if}
-								</label>
-
-								<div class="flex items-center justify-end space-x-2 pt-4">
-									<button class="btn btn-error" title="Report blueprint">
-										<span class="icon-[tabler--flag] text-2xl" />
-										Report
-									</button>
-									<form method="dialog">
-										<button class="btn btn-neutral">
-											<span class="2xl icon-[tabler--x] text-2xl" />
-											Cancel
-										</button>
-									</form>
-								</div>
-							</form>
-						</div>
-					</Dialog>
 				</div>
 			</div>
 		</header>
@@ -222,7 +271,7 @@
 			<button
 				class="btn btn-accent"
 				title="Copy blueprint"
-				use:copy={{ value: JSON.stringify(data.blueprint.entry.data, null, 4) }}
+				use:copy={{ value: data.blueprint.entry.data }}
 				on:copy={() => add({ message: 'Content copied' })}
 				on:error={(event) => add({ message: event.detail.message, type: 'ERROR' })}
 			>
@@ -232,7 +281,9 @@
 		</div>
 	</div>
 
-	<aside class="flex flex-col md:flex-col-reverse divide-y divide-base-content/20 bg-base-200">
+	<aside
+		class="flex flex-col divide-y divide-base-content/20 bg-base-200 md:flex-col-reverse md:divide-y-reverse"
+	>
 		<div
 			class="grid grow grid-flow-col grid-cols-2 grid-rows-4 gap-2 p-4 md:grid-flow-row md:grid-cols-1 md:grid-rows-none"
 		>

@@ -85,6 +85,7 @@ const BLUEPRINT_IMAGES_SCHEMA = z
 		const files = data as Array<File>;
 		return files.length <= BLUEPRINT_IMAGES_MAX;
 	}, `Max image amount is ${BLUEPRINT_IMAGES_MAX}`)
+	.transform((value) => value.filter((image) => image.size > 0))
 	.refine(
 		(files) =>
 			files.reduce<boolean>(
@@ -124,9 +125,9 @@ export const BLUEPRINT_CREATE_SCHEMA = z.object({
 });
 export const BLUEPRINT_UPDATE_SCHEMA = z.object({
 	id: z.string(),
-	title: BLUEPRINT_TITLE_SCHEMA,
+	title: BLUEPRINT_TITLE_SCHEMA.optional(),
 	description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
-	data: BLUEPRINT_DATA_SCHEMA,
+	data: BLUEPRINT_DATA_SCHEMA.optional(),
 	images: BLUEPRINT_IMAGES_SCHEMA.optional(),
 	tags: BLUEPRINT_TAGS_SCHEMA.optional()
 });
@@ -178,7 +179,8 @@ const BLUEPRINT_ENTRYROTATIONS = {
 type BlueprintEntryRotation =
 	(typeof BLUEPRINT_ENTRYROTATIONS)[keyof typeof BLUEPRINT_ENTRYROTATIONS];
 
-export type BlueprintBuildingIdentifier = (typeof GAME_IDENTIFIERS)['BuildingInternalVariantIds'][number];
+export type BlueprintBuildingIdentifier =
+	(typeof GAME_IDENTIFIERS)['BuildingInternalVariantIds'][number];
 export type BlueprintBuildingModel = {
 	base: ComponentType;
 	layers?: [ComponentType, ComponentType, ComponentType];

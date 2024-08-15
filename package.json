@@ -5,7 +5,7 @@
   "scripts": {
     "prepare:buildings": "bash resources/scripts/buildings-pipeline.sh",
     "prepare:shapes": "bash resources/scripts/shapes-pipeline.sh",
-    "dev": "ORIGIN=http://localhost:5173 vite dev",
+    "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

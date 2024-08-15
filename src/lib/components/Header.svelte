@@ -40,7 +40,7 @@
 			return;
 		}
 
-		const url = new URL('/api/v1/blueprint/search', $page.url.origin);
+		const url = new URL('/api/v1/blueprint', $page.url.origin);
 		url.searchParams.append('query', search);
 		try {
 			const response = await fetch(url.href);
@@ -57,7 +57,7 @@
 			return;
 		}
 
-		const url = new URL('/api/v1/user/search', $page.url.origin);
+		const url = new URL('/api/v1/user', $page.url.origin);
 		url.searchParams.append('displayname', search);
 		try {
 			const response = await fetch(url.href);
@@ -103,7 +103,7 @@
 	>
 		<div class="flex-1">
 			<a class="btn btn-square btn-ghost btn-lg rounded-3xl" title="Home" href="/">
-				<img class="inline-block h-16 w-16" src="/favicon.png" alt="Logo" />
+				<img class="inline-block" src="/favicon.png" alt="Logo" />
 			</a>
 		</div>
 

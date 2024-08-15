@@ -13,9 +13,7 @@
 </script>
 
 <section class="relative mx-auto w-full max-w-5xl">
-	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-	>
+	<header class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4">
 		<h2 class="inline-flex flex-grow items-center space-x-2 text-lg font-bold">
 			<span class="icon-[tabler--bookmark-filled] align-text-bottom text-2xl" />
 			{data.seo.title}
@@ -23,7 +21,7 @@
 	</header>
 
 	{#if data.blueprints && data.blueprints.length > 0}
-		<ul class="space-y-8 px-4">
+		<ul class="space-y-8 px-4 lg:px-0">
 			{#each data.blueprints as blueprint}
 				{@const preview = data.images && data.images[blueprint.id]}
 				<li>
