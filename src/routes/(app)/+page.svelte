@@ -1,10 +1,11 @@
 <script lang="ts">
+	import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 </script>
 
-<section class="mx-auto w-full max-w-5xl px-4 lg:px-0" id="hero">
+<section class="mx-auto w-full max-w-5xl px-4 lg:px-0 md:mt-8" id="hero">
 	<div class="hero rounded-4xl bg-base-200 p-8 md:p-12">
 		<div class="hero-content text-center">
 			<div class="max-w-lg">
@@ -29,7 +30,7 @@
 	</div>
 </section>
 
-<section class="mx-auto mt-16 w-full max-w-5xl px-4 lg:px-0" id="features">
+<section class="mx-auto mt-16 md:mt-24 w-full max-w-5xl px-4 lg:px-0" id="features">
 	<div class="mx-auto grid max-w-screen-sm grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3 lg:gap-4">
 		<h2 class="sr-only">Features</h2>
 
@@ -111,4 +112,10 @@
 			</a>
 		</div>
 	</div>
+</section>
+
+<section class="mx-auto mt-16 md:mt-24 md:mb-8 w-full max-w-5xl px-4 lg:px-0" id="latest">
+	<h2 class="text-3xl font-bold md:text-4xl mb-4">Latest blueprints</h2>
+
+	<BlueprintItemList items={data.result.items} images={data.images} />
 </section>

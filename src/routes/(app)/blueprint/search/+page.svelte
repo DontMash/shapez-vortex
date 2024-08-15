@@ -1,15 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
 	import type { PageData } from './$types';
-
-	import BlueprintItem from '$lib/components/blueprint/BlueprintItem.svelte';
 
 	export let data: PageData;
 
-	function getBlueprintUrl(id: string): string {
-		const url = new URL(`/blueprint/${id}`, $page.url.origin);
-		return url.href;
-	}
 	function getPageUrl(page: number) {
 		const url = new URL($page.url);
 		url.searchParams.set('page', String(page));
@@ -18,9 +13,7 @@
 </script>
 
 <section class="mx-auto w-full max-w-5xl">
-	<header
-		class="mb-4 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-	>
+	<header class="mb-4 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4">
 		<h2 class="text-lg font-bold">
 			<span class="icon-[tabler--search] align-text-bottom text-2xl" />
 			{data.seo.title}
@@ -92,19 +85,9 @@
 	</form>
 
 	{#if data.result.items && data.result.items.length > 0}
-		<ul class="space-y-8 px-4 lg:px-0">
-			{#each data.result.items as blueprint}
-				{@const preview = data.images && data.images[blueprint.id]}
-				<li>
-					<BlueprintItem
-						data={blueprint}
-						image={preview}
-						url={getBlueprintUrl(blueprint.id)}
-						isEditable={data.user && data.user.id === blueprint.creator}
-					/>
-				</li>
-			{/each}
-		</ul>
+		<div class="px-4 lg:px-0">
+			<BlueprintItemList items={data.result.items} images={data.images} />
+		</div>
 
 		{#key $page}
 			<div class="mt-8 flex justify-center">

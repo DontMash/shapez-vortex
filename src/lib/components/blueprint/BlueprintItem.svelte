@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import type { BlueprintRecord } from '$lib/blueprint.types';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { add } from '$lib/client/toast.service';
+	import type { BlueprintRecord } from '$lib/blueprint.types';
 
 	import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
@@ -106,7 +105,7 @@
 									return add({ message: 'Failed to delete blueprint', type: 'ERROR' });
 								}
 
-								await invalidateAll()
+								await invalidateAll();
 								add({ message: 'Successfully deleted blueprint', type: 'SUCCESS' });
 							} catch (_) {
 								add({ message: 'Error while deleting blueprint', type: 'ERROR' });

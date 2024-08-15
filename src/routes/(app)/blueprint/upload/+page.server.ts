@@ -28,7 +28,6 @@ export const actions = {
 
 		const formData = await request.formData();
 		const entries = { ...Object.fromEntries(formData), images: formData.getAll('images') };
-
 		const createUrl = new URL('/api/v1/blueprint', url.origin);
 		const response = await fetch(createUrl, { method: 'post', body: formData });
 		if (!response.ok) {
