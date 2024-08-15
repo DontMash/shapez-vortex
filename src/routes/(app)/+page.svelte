@@ -4,7 +4,7 @@
 	export let data: PageData;
 </script>
 
-<section class="mx-auto w-full max-w-5xl px-4" id="hero">
+<section class="mx-auto w-full max-w-5xl px-4 lg:px-0" id="hero">
 	<div class="hero rounded-4xl bg-base-200 p-8 md:p-12">
 		<div class="hero-content text-center">
 			<div class="max-w-lg">
@@ -29,7 +29,7 @@
 	</div>
 </section>
 
-<section class="mx-auto mt-16 w-full max-w-5xl px-4" id="features">
+<section class="mx-auto mt-16 w-full max-w-5xl px-4 lg:px-0" id="features">
 	<div class="mx-auto grid max-w-screen-sm grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3 lg:gap-4">
 		<h2 class="sr-only">Features</h2>
 
@@ -92,7 +92,7 @@
 					href="/blueprint/search"
 					title="Browse blueprints"
 				>
-					<img class="w-32" src="/favicon.png" alt="Blueprint Icon" />
+					<img class="size-32" src="/favicon.png" alt="Blueprint Icon" />
 				</a>
 			</figure>
 

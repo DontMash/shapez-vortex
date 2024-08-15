@@ -47,7 +47,7 @@
 			<select class="select select-bordered select-sm" id="filter" name="filter">
 				<option value="" selected={!data.filter}>-</option>
 				{#each data.tags as tag}
-					<option value={`tags=${tag.id}`} selected={data.filter?.includes(tag.id)}>
+					<option value={`tags=${tag.name}`} selected={data.filter?.includes(tag.name)}>
 						#{tag.name}
 					</option>
 				{/each}

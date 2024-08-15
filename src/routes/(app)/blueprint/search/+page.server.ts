@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
 
 export const load = (async ({ fetch, locals, url }) => {
-    const searchUrl = new URL('/api/v1/blueprint/search', url.origin);
+    const searchUrl = new URL('/api/v1/blueprint', url.origin);
     searchUrl.search = url.search;
     const response = await fetch(searchUrl.href);
 

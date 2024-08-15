@@ -1,0 +1,25 @@
+meta {
+  name: Login
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/v1/login
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  username: {{username}}
+  password: {{password}}
+}
+
+body:multipart-form {
+  username: smaschmann
+  password: asdfasdf
+}
+
+vars:post-response {
+  token: res.body.token
+}

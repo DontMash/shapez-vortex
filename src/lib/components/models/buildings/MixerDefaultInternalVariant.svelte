@@ -51,7 +51,6 @@ Command: npx @threlte/gltf@2.0.3 static/models/buildings/MixerDefaultInternalVar
       geometry={gltf.nodes.MixerFoundation.geometry}
       material={gltf.nodes.MixerFoundation.material}
       position={[0, 0.07, 0]}
-      rotation={[Math.PI, 0, Math.PI]}
     />
     <T.Mesh
       name="MixerGlas"
@@ -60,7 +59,6 @@ Command: npx @threlte/gltf@2.0.3 static/models/buildings/MixerDefaultInternalVar
       geometry={gltf.nodes.MixerGlas.geometry}
       material={gltf.nodes.MixerGlas.material}
       position={[0, 0.07, -0.02]}
-      rotation={[Math.PI, 0, Math.PI]}
     />
     <T.Mesh
       name="MixerRotator"
@@ -68,8 +66,7 @@ Command: npx @threlte/gltf@2.0.3 static/models/buildings/MixerDefaultInternalVar
       receiveShadow
       geometry={gltf.nodes.MixerRotator.geometry}
       material={gltf.nodes.MixerRotator.material}
-      position={[1, 0.09, -0.52]}
-      rotation={[Math.PI, 0, Math.PI]}
+      position={[-1, 0.09, 0.52]}
     />
   {:catch error}
     <slot name="error" {error} />

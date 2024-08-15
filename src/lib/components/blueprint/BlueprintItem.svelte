@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import type { BlueprintRecord } from '$lib/blueprint.types';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { add } from '$lib/client/toast.service';
@@ -63,7 +65,7 @@
 				{/if}
 			</div>
 		</div>
-		
+
 		<a class="link-hover link transition-colors hover:text-primary" href="/blueprint/{data.id}">
 			<h3 class="text-3xl font-bold">
 				{data.title}
@@ -91,11 +93,27 @@
 				<div class="flex items-center justify-end space-x-2">
 					<form
 						class="inline"
-						action="/blueprint/{data.id}?/deleteBlueprint"
+						action="/api/v1/blueprint"
 						method="post"
-						use:enhance
-						on:submit={() => deleteDialog.close()}
+						on:submit|preventDefault={async (event) => {
+							deleteDialog.close();
+
+							const url = new URL(event.currentTarget.action, $page.url.origin);
+							const formData = new FormData(event.currentTarget);
+							try {
+								const response = await fetch(url, { method: 'delete', body: formData });
+								if (!response.ok) {
+									return add({ message: 'Failed to delete blueprint', type: 'ERROR' });
+								}
+
+								await invalidateAll()
+								add({ message: 'Successfully deleted blueprint', type: 'SUCCESS' });
+							} catch (_) {
+								add({ message: 'Error while deleting blueprint', type: 'ERROR' });
+							}
+						}}
 					>
+						<input type="hidden" name="id" value={data.id} />
 						<button class="btn btn-error">
 							<span class="icon-[tabler--trash] text-2xl" />
 							Delete

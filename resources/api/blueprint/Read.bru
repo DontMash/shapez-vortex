@@ -1,0 +1,18 @@
+meta {
+  name: Read
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1/blueprint
+  body: none
+  auth: none
+}
+
+query {
+  ~sort: created
+  ~order: desc
+  ~filter: tags=asd,cutter,gg
+  ~query: te
+}
