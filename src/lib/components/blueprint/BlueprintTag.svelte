@@ -6,7 +6,7 @@
 
 <a
 	class="badge link-hover badge-primary badge-outline"
-	href="/blueprint/search?filter={encodeURIComponent(`tags=${data.id}`)}"
+	href="/blueprint/search?filter={encodeURIComponent(`tags=${data.name}`)}"
 >
 	#{data.name}
 </a>

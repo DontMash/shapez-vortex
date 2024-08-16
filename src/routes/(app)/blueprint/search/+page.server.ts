@@ -5,7 +5,7 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async ({ fetch, locals, url }) => {
 	const searchUrl = new URL('/api/v1/blueprint', url.origin);
-	searchUrl.search = url.search;
+	searchUrl.search = url.search;	
 	const response = await fetch(searchUrl);
 	if (!response.ok) {
 		return error(500, 'Failed to fetch blueprints');
@@ -22,7 +22,7 @@ export const load = (async ({ fetch, locals, url }) => {
 	const query = url.searchParams.get('query');
 	const filter = url.searchParams.get('filter');
 	const sort = url.searchParams.get('sort');
-	const order = url.searchParams.get('order');
+	const order = url.searchParams.get('order');	
 
 	return {
 		seo: {

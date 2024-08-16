@@ -1,12 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import { ZodIssueCode, type ZodError } from 'zod';
-import {
-	decode,
-	getBuildingCount,
-	getBuildings,
-	getCost,
-	getIslandCount
-} from '$lib/blueprint';
+import { decode, getBuildingCount, getBuildings, getCost, getIslandCount } from '$lib/blueprint';
 import {
 	BLUEPRINT_CREATE_SCHEMA,
 	BLUEPRINT_UPDATE_SCHEMA,
