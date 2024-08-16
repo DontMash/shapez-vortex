@@ -20,7 +20,7 @@ export const load = (async ({ depends, locals, params }) => {
 		let isBookmarked = false;
 		if (locals.user) {
 			const user = await locals.pb.collection('users').getOne<User>(locals.user?.id);
-			isBookmarked = user.blueprints.includes(blueprint.id);
+			isBookmarked = user.bookmarks.includes(blueprint.id);
 		}
 		if (locals.user && locals.user.verified && locals.user.id !== blueprint.creator) {
 			const pb = new PocketBase(POCKETBASE_URL);

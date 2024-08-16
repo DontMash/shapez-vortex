@@ -70,7 +70,7 @@
 									Report “{data.blueprint.entry.title}”
 								</h2>
 								<form class="space-y-2" action="?/reportBlueprint" method="post">
-									<input type="hidden" name="entry" value={data.blueprint.entry.id} />
+									<input type="hidden" name="blueprint" value={data.blueprint.entry.id} />
 
 									<label class="form-control" for="reason">
 										<div class="label">

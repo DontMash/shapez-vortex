@@ -15,14 +15,14 @@ export const actions = {
 			return fail(401);
 		}
 
-		const isBookmarked = locals.user.blueprints.includes(params.id);
+		const isBookmarked = locals.user.bookmarks.includes(params.id);
 		const pb = new PocketBase(POCKETBASE_URL);
 		await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
 		if (isBookmarked) {
-			await locals.pb.collection('users').update(locals.user.id, { 'blueprints-': params.id });
+			await locals.pb.collection('users').update(locals.user.id, { 'bookmarks-': params.id });
 			await pb.collection('blueprints').update(params.id, { 'bookmarkCount-': 1 });
 		} else {
-			await locals.pb.collection('users').update(locals.user.id, { 'blueprints+': params.id });
+			await locals.pb.collection('users').update(locals.user.id, { 'bookmarks+': params.id });
 			await pb.collection('blueprints').update(params.id, { 'bookmarkCount+': 1 });
 		}
 
@@ -62,18 +62,20 @@ export const actions = {
 				result[current.path[0]] = current.message;
 				return result;
 			}, {});
+			console.error(issues);
+			
 
 			return fail(400, { data: entries, issues, invalid: true });
 		}
 
 		const blueprint = await locals.pb
 			.collection<BlueprintRecord>('blueprints')
-			.getOne(result.data.entry);
+			.getOne(result.data.blueprint);
 		if (locals.user.id === blueprint.creator) {
 			return fail(403);
 		}
 
-		await locals.pb.collection('reports').create({ ...result.data, user: locals.user.id });
+		await locals.pb.collection('blueprintReports').create({ ...result.data, user: locals.user.id });
 		return { success: true };
 	}
 } satisfies Actions;

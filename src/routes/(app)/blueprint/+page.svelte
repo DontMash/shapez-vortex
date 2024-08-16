@@ -13,7 +13,7 @@
 
 <section class="mx-auto w-full max-w-5xl">
 	<header
-		class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
+		class="mb-12 border-b border-base-content/20 px-4 pb-4"
 	>
 		<hgroup>
 			<h2 class="text-lg font-bold">
