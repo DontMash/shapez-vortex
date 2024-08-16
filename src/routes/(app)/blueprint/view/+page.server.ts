@@ -1,5 +1,5 @@
-import { error, fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad, Actions } from './$types';
+import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { decode, isBlueprintIdentifier } from '$lib/blueprint';
 
@@ -28,24 +28,3 @@ export const load = (async ({ url }) => {
         error(400, 'Invalid blueprint identifier - decode');
     }
 }) satisfies PageServerLoad;
-
-export const actions = {
-    upload: async ({ request, url }) => {
-        const formData = await request.formData();
-
-        const file = formData.get('file') as File;
-        if (!file)
-            return fail(400);
-
-        const buffer = await file.arrayBuffer();
-        const codec = new TextDecoder();
-        const blueprintIdentifier = codec.decode(buffer);
-
-        if (blueprintIdentifier.length > 12500) {
-            return fail(400);
-        }
-
-        url.searchParams.set('identifier', blueprintIdentifier);
-        redirect(303, url);
-    }
-} satisfies Actions;

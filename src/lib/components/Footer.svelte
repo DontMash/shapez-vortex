@@ -35,12 +35,12 @@
 		<nav>
 			<h4 class="footer-title">Game</h4>
 			<div>
-				<span> Follow shapez 2 </span>
+				<span> Follow Shapez 2 </span>
 				<ul class="ml-1 inline-flex space-x-1.5 divide-x divide-base-content">
 					<li>
 						<a
 							class="link transition-colors hover:text-primary"
-							title="shapez 2 Website"
+							title="Shapez 2 Website"
 							href="https://shapez2.com/"
 							target="_blank"
 							rel="noreferrer"
@@ -130,7 +130,7 @@
 				target="_blank"
 				rel="noreferrer"
 			>
-				Visit shapez 2 Wiki
+				Visit Shapez 2 Wiki
 			</a>
 		</nav>
 		<nav>

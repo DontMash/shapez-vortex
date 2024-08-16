@@ -11,7 +11,7 @@
 			<div class="max-w-lg">
 				<h2 class="text-4xl font-bold md:text-5xl">Shapez Vortex</h2>
 				<p class="py-6 text-2xl md:text-3xl">
-					Discover, interact and share shapez 2 content with the community!
+					Discover, interact and share Shapez 2 content with the community!
 				</p>
 				<ul class="flex justify-center space-x-4">
 					<li>

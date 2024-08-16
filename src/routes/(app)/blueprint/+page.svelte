@@ -79,7 +79,7 @@
 		</div>
 	</form>
 
-	<form class="mt-4" action="/blueprint/view/?/upload" method="post" enctype="multipart/form-data">
+	<form class="mt-4" action="/blueprint/?/upload" method="post" enctype="multipart/form-data">
 		<label class="btn btn-primary btn-block" for="blueprint-file">
 			<input
 				class="sr-only"

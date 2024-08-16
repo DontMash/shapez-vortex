@@ -89,7 +89,7 @@
 						<form
 							class="btn btn-square btn-primary join-item"
 							method="post"
-							action="/blueprint/view/?/upload"
+							action="/blueprint/?/upload"
 							enctype="multipart/form-data"
 						>
 							<label class="flex h-full w-full items-center justify-center" for="blueprint-file">
