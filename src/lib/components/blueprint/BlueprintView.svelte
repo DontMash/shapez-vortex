@@ -78,7 +78,7 @@
 	}
 </script>
 
-<figure class="aspect-h-3 aspect-w-4 relative" bind:this={viewer}>
+<figure class="{isFullscreen ? '' : 'aspect-h-3 aspect-w-4'} relative" bind:this={viewer}>
 	{#if controls}
 		<div
 			class="absolute left-1/2 top-0 z-10 flex h-fit w-fit -translate-x-1/2 justify-center space-x-4 p-4"
@@ -190,7 +190,7 @@
 	{/if}
 
 	<div
-		class="overflow-hidden border-base-content/20 bg-base-100 shadow-lg outline-none transition-[border-radius] {!isFullscreen
+		class="h-full overflow-hidden border-base-content/20 bg-base-100 shadow-lg outline-none transition-[border-radius] {!isFullscreen
 			? 'border lg:rounded-4xl'
 			: ''}"
 	>

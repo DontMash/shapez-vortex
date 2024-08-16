@@ -70,7 +70,7 @@
 	};
 </script>
 
-<figure class="{isFullscreen ? '' : ''} relative bg-base-100" bind:this={viewer}>
+<figure class="relative bg-base-100" bind:this={viewer}>
 	<div class="mx-auto max-w-[100vh]">
 		<div
 			class="left-0 right-0 top-0 z-10 mx-auto flex h-fit flex-wrap justify-center gap-4 px-4 pt-4 sm:absolute"
