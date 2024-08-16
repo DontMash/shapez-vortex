@@ -33,8 +33,8 @@
 
 	let imagesFileinputElement: HTMLInputElement;
 	let previewImages: Array<File> = [];
-
 	const MAX_IMAGES = BLUEPRINT_IMAGES_MAX - 1;
+
 	function onPreviewImageFileChange(event: Event) {
 		const inputElement = event.target as HTMLInputElement;
 		if (!inputElement || !inputElement.files) return;
@@ -124,7 +124,7 @@
 				list.items.add(new File([blob], 'preview.png', { type: 'image/png' }));
 				previewImages.forEach((image) => list.items.add(image));
 				imagesFileinputElement.files = list.files;
-				
+
 				form.submit();
 			});
 		}}
@@ -187,6 +187,37 @@
 					<span class="label-text-alt italic text-error">{$page.form.issues['data']}</span>
 				</div>
 			{/if}
+		</label>
+
+		<label class="relative mt-4 hidden md:block" for="blueprint-file">
+			<input
+				class="input input-bordered h-32 w-full [text-indent:-9999rem]"
+				type="file"
+				id="blueprint-file"
+				multiple
+				on:change={async (event) => {
+					const input = event.currentTarget;
+					const files = input.files;
+					if (!files || files.length <= 0) return;
+
+					const file = files.item(0);
+					if (!file) return;
+
+					const buffer = await file.arrayBuffer();
+					const codec = new TextDecoder();
+					const blueprintIdentifier = codec.decode(buffer);
+					if (!isBlueprintIdentifier(blueprintIdentifier)) {
+						return add({ message: 'Invalid blueprint file', type: 'ERROR' });
+					}
+
+					identifier = blueprintIdentifier;
+					input.files = null;
+				}}
+			/>
+			<div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+				<span class="icon-[tabler--file-upload] size-8 align-middle" />
+				<span>Blueprint file</span>
+			</div>
 		</label>
 
 		<details class="collapse collapse-arrow mt-4 rounded-btn bg-base-200">
