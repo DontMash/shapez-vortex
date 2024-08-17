@@ -3,6 +3,7 @@
 	import { add } from '$lib/client/toast.service';
 	import { decode, isBlueprintIdentifier } from '$lib/blueprint';
 	import {
+	BLUEPRINT_FILE_FORMAT,
 		BLUEPRINT_IDENTIFIER_REGEX,
 		BLUEPRINT_IMAGES_MAX,
 		BLUEPRINT_IMAGE_MAX_FILE_SIZE,
@@ -194,6 +195,7 @@
 				class="input input-bordered h-32 w-full [text-indent:-9999rem]"
 				type="file"
 				id="blueprint-file"
+				accept={BLUEPRINT_FILE_FORMAT}
 				multiple
 				on:change={async (event) => {
 					const input = event.currentTarget;
