@@ -1,11 +1,12 @@
 <script lang="ts">
-	import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
 	import type { PageData } from './$types';
+
+	import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
 
 	export let data: PageData;
 </script>
 
-<section class="mx-auto w-full max-w-5xl px-4 lg:px-0 md:mt-8" id="hero">
+<section class="mx-auto w-full max-w-5xl px-4 md:mt-8 lg:px-0" id="hero">
 	<div class="hero rounded-4xl bg-base-200 p-8 md:p-12">
 		<div class="hero-content text-center">
 			<div class="max-w-lg">
@@ -30,7 +31,7 @@
 	</div>
 </section>
 
-<section class="mx-auto mt-16 md:mt-24 w-full max-w-5xl px-4 lg:px-0" id="features">
+<section class="mx-auto mt-16 w-full max-w-5xl px-4 md:mt-24 lg:px-0" id="features">
 	<div class="mx-auto grid max-w-screen-sm grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3 lg:gap-4">
 		<h2 class="sr-only">Features</h2>
 
@@ -114,8 +115,10 @@
 	</div>
 </section>
 
-<section class="mx-auto mt-16 md:mt-24 md:mb-8 w-full max-w-5xl px-4 lg:px-0" id="latest">
-	<h2 class="text-3xl font-bold md:text-4xl mb-4">Latest blueprints</h2>
+{#if data.latestBlueprints && data.latestBlueprintImages}
+	<section class="mx-auto mt-16 w-full max-w-5xl px-4 md:mb-8 md:mt-24 lg:px-0" id="latest">
+		<h2 class="mb-4 text-3xl font-bold md:text-4xl">Latest blueprints</h2>
 
-	<BlueprintItemList items={data.result.items} images={data.images} />
-</section>
+		<BlueprintItemList items={data.latestBlueprints} images={data.latestBlueprintImages} />
+	</section>
+{/if}

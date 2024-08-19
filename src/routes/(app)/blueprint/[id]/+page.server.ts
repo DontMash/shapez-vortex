@@ -62,8 +62,6 @@ export const actions = {
 				result[current.path[0]] = current.message;
 				return result;
 			}, {});
-			console.error(issues);
-			
 
 			return fail(400, { data: entries, issues, invalid: true });
 		}

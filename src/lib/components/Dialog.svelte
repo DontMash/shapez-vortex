@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let width: 'full' | 'auto' = 'auto';
+	export let align: 'top' | 'center' = 'center';
 
 	let dialog: HTMLDialogElement;
 
@@ -16,9 +17,9 @@
 
 <dialog class="modal backdrop-blur" on:close bind:this={dialog}>
 	<div
-		class={`modal-box min-h-16 overflow-hidden border border-base-200 p-0 ${
-			width === 'full' ? 'max-w-none' : ''
-		}`}
+		class="modal-box min-h-16 overflow-hidden border border-base-200 p-0 {width === 'full'
+			? 'max-w-none'
+			: ''} {align === 'top' ? 'absolute top-4' : ''}"
 	>
 		<slot />
 

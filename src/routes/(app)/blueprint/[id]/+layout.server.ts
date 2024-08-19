@@ -47,8 +47,6 @@ export const load = (async ({ depends, locals, params }) => {
 			}
 		};
 	} catch (err) {
-		console.error(err);
-
 		error(404, 'Blueprint not found');
 	}
 }) satisfies LayoutServerLoad;

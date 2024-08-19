@@ -92,7 +92,7 @@
 		{#key $page}
 			<div class="mt-8 flex justify-center">
 				<div class="join">
-					{#if data.result.totalPages > 5}
+					{#if data.result.totalPages > 3}
 						<a
 							class="btn btn-square join-item"
 							title="Go to the first page of results"
@@ -134,7 +134,7 @@
 							<span class="icon-[tabler--chevron-right] text-2xl">Next</span>
 						</a>
 					{/if}
-					{#if data.result.totalPages > 5}
+					{#if data.result.totalPages > 3}
 						<a
 							class="btn btn-square join-item"
 							title="Go to the last page of results"
