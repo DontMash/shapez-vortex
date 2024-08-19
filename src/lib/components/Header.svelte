@@ -148,7 +148,8 @@
 						{#each blueprints as blueprint}
 							<Command.Item
 								class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-								value={blueprint.title + blueprint.id}
+								id={blueprint.id}
+								value={blueprint.title}
 								onSelect={() => command(() => goto(`/blueprint/${blueprint.id}`))}
 							>
 								<span class="icon-[tabler--schema] text-lg" />
