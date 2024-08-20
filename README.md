@@ -114,93 +114,7 @@ To setup, install & develop you may need some tools:
 
 ## Roadmap
 
-* User
-  * Report
-  * Follow?
-  * Settings
-    * Linear-Upgrades
-  * Recommended/Popular
-* Blueprints
-  * Upload
-    * Combobox for tags
-    * Richtext-Editor for description
-    * bookmarks as view collection in pb
-    * Spoiler (Option/Warning)
-  * Library
-    * Search
-    * Filter
-    * Sort
-    * Pagination
-  * Blueprint Viewer
-    * Instructions
-      * How to
-      * Examples
-    * Layers
-      * Select
-      * Toggle
-    * Instancing
-    * Overview
-      * Building count
-      * Island count
-      * List of Buildings
-      * Blueprint cost
-    * Geometry details
-      * Belt arrows
-      * Building decorations/props
-      * Glass material
-    * Drag & Drop to view file
-  * Simulation?
-    * Shape Input/Output
-    * Step by Step?
-  * Builder?
-  * Steam Workshop link
-* Progression Editor
-  * Shape images
-  * Share entry
-  * Unlocks
-  * Search
-    * Title
-    * Shape
-    * Unlocks
-  * Filter
-  * Sort
-* Shapes
-  * Viewer
-    * Instructions (similar to [S1-Viewer](https://viewer.shapez.io))
-      * How to
-      * Types (C,R,S,W,P)
-      * Color (r,g,b,c,m,y,w,k)
-      * Examples
-    * Randomize
-      * Shuffle (keep parts)
-      * Bias
-        * Layers
-        * Parts
-      * Types
-      * Colors
-    * Accessibility Features
-    * Builder?
-* Mods
-* Savegame editor
-* Solution calculator
-  * Inputs/Outputs for blueprint
-  * Process chain
-* Quality Assurance
-  * Custom PocketBase verification/email pages
-  * Better form responses & errors
-  * Content filters (Profanity, ...)
-  * Responsiveness (Device/Platform)
-  * Accessibility
-    * WCAG v2.2
-  * SEO
-    * Preview image
-    * Content update
-  * Tests
-    * Server-Side
-    * Client-Side
-    * Code coverage
-    * Visuals
-* Shapez-Vortex Logo
+Visit the [project overview][project-url] to see what we are currently working.
 
 See the [open issues][issues-url] for a full list of proposed features (and known issues).
 
@@ -237,15 +151,15 @@ Distributed under the MIT License. See [`LICENSE`][license-url] for more informa
 
 Sören Maschmann - [E-Mail](mailto:work@soren.codes)
 
-[Project Link][repo-url]
+[Repository Link][repo-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS -->
-<!-- IMAGES -->
 [repo-url]: https://github.com/DontMash/shapez-vortex
 [product-url]: https://shapez.soren.codes
 [product-image]: resources/images/product.png
+[project-url]: https://github.com/users/DontMash/projects/2/views/1
 
 <!-- SHIELDS -->
 [stars-shield]: https://img.shields.io/github/stars/DontMash/shapez-vortex.svg?style=for-the-badge
