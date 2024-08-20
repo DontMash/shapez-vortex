@@ -536,6 +536,8 @@ const getCompatibleBlueprintBuildingType = (type: BlueprintBuildingIdentifier) =
 			return 'WireDefault2UpLeftInternalVariantMirrored';
 		case 'CutterMirroredInternalVariant':
 			return 'CutterDefaultInternalVariantMirrored';
+		case 'StackerMirroredInternalVariant':
+			return 'StackerDefaultInternalVariantMirrored';
 		case 'FluidBridgeSenderInternalVariant':
 			return 'FluidPortSenderInternalVariant';
 		case 'FluidBridgeReceiverInternalVariant':
