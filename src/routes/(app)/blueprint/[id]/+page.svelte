@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { add } from '$lib/client/toast.service';
@@ -279,7 +279,7 @@
 		class="flex flex-col divide-y divide-base-content/20 bg-base-200 md:flex-col-reverse md:divide-y-reverse"
 	>
 		<div
-			class="grid grow grid-flow-col grid-cols-2 grid-rows-4 gap-2 p-4 md:grid-flow-row md:grid-cols-1 md:grid-rows-none"
+			class="grid grow grid-flow-col grid-cols-2 grid-rows-4 place-content-start gap-2 p-4 md:grid-flow-row md:grid-cols-1 md:grid-rows-none"
 		>
 			<div class="flex items-center space-x-4">
 				<span class="icon-[tabler--square-rounded-letter-t] text-2xl text-primary">
