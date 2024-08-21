@@ -3,11 +3,10 @@
 	import { add } from '$lib/client/toast.service';
 	import { decode, isBlueprintIdentifier } from '$lib/blueprint';
 	import {
-	BLUEPRINT_FILE_FORMAT,
+		BLUEPRINT_FILE_FORMAT,
 		BLUEPRINT_IDENTIFIER_REGEX,
 		BLUEPRINT_IMAGES_MAX,
 		BLUEPRINT_IMAGE_MAX_FILE_SIZE,
-		BLUEPRINT_TAGS_REGEX,
 		BLUEPRINT_TITLE_MAX_LENGTH,
 		BLUEPRINT_TITLE_MIN_LENGTH,
 		BLUEPRINT_TITLE_REGEX,
@@ -16,6 +15,7 @@
 	} from '$lib/blueprint.types';
 	import type { PageData } from './$types';
 
+	import BlueprintTagCombobox from '$lib/components/blueprint/BlueprintTagCombobox.svelte';
 	import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
 
 	export let data: PageData;
@@ -222,46 +222,13 @@
 			</div>
 		</label>
 
-		<details class="collapse collapse-arrow mt-4 rounded-btn bg-base-200">
+		<details class="collapse collapse-arrow mt-4 rounded-btn bg-base-200" open>
 			<summary class="collapse-title !flex cursor-pointer items-center text-sm">
 				Additional information
 			</summary>
+
 			<div class="collapse-content">
-				<label class="form-control" for="tags">
-					<div class="label">
-						<span class="label-text">
-							Tags <span class="text-xs text-base-300">(optional)</span>
-						</span>
-						<i class="label-text-alt">comma seperated list</i>
-					</div>
-					{#if $page.form && $page.form.invalid}
-						<input
-							class={`input input-bordered text-sm placeholder:italic ${
-								$page.form.issues['tags'] ? 'input-error' : ''
-							}`}
-							type="text"
-							name="tags"
-							id="tags"
-							value={$page.form.data.tags}
-							placeholder="efficient, compact, ..."
-							pattern={BLUEPRINT_TAGS_REGEX.source}
-						/>
-						{#if $page.form.issues['tags']}
-							<div class="label">
-								<span class="label-text-alt italic text-error">{$page.form.issues['tags']}</span>
-							</div>
-						{/if}
-					{:else}
-						<input
-							class="input input-bordered text-sm placeholder:italic"
-							type="text"
-							name="tags"
-							id="tags"
-							placeholder="efficient, compact, ..."
-							pattern={BLUEPRINT_TAGS_REGEX.source}
-						/>
-					{/if}
-				</label>
+				<BlueprintTagCombobox data={data.tags} />
 
 				<label class="form-control h-64" for="description">
 					<div class="label">
@@ -385,7 +352,7 @@
 			</div>
 		</details>
 
-		<div class="mt-2">
+		<div class="-mx-4 mt-2 lg:mx-0">
 			<div class="label ml-4">
 				<span class="label-text">Blueprint preview image</span>
 			</div>

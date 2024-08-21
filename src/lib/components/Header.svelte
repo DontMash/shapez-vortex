@@ -144,7 +144,7 @@
 			{#if searchValue}
 				{@const blueprints = $page.data.searchBlueprints}
 				{#if blueprints.length > 0}
-					<Command.Group class="[&>[data-cmdk-group-heading]]:text-xs" heading="Blueprints">
+					<Command.Group class="[&>[data-cmdk-group-heading]]:text-xs" heading="Blueprints" alwaysRender>
 						{#each blueprints as blueprint}
 							<Command.Item
 								class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
@@ -163,7 +163,7 @@
 						{/each}
 						<Command.Item
 							class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-							alwaysRender={true}
+							alwaysRender
 							onSelect={() => command(() => searchBlueprints(searchValue))}
 						>
 							<span class="icon-[tabler--search] text-lg" />

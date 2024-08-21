@@ -16,6 +16,7 @@
 	import type { PageData } from './$types';
 
 	import Dialog from '$lib/components/Dialog.svelte';
+	import BlueprintTagCombobox from '$lib/components/blueprint/BlueprintTagCombobox.svelte';
 
 	export let data: PageData;
 
@@ -246,43 +247,9 @@
 			<summary class="collapse-title !flex cursor-pointer items-center text-sm">
 				Additional information
 			</summary>
+
 			<div class="collapse-content">
-				<label class="form-control" for="tags">
-					<div class="label">
-						<span class="label-text">
-							Tags <span class="text-xs text-base-300">(optional)</span>
-						</span>
-						<i class="label-text-alt">comma seperated list</i>
-					</div>
-					{#if $page.form && $page.form.invalid}
-						<input
-							class={`input input-bordered text-sm placeholder:italic ${
-								$page.form.issues['tags'] ? 'input-error' : ''
-							}`}
-							type="text"
-							name="tags"
-							id="tags"
-							value={$page.form.data.tags}
-							placeholder="efficient, compact, ..."
-							pattern={BLUEPRINT_TAGS_REGEX.source}
-						/>
-						{#if $page.form.issues['tags']}
-							<div class="label">
-								<span class="label-text-alt italic text-error">{$page.form.issues['tags']}</span>
-							</div>
-						{/if}
-					{:else}
-						<input
-							class="input input-bordered text-sm placeholder:italic"
-							type="text"
-							name="tags"
-							id="tags"
-							value={tags.join(', ')}
-							placeholder="efficient, compact, ..."
-							pattern={BLUEPRINT_TAGS_REGEX.source}
-						/>
-					{/if}
-				</label>
+				<BlueprintTagCombobox data={data.tags} value={data.blueprint.entry.expand?.tags} />
 
 				<label class="form-control h-64" for="description">
 					<div class="label">
