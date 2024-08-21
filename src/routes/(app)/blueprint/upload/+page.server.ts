@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { ZodError } from 'zod';
-import type { BlueprintRecord } from '$lib/blueprint.types';
+import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
@@ -8,12 +8,15 @@ export const load = (async ({ locals }) => {
 		redirect(303, '/settings/account');
 	}
 
+	const tags = await locals.pb.collection<BlueprintTag>('tags').getFullList();
+
 	return {
 		seo: {
 			title: 'Upload Blueprint',
 			description: 'Share your blueprint with the community.',
 			keywords: ['Blueprint', 'Upload']
-		}
+		},
+		tags
 	};
 }) satisfies PageServerLoad;
 

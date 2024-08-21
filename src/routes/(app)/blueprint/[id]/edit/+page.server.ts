@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { ZodError } from 'zod';
-import type { BlueprintRecord } from '$lib/blueprint.types';
+import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals, parent, url }) => {
@@ -17,11 +17,14 @@ export const load = (async ({ locals, parent, url }) => {
 		redirect(303, '/settings/account');
 	}
 
+	const tags = await locals.pb.collection<BlueprintTag>('tags').getFullList();
+
 	return {
 		seo: {
 			title: `Edit blueprint - ${data.blueprint.entry.title}`,
 			description: 'Update your blueprint with new or more information.'
-		}
+		},
+		tags
 	};
 }) satisfies PageServerLoad;
 

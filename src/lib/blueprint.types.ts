@@ -67,9 +67,12 @@ export const BLUEPRINT_TITLE_REGEX = new RegExp(
 const BLUEPRINT_DESCRIPTION_MAX_LENGTH = 2048;
 export const BLUEPRINT_TAG_MIN_LENGTH = 3;
 export const BLUEPRINT_TAG_MAX_LENGTH = 24;
+export const BLUEPRINT_TAG_REGEX = new RegExp(
+	`[\\w-]{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}}`
+);
 export const BLUEPRINT_TAGS_MAX = 8;
 export const BLUEPRINT_TAGS_REGEX = new RegExp(
-	`^\\s*([\\w-]{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}}(\\s*,+\\s*[\\w-]{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}})*)?\\s*$`
+	`^\\s*(${BLUEPRINT_TAG_REGEX.source}(\\s*,+\\s*${BLUEPRINT_TAG_REGEX.source})*)?\\s*$`
 );
 export const BLUEPRINT_IMAGE_MAX_FILE_SIZE = 1048576;
 const BLUEPRINT_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'] as const;
