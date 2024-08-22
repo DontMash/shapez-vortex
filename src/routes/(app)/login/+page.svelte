@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Page } from '@sveltejs/kit';
 	import { page } from '$app/stores';
-	import type { PageData } from './$types';
 	import { PASSWORD_MIN_LENGTH, USERNAME_REGEX } from '$lib/user.types';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 
