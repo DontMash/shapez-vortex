@@ -20,14 +20,21 @@
 
 	export let data: PageData;
 
-	let identifier: BlueprintIdentifier;
+	let blueprintIdentifier: BlueprintIdentifier;
 	let blueprint: Blueprint | undefined;
+	let blueprintTitle: string;
 	$: {
 		try {
-			blueprint = isBlueprintIdentifier(identifier) ? decode(identifier) : undefined;
+			blueprint = isBlueprintIdentifier(blueprintIdentifier)
+				? decode(blueprintIdentifier)
+				: undefined;
 		} catch (error) {
 			blueprint = undefined;
 			add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
+		}
+
+		if ($page.form && $page.form.invalid && $page.form.data.title) {
+			blueprintTitle = $page.form.data.title;
 		}
 	}
 	let view: BlueprintView;
@@ -134,38 +141,26 @@
 			<div class="label">
 				<span class="label-text">Title</span>
 			</div>
-			{#if $page.form && $page.form.invalid}
-				<input
-					class={`input input-bordered text-sm placeholder:italic ${
-						$page.form.issues['title'] ? 'input-error' : ''
-					}`}
-					type="text"
-					name="title"
-					id="title"
-					value={$page.form.data.title}
-					placeholder="My blueprint ..."
-					minlength={BLUEPRINT_TITLE_MIN_LENGTH}
-					maxlength={BLUEPRINT_TITLE_MAX_LENGTH}
-					pattern={BLUEPRINT_TITLE_REGEX.source}
-					required
-				/>
-				{#if $page.form.issues['title']}
-					<div class="label">
-						<span class="label-text-alt italic text-error">{$page.form.issues['title']}</span>
-					</div>
-				{/if}
-			{:else}
-				<input
-					class="input input-bordered text-sm placeholder:italic"
-					type="text"
-					name="title"
-					id="title"
-					placeholder="My blueprint ..."
-					minlength={BLUEPRINT_TITLE_MIN_LENGTH}
-					maxlength={BLUEPRINT_TITLE_MAX_LENGTH}
-					pattern={BLUEPRINT_TITLE_REGEX.source}
-					required
-				/>
+			<input
+				class="input input-bordered text-sm placeholder:italic {$page.form &&
+				$page.form.invalid &&
+				$page.form.issues['title']
+					? 'input-error'
+					: ''}"
+				type="text"
+				name="title"
+				id="title"
+				placeholder="My blueprint ..."
+				minlength={BLUEPRINT_TITLE_MIN_LENGTH}
+				maxlength={BLUEPRINT_TITLE_MAX_LENGTH}
+				pattern={BLUEPRINT_TITLE_REGEX.source}
+				required
+				bind:value={blueprintTitle}
+			/>
+			{#if $page.form && $page.form.invalid && $page.form.issues['title']}
+				<div class="label">
+					<span class="label-text-alt italic text-error">{$page.form.issues['title']}</span>
+				</div>
 			{/if}
 		</label>
 
@@ -181,7 +176,7 @@
 				placeholder="SHAPEZ-2 ... $"
 				pattern={BLUEPRINT_IDENTIFIER_REGEX.source}
 				required
-				bind:value={identifier}
+				bind:value={blueprintIdentifier}
 			/>
 			{#if $page.form && $page.form.invalid && $page.form.issues['data']}
 				<div class="label">
@@ -192,7 +187,7 @@
 
 		<label class="relative mt-4 hidden md:block" for="blueprint-file">
 			<input
-				class="input input-bordered h-32 w-full [text-indent:-9999rem] cursor-pointer"
+				class="input input-bordered h-32 w-full cursor-pointer [text-indent:-9999rem]"
 				type="file"
 				id="blueprint-file"
 				accept={BLUEPRINT_FILE_FORMAT}
@@ -207,13 +202,16 @@
 
 					const buffer = await file.arrayBuffer();
 					const codec = new TextDecoder();
-					const blueprintIdentifier = codec.decode(buffer);
-					if (!isBlueprintIdentifier(blueprintIdentifier)) {
+					const identifier = codec.decode(buffer);
+					if (!isBlueprintIdentifier(identifier)) {
 						return add({ message: 'Invalid blueprint file', type: 'ERROR' });
 					}
 
-					identifier = blueprintIdentifier;
+					blueprintIdentifier = identifier;
+					if (!blueprintTitle) blueprintTitle = file.name.slice(0, -BLUEPRINT_FILE_FORMAT.length);
 					input.files = null;
+
+					add({ message: 'Updated blueprint identifier', type: 'SUCCESS' });
 				}}
 			/>
 			<div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -356,7 +354,7 @@
 			<div class="label ml-4">
 				<span class="label-text">Blueprint preview image</span>
 			</div>
-			<BlueprintView {identifier} {blueprint} controls={{}} bind:this={view} />
+			<BlueprintView identifier={blueprintIdentifier} {blueprint} controls={{}} bind:this={view} />
 		</div>
 
 		<button class="btn btn-primary btn-block mt-4">Upload</button>

@@ -237,9 +237,12 @@
 				{#if blueprint.BP.$type === 'Island'}
 					{#each blueprint.BP.Entries as islandEntry}
 						<T.Group position={getBlueprintIslandPosition(islandEntry)}>
-							{#each islandEntry.B.Entries as buildingEntry}
-								<BlueprintBuilding entry={buildingEntry} />
-							{/each}
+							{@const islandBlueprint = islandEntry.B}
+							{#if islandBlueprint}
+								{#each islandBlueprint.Entries as buildingEntry}
+									<BlueprintBuilding entry={buildingEntry} />
+								{/each}
+							{/if}
 						</T.Group>
 					{/each}
 				{/if}

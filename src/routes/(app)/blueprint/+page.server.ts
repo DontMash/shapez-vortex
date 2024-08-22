@@ -54,7 +54,8 @@ export const actions = {
 			return fail(400);
 		}
 
-		url.searchParams.set('identifier', blueprintIdentifier);
-		redirect(303, url);
+		const blueprintUrl = new URL('/blueprint/view', url.origin);
+		blueprintUrl.searchParams.set('identifier', blueprintIdentifier);
+		redirect(303, blueprintUrl);
 	}
 } satisfies Actions;
