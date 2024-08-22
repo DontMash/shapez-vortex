@@ -28,6 +28,7 @@
 
 	let identifier: BlueprintIdentifier;
 	let blueprint: Blueprint | undefined;
+	let blueprintTitle: string = data.blueprint.entry.title;
 	$: {
 		identifier = data.blueprint.entry.data;
 
@@ -36,6 +37,10 @@
 		} catch (error) {
 			blueprint = undefined;
 			add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
+		}
+
+		if ($page.form && $page.form.invalid && $page.form.data.title) {
+			blueprintTitle = $page.form.data.title;
 		}
 	}
 	let view: BlueprintView;
@@ -221,39 +226,26 @@
 			<div class="label">
 				<span class="label-text">Title</span>
 			</div>
-			{#if $page.form && $page.form.invalid}
-				<input
-					class={`input input-bordered text-sm placeholder:italic ${
-						$page.form.issues['title'] ? 'input-error' : ''
-					}`}
-					type="text"
-					name="title"
-					id="title"
-					value={$page.form.data.title}
-					placeholder="My blueprint ..."
-					minlength={BLUEPRINT_TITLE_MIN_LENGTH}
-					maxlength={BLUEPRINT_TITLE_MAX_LENGTH}
-					pattern={BLUEPRINT_TITLE_REGEX.source}
-					required
-				/>
-				{#if $page.form.issues['title']}
-					<div class="label">
-						<span class="label-text-alt italic text-error">{$page.form.issues['title']}</span>
-					</div>
-				{/if}
-			{:else}
-				<input
-					class="input input-bordered text-sm placeholder:italic"
-					type="text"
-					name="title"
-					id="title"
-					value={data.blueprint.entry.title}
-					placeholder="My blueprint ..."
-					minlength={BLUEPRINT_TITLE_MIN_LENGTH}
-					maxlength={BLUEPRINT_TITLE_MAX_LENGTH}
-					pattern={BLUEPRINT_TITLE_REGEX.source}
-					required
-				/>
+			<input
+				class="input input-bordered text-sm placeholder:italic {$page.form &&
+				$page.form.invalid &&
+				$page.form.issues['title']
+					? 'input-error'
+					: ''}"
+				type="text"
+				name="title"
+				id="title"
+				placeholder="My blueprint ..."
+				minlength={BLUEPRINT_TITLE_MIN_LENGTH}
+				maxlength={BLUEPRINT_TITLE_MAX_LENGTH}
+				pattern={BLUEPRINT_TITLE_REGEX.source}
+				required
+				bind:value={blueprintTitle}
+			/>
+			{#if $page.form && $page.form.invalid && $page.form.issues['title']}
+				<div class="label">
+					<span class="label-text-alt italic text-error">{$page.form.issues['title']}</span>
+				</div>
 			{/if}
 		</label>
 
@@ -301,7 +293,10 @@
 					}
 
 					identifier = blueprintIdentifier;
+					if (!blueprintTitle) blueprintTitle = file.name.slice(0, -BLUEPRINT_FILE_FORMAT.length);
 					input.files = null;
+
+					add({ message: 'Updated blueprint identifier', type: 'SUCCESS' });
 				}}
 			/>
 			<div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

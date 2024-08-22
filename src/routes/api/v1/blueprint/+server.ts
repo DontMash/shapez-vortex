@@ -98,20 +98,25 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 		tags = await Promise.all(promises);
 	}
 
-	const blueprint = decode(result.data.data);
-	const buildings = getBuildings(blueprint);
-	const buildingCount = getBuildingCount(blueprint);
-	const islandCount = getIslandCount(blueprint);
-	const blueprintCost = getCost(buildingCount);
-
+	const {
+		title,
+		data,
+		description,
+		images,
+		blueprint,
+		cost,
+		buildings,
+		buildingCount,
+		islandCount
+	} = result.data;
 	const blueprintFormData = new FormData();
-	blueprintFormData.append('title', result.data.title);
-	blueprintFormData.append('data', result.data.data);
-	blueprintFormData.append('description', result.data.description ?? '');
-	result.data.images?.forEach((image) => blueprintFormData.append('images', image));
+	blueprintFormData.append('title', title);
+	blueprintFormData.append('data', data);
+	blueprintFormData.append('description', description ?? '');
+	images?.forEach((image) => blueprintFormData.append('images', image));
 	tags.forEach((tag) => blueprintFormData.append('tags', tag.id));
 	blueprintFormData.append('type', blueprint.BP.$type);
-	blueprintFormData.append('cost', blueprintCost.toString());
+	blueprintFormData.append('cost', cost.toString());
 	blueprintFormData.append('buildings', JSON.stringify(Object.fromEntries(buildings)));
 	blueprintFormData.append('buildingCount', buildingCount.toString());
 	blueprintFormData.append('islandCount', islandCount.toString());
@@ -191,7 +196,31 @@ export const PUT: RequestHandler = async ({ locals, request }) => {
 	if (result.data.data) {
 		const blueprint = decode(result.data.data);
 		const buildings = getBuildings(blueprint);
+		if (buildings.size <= 0) {
+			const error: Pick<ZodError, 'issues'> = {
+				issues: [
+					{
+						code: ZodIssueCode.custom,
+						path: [],
+						message: 'Minimum of one building entry required'
+					}
+				]
+			};
+			return json(error, { status: 400 });
+		}
 		const buildingCount = getBuildingCount(blueprint);
+		if (buildings.size <= 0) {
+			const error: Pick<ZodError, 'issues'> = {
+				issues: [
+					{
+						code: ZodIssueCode.custom,
+						path: [],
+						message: 'Minimum of one building required'
+					}
+				]
+			};
+			return json(error, { status: 400 });
+		}
 		const islandCount = getIslandCount(blueprint);
 		const blueprintCost = getCost(buildingCount);
 

@@ -12,17 +12,9 @@ import {
 	BLUEPRINT_IDENTIFIER_SUFFIX,
 	BLUEPRINT_IDENTIFIER_VERSION,
 	BLUEPRINT_IDENTIFIER_REGEX,
-	BLUEPRINT_TYPES,
-	type BlueprintBuildingIdentifier
+	type BlueprintBuildingIdentifier,
+	BLUEPRINT_SCHEMA
 } from '$lib/blueprint.types';
-
-const BLUEPRINT_SCHEMA = z.object({
-	V: z.number(),
-	BP: z.object({
-		$type: z.enum(BLUEPRINT_TYPES),
-		Entries: z.any().array()
-	})
-});
 
 export function update(
 	value: BlueprintIdentifier,
@@ -74,7 +66,12 @@ function fix(value: Blueprint): Blueprint {
 	return { ...value, BP: bp };
 }
 function fixBlueprintIsland(value: BlueprintIsland): BlueprintIsland {
-	const entries = value.Entries.map((entry) => ({ ...entry, B: fixBlueprintBuilding(entry.B) }));
+	const entries = value.Entries.map((entry) => {
+		if (!entry.B) {
+			return entry;
+		}
+		return { ...entry, B: fixBlueprintBuilding(entry.B) };
+	});
 	return { ...value, Entries: entries };
 }
 function fixBlueprintBuilding(value: BlueprintBuilding): BlueprintBuilding {
@@ -94,7 +91,7 @@ function fixBlueprintBuilding(value: BlueprintBuilding): BlueprintBuilding {
 export function getBuildingCount(blueprint: Blueprint): number {
 	if (blueprint.BP.$type === 'Island') {
 		return blueprint.BP.Entries.reduce<number>((previousIsland, currentIsland) => {
-			return previousIsland + currentIsland.B.Entries.length;
+			return previousIsland + (currentIsland.B?.Entries.length ?? 0);
 		}, 0);
 	}
 	return blueprint.BP.Entries.length;
@@ -109,6 +106,9 @@ export function getBuildings(blueprint: Blueprint): Map<BlueprintBuildingIdentif
 	if (blueprint.BP.$type === 'Island') {
 		return blueprint.BP.Entries.reduce<Map<BlueprintBuildingIdentifier, number>>(
 			(result, current) => {
+				if (!current.B) {
+					return result;
+				}
 				getBuildingTypes(current.B).forEach((value, key) =>
 					result.set(key, (result.get(key) ?? 0) + value)
 				);

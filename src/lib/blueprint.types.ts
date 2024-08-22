@@ -2,7 +2,8 @@ import type { ComponentType } from 'svelte';
 import _ from 'lodash';
 import type { RecordModel } from 'pocketbase';
 import { z } from 'zod';
-
+import { decode, getBuildingCount, getBuildings, getCost, getIslandCount } from '$lib/blueprint';
+import type { ShapeIdentifier } from '$lib/shape.types';
 import GAME_IDENTIFIERS from '$lib/assets/data/identifiers.json';
 
 export const GAME_VERSION = 1095;
@@ -59,6 +60,88 @@ export const BLUEPRINT_IDENTIFIER_REGEX = new RegExp(
 export type BlueprintIdentifier =
 	`${BlueprintIdentifierPrefix}${BlueprintIdentifierSeperator}${BlueprintIdentifierVersion}${BlueprintIdentifierSeperator}${string}${BlueprintIdentifierSuffix}`;
 
+export const BLUEPRINT_TYPES = ['Island', 'Building'] as const;
+type BlueprintType = (typeof BLUEPRINT_TYPES)[number];
+export type Blueprint = {
+	// version
+	V: number;
+	BP: BlueprintIsland | BlueprintBuilding;
+};
+export type BlueprintIsland = {
+	$type: (typeof BLUEPRINT_TYPES)[0];
+	Entries: Array<BlueprintIslandEntry>;
+} & BlueprintInfo;
+export type BlueprintIslandEntry = {
+	// island layout type
+	T: string;
+	// relative x position
+	X?: number;
+	// relative y position
+	Y?: number;
+	R?: BlueprintEntryRotation;
+	B?: BlueprintBuilding;
+};
+export type BlueprintBuilding = {
+	$type: (typeof BLUEPRINT_TYPES)[1];
+	Entries: Array<BlueprintBuildingEntry>;
+} & BlueprintInfo;
+export type BlueprintBuildingEntry = {
+	// building identifier
+	T: BlueprintBuildingIdentifier;
+	// relative x position
+	X?: number;
+	// relative y position
+	Y?: number;
+	// layer
+	L?: 0 | 1 | 2;
+	R?: BlueprintEntryRotation;
+	// Additional data
+	C?: string;
+};
+const BLUEPRINT_ENTRYROTATIONS = {
+	East: 0,
+	South: 1,
+	West: 2,
+	North: 3
+} as const;
+type BlueprintEntryRotation =
+	(typeof BLUEPRINT_ENTRYROTATIONS)[keyof typeof BLUEPRINT_ENTRYROTATIONS];
+type BlueprintInfo = {
+	Icon: {
+		Data: Array<BlueprintIconData>;
+	};
+};
+type BlueprintIconData = `icon:${string}` | `shape:${ShapeIdentifier}`;
+
+export type BlueprintBuildingIdentifier =
+	(typeof GAME_IDENTIFIERS)['BuildingInternalVariantIds'][number];
+export type BlueprintBuildingModel = {
+	base: ComponentType;
+	layers?: [ComponentType, ComponentType, ComponentType];
+};
+
+const ISLAND_PADDING_SIZE = 3;
+const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;
+const ISLAND_MIN_SIZE = 12;
+export const ISLAND_LAYOUT_UNIT = ISLAND_MIN_SIZE + ISLAND_GAP_SIZE;
+const ISLAND_LAYOUT_IDENTIFIER = [
+	'Layout_1',
+	'Layout_2',
+	'Layout_3_L',
+	'Layout_4_Quad_TwoNotches',
+	'Layout_4_T',
+	'Layout_5_Cross',
+	'Layout_9_Quad_TopAllNotches'
+] as const;
+export type IslandLayoutIdentifier = (typeof ISLAND_LAYOUT_IDENTIFIER)[number];
+
+export const BLUEPRINT_SCHEMA = z.object({
+	V: z.number(),
+	BP: z.object({
+		$type: z.enum(BLUEPRINT_TYPES),
+		Entries: z.any().array()
+	})
+});
 export const BLUEPRINT_TITLE_MIN_LENGTH = 3;
 export const BLUEPRINT_TITLE_MAX_LENGTH = 64;
 export const BLUEPRINT_TITLE_REGEX = new RegExp(
@@ -119,87 +202,38 @@ const BLUEPRINT_TAGS_SCHEMA = z
 			.slice(0, BLUEPRINT_TAGS_MAX);
 		return new Set(tags);
 	});
-export const BLUEPRINT_CREATE_SCHEMA = z.object({
-	title: BLUEPRINT_TITLE_SCHEMA,
-	description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
-	data: BLUEPRINT_DATA_SCHEMA,
-	images: BLUEPRINT_IMAGES_SCHEMA.optional(),
-	tags: BLUEPRINT_TAGS_SCHEMA.optional()
-});
-export const BLUEPRINT_UPDATE_SCHEMA = z.object({
-	id: z.string(),
-	title: BLUEPRINT_TITLE_SCHEMA.optional(),
-	description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
-	data: BLUEPRINT_DATA_SCHEMA.optional(),
-	images: BLUEPRINT_IMAGES_SCHEMA.optional(),
-	tags: BLUEPRINT_TAGS_SCHEMA.optional()
-});
+export const BLUEPRINT_CREATE_SCHEMA = z
+	.object({
+		title: BLUEPRINT_TITLE_SCHEMA,
+		description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
+		data: BLUEPRINT_DATA_SCHEMA,
+		images: BLUEPRINT_IMAGES_SCHEMA.optional(),
+		tags: BLUEPRINT_TAGS_SCHEMA.optional()
+	})
+	.transform((value) => {
+		const blueprint = decode(value.data);
+		const buildings = getBuildings(blueprint);
+		const buildingCount = getBuildingCount(blueprint);
+		const islandCount = getIslandCount(blueprint);
+		const cost = getCost(buildingCount);
 
-export const BLUEPRINT_TYPES = ['Island', 'Building'] as const;
-type BlueprintType = (typeof BLUEPRINT_TYPES)[number];
-export type Blueprint = {
-	// version
-	V: number;
-	BP: BlueprintIsland | BlueprintBuilding;
-};
-export type BlueprintIsland = {
-	$type: (typeof BLUEPRINT_TYPES)[0];
-	Entries: Array<BlueprintIslandEntry>;
-};
-export type BlueprintIslandEntry = {
-	// island layout type
-	T: string;
-	// relative x position
-	X?: number;
-	// relative y position
-	Y?: number;
-	R?: BlueprintEntryRotation;
-	B: BlueprintBuilding;
-};
-export type BlueprintBuilding = {
-	$type: (typeof BLUEPRINT_TYPES)[1];
-	Entries: Array<BlueprintBuildingEntry>;
-};
-export type BlueprintBuildingEntry = {
-	// building identifier
-	T: BlueprintBuildingIdentifier;
-	// relative x position
-	X?: number;
-	// relative y position
-	Y?: number;
-	// layer
-	L?: 0 | 1 | 2;
-	R?: BlueprintEntryRotation;
-	// Additional data
-	C?: string;
-};
-const BLUEPRINT_ENTRYROTATIONS = {
-	East: 0,
-	South: 1,
-	West: 2,
-	North: 3
-} as const;
-type BlueprintEntryRotation =
-	(typeof BLUEPRINT_ENTRYROTATIONS)[keyof typeof BLUEPRINT_ENTRYROTATIONS];
-
-export type BlueprintBuildingIdentifier =
-	(typeof GAME_IDENTIFIERS)['BuildingInternalVariantIds'][number];
-export type BlueprintBuildingModel = {
-	base: ComponentType;
-	layers?: [ComponentType, ComponentType, ComponentType];
-};
-
-const ISLAND_PADDING_SIZE = 3;
-const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;
-const ISLAND_MIN_SIZE = 12;
-export const ISLAND_LAYOUT_UNIT = ISLAND_MIN_SIZE + ISLAND_GAP_SIZE;
-const ISLAND_LAYOUT_IDENTIFIER = [
-	'Layout_1',
-	'Layout_2',
-	'Layout_3_L',
-	'Layout_4_Quad_TwoNotches',
-	'Layout_4_T',
-	'Layout_5_Cross',
-	'Layout_9_Quad_TopAllNotches'
-] as const;
-export type IslandLayoutIdentifier = (typeof ISLAND_LAYOUT_IDENTIFIER)[number];
+		return {
+			...value,
+			blueprint,
+			buildings,
+			buildingCount,
+			islandCount,
+			cost
+		};
+	})
+	.refine((value) => value.buildingCount > 0, 'Minimum of one building required')
+	.refine((value) => value.buildings.size > 0, 'Minimum of one building entry required');
+export const BLUEPRINT_UPDATE_SCHEMA = z
+	.object({
+		id: z.string(),
+		title: BLUEPRINT_TITLE_SCHEMA.optional(),
+		description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
+		data: BLUEPRINT_DATA_SCHEMA.optional(),
+		images: BLUEPRINT_IMAGES_SCHEMA.optional(),
+		tags: BLUEPRINT_TAGS_SCHEMA.optional()
+	});

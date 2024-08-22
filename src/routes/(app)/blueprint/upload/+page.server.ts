@@ -2,6 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { ZodError } from 'zod';
 import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
 import type { Actions, PageServerLoad } from './$types';
+import type { ClientResponseError } from 'pocketbase';
 
 export const load = (async ({ locals }) => {
 	if (locals.user && !locals.user.verified) {
