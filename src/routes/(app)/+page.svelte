@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
+	import { Button } from '$lib/components/ui/button';
 	import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
 
 	export let data: PageData;
@@ -116,9 +117,16 @@
 </section>
 
 {#if data.latestBlueprints && data.latestBlueprintImages}
-	<section class="mx-auto mt-16 w-full max-w-5xl px-4 md:mb-8 md:mt-24 lg:px-0" id="latest">
-		<h2 class="mb-4 text-3xl font-bold md:text-4xl">Latest blueprints</h2>
+	<section
+		class="mx-auto mt-16 w-full max-w-5xl space-y-4 px-4 md:mb-8 md:mt-24 lg:px-0"
+		id="latest"
+	>
+		<h2 class="text-3xl font-bold md:text-4xl">Latest blueprints</h2>
 
 		<BlueprintItemList items={data.latestBlueprints} images={data.latestBlueprintImages} />
+
+		<div class="flex justify-center">
+			<Button href="/blueprint/search" size="lg" variant="outline">See more</Button>
+		</div>
 	</section>
 {/if}

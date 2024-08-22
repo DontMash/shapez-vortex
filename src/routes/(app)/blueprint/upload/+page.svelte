@@ -192,7 +192,7 @@
 
 		<label class="relative mt-4 hidden md:block" for="blueprint-file">
 			<input
-				class="input input-bordered h-32 w-full [text-indent:-9999rem]"
+				class="input input-bordered h-32 w-full [text-indent:-9999rem] cursor-pointer"
 				type="file"
 				id="blueprint-file"
 				accept={BLUEPRINT_FILE_FORMAT}

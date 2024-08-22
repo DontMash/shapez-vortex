@@ -3,22 +3,43 @@
 	import { beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { add } from '$lib/client/toast.service';
+	import { decode, isBlueprintIdentifier } from '$lib/blueprint';
 	import {
+		BLUEPRINT_FILE_FORMAT,
 		BLUEPRINT_IDENTIFIER_REGEX,
 		BLUEPRINT_IMAGES_MAX,
 		BLUEPRINT_IMAGE_MAX_FILE_SIZE,
-		BLUEPRINT_TAGS_REGEX,
 		BLUEPRINT_TITLE_MAX_LENGTH,
 		BLUEPRINT_TITLE_MIN_LENGTH,
 		BLUEPRINT_TITLE_REGEX,
+		type Blueprint,
+		type BlueprintIdentifier,
 		type BlueprintTag
 	} from '$lib/blueprint.types';
 	import type { PageData } from './$types';
 
+	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { Label } from '$lib/components/ui/label';
 	import Dialog from '$lib/components/Dialog.svelte';
 	import BlueprintTagCombobox from '$lib/components/blueprint/BlueprintTagCombobox.svelte';
+	import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
 
 	export let data: PageData;
+
+	let identifier: BlueprintIdentifier;
+	let blueprint: Blueprint | undefined;
+	$: {
+		identifier = data.blueprint.entry.data;
+
+		try {
+			blueprint = isBlueprintIdentifier(identifier) ? decode(identifier) : undefined;
+		} catch (error) {
+			blueprint = undefined;
+			add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
+		}
+	}
+	let view: BlueprintView;
+	let editPreview: boolean = false;
 
 	let imagesFileinputElement: HTMLInputElement;
 	let isSubmit: boolean = false;
@@ -161,7 +182,36 @@
 		</hgroup>
 	</header>
 
-	<form method="post" enctype="multipart/form-data" on:submit={() => (isSubmit = true)}>
+	<form
+		method="post"
+		enctype="multipart/form-data"
+		on:submit|preventDefault={(event) => {
+			const form = event.currentTarget;
+			if (!editPreview) {
+				isSubmit = true;
+				return form.submit();
+			}
+
+			const canvas = view.canvas();
+			if (!canvas) {
+				return add({ message: 'Preview canvas unavailable', type: 'ERROR' });
+			}
+
+			canvas.toBlob((blob) => {
+				if (!blob) {
+					return add({ message: 'Cannot create preview image', type: 'ERROR' });
+				}
+
+				const list = new DataTransfer();
+				list.items.add(new File([blob], 'preview.png', { type: 'image/png' }));
+				previewImages.forEach((image) => list.items.add(image));
+				imagesFileinputElement.files = list.files;
+
+				isSubmit = true;
+				form.submit();
+			});
+		}}
+	>
 		<input type="hidden" name="id" id="id" value={data.blueprint.entry.id} />
 		{#if $page.form && $page.form.invalid && $page.form.issues['unmodified']}
 			<span class="label-text-alt italic text-warning">{$page.form.issues['unmodified']}</span>
@@ -211,36 +261,53 @@
 			<div class="label">
 				<span class="label-text">Blueprint identifier</span>
 			</div>
-			{#if $page.form && $page.form.invalid}
-				<input
-					class={`input input-bordered text-sm placeholder:italic ${
-						$page.form.issues['data'] ? 'input-error' : ''
-					}`}
-					type="text"
-					name="data"
-					id="data"
-					value={$page.form.data.data}
-					placeholder="SHAPEZ-2 ... $"
-					pattern={BLUEPRINT_IDENTIFIER_REGEX.source}
-					required
-				/>
-				{#if $page.form.issues['data']}
-					<div class="label">
-						<span class="label-text-alt italic text-error">{$page.form.issues['data']}</span>
-					</div>
-				{/if}
-			{:else}
-				<input
-					class="input input-bordered text-sm placeholder:italic"
-					type="text"
-					name="data"
-					id="data"
-					value={data.blueprint.entry.data}
-					placeholder="SHAPEZ-2 ... $"
-					pattern={BLUEPRINT_IDENTIFIER_REGEX.source}
-					required
-				/>
+			<input
+				class="input input-bordered text-sm placeholder:italic"
+				type="text"
+				name="data"
+				id="data"
+				placeholder="SHAPEZ-2 ... $"
+				pattern={BLUEPRINT_IDENTIFIER_REGEX.source}
+				required
+				bind:value={identifier}
+			/>
+			{#if $page.form && $page.form.invalid && $page.form.issues['data']}
+				<div class="label">
+					<span class="label-text-alt italic text-error">{$page.form.issues['data']}</span>
+				</div>
 			{/if}
+		</label>
+
+		<label class="relative mt-4 hidden md:block" for="blueprint-file">
+			<input
+				class="input input-bordered h-32 w-full cursor-pointer [text-indent:-9999rem]"
+				type="file"
+				id="blueprint-file"
+				accept={BLUEPRINT_FILE_FORMAT}
+				multiple
+				on:change={async (event) => {
+					const input = event.currentTarget;
+					const files = input.files;
+					if (!files || files.length <= 0) return;
+
+					const file = files.item(0);
+					if (!file) return;
+
+					const buffer = await file.arrayBuffer();
+					const codec = new TextDecoder();
+					const blueprintIdentifier = codec.decode(buffer);
+					if (!isBlueprintIdentifier(blueprintIdentifier)) {
+						return add({ message: 'Invalid blueprint file', type: 'ERROR' });
+					}
+
+					identifier = blueprintIdentifier;
+					input.files = null;
+				}}
+			/>
+			<div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+				<span class="icon-[tabler--file-upload] size-8 align-middle" />
+				<span>Blueprint file</span>
+			</div>
 		</label>
 
 		<details class="collapse collapse-arrow mt-4 rounded-btn bg-base-200" open>
@@ -372,6 +439,27 @@
 				{/if}
 			</div>
 		</details>
+		<div class="-mx-4 mt-4 lg:mx-0">
+			<div class="mb-2 flex items-center space-x-2">
+				<Checkbox
+					class="border-accent"
+					id="blueprint-preview"
+					aria-labelledby="blueprint-preview-label"
+					bind:checked={editPreview}
+				/>
+				<Label
+					id="blueprint-preview-label"
+					for="blueprint-preview"
+					class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+				>
+					Add new blueprint preview image
+				</Label>
+			</div>
+
+			<div class={editPreview ? 'block' : 'hidden'}>
+				<BlueprintView {identifier} {blueprint} controls={{}} bind:this={view} />
+			</div>
+		</div>
 
 		<button class="btn btn-primary btn-block mt-4">Update</button>
 	</form>
