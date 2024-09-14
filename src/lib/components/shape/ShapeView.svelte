@@ -8,7 +8,7 @@
 	import { fullscreen } from '$lib/client/actions/fullscreen';
 	import { add } from '$lib/client/toast.service';
 	import {
-		isHexShapeIdentifier,
+		isDefaultShapeIdentifier,
 		SHAPE_COLOR_BASE_MATERIAL,
 		type ShapeData
 	} from '$lib/shape.types';
@@ -25,7 +25,7 @@
 	export let isExtended = false;
 	export let isExpanded = false;
 
-	$: isHex = isHexShapeIdentifier(data.identifier);
+	$: isHex = !isDefaultShapeIdentifier(data.identifier);
 
 	let ctx: ThrelteContext | undefined;
 	let viewer: HTMLElement | undefined;
@@ -226,7 +226,11 @@
 							>
 								{#each layer as part, partIndex}
 									<T.Group rotation.y={partIndex * (isHex ? -1 / 3 : -0.5) * Math.PI + Math.PI}>
-										<ShapePart data={part} {isHex} offset={expandOffset * SHAPE_LAYER_SCALE * (layerIndex +1)} />
+										<ShapePart
+											data={part}
+											{isHex}
+											offset={expandOffset * SHAPE_LAYER_SCALE * (layerIndex + 1)}
+										/>
 									</T.Group>
 								{/each}
 							</T.Group>

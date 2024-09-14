@@ -180,7 +180,11 @@ export type ShapeHexTypes = (typeof SHAPE_HEX_TYPES)[number];
 export const SHAPE_HEX_TYPE_IDENTIFIER = [...SHAPE_HEX_TYPES, ...SHAPE_SUPPORT_TYPES] as const;
 export type ShapeHexTypeIdentifier = (typeof SHAPE_HEX_TYPE_IDENTIFIER)[number];
 export type ShapeType = ShapeDefaultType | ShapeHexTypes;
-export const SHAPE_TYPE_IDENTIFIER = [...SHAPE_DEFAULT_TYPE_IDENTIFIERS, ...SHAPE_HEX_TYPE_IDENTIFIER, '-'] as const;
+export const SHAPE_TYPE_IDENTIFIER = [
+	...SHAPE_DEFAULT_TYPE_IDENTIFIERS,
+	...SHAPE_HEX_TYPE_IDENTIFIER,
+	'-'
+] as const;
 export type ShapeTypeIdentifier = (typeof SHAPE_TYPE_IDENTIFIER)[number];
 export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'p', 'y', 'k', 'w'] as const;
 export type ShapeColor = (typeof SHAPE_COLORS)[number];
@@ -207,5 +211,5 @@ export const isHexShapeIdentifier = (identifier: ShapeIdentifier): boolean =>
 export const isShapeIdentifier = (identifier: ShapeIdentifier): boolean => {
 	const a = isDefaultShapeIdentifier(identifier);
 	const b = isHexShapeIdentifier(identifier);
-	return (a && !b) || (!a && b);
+	return (a && !b) || (!a && b) || (a && b);
 };
