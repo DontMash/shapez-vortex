@@ -28,21 +28,6 @@ export const actions = {
 
 		return { success: true };
 	},
-	deleteBlueprint: async ({ locals, params, url }) => {
-		if (!locals.user) {
-			return fail(401);
-		}
-
-		const formData = new FormData();
-		formData.set('id', params.id);
-		const deleteUrl = new URL('/api/v1/blueprint', url.origin);
-		const response = await fetch(deleteUrl, { method: 'delete', body: formData });
-		if (!response.ok) {
-			return fail(400, { issues: { id: 'Failed to delete blueprint' } });
-		}
-
-		return { success: true };
-	},
 	reportBlueprint: async ({ locals, request }) => {
 		if (!locals.user) {
 			return fail(401);

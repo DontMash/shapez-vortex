@@ -92,15 +92,14 @@
 				<div class="flex items-center justify-end space-x-2">
 					<form
 						class="inline"
-						action="/api/v1/blueprint"
+						action="/api/v1/blueprint/{data.id}"
 						method="post"
 						on:submit|preventDefault={async (event) => {
 							deleteDialog.close();
 
 							const url = new URL(event.currentTarget.action, $page.url.origin);
-							const formData = new FormData(event.currentTarget);
 							try {
-								const response = await fetch(url, { method: 'delete', body: formData });
+								const response = await fetch(url, { method: 'delete' });
 								if (!response.ok) {
 									return add({ message: 'Failed to delete blueprint', type: 'ERROR' });
 								}
@@ -112,7 +111,6 @@
 							}
 						}}
 					>
-						<input type="hidden" name="id" value={data.id} />
 						<button class="btn btn-error">
 							<span class="icon-[tabler--trash] text-2xl" />
 							Delete

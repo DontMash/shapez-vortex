@@ -9,7 +9,6 @@ const protectedActions = [
 	'requestEmail',
 	'updateDisplayname',
 	'updateBookmark',
-	'deleteBlueprint'
 ] as const;
 
 export const handle: Handle = async ({ event, resolve }) => {

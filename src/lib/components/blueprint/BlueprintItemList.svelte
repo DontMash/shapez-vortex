@@ -13,7 +13,7 @@
 	}
 </script>
 
-<ul class="space-y-8">
+<ul class="space-y-4">
 	{#each items as blueprint}
 		{@const preview = images && images[blueprint.id]}
 		<li>

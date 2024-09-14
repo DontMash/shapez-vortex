@@ -190,7 +190,7 @@
 									<div class="flex items-center justify-end space-x-2">
 										<form
 											class="inline"
-											action="/api/v1/blueprint"
+											action="/api/v1/blueprint/{data.blueprint.entry.id}"
 											method="post"
 											on:submit|preventDefault={async (event) => {
 												deleteDialog.close();
@@ -210,7 +210,6 @@
 												}
 											}}
 										>
-											<input type="hidden" name="id" value={data.blueprint.entry.id} />
 											<button class="btn btn-error">
 												<span class="icon-[tabler--trash] text-2xl" />
 												Delete
@@ -256,7 +255,7 @@
 			<a
 				class="btn btn-secondary"
 				title="Download blueprint"
-				href={`/blueprint/${data.blueprint.entry.id}/download`}
+				href="/api/v1/blueprint/{data.blueprint.entry.id}/download"
 				download
 			>
 				<span class="icon-[tabler--download] text-2xl" />

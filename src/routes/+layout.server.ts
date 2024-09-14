@@ -3,6 +3,7 @@ import UAParser from 'ua-parser-js';
 import type { LayoutServerLoad } from './$types';
 import type { BlueprintRecord } from '$lib/blueprint.types';
 import type { User } from '$lib/user.types';
+import { get } from '$lib/server/blueprint.api';
 
 export const load = (async ({ locals, request, url }) => {
 	let agent;
@@ -14,16 +15,11 @@ export const load = (async ({ locals, request, url }) => {
 
 	// fetch the latest 100 blueprints for client-side search
 	let searchBlueprints: Array<BlueprintRecord> = [];
-	const blueprintUrl = new URL('/api/v1/blueprint', url.origin);
-	blueprintUrl.searchParams.append('perPage', String(100));
 	try {
-		const response = await fetch(blueprintUrl);
-		if (!response.ok) {
-			throw new Error('Invalid blueprint fetch', { cause: response });
-		}
-		const result = (await response.json()) as ListResult<BlueprintRecord>;
+		const result = await get(locals.pb, { query: '', perPage: 100 });
 		searchBlueprints = result.items;
 	} catch (err) {
+		searchBlueprints = [];
 		console.error(err);
 	}
 

@@ -19,6 +19,8 @@
 	import ShapeHexH from '$lib/components/models/shapes/ShapeHexH.svelte';
 	import ShapeHexP from '$lib/components/models/shapes/ShapeHexP.svelte';
 
+	const SHAPE_PART_BASE_OFFSET = 0.025;
+
 	export let data: ShapePartData;
 	export let isHex: boolean = false;
 	export let offset: number = 0;
@@ -75,7 +77,7 @@
 <Suspense on:load={onModelLoad}>
 	<svelte:component
 		this={getShapePart(data.type)}
-		position={[-offset, 0, offset]}
+		position={[-SHAPE_PART_BASE_OFFSET - offset, 0, SHAPE_PART_BASE_OFFSET + offset]}
 		bind:this={componentModel}
 	/>
 </Suspense>

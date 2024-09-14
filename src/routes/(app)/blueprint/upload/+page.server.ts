@@ -1,8 +1,10 @@
-import { fail, redirect } from '@sveltejs/kit';
-import type { ZodError } from 'zod';
-import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
+import { fail, isRedirect, redirect } from '@sveltejs/kit';
+import { setError, superValidate, withFiles } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { post } from '$lib/server/blueprint.api';
+import { BLUEPRINT_FORM_SCHEMA } from '$lib/blueprint.schema';
+import type { BlueprintTag } from '$lib/blueprint.types';
 import type { Actions, PageServerLoad } from './$types';
-import type { ClientResponseError } from 'pocketbase';
 
 export const load = (async ({ locals }) => {
 	if (locals.user && !locals.user.verified) {
@@ -17,12 +19,13 @@ export const load = (async ({ locals }) => {
 			description: 'Share your blueprint with the community.',
 			keywords: ['Blueprint', 'Upload']
 		},
+		form: await superValidate(zod(BLUEPRINT_FORM_SCHEMA)),
 		tags
 	};
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ fetch, locals, request, url }) => {
+	default: async ({ locals, request }) => {
 		if (locals.user && !locals.user.verified) {
 			redirect(303, '/settings/account');
 		}
@@ -30,20 +33,24 @@ export const actions = {
 			return fail(401);
 		}
 
-		const formData = await request.formData();
-		const entries = { ...Object.fromEntries(formData), images: formData.getAll('images') };
-		const createUrl = new URL('/api/v1/blueprint', url.origin);
-		const response = await fetch(createUrl, { method: 'post', body: formData });
-		if (!response.ok) {
-			const error = (await response.json()) as ZodError;
-			const issues = error.issues.reduce<Record<string, string>>((result, current) => {
-				result[current.path[0]] = current.message;
-				return result;
-			}, {});
-			return fail(400, { data: { ...entries, images: undefined }, issues, invalid: true });
+		const form = await superValidate(request, zod(BLUEPRINT_FORM_SCHEMA));
+		if (!form.valid) {
+			return fail(400, withFiles({ form }));
 		}
 
-		const record = (await response.json()) as BlueprintRecord;
-		redirect(303, `/blueprint/${record.id}`);
+		try {
+			const record = await post(locals.pb, form.data);
+			redirect(303, `/blueprint/${record.id}`);
+		} catch (err) {
+			const error = err as Error;
+			if (isRedirect(error)) throw error;			
+			return setError(
+				form,
+				'data',
+				error.cause
+					? Object.entries(error.cause as object).map(([key, value]) => `${key}: ${value}`)
+					: error.message
+			);
+		}
 	}
 } satisfies Actions;

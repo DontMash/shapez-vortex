@@ -7,7 +7,7 @@ export const SHAPE_MAX_LAYERS = 4;
 export const SHAPE_MAX_DEFAULT_PARTS = 4;
 export const SHAPE_MAX_HEX_PARTS = 6;
 
-export const SHAPE_COLOR_BASE = 0xefefef;
+export const SHAPE_COLOR_BASE = 0x333333;
 export const SHAPE_COLOR_NONE = 0x777777;
 export const SHAPE_COLOR_PIN = 0x444450;
 export const SHAPE_COLOR_RED = 0xee3333;
@@ -21,14 +21,14 @@ export const SHAPE_COLOR_WHITE = 0xfafafa;
 
 const SHAPE_COLOR_MATERIAL_OPTIONS = {
 	vertexColors: true,
-	roughness: 0.5,
+	roughness: 0.7,
 	metalness: 0.1
 };
 export const SHAPE_COLOR_BASE_MATERIAL = new MeshStandardMaterial({
 	name: 'BASE_MATERIAL',
 	color: SHAPE_COLOR_BASE,
 	roughness: 0.8,
-	metalness: 1
+	metalness: 0.3
 });
 export const SHAPE_COLOR_NONE_MATERIAL = new MeshStandardMaterial({
 	name: 'NONE_MATERIAL',

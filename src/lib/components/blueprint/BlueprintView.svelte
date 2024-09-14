@@ -2,7 +2,7 @@
 	import { Canvas, T, type ThrelteContext } from '@threlte/core';
 	import { OrbitControls } from '@threlte/extras';
 	import { MOUSE } from 'three';
-	import { OrbitControls as ThreeOrbitControls } from 'three/addons/controls/OrbitControls.js';
+	import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
 	import {
 		BLUEPRINT_FILE_FORMAT,
 		BLUEPRINT_GRID_COLOR,
@@ -44,7 +44,7 @@
 	function reset() {
 		if (!orbitControls) return;
 
-		const ref = orbitControls.ref as ThreeOrbitControls;
+		const ref = orbitControls.ref as OrbitControlsType;
 		ref.enableDamping = false;
 		ref.reset();
 		ref.enableDamping = true;
@@ -191,7 +191,7 @@
 
 	<div
 		class="h-full overflow-hidden border-base-content/20 bg-base-100 shadow-lg outline-none transition-[border-radius] {!isFullscreen
-			? 'border lg:rounded-4xl'
+			? 'border lg:rounded-md'
 			: ''}"
 	>
 		<Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>

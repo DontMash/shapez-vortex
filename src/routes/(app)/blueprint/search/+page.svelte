@@ -56,7 +56,7 @@
 				<option value="updated" selected={data.sort === 'updated'}>Updated</option>
 				<option value="title" selected={data.sort === 'title'}>Title</option>
 				<option value="version" selected={data.sort === 'version'}>Version</option>
-				<option value="cost" selected={data.sort === 'cost'}>Points</option>
+				<option value="cost" selected={data.sort === 'cost'}>Cost</option>
 				<option value="buildingCount" selected={data.sort === 'buildingCount'}>Buildings</option>
 				<option value="islandCount" selected={data.sort === 'islandCount'}>Islands</option>
 				<option value="viewCount" selected={data.sort === 'viewCount'}>Views</option>

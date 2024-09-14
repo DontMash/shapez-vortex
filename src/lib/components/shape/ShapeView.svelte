@@ -19,7 +19,7 @@
 	const SHAPE_LAYER_HEIGHT = 0.05;
 	const SHAPE_LAYER_SCALE = 0.2;
 	const SHAPE_LAYER_EXTEND_OFFSET = 0.15;
-	const SHAPE_PART_EXPAND_OFFSET = 0.15;
+	const SHAPE_PART_EXPAND_OFFSET = 0.4;
 
 	export let data: ShapeData;
 	export let isExtended = false;
@@ -226,7 +226,7 @@
 							>
 								{#each layer as part, partIndex}
 									<T.Group rotation.y={partIndex * (isHex ? -1 / 3 : -0.5) * Math.PI + Math.PI}>
-										<ShapePart data={part} {isHex} offset={expandOffset} />
+										<ShapePart data={part} {isHex} offset={expandOffset * SHAPE_LAYER_SCALE * (layerIndex +1)} />
 									</T.Group>
 								{/each}
 							</T.Group>

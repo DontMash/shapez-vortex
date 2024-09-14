@@ -116,14 +116,17 @@
 	</div>
 </section>
 
-{#if data.latestBlueprints && data.latestBlueprintImages}
+{#if data.searchBlueprints && data.blueprintImages}
 	<section
 		class="mx-auto mt-16 w-full max-w-5xl space-y-4 px-4 md:mb-8 md:mt-24 lg:px-0"
 		id="latest"
 	>
 		<h2 class="text-3xl font-bold md:text-4xl">Latest blueprints</h2>
 
-		<BlueprintItemList items={data.latestBlueprints} images={data.latestBlueprintImages} />
+		<BlueprintItemList
+			items={data.searchBlueprints.slice(0, 3)}
+			images={data.blueprintImages}
+		/>
 
 		<div class="flex justify-center">
 			<Button href="/blueprint/search" size="lg" variant="outline">See more</Button>

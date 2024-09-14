@@ -1,5 +1,5 @@
-import PocketBase from 'pocketbase';
-import UAParser from 'ua-parser-js';
+import type PocketBase from 'pocketbase';
+import type UAParser from 'ua-parser-js';
 import type { User } from '$lib/user.types';
 
 // See https://kit.svelte.dev/docs/types#app

@@ -1,9 +1,9 @@
 import type { ComponentType } from 'svelte';
-import _ from 'lodash';
 import type { RecordModel } from 'pocketbase';
-import { z } from 'zod';
-import { decode, getBuildingCount, getBuildings, getCost, getIslandCount } from '$lib/blueprint';
+import type { z } from 'zod';
+import type { BLUEPRINT_RECORD_SCHEMA } from '$lib/blueprint.schema';
 import type { ShapeIdentifier } from '$lib/shape.types';
+
 import GAME_IDENTIFIERS from '$lib/assets/data/identifiers.json';
 
 export const GAME_VERSION = 1095;
@@ -13,37 +13,10 @@ export const BLUEPRINT_EMPTY_DATA = '//8=';
 export const BLUEPRINT_GRID_SIZE = 1001;
 export const BLUEPRINT_GRID_COLOR = 0x444444;
 
-type BlueprintData = {
-	title: string;
-	description: string;
-	images: Array<string>;
-	tags: Array<string>;
-	data: BlueprintIdentifier;
-	type: BlueprintType;
-	cost: number;
-	// Record<BuildingIdentifier, number> as json-string
-	buildings: string;
-	buildingCount: number;
-	islandCount: number;
-	creator: string;
-	viewCount: number;
-	downloadCount: number;
-	bookmarkCount: number;
-	version: number;
-};
-export type BlueprintRecord = RecordModel & BlueprintData;
+export type BlueprintRecordData = z.infer<typeof BLUEPRINT_RECORD_SCHEMA>;
+export type BlueprintRecord = RecordModel & BlueprintRecordData & { images: Array<string> };
 export interface BlueprintTag extends RecordModel {
 	name: string;
-}
-
-export function isLike(a: Partial<BlueprintData>, b: Partial<BlueprintData>): boolean {
-	if (a.title !== b.title) return false;
-	if (a.data !== b.data) return false;
-	if (!_.isEqual(a.tags, b.tags)) return false;
-	if (!_.isEqual(a.images, b.images)) return false;
-	if (a.description !== b.description) return false;
-
-	return true;
 }
 
 export const BLUEPRINT_IDENTIFIER_PREFIX = 'SHAPEZ2' as const;
@@ -61,7 +34,6 @@ export type BlueprintIdentifier =
 	`${BlueprintIdentifierPrefix}${BlueprintIdentifierSeperator}${BlueprintIdentifierVersion}${BlueprintIdentifierSeperator}${string}${BlueprintIdentifierSuffix}`;
 
 export const BLUEPRINT_TYPES = ['Island', 'Building'] as const;
-type BlueprintType = (typeof BLUEPRINT_TYPES)[number];
 export type Blueprint = {
 	// version
 	V: number;
@@ -134,106 +106,3 @@ const ISLAND_LAYOUT_IDENTIFIER = [
 	'Layout_9_Quad_TopAllNotches'
 ] as const;
 export type IslandLayoutIdentifier = (typeof ISLAND_LAYOUT_IDENTIFIER)[number];
-
-export const BLUEPRINT_SCHEMA = z.object({
-	V: z.number(),
-	BP: z.object({
-		$type: z.enum(BLUEPRINT_TYPES),
-		Entries: z.any().array()
-	})
-});
-export const BLUEPRINT_TITLE_MIN_LENGTH = 3;
-export const BLUEPRINT_TITLE_MAX_LENGTH = 64;
-export const BLUEPRINT_TITLE_REGEX = new RegExp(
-	`^[A-Za-z0-9\\-_\\s]{${BLUEPRINT_TITLE_MIN_LENGTH},${BLUEPRINT_TITLE_MAX_LENGTH}}$`
-);
-const BLUEPRINT_DESCRIPTION_MAX_LENGTH = 2048;
-export const BLUEPRINT_TAG_MIN_LENGTH = 3;
-export const BLUEPRINT_TAG_MAX_LENGTH = 24;
-export const BLUEPRINT_TAG_REGEX = new RegExp(
-	`[\\w-]{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}}`
-);
-export const BLUEPRINT_TAGS_MAX = 8;
-export const BLUEPRINT_TAGS_REGEX = new RegExp(
-	`^\\s*(${BLUEPRINT_TAG_REGEX.source}(\\s*,+\\s*${BLUEPRINT_TAG_REGEX.source})*)?\\s*$`
-);
-export const BLUEPRINT_IMAGE_MAX_FILE_SIZE = 1048576;
-const BLUEPRINT_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'] as const;
-type BlueprintImageType = (typeof BLUEPRINT_IMAGE_TYPES)[number];
-export const BLUEPRINT_IMAGES_MAX = 4;
-const BLUEPRINT_TITLE_SCHEMA = z.string().regex(BLUEPRINT_TITLE_REGEX);
-const BLUEPRINT_DESCRIPTION_SCHEMA = z.string().max(BLUEPRINT_DESCRIPTION_MAX_LENGTH);
-const BLUEPRINT_DATA_SCHEMA = z.custom<BlueprintIdentifier>((data) =>
-	BLUEPRINT_IDENTIFIER_REGEX.test(data as string)
-);
-const BLUEPRINT_IMAGES_SCHEMA = z
-	.custom<Array<File>>((data) => {
-		const files = data as Array<File>;
-		return files.length <= BLUEPRINT_IMAGES_MAX;
-	}, `Max image amount is ${BLUEPRINT_IMAGES_MAX}`)
-	.transform((value) => value.filter((image) => image.size > 0))
-	.refine(
-		(files) =>
-			files.reduce<boolean>(
-				(result, current) => result && current.size <= BLUEPRINT_IMAGE_MAX_FILE_SIZE,
-				true
-			),
-		`Max image size is ${BLUEPRINT_IMAGE_MAX_FILE_SIZE / 1024 / 1024}MB.`
-	)
-	.refine(
-		(files) =>
-			files.reduce<boolean>(
-				(result, current) =>
-					result &&
-					(!current.name || BLUEPRINT_IMAGE_TYPES.includes(current.type as BlueprintImageType)),
-				true
-			),
-		`Accepted image formats are: ${BLUEPRINT_IMAGE_TYPES.join(', ')}`
-	);
-const BLUEPRINT_TAGS_SCHEMA = z
-	.string()
-	.regex(BLUEPRINT_TAGS_REGEX)
-	.transform((value) => {
-		const tags = value
-			.replace(/\s+/gi, '')
-			.toLocaleLowerCase()
-			.split(',')
-			.filter((tag) => tag.length !== 0)
-			.slice(0, BLUEPRINT_TAGS_MAX);
-		return new Set(tags);
-	});
-export const BLUEPRINT_CREATE_SCHEMA = z
-	.object({
-		title: BLUEPRINT_TITLE_SCHEMA,
-		description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
-		data: BLUEPRINT_DATA_SCHEMA,
-		images: BLUEPRINT_IMAGES_SCHEMA.optional(),
-		tags: BLUEPRINT_TAGS_SCHEMA.optional()
-	})
-	.transform((value) => {
-		const blueprint = decode(value.data);
-		const buildings = getBuildings(blueprint);
-		const buildingCount = getBuildingCount(blueprint);
-		const islandCount = getIslandCount(blueprint);
-		const cost = getCost(buildingCount);
-
-		return {
-			...value,
-			blueprint,
-			buildings,
-			buildingCount,
-			islandCount,
-			cost
-		};
-	})
-	.refine((value) => value.buildingCount > 0, 'Minimum of one building required')
-	.refine((value) => value.buildings.size > 0, 'Minimum of one building entry required');
-export const BLUEPRINT_UPDATE_SCHEMA = z
-	.object({
-		id: z.string(),
-		title: BLUEPRINT_TITLE_SCHEMA.optional(),
-		description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
-		data: BLUEPRINT_DATA_SCHEMA.optional(),
-		images: BLUEPRINT_IMAGES_SCHEMA.optional(),
-		tags: BLUEPRINT_TAGS_SCHEMA.optional()
-	});
