@@ -5,7 +5,7 @@ type CopyAttributes = {
 	'on:copy': (e: CustomEvent<string>) => void;
 	'on:error': (e: CustomEvent<Error>) => void;
 };
-export const copy: Action<HTMLButtonElement, CopyParameters> = (button, params) => {
+export const copy: Action<HTMLButtonElement, CopyParameters> = (button, params: CopyParameters) => {
 	if (!params) {
 		throw new Error('No copy parameters provided');
 	}
@@ -31,7 +31,11 @@ export const copy: Action<HTMLButtonElement, CopyParameters> = (button, params) 
 				input.select();
 				const success = document.execCommand('copy');
 				document.body.removeChild(input);
-				success ? onSuccess() : onFailure('Copy not successful');
+				if (success) {
+					onSuccess();
+				} else {
+					onFailure('Copy not successful');
+				}
 			} catch (error) {
 				onFailure(`Copy failed: ${error}`);
 			}
