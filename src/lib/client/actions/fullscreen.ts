@@ -7,23 +7,25 @@ type Attributes = {
 	'on:error': (e: CustomEvent<Error>) => void;
 };
 
-export const fullscreen: Action<HTMLButtonElement, Parameters> = (button, params) => {
+export const fullscreen: Action<HTMLButtonElement, Parameters> = (button, params: Parameters) => {
 	if (!screenfull.isEnabled) return;
 
 	const onSuccess = () =>
-		button.dispatchEvent(new CustomEvent('change', { detail: screenfull.isFullscreen }));
+		button.dispatchEvent(new CustomEvent<boolean>('change', { detail: screenfull.isFullscreen }));
 	const onFailure = (message: string) =>
 		button.dispatchEvent(new CustomEvent<Error>('error', { detail: new Error(message) }));
 
-	let fullscreenElement = params?.fullscreenElement;
+	let fullscreenElement = params.fullscreenElement;
 	button.addEventListener('click', () => toggle(), true);
 	screenfull.on('change', () => onSuccess());
 	screenfull.on('error', () => onFailure('Fullscreen error'));
 
 	function toggle() {
-		screenfull.isEnabled
-			? screenfull.toggle(fullscreenElement)
-			: onFailure('Fullscreen not available');
+		if (screenfull.isEnabled) {
+			screenfull.toggle(fullscreenElement);
+		} else {
+			onFailure('Fullscreen not available');
+		}
 	}
 
 	return {

@@ -6,7 +6,7 @@ type ClearParameters = {
 type ClearAttributes = {
     'on:clear': (e: CustomEvent<void>) => void;
 };
-export const clear: Action<HTMLButtonElement, ClearParameters> = (button, params) => {
+export const clear: Action<HTMLButtonElement, ClearParameters> = (button, params: ClearParameters) => {
     if (!params) {
         throw new Error('No clear parameters provided');
     }
