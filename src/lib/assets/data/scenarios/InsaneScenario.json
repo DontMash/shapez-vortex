@@ -21,8 +21,10 @@
     "RmCcWcCm:--cm--cc:RcccCmcm:cmcccccm:cw--cw--"
   ],
   "Config": {
-    "BaseChunkLimitMultiplier": 125,
-    "InitialResearchPoints": "0",
+    "BaseChunkLimitMultiplier": 200,
+    "BaseBlueprintRewardMultiplier": 500,
+    "InitialResearchPoints": 0,
+
     "MaxShapeLayers": 5,
     "LayerMechanicIds": ["RULayer2", "RULayer3"],
     "BlueprintsMechanicId": "RUBlueprints",
@@ -300,7 +302,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 100000
+              "Amount": 20000
             },
             {
               "$type": "ResearchPointsReward",
@@ -317,7 +319,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 50000
+              "Amount": 10000
             },
             {
               "$type": "ResearchPointsReward",
@@ -334,7 +336,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 25000
+              "Amount": 5000
             },
             {
               "$type": "ResearchPointsReward",
@@ -403,8 +405,16 @@
         {
           "Id": "Random1",
           "Randomized": true,
-          "StartingAmount": 1500,
+          "StartingAmount": 2000,
           "ExponentialGrowthPercentPerLevel": 7,
+          "RequiredUpgrade": "RNEndOfGame"
+        },
+        {
+          "Id": "Random2",
+          "Randomized": true,
+          "RandomizedUseCrystals": true,
+          "StartingAmount": 2000,
+          "ExponentialGrowthPercentPerLevel": 4,
           "RequiredUpgrade": "RNEndOfGame"
         }
       ]
@@ -592,11 +602,11 @@
           {
             "Shapes": [
               {
-                "Shape": "CuRuWrWr",
+                "Shape": "Ru----Rb",
                 "Amount": 3000
               },
               {
-                "Shape": "WrWrRbCb:RuCuWrWr",
+                "Shape": "RuCbCuRb:--WrWr--",
                 "Amount": 4000
               },
               {
@@ -631,7 +641,7 @@
           },
           {
             "$type": "BlueprintCurrencyReward",
-            "Amount": 2500
+            "Amount": 5000
           },
           {
             "$type": "BuildingReward",
@@ -690,7 +700,7 @@
           },
           {
             "$type": "BlueprintCurrencyReward",
-            "Amount": 750
+            "Amount": 15000
           },
           {
             "$type": "WikiEntryReward",
@@ -751,6 +761,10 @@
             "Amount": 500
           },
           {
+            "$type": "BlueprintCurrencyReward",
+            "Amount": 25000
+          },
+          {
             "$type": "BuildingReward",
             "BuildingVariantId": "CrystalGeneratorDefaultVariant"
           },
@@ -777,7 +791,7 @@
               },
               {
                 "Shape": "RyRyRyRy:P-RmRmP-:CmRwRwCm:P-P-P-P-:--CmCm--",
-                "Amount": 30000
+                "Amount": 45000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -794,7 +808,7 @@
               },
               {
                 "Shape": "CmCmCmCm:CyCwCwCy:CwP-P-Cw:CyCyCyCy:P-CwCwP-",
-                "Amount": 30000
+                "Amount": 45000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -834,7 +848,7 @@
               },
               {
                 "Shape": "RmCcWcCm:--cm--cc:RcccCmcm:cmcccccm:cw--cw--",
-                "Amount": 80000
+                "Amount": 100000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -851,7 +865,7 @@
               },
               {
                 "Shape": "RmCmWcCc:--Cu--Cu:RcCcCmCm:cwWucwWu",
-                "Amount": 22000
+                "Amount": 50000
               }
             ]
           }
@@ -3490,7 +3504,7 @@
             ],
             "Costs": [
               {
-                "Shape": "P-P-cmP-:WuWuWuWu:cy------:CwCwCwCw:cgcgcgcg",
+                "Shape": "P-P-cmP-:WuWuWuWu:cy--cy--:CwCwCwCw:cgcgcgcg",
                 "Amount": 20000
               }
             ]
@@ -3705,6 +3719,10 @@
           },
           {
             "$type": "BuildingReward",
+            "BuildingVariantId": "PipeGateDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
             "BuildingVariantId": "DisplayDefaultVariant"
           },
           {
@@ -3726,6 +3744,10 @@
           {
             "$type": "MechanicReward",
             "MechanicId": "RUWires"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKWires"
           }
         ],
         "Costs": [
@@ -3804,6 +3826,10 @@
           {
             "$type": "BuildingReward",
             "BuildingVariantId": "VirtualPainterDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualPinPusherDefaultVariant"
           },
           {
             "$type": "BuildingReward",
@@ -4039,6 +4065,10 @@
           {
             "$type": "IslandLayoutReward",
             "LayoutId": "Layout_TrainRollerCoasterLoop"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainRollerCoasterLoop_Flipped"
           }
         ],
         "Costs": [

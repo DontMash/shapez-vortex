@@ -2,7 +2,7 @@
   "Version": "1",
   "UniqueId": "hexagonal-scenario-parameter-preset",
   "Title": "@scenario-preset.hexagonal.title",
-  "Description": "@scenario-preset.hexagonal.title",
+  "Description": "@scenario-preset.hexagonal.description",
   "Parameters": {
     "ScenarioId": "hexagonal-scenario",
     "MapGenerationParameters": {

@@ -3,10 +3,11 @@ import type { RecordModel } from 'pocketbase';
 import type { z } from 'zod';
 import type { BLUEPRINT_RECORD_SCHEMA } from '$lib/blueprint.schema';
 import type { ShapeIdentifier } from '$lib/shape.types';
+import version from '$lib/assets/data/version?raw';
 
 import GAME_IDENTIFIERS from '$lib/assets/data/identifiers.json';
 
-export const GAME_VERSION = 1095;
+export const GAME_VERSION = version;
 
 export const BLUEPRINT_FILE_FORMAT = '.spz2bp' as const;
 export const BLUEPRINT_EMPTY_DATA = '//8=';
@@ -96,13 +97,4 @@ const ISLAND_PADDING_SIZE = 3;
 const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;
 const ISLAND_MIN_SIZE = 12;
 export const ISLAND_LAYOUT_UNIT = ISLAND_MIN_SIZE + ISLAND_GAP_SIZE;
-const ISLAND_LAYOUT_IDENTIFIER = [
-	'Layout_1',
-	'Layout_2',
-	'Layout_3_L',
-	'Layout_4_Quad_TwoNotches',
-	'Layout_4_T',
-	'Layout_5_Cross',
-	'Layout_9_Quad_TopAllNotches'
-] as const;
-export type IslandLayoutIdentifier = (typeof ISLAND_LAYOUT_IDENTIFIER)[number];
+export type IslandLayoutIdentifier = (typeof GAME_IDENTIFIERS)['IslandLayoutIds'][number];

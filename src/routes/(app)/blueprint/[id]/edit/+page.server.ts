@@ -20,7 +20,7 @@ export const load = (async ({ locals, parent, url }) => {
 		redirect(303, '/settings/account');
 	}
 
-	const tags = await locals.pb.collection<BlueprintTag>('tags').getFullList();
+	const tags = await locals.pb.collection<BlueprintTag>('blueprintTags').getFullList();
 
 	return {
 		seo: {

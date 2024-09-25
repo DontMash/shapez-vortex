@@ -16,7 +16,8 @@
     "RyP-RyP-:SwRuSwRu"
   ],
   "Config": {
-    "BaseChunkLimitMultiplier": 150,
+    "BaseChunkLimitMultiplier": 200,
+    "BaseBlueprintRewardMultiplier": 500,
     "InitialResearchPoints": 0,
     "LayerMechanicIds": ["RULayer2", "RULayer3"],
     "BlueprintsMechanicId": "RUBlueprints",
@@ -294,7 +295,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 100000
+              "Amount": 20000
             },
             {
               "$type": "ResearchPointsReward",
@@ -311,7 +312,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 50000
+              "Amount": 10000
             },
             {
               "$type": "ResearchPointsReward",
@@ -328,7 +329,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 25000
+              "Amount": 5000
             },
             {
               "$type": "ResearchPointsReward",
@@ -385,6 +386,14 @@
           "Randomized": true,
           "StartingAmount": 1000,
           "ExponentialGrowthPercentPerLevel": 5,
+          "RequiredUpgrade": "RNEndOfGame"
+        },
+        {
+          "Id": "Random2",
+          "Randomized": true,
+          "RandomizedUseCrystals": true,
+          "StartingAmount": 1000,
+          "ExponentialGrowthPercentPerLevel": 4,
           "RequiredUpgrade": "RNEndOfGame"
         }
       ]
@@ -611,7 +620,7 @@
           },
           {
             "$type": "BlueprintCurrencyReward",
-            "Amount": 750
+            "Amount": 5000
           },
           {
             "$type": "WikiEntryReward",
@@ -670,7 +679,7 @@
           },
           {
             "$type": "BlueprintCurrencyReward",
-            "Amount": 2500
+            "Amount": 15000
           },
           {
             "$type": "BuildingReward",
@@ -728,6 +737,10 @@
             "Amount": 500
           },
           {
+            "$type": "BlueprintCurrencyReward",
+            "Amount": 25000
+          },
+          {
             "$type": "BuildingReward",
             "BuildingVariantId": "CrystalGeneratorDefaultVariant"
           },
@@ -754,7 +767,7 @@
               },
               {
                 "Shape": "RyP-RyP-:SwRuSwRu",
-                "Amount": 40000
+                "Amount": 60000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -808,7 +821,7 @@
               },
               {
                 "Shape": "RucrRucr:cbcbcbcb:CwCwCwCw",
-                "Amount": 55000
+                "Amount": 150000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -3492,6 +3505,10 @@
           },
           {
             "$type": "BuildingReward",
+            "BuildingVariantId": "PipeGateDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
             "BuildingVariantId": "DisplayDefaultVariant"
           },
           {
@@ -3513,6 +3530,10 @@
           {
             "$type": "MechanicReward",
             "MechanicId": "RUWires"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKWires"
           }
         ],
         "Costs": [
@@ -3591,6 +3612,10 @@
           {
             "$type": "BuildingReward",
             "BuildingVariantId": "VirtualPainterDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualPinPusherDefaultVariant"
           },
           {
             "$type": "BuildingReward",
@@ -3826,6 +3851,10 @@
           {
             "$type": "IslandLayoutReward",
             "LayoutId": "Layout_TrainRollerCoasterLoop"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainRollerCoasterLoop_Flipped"
           }
         ],
         "Costs": [

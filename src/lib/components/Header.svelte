@@ -75,8 +75,8 @@
 
 			<a
 				class="btn btn-square btn-primary btn-md fill-primary-content"
-				title="Upload a blueprint"
-				href="/blueprint/upload"
+				title="Upload your content"
+				href="/upload"
 			>
 				<span class="icon-[tabler--upload] text-2xl">Upload</span>
 			</a>

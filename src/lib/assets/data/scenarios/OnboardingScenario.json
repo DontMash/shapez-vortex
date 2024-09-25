@@ -9,13 +9,15 @@
   "FollowupScenarioIds": ["default-scenario", "hard-scenario"],
   "ExampleShapes": ["CuCuCuCu", "RuCuRuCu", "CuCuCuRu:CuCuCuCu"],
   "Config": {
-    "BaseChunkLimitMultiplier": 150,
+    "BaseChunkLimitMultiplier": 200,
+    "BaseBlueprintRewardMultiplier": 500,
     "LayerMechanicIds": ["RULayer2", "RULayer3"],
     "BlueprintsMechanicId": "RUBlueprints",
     "RailsMechanicId": "RURailManagement",
     "PlayerLevelMechanicId": "RUPlayerLevel",
     "IslandManagementMechanicId": "RUIslandPlacement",
     "TrainHubDeliveryMechanicId": "RUTrainHubDelivery",
+    "EstimatedUpcomingUpgradesFromFollowup": 145,
     "BlueprintCurrencyShapes": [
       {
         "Shape": "CuRuCuCu",

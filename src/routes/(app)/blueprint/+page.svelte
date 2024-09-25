@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
 	import { superForm } from 'sveltekit-superforms';

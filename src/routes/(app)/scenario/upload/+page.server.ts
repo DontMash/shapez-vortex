@@ -1,9 +1,8 @@
 import { fail, isRedirect, redirect } from '@sveltejs/kit';
 import { setError, superValidate, withFiles } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { post } from '$lib/server/blueprint.api';
-import { BLUEPRINT_FORM_SCHEMA } from '$lib/blueprint.schema';
-import type { BlueprintTag } from '$lib/blueprint.types';
+import { SCENARIO_SCHEMA } from '$lib/scenario.schema';
+import type { ScenarioTag } from '$lib/scenario.types';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
@@ -11,15 +10,15 @@ export const load = (async ({ locals }) => {
 		redirect(303, '/settings/account');
 	}
 
-	const tags = await locals.pb.collection<BlueprintTag>('blueprintTags').getFullList();
+	const tags = await locals.pb.collection<ScenarioTag>('scenarioTags').getFullList();
 
 	return {
 		seo: {
-			title: 'Upload Blueprint',
-			description: 'Share your blueprint with the community.',
-			keywords: ['Blueprint', 'Upload']
+			title: 'Upload Scenario',
+			description: 'Share your scenario with the community.',
+			keywords: ['Scenario', 'Upload']
 		},
-		form: await superValidate(zod(BLUEPRINT_FORM_SCHEMA)),
+		form: await superValidate(zod(SCENARIO_SCHEMA)),
 		tags
 	};
 }) satisfies PageServerLoad;
@@ -33,17 +32,18 @@ export const actions = {
 			return fail(401);
 		}
 
-		const form = await superValidate(request, zod(BLUEPRINT_FORM_SCHEMA));
+		const form = await superValidate(request, zod(SCENARIO_SCHEMA));
 		if (!form.valid) {
 			return fail(400, withFiles({ form }));
 		}
 
 		try {
-			const record = await post(locals.pb, form.data);
-			redirect(303, `/blueprint/${record.id}`);
+			console.log(form);
+
+			// redirect(303, `/scenario/${record.id}`);
 		} catch (err) {
 			const error = err as Error;
-			if (isRedirect(error)) throw error;			
+			if (isRedirect(error)) throw error;
 			return setError(
 				form,
 				'data',

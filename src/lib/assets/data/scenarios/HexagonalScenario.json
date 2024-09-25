@@ -9,7 +9,8 @@
   "RecommendedScenarioIdsToCompleteBefore": ["default-scenario"],
   "ExampleShapes": ["Hu--HuHu--Hu:Hb--HrHb--Hr:GgGgGgGgGgGg", "--FrFr--FrFr:HrHr--HrHr--:--FbFb--FbFb:HbHb--HbHb--", "HbGbHbHbGbHb:HgGgHgHgGgHg:FwFwFwFwFwFw:HyHyHyHyHyHy", "HwHwHwHwHwHw:GbGbGbGbGbGb:P-P-P-P-P-P-:FwFwFwFwFwFw", "P-FcP-FcP-Fc:FcFyFcFyFcFy:P---P---P---:Fy--Fy--Fy--"],
   "Config": {
-    "BaseChunkLimitMultiplier": 150,
+    "BaseChunkLimitMultiplier": 200,
+    "BaseBlueprintRewardMultiplier": 500,
     "InitialResearchPoints": 0,
     "LayerMechanicIds": ["RULayer2", "RULayer3"],
     "BlueprintsMechanicId": "RUBlueprints",
@@ -70,7 +71,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 100000
+              "Amount": 20000
             },
             {
               "$type": "ResearchPointsReward",
@@ -87,7 +88,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 50000
+              "Amount": 10000
             },
             {
               "$type": "ResearchPointsReward",
@@ -104,7 +105,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 25000
+              "Amount": 5000
             },
             {
               "$type": "ResearchPointsReward",
@@ -116,7 +117,7 @@
       "GoalLines": [
         {
           "Id": "Reuse_Fluids",
-          "Shape": "GbHrHuHuHrGb:GuFgGbGbFgGu",
+          "Shape": "GbHrHuHuHrGb:--FgGbGbFg--",
           "StartingAmount": 10000,
           "ExponentialGrowthPercentPerLevel": 14,
           "RequiredUpgrade": "RNFluids"
@@ -126,14 +127,14 @@
           "Shape": "HbHbHbHbHbHb:GgGgGgGgGgGg:FrFrFrFrFrFr",
           "StartingAmount": 10000,
           "ExponentialGrowthPercentPerLevel": 15,
-          "RequiredUpgrade": "RNFluids"
+          "RequiredUpgrade": "RNTrains"
         },
         {
           "Id": "Reuse_PinPusher",
           "Shape": "FbGrFbGrFbGr:Gr--Gr--Gr--",
           "StartingAmount": 10000,
           "ExponentialGrowthPercentPerLevel": 14,
-          "RequiredUpgrade": "RNTrains"
+          "RequiredUpgrade": "RNColorMixing"
         },
         {
           "Id": "Reuse_Mixing",
@@ -147,7 +148,7 @@
           "Shape": "P-FcP-FcP-Fc:FcFyFcFyFcFy:P---P---P---:Fy--Fy--Fy--",
           "StartingAmount": 10000,
           "ExponentialGrowthPercentPerLevel": 12,
-          "RequiredUpgrade": "RNColorMixing"
+          "RequiredUpgrade": "RNCrystals"
         },
         {
           "Id": "Reuse_Final",
@@ -161,6 +162,14 @@
           "Randomized": true,
           "StartingAmount": 1000,
           "ExponentialGrowthPercentPerLevel": 5,
+          "RequiredUpgrade": "RNEndOfGame"
+        },
+        {
+          "Id": "Random2",
+          "Randomized": true,
+          "RandomizedUseCrystals": true,
+          "StartingAmount": 1000,
+          "ExponentialGrowthPercentPerLevel": 4,
           "RequiredUpgrade": "RNEndOfGame"
         }
       ]
@@ -325,8 +334,8 @@
                 "Amount": 600
               }
             ],
-            "StartingOffset": 1,
-            "ReusedAtNextMilestone": true
+            "ReusedAtSameMilestone": true,
+            "ReusedAtSameMilestoneOffset": -1
           }
         ]
       },
@@ -641,7 +650,7 @@
           },
           {
             "$type": "BlueprintCurrencyReward",
-            "Amount": 2500
+            "Amount": 5000
           },
           {
             "$type": "BuildingReward",
@@ -700,7 +709,7 @@
           },
           {
             "$type": "BlueprintCurrencyReward",
-            "Amount": 750
+            "Amount": 15000
           },
           {
             "$type": "WikiEntryReward",
@@ -758,6 +767,10 @@
             "Amount": 500
           },
           {
+            "$type": "BlueprintCurrencyReward",
+            "Amount": 25000
+          },
+          {
             "$type": "BuildingReward",
             "BuildingVariantId": "CrystalGeneratorDefaultVariant"
           },
@@ -784,7 +797,7 @@
               },
               {
                 "Shape": "P-FcP-FcP-Fc:FcFyFcFyFcFy:P---P---P---:Fy--Fy--Fy--",
-                "Amount": 40000
+                "Amount": 60000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -838,7 +851,7 @@
               },
               {
                 "Shape": "HwcrHwcrHwcr:cccccccccccc:FwFwFwFwFwFw",
-                "Amount": 55000
+                "Amount": 150000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -2307,7 +2320,7 @@
 
       {
         "Title": "@side-goal.hex-galactic-lotus",
-        "RequiredUpgradeIds": ["RNTrains"],
+        "RequiredUpgradeIds": ["RNColorMixing"],
         "SideQuests": [
           {
             "Id": "SG_Trains_6_1",
@@ -3037,7 +3050,7 @@
             ],
             "Costs": [
               {
-                "Shape": "P-----P-P-P-:Hr----HrHrHr",
+                "Shape": "P---------P-:Hr--------Hr",
                 "Amount": 6000
               }
             ]
@@ -3056,7 +3069,7 @@
             ],
             "Costs": [
               {
-                "Shape": "P-P-P-P-P-P-:HrGcGcHrHrHr",
+                "Shape": "P-P-P-----P-:HrGcGc----Hr",
                 "Amount": 8000
               }
             ]
@@ -3075,13 +3088,32 @@
             ],
             "Costs": [
               {
-                "Shape": "HuGuGuHwHwHw:P-P-P-P-P-P-:HrGcGcHrHrHr",
+                "Shape": "P-P-P-P-P-P-:HrGcGcHyHyHr",
                 "Amount": 8000
               }
             ]
           },
           {
             "Id": "SG_PinPusher_4_4",
+            "Rewards": [
+              {
+                "$type": "ResearchPointsReward",
+                "Amount": 6
+              },
+              {
+                "$type": "ChunkLimitReward",
+                "Amount": 70
+              }
+            ],
+            "Costs": [
+              {
+                "Shape": "HuGuGuHuHuHu:P-P-P-P-P-P-:HrGcGcHyHyHr",
+                "Amount": 8000
+              }
+            ]
+          },
+          {
+            "Id": "SG_PinPusher_4_5",
             "Rewards": [
               {
                 "$type": "ResearchPointsReward",
@@ -3094,7 +3126,7 @@
             ],
             "Costs": [
               {
-                "Shape": "HwGwGwHwHwHw:P-P-P-P-P-P-:HrGcGcHrHrHr",
+                "Shape": "HwGwGwHwHwHw:P-P-P-P-P-P-:HrGcGcHyHyHr",
                 "Amount": 16000
               }
             ]
@@ -3995,6 +4027,10 @@
           },
           {
             "$type": "BuildingReward",
+            "BuildingVariantId": "PipeGateDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
             "BuildingVariantId": "DisplayDefaultVariant"
           },
           {
@@ -4016,6 +4052,10 @@
           {
             "$type": "MechanicReward",
             "MechanicId": "RUWires"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKWires"
           }
         ],
         "Costs": [
@@ -4094,6 +4134,10 @@
           {
             "$type": "BuildingReward",
             "BuildingVariantId": "VirtualPainterDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualPinPusherDefaultVariant"
           },
           {
             "$type": "BuildingReward",
@@ -4329,6 +4373,10 @@
           {
             "$type": "IslandLayoutReward",
             "LayoutId": "Layout_TrainRollerCoasterLoop"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_TrainRollerCoasterLoop_Flipped"
           }
         ],
         "Costs": [
@@ -4859,11 +4907,11 @@
         "GuaranteedShapePatches": [
           "--FgFuFuFg--",
           "FuFuGuGuGuGu",
-          "GbGbGuGu----",
-          "--HrHuHuHr--",
+          "GuGuGuGu----",
+          "--HuHuHuHu--",
           "--FuFuFuFu--",
-          "HuHuHuHuHuHu",
-          "GuGuGuGuGuGu",
+          "HuHrHrHrHuHu",
+          "GbGuGuGuGbGb",
           "FgFgFuFu----"
         ],
         "GuaranteedColorPatches": ["r", "b"]

@@ -3,12 +3,12 @@ import { redirect, type Handle } from '@sveltejs/kit';
 import { POCKETBASE_URL } from '$env/static/private';
 import type { User } from '$lib/user.types';
 
-const protectedRoutes = ['settings', 'blueprint/upload'] as const;
+const protectedRoutes = ['settings', 'blueprint/upload', 'scenario/upload'] as const;
 const protectedActions = [
 	'requestVerification',
 	'requestEmail',
 	'updateDisplayname',
-	'updateBookmark',
+	'updateBookmark'
 ] as const;
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -17,9 +17,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.pb = pb;
 	try {
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		event.locals.pb.authStore.isValid && (await event.locals.pb.collection('users').authRefresh());
 		event.locals.user = structuredClone(pb.authStore.model) as User;
-	} catch (_) {
+	} catch {
 		event.locals.pb.authStore.clear();
 		event.locals.user = undefined;
 	}

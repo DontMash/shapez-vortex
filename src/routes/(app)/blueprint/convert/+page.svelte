@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import type { PageData } from './$types';
 	import { GAME_VERSION } from '$lib/blueprint.types';
+	import type { PageData } from './$types';
 
 	import CopyButton from '$lib/components/CopyButton.svelte';
 

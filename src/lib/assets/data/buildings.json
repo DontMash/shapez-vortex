@@ -664,7 +664,7 @@
     "Selectable": true,
     "PlayerBuildable": true,
     "AutoConnectBelts": true,
-    "PipetteOverrideVariantId": "PipeDefaultVariant",
+    "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
         "Id": "FluidPortReceiverInternalVariant",
@@ -687,7 +687,7 @@
     "Selectable": true,
     "PlayerBuildable": true,
     "AutoConnectBelts": true,
-    "PipetteOverrideVariantId": "PipeDefaultVariant",
+    "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
         "Id": "FluidPortSenderInternalVariant",
@@ -2338,6 +2338,42 @@
     ]
   },
   {
+    "Id": "PipeGateDefaultVariant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
+      {
+        "Id": "PipeGateDefaultInternalVariant",
+        "MirroredInternalVariantId": "PipeGateDefaultInternalVariantMirrored",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "PipeGateDefaultInternalVariantMirrored",
+        "MirroredInternalVariantId": "PipeGateDefaultInternalVariant",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      }
+    ]
+  },
+  {
     "Id": "PumpDefaultVariant",
     "Removable": true,
     "Selectable": true,
@@ -3023,6 +3059,29 @@
       {
         "Id": "VirtualPainterDefaultInternalVariantMirrored",
         "MirroredInternalVariantId": "VirtualPainterDefaultInternalVariant",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      }
+    ]
+  },
+  {
+    "Id": "VirtualPinPusherDefaultVariant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
+      {
+        "Id": "VirtualPinPusherDefaultInternalVariant",
+        "MirroredInternalVariantId": null,
         "Tiles": [
           {
             "X": 0,

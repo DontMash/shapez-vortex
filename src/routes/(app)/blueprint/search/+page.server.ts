@@ -10,7 +10,7 @@ export const load = (async ({ fetch, locals, url }) => {
 		return result;
 	}, {});
 
-	const tags = await locals.pb.collection<BlueprintTag>('tags').getFullList();
+	const tags = await locals.pb.collection<BlueprintTag>('blueprintTags').getFullList();
 	const query = url.searchParams.get('query');
 	const filter = url.searchParams.get('filter');
 	const sort = url.searchParams.get('sort');
