@@ -3,10 +3,6 @@ import { z } from 'zod';
 
 export const SHAPE: ShapeIdentifier = 'CwRwCwCw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
 
-export const SHAPE_MAX_LAYERS = 4;
-export const SHAPE_MAX_DEFAULT_PARTS = 4;
-export const SHAPE_MAX_HEX_PARTS = 6;
-
 export const SHAPE_COLOR_BASE = 0x333333;
 export const SHAPE_COLOR_NONE = 0x777777;
 export const SHAPE_COLOR_PIN = 0x444450;
@@ -85,7 +81,7 @@ export const SHAPE_COLOR_MATERIALS: Record<ShapeColorIdentifier, Material> = {
 	g: SHAPE_COLOR_GREEN_MATERIAL,
 	b: SHAPE_COLOR_BLUE_MATERIAL,
 	c: SHAPE_COLOR_CYAN_MATERIAL,
-	p: SHAPE_COLOR_PURPLE_MATERIAL,
+	m: SHAPE_COLOR_PURPLE_MATERIAL,
 	y: SHAPE_COLOR_YELLOW_MATERIAL,
 	k: SHAPE_COLOR_BLACK_MATERIAL,
 	w: SHAPE_COLOR_WHITE_MATERIAL,
@@ -147,7 +143,7 @@ export const SHAPE_CRYSTAL_MATERIALS: Record<ShapeColorIdentifier, Material> = {
 	g: SHAPE_CRYSTAL_GREEN_MATERIAL,
 	b: SHAPE_CRYSTAL_BLUE_MATERIAL,
 	c: SHAPE_CRYSTAL_CYAN_MATERIAL,
-	p: SHAPE_CRYSTAL_PURPLE_MATERIAL,
+	m: SHAPE_CRYSTAL_PURPLE_MATERIAL,
 	y: SHAPE_CRYSTAL_YELLOW_MATERIAL,
 	k: SHAPE_CRYSTAL_BLACK_MATERIAL,
 	w: SHAPE_CRYSTAL_WHITE_MATERIAL,
@@ -186,7 +182,7 @@ export const SHAPE_TYPE_IDENTIFIER = [
 	'-'
 ] as const;
 export type ShapeTypeIdentifier = (typeof SHAPE_TYPE_IDENTIFIER)[number];
-export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'p', 'y', 'k', 'w'] as const;
+export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'm', 'y', 'k', 'w'] as const;
 export type ShapeColor = (typeof SHAPE_COLORS)[number];
 export const SHAPE_COLOR_IDENTIFIERS = [...SHAPE_COLORS, 'u', '-'] as const;
 export type ShapeColorIdentifier = (typeof SHAPE_COLOR_IDENTIFIERS)[number];
@@ -200,10 +196,20 @@ export const SHAPE_LAYER_IDENTIFIER_SEPERATOR = ':';
 export const SHAPE_PART_REGEX = /(..?)/g;
 export const SHAPE_PART_PARAMETERS_REGEX = /(.?)/g;
 
-const SHAPE_DEFAULT_IDENTIFIER_REGEX =
-	/^([CRSWPc-][rgbcpykwu-]){1,4}(:([CRSWPc-][rgbcpykwu-]){1,4}){0,3}$/;
-const SHAPE_HEX_IDENTIFIER_REGEX =
-	/^([FGHPc-][rgbcpykwu-]){1,6}(:([FGHPc-][rgbcpykwu-]){1,6}){0,3}$/;
+export const SHAPE_MAX_LAYERS = 6;
+export const SHAPE_MAX_DEFAULT_PARTS = 4;
+export const SHAPE_MAX_HEX_PARTS = 6;
+const SHAPE_DEFAULT_PART_REGEX = `[CRSWPc-]`;
+const SHAPE_HEX_PART_REGEX = `[FGHPc-]`;
+const SHAPE_COLOR_REGEX = `[rgbcmykwu-]`;
+const SHAPE_DEFAULT_LAYER_REGEX = `${SHAPE_DEFAULT_PART_REGEX}${SHAPE_COLOR_REGEX}){1,${SHAPE_MAX_DEFAULT_PARTS}}`;
+const SHAPE_DEFAULT_IDENTIFIER_REGEX = new RegExp(
+	`^(${SHAPE_DEFAULT_LAYER_REGEX}(:(${SHAPE_DEFAULT_LAYER_REGEX})*$`
+);
+const SHAPE_HEX_LAYER_REGEX = `${SHAPE_HEX_PART_REGEX}${SHAPE_COLOR_REGEX}){1,${SHAPE_MAX_HEX_PARTS}}`;
+const SHAPE_HEX_IDENTIFIER_REGEX = new RegExp(
+	`^(${SHAPE_HEX_LAYER_REGEX}(:(${SHAPE_HEX_LAYER_REGEX})*$`
+);
 export const isDefaultShapeIdentifier = (identifier: ShapeIdentifier): boolean =>
 	z.string().regex(SHAPE_DEFAULT_IDENTIFIER_REGEX).safeParse(identifier).success;
 export const isHexShapeIdentifier = (identifier: ShapeIdentifier): boolean =>

@@ -10,6 +10,7 @@
 	import {
 		isDefaultShapeIdentifier,
 		SHAPE_COLOR_BASE_MATERIAL,
+		SHAPE_MAX_LAYERS,
 		type ShapeData
 	} from '$lib/shape.types';
 
@@ -17,7 +18,7 @@
 	import ShapeDefaultSupport from '$lib/components/models/shapes/ShapeDefaultSupport.svelte';
 
 	const SHAPE_LAYER_HEIGHT = 0.05;
-	const SHAPE_LAYER_SCALE = 0.2;
+	const SHAPE_LAYER_SCALE = 1 / SHAPE_MAX_LAYERS;
 	const SHAPE_LAYER_EXTEND_OFFSET = 0.15;
 	const SHAPE_PART_EXPAND_OFFSET = 0.4;
 
@@ -177,7 +178,6 @@
 						value={$page.data.shape?.identifier ?? null}
 						required
 						minlength="2"
-						maxlength="51"
 					/>
 
 					<button class="btn btn-square btn-ghost btn-sm" type="reset" title="Clear shape input">
@@ -215,7 +215,7 @@
 						<ShapeDefaultSupport position.y={-0.025} bind:this={baseComponentModel} />
 					</Suspense>
 					{#key data}
-						{#each data.data as layer, layerIndex}
+						{#each data.data.slice(0,SHAPE_MAX_LAYERS) as layer, layerIndex}
 							{@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
 							{@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
 							{@const extendOffset = isExtended ? layerIndex * SHAPE_LAYER_EXTEND_OFFSET : 0}
