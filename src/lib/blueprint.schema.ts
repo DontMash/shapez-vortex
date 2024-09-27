@@ -1,9 +1,8 @@
 import { z } from 'zod';
-import { decode, encode } from '$lib/blueprint';
+import { decode } from '$lib/blueprint';
 import {
 	BLUEPRINT_IDENTIFIER_REGEX,
 	BLUEPRINT_TYPES,
-	type Blueprint,
 	type BlueprintIdentifier
 } from '$lib/blueprint.types';
 
@@ -41,7 +40,7 @@ const BLUEPRINT_DATA_SCHEMA = z
 		try {
 			decode(value);
 			return true;
-		} catch (error) {
+		} catch {
 			return false;
 		}
 	}, 'Invalid blueprint data');

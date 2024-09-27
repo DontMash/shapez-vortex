@@ -18,9 +18,8 @@ export const load = (async ({ locals, request, url }) => {
 	try {
 		const result = await get(locals.pb, { query: '', perPage: 100 });
 		searchBlueprints = result.items;
-	} catch (err) {
+	} catch {
 		searchBlueprints = [];
-		console.error(err);
 	}
 
 	// fetch the latest 100 users for client-side search
@@ -34,8 +33,8 @@ export const load = (async ({ locals, request, url }) => {
 		}
 		const result = (await response.json()) as ListResult<User>;
 		searchUsers = result.items;
-	} catch (err) {
-		console.error(err);
+	} catch {
+		searchUsers = [];
 	}	
 
 	return {
