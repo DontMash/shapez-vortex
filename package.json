@@ -60,14 +60,14 @@
     "cmdk-sv": "^0.0.18",
     "formsnap": "^1.0.1",
     "pako": "^2.1.0",
-    "pocketbase": "^0.21.0",
+    "pocketbase": "^0.22.1",
     "screenfull": "^6.0.2",
     "sveltekit-superforms": "^2.17.0",
     "tailwind-merge": "^2.5.2",
-    "tailwind-variants": "^0.2.1",
-    "three": "0.167.1",
-    "three-custom-shader-material": "^5.4.0",
-    "ua-parser-js": "^1.0.37",
+    "tailwind-variants": "^0.3.0",
+    "three": "0.171.0",
+    "three-custom-shader-material": "^6.2.0",
+    "ua-parser-js": "^2.0.0",
     "zod": "^3.23.8"
   }
 }
