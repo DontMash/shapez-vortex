@@ -14,7 +14,24 @@ const SCENARIO_TITLE_SCHEMA = z
 const SCENARIO_DATA_SCHEMA = z
 	.instanceof(File)
 	.refine((value) => value.size > 0, 'Empty file')
-	.refine((value) => value.type !== 'application/json', 'Accepted file format: application/json');
+	.refine((value) => value.type === 'application/json', 'Accepted file format: application/json');
+
+const SCENARIO_IMAGE_MAX_FILE_SIZE = 1_048_576;
+const SCENARIO_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'] as const;
+const SCENARIO_IMAGES_MAX = 4;
+const SCENARIO_IMAGES_SCHEMA = z
+	.instanceof(File)
+	.refine((value) => value.size > 0, 'Empty file')
+	.refine(
+		(value) => value.size < SCENARIO_IMAGE_MAX_FILE_SIZE,
+		`Max. image size is ${SCENARIO_IMAGE_MAX_FILE_SIZE / 1024 / 1024}MB.`
+	)
+	.refine(
+		(value) => !!SCENARIO_IMAGE_TYPES.find((type) => type === value.type),
+		`Accepted image formats are: ${SCENARIO_IMAGE_TYPES.join(', ')}`
+	)
+	.array()
+	.max(SCENARIO_IMAGES_MAX);
 
 const SCENARIO_TAG_MIN = 3;
 const SCENARIO_TAG_MAX = 24;
@@ -34,6 +51,7 @@ const SCENARIO_DESCRIPTION_SCHEMA = z.string().max(SCENARIO_DESCRIPTION_MAX);
 export const SCENARIO_SCHEMA = z.object({
 	title: SCENARIO_TITLE_SCHEMA,
 	data: SCENARIO_DATA_SCHEMA,
+	images: SCENARIO_IMAGES_SCHEMA.optional(),
 	tags: SCENARIO_TAGS_SCHEMA.optional(),
 	description: SCENARIO_DESCRIPTION_SCHEMA.optional()
 });

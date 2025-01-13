@@ -7,7 +7,7 @@
 	export let data: PageData;
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
+<section class="mx-auto w-full max-w-5xl px-4 lg:px-0">
 	<header class="mb-12 flex w-full items-end space-x-4 border-b border-input px-4 pb-4">
 		<hgroup>
 			<h2 class="text-lg font-bold">
@@ -26,6 +26,11 @@
 				<Card.Title>Upload Blueprint</Card.Title>
 				<Card.Description>Share your blueprint with the community.</Card.Description>
 			</Card.Header>
+			<Card.Content>
+				<picture class="block aspect-w-3 aspect-h-2">
+					<img class="object-cover" src="blueprint-viewer-example.png" alt="Ingame scenario selection preview" />
+				</picture>
+			</Card.Content>
 			<Card.Footer>
 				<Button href="/blueprint/upload">Start</Button>
 			</Card.Footer>
@@ -36,6 +41,11 @@
 				<Card.Title>Upload scenario</Card.Title>
 				<Card.Description>Share your scenario with the community.</Card.Description>
 			</Card.Header>
+			<Card.Content>
+				<picture class="block aspect-w-3 aspect-h-2">
+					<img class="object-cover" src="scenario-example.jpeg" alt="Ingame scenario selection preview" />
+				</picture>
+			</Card.Content>
 			<Card.Footer>
 				<Button href="/scenario/upload">Start</Button>
 			</Card.Footer>

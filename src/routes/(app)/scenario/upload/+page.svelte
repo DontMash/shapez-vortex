@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
+	import { add } from '$lib/client/toast.service';
 	import { SCENARIO_SCHEMA, SCENARIO_TITLE_MAX, SCENARIO_TITLE_MIN } from '$lib/scenario.schema';
 	import type { PageData } from './$types';
 
@@ -48,6 +49,55 @@
 					</Tooltip.Root>
 				</Form.Label>
 				<Input placeholder="My scenario ..." {...attrs} bind:value={$formData.title} />
+			</Form.Control>
+			<Form.FieldErrors />
+		</Form.Field>
+
+		<Form.Field {form} name="data">
+			<Form.Control let:attrs>
+				<Form.Label class="relative block">
+					<input
+						class="peer h-32 w-full cursor-pointer rounded-md border border-input bg-background outline-2 outline-offset-2 outline-ring transition-colors [text-indent:-9999rem] hover:bg-foreground focus-visible:outline"
+						type="file"
+						accept="application/json"
+						{...attrs}
+						on:change={(event) => {
+							const input = event.currentTarget;
+							if (!input.files || !input.files.length) {
+								return add({ message: 'No files provided', type: 'ERROR' });
+							}
+							const file = input.files.item(0);
+							if (!file) {
+								return add({ message: 'Invalid file provided', type: 'ERROR' });
+							}
+							$formData.data = file;
+						}}
+					/>
+					<div
+						class="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center space-x-1 transition-colors peer-hover:text-background"
+					>
+						<span class="icon-[tabler--file-upload] size-8 align-middle" />
+						<div>
+							<p>Scenario file</p>
+							{#if $formData.data}
+								<p class="italic text-muted">
+									{$formData.data.name}
+								</p>
+							{/if}
+						</div>
+						<Tooltip.Root>
+							<Tooltip.Trigger class="pointer-events-auto">
+								<span class="icon-[tabler--info-circle] align-text-bottom text-lg text-input" />
+							</Tooltip.Trigger>
+							<Tooltip.Content>
+								<p>
+									The scenario file contains all information needed for the game to create a new
+									save game.
+								</p>
+							</Tooltip.Content>
+						</Tooltip.Root>
+					</div>
+				</Form.Label>
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
