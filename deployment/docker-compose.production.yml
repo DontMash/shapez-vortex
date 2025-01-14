@@ -1,12 +1,13 @@
 include:
-  - volumes.compose.yml
+  - caddy-volumes.compose.yml
+  - pocketbase-volumes.compose.yml
 
 name: shapez-vortex
 services:
-  nginx:
+  proxy:
     extends:
-      file: nginx.compose.yml
-      service: nginx
+      file: caddy.compose.yml
+      service: caddy
   db:
     extends:
       file: pocketbase.compose.yml
