@@ -1,9 +1,10 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
+	import { page } from '$app/stores';
 	import { type Mesh, type Object3D } from 'three';
+	import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
 	import { Canvas, T, type ThrelteContext } from '@threlte/core';
 	import { OrbitControls, Suspense } from '@threlte/extras';
-	import { page } from '$app/stores';
 	import { copy } from '$lib/client/actions/clipboard';
 	import { fullscreen } from '$lib/client/actions/fullscreen';
 	import { add } from '$lib/client/toast.service';
@@ -17,10 +18,14 @@
 	import ShapePart from '$lib/components/shape/ShapePart.svelte';
 	import ShapeDefaultSupport from '$lib/components/models/shapes/ShapeDefaultSupport.svelte';
 
+	type ThrelteVector3 = [x: number, y: number, z: number];
+
 	const SHAPE_LAYER_HEIGHT = 0.05;
 	const SHAPE_LAYER_SCALE = 1 / SHAPE_MAX_LAYERS;
 	const SHAPE_LAYER_EXTEND_OFFSET = 0.15;
 	const SHAPE_PART_EXPAND_OFFSET = 0.4;
+	const SHAPE_CAMERA_START_POSITION: ThrelteVector3 = [0, 0, 1.5];
+	const SHAPE_CAMERA_TOP_POSITION: ThrelteVector3 = [0, 1.5, 0];
 
 	export let data: ShapeData;
 	export let isExtended = false;
@@ -51,14 +56,23 @@
 		);
 	}
 	function onReset() {
-		if (!orbitControls) return;
-
-		orbitControls.ref.reset();
+		setCameraPosition();
 	}
 	function onTop() {
+		setCameraPosition(SHAPE_CAMERA_TOP_POSITION);
+	}
+	function setCameraPosition(value?: ThrelteVector3) {
 		if (!orbitControls) return;
 
-		orbitControls.ref.object.position.set(0, 2.5, 0);
+		const ref = orbitControls.ref as OrbitControlsType;
+		ref.enableDamping = false;
+		ref.update();
+		if (value) {
+			orbitControls.ref.object.position.set(...value);
+		} else {
+			orbitControls.ref.reset();
+		}
+		ref.enableDamping = true;
 	}
 
 	const onBaseModelLoad = () => {
@@ -193,12 +207,12 @@
 		<div class="aspect-h-1 aspect-w-1">
 			<div>
 				<Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
-					<T.PerspectiveCamera makeDefault position={[0, 2, 1.5]} fov={55}>
+					<T.PerspectiveCamera makeDefault position={SHAPE_CAMERA_START_POSITION} fov={55}>
 						<OrbitControls
 							enablePan={false}
 							enableZoom={false}
 							enableDamping
-							maxPolarAngle={Math.PI * 0.4}
+							maxPolarAngle={Math.PI * 0.35}
 							bind:this={orbitControls}
 						/>
 					</T.PerspectiveCamera>
@@ -211,31 +225,33 @@
 						shadow.mapSize={[2048, 2048]}
 					/>
 
-					<Suspense on:load={onBaseModelLoad}>
-						<ShapeDefaultSupport position.y={-0.025} bind:this={baseComponentModel} />
-					</Suspense>
-					{#key data}
-						{#each data.data.slice(0,SHAPE_MAX_LAYERS) as layer, layerIndex}
-							{@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
-							{@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
-							{@const extendOffset = isExtended ? layerIndex * SHAPE_LAYER_EXTEND_OFFSET : 0}
-							{@const expandOffset = isExpanded ? SHAPE_PART_EXPAND_OFFSET : 0}
-							<T.Group
-								position.y={layerPositionY + extendOffset}
-								scale={[layerScale, 0.5, layerScale]}
-							>
-								{#each layer as part, partIndex}
-									<T.Group rotation.y={partIndex * (isHex ? -1 / 3 : -0.5) * Math.PI + Math.PI}>
-										<ShapePart
-											data={part}
-											{isHex}
-											offset={expandOffset * SHAPE_LAYER_SCALE * (layerIndex + 1)}
-										/>
-									</T.Group>
-								{/each}
-							</T.Group>
-						{/each}
-					{/key}
+					<T.Group position.y={-0.25}>
+						<Suspense on:load={onBaseModelLoad}>
+							<ShapeDefaultSupport position.y={-0.025} bind:this={baseComponentModel} />
+						</Suspense>
+						{#key data}
+							{#each data.data.slice(0, SHAPE_MAX_LAYERS) as layer, layerIndex}
+								{@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
+								{@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
+								{@const extendOffset = isExtended ? layerIndex * SHAPE_LAYER_EXTEND_OFFSET : 0}
+								{@const expandOffset = isExpanded ? SHAPE_PART_EXPAND_OFFSET : 0}
+								<T.Group
+									position.y={layerPositionY + extendOffset}
+									scale={[layerScale, 0.5, layerScale]}
+								>
+									{#each layer as part, partIndex}
+										<T.Group rotation.y={partIndex * (isHex ? -1 / 3 : -0.5) * Math.PI + Math.PI}>
+											<ShapePart
+												data={part}
+												{isHex}
+												offset={expandOffset * SHAPE_LAYER_SCALE * (layerIndex + 1)}
+											/>
+										</T.Group>
+									{/each}
+								</T.Group>
+							{/each}
+						{/key}
+					</T.Group>
 				</Canvas>
 			</div>
 		</div>
