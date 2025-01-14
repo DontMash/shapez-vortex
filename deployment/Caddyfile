@@ -1,0 +1,7 @@
+vortex.shapez2.io {
+    reverse_proxy db:8080
+    request_body {
+		max_size 100MB
+	}
+}
+

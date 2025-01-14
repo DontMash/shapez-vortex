@@ -1,5 +1,5 @@
 include:
-  - volumes.compose.yml
+  - pocketbase-volumes.compose.yml
 
 name: shapez-vortex-development
 services:
