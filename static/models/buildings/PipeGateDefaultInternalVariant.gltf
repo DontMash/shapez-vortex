@@ -8,7 +8,10 @@
 		{
 			"name":"Scene",
 			"nodes":[
-				0
+				0,
+				1,
+				2,
+				3
 			]
 		}
 	],
@@ -22,12 +25,42 @@
 				0,
 				0.7071068286895752
 			]
+		},
+		{
+			"mesh":1,
+			"name":"Wire_PipeGate_Glas_LOD0",
+			"rotation":[
+				0.7071068286895752,
+				0,
+				0,
+				0.7071068286895752
+			]
+		},
+		{
+			"mesh":2,
+			"name":"Wire_PipeGate_Switch_LOD0",
+			"rotation":[
+				0.7071068286895752,
+				0,
+				0,
+				0.7071068286895752
+			]
+		},
+		{
+			"mesh":3,
+			"name":"Wire_PipeGate_Valve_LOD0",
+			"rotation":[
+				0.7071068286895752,
+				0,
+				0,
+				0.7071068286895752
+			]
 		}
 	],
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"Material.001",
+			"name":"Material.002",
 			"pbrMetallicRoughness":{
 				"metallicFactor":0,
 				"roughnessFactor":0.5
@@ -36,18 +69,58 @@
 	],
 	"meshes":[
 		{
-			"name":"Cube.127",
+			"name":"Cube.001",
 			"primitives":[
 				{
 					"attributes":{
 						"POSITION":0,
 						"NORMAL":1,
 						"TEXCOORD_0":2,
-						"TEXCOORD_1":3,
-						"TEXCOORD_2":4
+						"TEXCOORD_1":3
 					},
-					"indices":5,
+					"indices":4,
 					"material":0
+				}
+			]
+		},
+		{
+			"name":"Cylinder.002",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":5,
+						"NORMAL":6,
+						"TEXCOORD_0":7
+					},
+					"indices":8
+				}
+			]
+		},
+		{
+			"name":"Cube.128",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":9,
+						"NORMAL":10,
+						"TEXCOORD_0":11,
+						"TEXCOORD_1":12
+					},
+					"indices":13,
+					"material":0
+				}
+			]
+		},
+		{
+			"name":"Cylinder.014",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":14,
+						"NORMAL":15,
+						"TEXCOORD_0":16
+					},
+					"indices":17
 				}
 			]
 		}
@@ -56,7 +129,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":3410,
+			"count":3262,
 			"max":[
 				0.5,
 				0.2989553213119507,
@@ -72,75 +145,249 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":3410,
+			"count":3262,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":3410,
+			"count":3262,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":3410,
+			"count":3262,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":4,
-			"componentType":5126,
-			"count":3410,
-			"type":"VEC2"
+			"componentType":5123,
+			"count":8112,
+			"type":"SCALAR"
 		},
 		{
 			"bufferView":5,
+			"componentType":5126,
+			"count":32,
+			"max":[
+				0.5,
+				0.15000002086162567,
+				-0.04999999701976776
+			],
+			"min":[
+				-0.5,
+				-0.14999999105930328,
+				-0.3500000238418579
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":6,
+			"componentType":5126,
+			"count":32,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":7,
+			"componentType":5126,
+			"count":32,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":8,
 			"componentType":5123,
-			"count":8436,
+			"count":96,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":9,
+			"componentType":5126,
+			"count":20,
+			"max":[
+				-0.06917041540145874,
+				0.1445818841457367,
+				-0.26149532198905945
+			],
+			"min":[
+				-0.23065364360809326,
+				-0.1445818841457367,
+				-0.3423699140548706
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":10,
+			"componentType":5126,
+			"count":20,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":11,
+			"componentType":5126,
+			"count":20,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":12,
+			"componentType":5126,
+			"count":20,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":13,
+			"componentType":5123,
+			"count":48,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":14,
+			"componentType":5126,
+			"count":96,
+			"max":[
+				0.009999999776482582,
+				0.15000002086162567,
+				-0.04999999701976776
+			],
+			"min":[
+				-0.009999999776482582,
+				-0.1499999314546585,
+				-0.3500000238418579
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":15,
+			"componentType":5126,
+			"count":96,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":16,
+			"componentType":5126,
+			"count":96,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":17,
+			"componentType":5123,
+			"count":180,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":40920,
+			"byteLength":39144,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":40920,
-			"byteOffset":40920,
+			"byteLength":39144,
+			"byteOffset":39144,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":27280,
-			"byteOffset":81840,
+			"byteLength":26096,
+			"byteOffset":78288,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":27280,
-			"byteOffset":109120,
+			"byteLength":26096,
+			"byteOffset":104384,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":27280,
-			"byteOffset":136400,
+			"byteLength":16224,
+			"byteOffset":130480,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":384,
+			"byteOffset":146704,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":16872,
-			"byteOffset":163680,
+			"byteLength":384,
+			"byteOffset":147088,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":256,
+			"byteOffset":147472,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":192,
+			"byteOffset":147728,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":240,
+			"byteOffset":147920,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":240,
+			"byteOffset":148160,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":160,
+			"byteOffset":148400,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":160,
+			"byteOffset":148560,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":96,
+			"byteOffset":148720,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":1152,
+			"byteOffset":148816,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1152,
+			"byteOffset":149968,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":768,
+			"byteOffset":151120,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":360,
+			"byteOffset":151888,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":180552,
+			"byteLength":152248,
 			"uri":"PipeGateDefaultInternalVariant.bin"
 		}
 	]

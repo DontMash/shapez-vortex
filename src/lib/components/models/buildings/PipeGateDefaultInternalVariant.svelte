@@ -12,9 +12,12 @@ Command: npx @threlte/gltf@2.0.3 static/models/buildings/PipeGateDefaultInternal
   type GLTFResult = {
     nodes: {
       Wire_PipeGate_Main_LOD0: THREE.Mesh
+      Wire_PipeGate_Glas_LOD0: THREE.Mesh
+      Wire_PipeGate_Switch_LOD0: THREE.Mesh
+      Wire_PipeGate_Valve_LOD0: THREE.Mesh
     }
     materials: {
-      ['Material.001']: THREE.MeshStandardMaterial
+      ['Material.002']: THREE.MeshStandardMaterial
     }
   }
 
@@ -49,7 +52,31 @@ Command: npx @threlte/gltf@2.0.3 static/models/buildings/PipeGateDefaultInternal
       castShadow
       receiveShadow
       geometry={gltf.nodes.Wire_PipeGate_Main_LOD0.geometry}
-      material={gltf.materials['Material.001']}
+      material={gltf.materials['Material.002']}
+      rotation={[Math.PI / 2, 0, 0]}
+    />
+    <T.Mesh
+      name="Wire_PipeGate_Glas_LOD0"
+      castShadow
+      receiveShadow
+      geometry={gltf.nodes.Wire_PipeGate_Glas_LOD0.geometry}
+      material={gltf.nodes.Wire_PipeGate_Glas_LOD0.material}
+      rotation={[Math.PI / 2, 0, 0]}
+    />
+    <T.Mesh
+      name="Wire_PipeGate_Switch_LOD0"
+      castShadow
+      receiveShadow
+      geometry={gltf.nodes.Wire_PipeGate_Switch_LOD0.geometry}
+      material={gltf.materials['Material.002']}
+      rotation={[Math.PI / 2, 0, 0]}
+    />
+    <T.Mesh
+      name="Wire_PipeGate_Valve_LOD0"
+      castShadow
+      receiveShadow
+      geometry={gltf.nodes.Wire_PipeGate_Valve_LOD0.geometry}
+      material={gltf.nodes.Wire_PipeGate_Valve_LOD0.material}
       rotation={[Math.PI / 2, 0, 0]}
     />
   {:catch error}
