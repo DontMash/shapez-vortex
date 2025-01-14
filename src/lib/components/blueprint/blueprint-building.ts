@@ -66,6 +66,7 @@ import PipeUpBackwardInternalVariant_Layer1 from '$lib/components/models/buildin
 import Pipe2UpForwardInternalVariant from '$lib/components/models/buildings/Pipe2UpForwardInternalVariant.svelte';
 import Pipe2UpLeftInternalVariant from '$lib/components/models/buildings/Pipe2UpLeftInternalVariant.svelte';
 import Pipe2UpBackwardInternalVariant from '$lib/components/models/buildings/Pipe2UpBackwardInternalVariant.svelte';
+import PipeGateDefaultInternalVariant from '$lib/components/models/buildings/PipeGateDefaultInternalVariant.svelte';
 import FluidPortSenderInternalVariant from '$lib/components/models/buildings/FluidPortSenderInternalVariant.svelte';
 import FluidPortReceiverInternalVariant from '$lib/components/models/buildings/FluidPortReceiverInternalVariant.svelte';
 import WireDefaultForwardInternalVariant from '$lib/components/models/buildings/WireDefaultForwardInternalVariant.svelte';
@@ -97,6 +98,7 @@ import VirtualStackerDefaultInternalVariant from '$lib/components/models/buildin
 import VirtualUnstackerDefaultInternalVariant from '$lib/components/models/buildings/VirtualUnstackerDefaultInternalVariant.svelte';
 import VirtualPainterDefaultInternalVariant from '$lib/components/models/buildings/VirtualPainterDefaultInternalVariant.svelte';
 import VirtualCrystalGeneratorDefaultInternalVariant from '$lib/components/models/buildings/VirtualCrystalGeneratorDefaultInternalVariant.svelte';
+import VirtualPinPusherDefaultInternalVariant from '$lib/components/models/buildings/VirtualPinPusherDefaultInternalVariant.svelte';
 import BeltFilterDefaultInternalVariant from '$lib/components/models/buildings/BeltFilterDefaultInternalVariant.svelte';
 import BeltReaderDefaultInternalVariant from '$lib/components/models/buildings/BeltReaderDefaultInternalVariant.svelte';
 import DisplayDefaultInternalVariant from '$lib/components/models/buildings/DisplayDefaultInternalVariant.svelte';
@@ -324,6 +326,9 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
 	Pipe2UpBackwardInternalVariant: {
 		base: Pipe2UpBackwardInternalVariant
 	},
+	PipeGateDefaultInternalVariant: {
+		base: PipeGateDefaultInternalVariant
+	},
 	FluidPortSenderInternalVariant: {
 		base: FluidPortSenderInternalVariant
 	},
@@ -416,6 +421,9 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
 	},
 	VirtualCrystalGeneratorDefaultInternalVariant: {
 		base: VirtualCrystalGeneratorDefaultInternalVariant
+	},
+	VirtualPinPusherDefaultInternalVariant: {
+		base: VirtualPinPusherDefaultInternalVariant
 	},
 	BeltFilterDefaultInternalVariant: {
 		base: BeltFilterDefaultInternalVariant
@@ -589,6 +597,8 @@ const getMirroredBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => 
 			return 'VirtualHalvesSwapperDefaultInternalVariant';
 		case 'VirtualAnalyzerDefaultInternalVariantMirrored':
 			return 'VirtualAnalyzerDefaultInternalVariant';
+		case 'PipeGateDefaultInternalVariantMirrored':
+			return 'PipeGateDefaultInternalVariant';
 		case 'BeltFilterDefaultInternalVariantMirrored':
 			return 'BeltFilterDefaultInternalVariant';
 		case 'BeltReaderDefaultInternalVariantMirrored':
@@ -605,6 +615,8 @@ const getMirroredBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => 
 			return 'FluidStorageDefaultInternalVariant';
 		case 'CrystalGeneratorDefaultInternalVariantMirrored':
 			return 'CrystalGeneratorDefaultInternalVariant';
+		case 'LogicGateCompareInternalVariantMirrored':
+			return 'LogicGateCompareInternalVariant';
 
 		default:
 			return type;

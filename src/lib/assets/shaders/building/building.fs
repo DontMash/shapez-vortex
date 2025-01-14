@@ -2,6 +2,8 @@ precision mediump float;
 
 uniform sampler2D lutTexture;
 uniform vec3 accentColor;
+uniform vec3 emissive1Color;
+uniform vec3 emissive2Color;
 
 varying vec4 vPosition;
 varying vec2 vUv;
@@ -17,6 +19,12 @@ void main() {
     }
     // Emissive
     if (xIndex == 2) {
+        if (yIndex == 1) {
+            color = vec4(emissive1Color,1.0);
+        }
+        if (yIndex == 2) {
+            color = vec4(emissive2Color,1.0);
+        }
         // csm_Emissive = color.xyz;
     }
     // Metal brushed
