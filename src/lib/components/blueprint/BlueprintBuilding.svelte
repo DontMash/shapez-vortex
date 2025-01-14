@@ -29,7 +29,13 @@
 		baseMaterial: MeshStandardMaterial,
 		vertexShader: BUILDING_VERTEXSHADER,
 		fragmentShader: BUILDING_FRAGMENTSHADER,
-		uniforms: UniformsUtils.merge([{ accentColor: { value: new Color(0xff9421) } }]),
+		uniforms: UniformsUtils.merge([
+			{
+				accentColor: { value: new Color(0xff9421) },
+				emissive1Color: { value: new Color(0xf3b026) },
+				emissive2Color: { value: new Color(0x576fd4) }
+			}
+		]),
 		silent: true
 	});
 	const BUILDING_MATERIAL_GLASS = new MeshStandardMaterial({
