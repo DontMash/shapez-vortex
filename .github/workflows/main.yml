@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+
+env:
+  BUN_VERSION: latest
+  APP_NAME: shapez-vortex
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Lint ${{ env.APP_NAME }}
+        run: bun run lint
+
+  # build:
+  #   name: Build
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+  #     - name: Setup Go
+  #       uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
+  #       with:
+  #         go-version: ${{ env.GO_VERSION }}
+  #     - name: Install Dependencies
+  #       run: go mod download
+  #     - name: Verify Dependencies
+  #       run: go mod verify
+  #     - name: Build ${{ env.APP_NAME }}
+  #       run: |
+  #         chmod +x ./scripts/build.sh
+  #         ./scripts/build.sh
+
+  # test:
+  #     name: Test
+  #     needs: build
+  #     runs-on: ubuntu-latest
+
+  #     steps:
+  #       - name: Checkout
+  #         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+  #       - name: Setup Go
+  #         uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
+  #         with:
+  #           go-version: ${{ env.GO_VERSION }}
+  #       - name: "Warning: No test cases"
+  #         run: echo "Reminder to create test cases"
+  #       - name: Install Dependencies
+  #         run: go mod download
+  #       - name: Verify Dependencies
+  #         run: go mod verify
+  #       - name: Test ${{ env.APP_NAME }}
+  #         run: go test -v ./...
