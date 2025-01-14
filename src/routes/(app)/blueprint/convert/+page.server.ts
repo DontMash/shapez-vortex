@@ -26,7 +26,7 @@ export const actions = {
     const identifier = blueprintIdentifier.trim() as BlueprintIdentifier;
     try {
       return { success: true, identifier: update(identifier, version) };
-    } catch (err) {
+    } catch {
       return fail(400, { identifier, invalid: true });
     }
   },

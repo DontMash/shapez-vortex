@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import type { User } from '$lib/user.types';
 
-export const load = (async ({ depends, locals, params }) => {
+export const load = (async ({ locals, params }) => {
   try {
     let user: Pick<User, 'id' | 'displayname'>;
     if (params.slug.startsWith('@')) {
@@ -23,7 +23,7 @@ export const load = (async ({ depends, locals, params }) => {
       },
       profile: user,
     };
-  } catch (err) {
+  } catch {
     error(404, 'User not found');
   }
 }) satisfies LayoutServerLoad;

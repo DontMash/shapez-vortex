@@ -2,7 +2,7 @@ import type { BlueprintTag } from '$lib/blueprint.types';
 import { get, getBlueprintOptions } from '$lib/server/blueprint.api';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ fetch, locals, url }) => {
+export const load = (async ({ locals, url }) => {
   const result = await get(locals.pb, getBlueprintOptions(url));
   const images = result.items?.reduce<Record<string, string>>(
     (result, current) => {

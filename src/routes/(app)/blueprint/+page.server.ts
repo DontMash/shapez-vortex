@@ -1,9 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { BLUEPRINT_VIEW_SCHEMA } from '$lib/blueprint.schema';
-import { decode, update } from '$lib/blueprint';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {

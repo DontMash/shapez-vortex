@@ -60,7 +60,7 @@ export const load = (async ({ depends, locals, params }) => {
         isBookmarked,
       },
     };
-  } catch (err) {
+  } catch {
     error(404, 'Blueprint not found');
   }
 }) satisfies LayoutServerLoad;

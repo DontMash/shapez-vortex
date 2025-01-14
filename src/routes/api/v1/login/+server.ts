@@ -1,5 +1,5 @@
 import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';
-import { error, json } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ locals, request }) => {

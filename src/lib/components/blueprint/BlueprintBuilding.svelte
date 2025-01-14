@@ -58,7 +58,7 @@
 
   $: buildingModel = getBlueprintBuildingModel(entry.T);
 
-  let componentModel: SvelteComponent<any, any, any> | undefined = undefined;
+  let componentModel: SvelteComponent | undefined = undefined;
 
   export const MIRRORED_BUILDINGS = [
     'BeltDefaultRightInternalVariant',
@@ -78,8 +78,8 @@
   ];
   const isMirrored = (type: BlueprintBuildingIdentifier) => {
     return (
-      entry.T.toLowerCase().includes('mirrored') ||
-      MIRRORED_BUILDINGS.includes(entry.T)
+      type.toLowerCase().includes('mirrored') ||
+      MIRRORED_BUILDINGS.includes(type)
     );
   };
   const setMaterial = (entry: BlueprintBuildingEntry, object: Object3D) => {

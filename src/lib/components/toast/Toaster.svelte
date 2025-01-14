@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { add, toastStore, type ToastType } from '$lib/client/toast.service';
-  import { onMount } from 'svelte';
+  import { toastStore, type ToastType } from '$lib/client/toast.service';
 
   const ALERT_TYPES: Record<ToastType, string> = {
     INFO: 'alert-info',

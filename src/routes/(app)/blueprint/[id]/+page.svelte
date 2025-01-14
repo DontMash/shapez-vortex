@@ -243,7 +243,7 @@
                             type: 'SUCCESS',
                           });
                           goto('/blueprint/search');
-                        } catch (_) {
+                        } catch {
                           add({
                             message: 'Error while deleting blueprint',
                             type: 'ERROR',
@@ -282,9 +282,7 @@
       </ul>
     {/if}
 
-    <div class="prose min-h-32 grow">
-      {@html data.blueprint.entry.description}
-    </div>
+    <div class="prose min-h-32 grow">{data.blueprint.entry.description}</div>
 
     <div class="flex flex-col gap-2 sm:flex-row">
       <a
@@ -460,7 +458,7 @@
           <div
             class="badge badge-neutral badge-sm absolute bottom-2 left-1/2 flex -translate-x-1/2 space-x-1"
           >
-            {#each images as _, index}
+            {#each [...Array(images.length).keys()] as index}
               {@const link = `#image${index + 1}`}
               {@const name = `Image #${index}`}
               <a
@@ -479,7 +477,7 @@
 </article>
 
 <section class="mx-auto mt-16 w-full max-w-5xl">
-  {#if !!!data.agent?.device.type}
+  {#if !data.agent?.device.type}
     <BlueprintView
       identifier={data.blueprint.entry.data}
       blueprint={data.blueprint.data}

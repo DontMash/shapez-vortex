@@ -1,4 +1,3 @@
-import type { ClientResponseError } from 'pocketbase';
 import { fail, redirect, isRedirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';

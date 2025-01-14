@@ -77,7 +77,7 @@
         $formData.data && isBlueprintIdentifier($formData.data)
           ? decode($formData.data)
           : undefined;
-    } catch (error) {
+    } catch {
       blueprint = undefined;
       add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
     }
@@ -126,7 +126,7 @@
       add({ message: error.message, type: 'ERROR' });
     } finally {
       isSubmit = true;
-      return submit();
+      submit();
     }
   }
 

@@ -17,10 +17,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   event.locals.pb = pb;
   try {
-    event.locals.pb.authStore.isValid &&
+    const valid =
+      event.locals.pb.authStore.isValid &&
       (await event.locals.pb.collection('users').authRefresh());
-    event.locals.user = structuredClone(pb.authStore.model) as User;
-  } catch (_) {
+    if (valid) {
+      event.locals.user = structuredClone(pb.authStore.model) as User;
+    }
+  } catch {
     event.locals.pb.authStore.clear();
     event.locals.user = undefined;
   }

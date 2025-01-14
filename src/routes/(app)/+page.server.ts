@@ -1,4 +1,3 @@
-import { get } from '$lib/server/blueprint.api';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals, parent }) => {
@@ -21,7 +20,7 @@ export const load = (async ({ locals, parent }) => {
     return {
       blueprintImages: images,
     };
-  } catch (err) {
+  } catch {
     return {};
   }
 }) satisfies PageServerLoad;

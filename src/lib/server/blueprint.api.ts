@@ -57,7 +57,7 @@ export const get = async (pb: PocketBase, options?: BlueprintGetOptions) => {
     const filterEntries = Object.entries(filter);
     for (const [key, value] of filterEntries) {
       switch (key) {
-        case 'tags':
+        case 'tags': {
           const tagCollectionFilter = value
             .map((tag) => `name="${tag}"`)
             .join('||');
@@ -68,6 +68,7 @@ export const get = async (pb: PocketBase, options?: BlueprintGetOptions) => {
 
           const tagFilter = tags.map((tag) => `${key}?~"${tag.id}"`).join('||');
           filterParams.push(tagFilter);
+        }
       }
     }
   }
@@ -127,7 +128,7 @@ export const put = async (
   formData.set('bookmarkCount', String(blueprintRecord.bookmarkCount));
   formData.set('version', String(blueprintRecord.version + 1));
 
-  const test = await pb
+  await pb
     .collection<BlueprintRecord>('blueprints')
     .update(id, { images: null });
   const record = await pb
@@ -137,7 +138,7 @@ export const put = async (
 };
 
 const createBlueprintTags = async (pb: PocketBase, value: string) =>
-  new Promise<Array<BlueprintTag>>((resolve, _) => {
+  new Promise<Array<BlueprintTag>>((resolve) => {
     const user = pb.authStore.model;
     const tags = new Set(
       value

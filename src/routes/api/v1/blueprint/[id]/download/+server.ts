@@ -1,5 +1,4 @@
 import PocketBase from 'pocketbase';
-import { error } from '@sveltejs/kit';
 import {
   POCKETBASE_URL,
   ADMIN_EMAIL,

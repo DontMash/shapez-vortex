@@ -121,7 +121,7 @@
                   message: 'Successfully deleted blueprint',
                   type: 'SUCCESS',
                 });
-              } catch (_) {
+              } catch {
                 add({
                   message: 'Error while deleting blueprint',
                   type: 'ERROR',

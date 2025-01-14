@@ -29,7 +29,7 @@ export const load = (async ({ url }) => {
         data,
       },
     };
-  } catch (err) {
+  } catch {
     error(400, 'Invalid blueprint identifier - decode');
   }
 }) satisfies PageServerLoad;

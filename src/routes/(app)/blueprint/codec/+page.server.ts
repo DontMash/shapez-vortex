@@ -26,7 +26,7 @@ export const actions = {
         blueprintIdentifier.trim() as BlueprintIdentifier,
       );
       return { blueprint, success: true };
-    } catch (err) {
+    } catch {
       return fail(400, { blueprintIdentifier, invalid: true });
     }
   },
@@ -40,7 +40,7 @@ export const actions = {
       const blueprint = JSON.parse(blueprintData as string) as Blueprint;
       const blueprintIdentifier = encode(blueprint);
       return { blueprintIdentifier, success: true };
-    } catch (err) {
+    } catch {
       return fail(400, { blueprintData, invalid: true });
     }
   },

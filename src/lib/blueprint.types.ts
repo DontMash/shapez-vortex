@@ -71,7 +71,7 @@ export type BlueprintBuildingEntry = {
   // Additional data
   C?: string;
 };
-const BLUEPRINT_ENTRYROTATIONS = {
+export const BLUEPRINT_ENTRYROTATIONS = {
   East: 0,
   South: 1,
   West: 2,
@@ -97,7 +97,7 @@ const ISLAND_PADDING_SIZE = 3;
 const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;
 const ISLAND_MIN_SIZE = 12;
 export const ISLAND_LAYOUT_UNIT = ISLAND_MIN_SIZE + ISLAND_GAP_SIZE;
-const ISLAND_LAYOUT_IDENTIFIER = [
+export const ISLAND_LAYOUT_IDENTIFIER = [
   'Layout_1',
   'Layout_2',
   'Layout_3_L',

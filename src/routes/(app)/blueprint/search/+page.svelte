@@ -5,9 +5,9 @@
 
   export let data: PageData;
 
-  function getPageUrl(page: number) {
+  function getPageUrl(pageIndex: number) {
     const url = new URL($page.url);
-    url.searchParams.set('page', String(page));
+    url.searchParams.set('page', String(pageIndex));
     return url.href;
   }
 </script>
@@ -144,7 +144,7 @@
               <span class="icon-[tabler--chevron-left] text-2xl">Previous</span>
             </a>
           {/if}
-          {#each { length: data.result.totalPages } as _, index}
+          {#each [...Array(data.result.totalPages).keys()] as index}
             {@const page = index + 1}
             {@const diff = data.result.page - page}
             {#if diff < 3 && diff > -3}

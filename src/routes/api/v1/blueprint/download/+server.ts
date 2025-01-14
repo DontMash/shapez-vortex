@@ -3,9 +3,8 @@ import type { RequestHandler } from './$types';
 import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
 
 export const GET: RequestHandler = async ({ url }) => {
-  let identifier;
-  let name = 'blueprint';
-  identifier = url.searchParams.get('identifier');
+  const name = 'blueprint';
+  const identifier = url.searchParams.get('identifier');
   if (!identifier) {
     error(400, 'Invalid/missing identifier query parameter');
   }

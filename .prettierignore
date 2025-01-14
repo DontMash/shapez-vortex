@@ -12,5 +12,6 @@ pnpm-lock.yaml
 package-lock.json
 yarn.lock
 
-src/lib/components/models/*
 src/lib/assets/*
+src/lib/components/models/*
+src/lib/components/ui/*
