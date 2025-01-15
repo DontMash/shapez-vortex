@@ -11,10 +11,6 @@ permissions:
   packages: write
   pull-requests: write
 
-env:
-  BUN_VERSION: latest
-  APP_NAME: shapez-vortex
-
 jobs:
   lint:
     name: Lint
@@ -22,14 +18,14 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
       - name: Setup bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
       - name: Install Dependencies
         run: bun install --frozen-lockfile
-      - name: Lint ${{ env.APP_NAME }}
+      - name: Lint ${{ env.CODESPACE_NAME }}
         run: bun run lint
 
   build:
@@ -38,14 +34,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
       - name: Setup bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
+      - name: Environment
+        run: env
       - name: Install Dependencies
         run: bun install --frozen-lockfile
-      - name: Build ${{ env.APP_NAME }}
+      - name: Build ${{ env.CODESPACE_NAME }}
         run: bun run build
 
   # test:
