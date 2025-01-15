@@ -124,7 +124,7 @@
   </div>
 </section>
 
-{#if data.searchBlueprints && data.blueprintImages}
+{#if data.searchBlueprints && data.searchBlueprints.length && data.blueprintImages}
   <section
     class="mx-auto mt-16 w-full max-w-5xl space-y-4 px-4 md:mb-8 md:mt-24 lg:px-0"
     id="latest"
