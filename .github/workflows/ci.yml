@@ -43,7 +43,11 @@ jobs:
         run: env
       - name: Install Dependencies
         run: bun install --frozen-lockfile
-      - name: Build ${{ env.CODESPACE_NAME }}
+      - name: Build ${{ env.GITHUB_REPOSITORY }}
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
         run: bun run build
 
   # test:
