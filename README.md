@@ -136,11 +136,11 @@ Distributed under the MIT License. See [`LICENSE`][license-url] for more informa
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
+<!-- CONTACT / SUPPORT -->
 
-## Contact
+## Contact / Support
 
-Sören Maschmann - [E-Mail](mailto:work@soren.codes)
+To get in touch or support, see [`SUPPORT`][support-url].
 
 [Repository Link][repo-url]
 
@@ -152,6 +152,7 @@ Sören Maschmann - [E-Mail](mailto:work@soren.codes)
 [product-image]: docs/images/product.png
 [project-url]: https://github.com/users/DontMash/projects/2/views/1
 [contributing-url]: https://github.com/DontMash/shapez-vortex/blob/main/docs/CONTRIBUTING.md
+[support-url]: https://github.com/DontMash/shapez-vortex/blob/main/docs/SUPPORT.md
 
 <!-- SHIELDS -->
 [stars-shield]: https://img.shields.io/github/stars/DontMash/shapez-vortex.svg?style=for-the-badge
