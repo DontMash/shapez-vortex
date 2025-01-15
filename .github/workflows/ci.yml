@@ -109,21 +109,21 @@ jobs:
       - name: Create Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
 
       - name: Approve Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           gh pr review --approve ${{ env.PR_BRANCH }}
 
       - name: Merge Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
 
