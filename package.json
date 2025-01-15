@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "test:unit": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "prettier --check src && eslint src",
     "format": "prettier --write src"
   },
@@ -30,6 +32,7 @@
     "@types/ua-parser-js": "^0.7.39",
     "@typescript-eslint/eslint-plugin": "^8.0.1",
     "@typescript-eslint/parser": "^8.0.1",
+    "@vitest/coverage-v8": "^2.1.8",
     "autoprefixer": "^10.4.14",
     "daisyui": "^4.12.10",
     "eslint": "8.57.0",
@@ -47,7 +50,7 @@
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
     "vite": "^5.0.0",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.8"
   },
   "type": "module",
   "dependencies": {

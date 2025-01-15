@@ -48,23 +48,23 @@ jobs:
           POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
         run: bun run build
 
-  # test:
-  #     name: Test
-  #     needs: build
-  #     runs-on: ubuntu-latest
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
 
-  #     steps:
-  #       - name: Checkout
-  #         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-  #       - name: Setup Go
-  #         uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
-  #         with:
-  #           go-version: ${{ env.GO_VERSION }}
-  #       - name: "Warning: No test cases"
-  #         run: echo "Reminder to create test cases"
-  #       - name: Install Dependencies
-  #         run: go mod download
-  #       - name: Verify Dependencies
-  #         run: go mod verify
-  #       - name: Test ${{ env.APP_NAME }}
-  #         run: go test -v ./...
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Test ${{ env.GITHUB_REPOSITORY }}
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
+        run: bun run test
