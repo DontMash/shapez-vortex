@@ -138,7 +138,7 @@
 
     <div class="flex justify-center">
       <Button href="/blueprint/search" size="lg" variant="outline"
-        >See more</Button
+        >View more</Button
       >
     </div>
   </section>
