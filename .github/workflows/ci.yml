@@ -39,8 +39,6 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
-      - name: Environment
-        run: env
       - name: Install Dependencies
         run: bun install --frozen-lockfile
       - name: Build ${{ env.GITHUB_REPOSITORY }}
