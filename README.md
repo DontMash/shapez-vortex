@@ -10,7 +10,7 @@
 <h3 align="center">Shapez Vortex</h3>
 
   <p align="center">
-    A collection of tools to view, share & modify data of the game
+    A community-platform with tools to view, share & modify content of the game
     <a href="https://store.steampowered.com/app/2162800/shapez_2/">Shapez 2</a>.
     <br />
     <br />
