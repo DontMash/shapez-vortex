@@ -25,7 +25,7 @@ jobs:
           bun-version: ${{ env.BUN_VERSION }}
       - name: Install Dependencies
         run: bun install --frozen-lockfile
-      - name: Lint ${{ env.CODESPACE_NAME }}
+      - name: Lint
         run: bun run lint
 
   build:
@@ -41,7 +41,7 @@ jobs:
           bun-version: ${{ env.BUN_VERSION }}
       - name: Install Dependencies
         run: bun install --frozen-lockfile
-      - name: Build ${{ env.GITHUB_REPOSITORY }}
+      - name: Build
         env:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
@@ -62,7 +62,7 @@ jobs:
           bun-version: ${{ env.BUN_VERSION }}
       - name: Install Dependencies
         run: bun install --frozen-lockfile
-      - name: Test ${{ env.GITHUB_REPOSITORY }}
+      - name: Test
         env:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
