@@ -158,7 +158,7 @@ Sören Maschmann - [E-Mail](mailto:work@soren.codes)
 <!-- MARKDOWN LINKS -->
 [repo-url]: https://github.com/DontMash/shapez-vortex
 [product-url]: https://shapez.soren.codes
-[product-image]: resources/images/product.png
+[product-image]: docs/images/product.png
 [project-url]: https://github.com/users/DontMash/projects/2/views/1
 
 <!-- SHIELDS -->
