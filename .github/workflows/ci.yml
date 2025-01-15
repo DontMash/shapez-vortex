@@ -1,0 +1,152 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Lint
+        run: bun run lint
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Build
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
+        run: bun run build
+
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Test
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
+        run: bun run test
+
+  changelog:
+    name: Changelog
+    needs:
+      - lint
+      - build
+      - test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+
+    outputs:
+      skipped: ${{ steps.changelog.outputs.skipped }}
+      tag: ${{ steps.changelog.outputs.tag }}
+      clean_changelog: ${{ steps.changelog.outputs.clean_changelog }}
+      version: ${{ steps.changelog.outputs.version }}
+
+    env:
+      PR_BRANCH: release-ci-${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create Branch
+        run: |
+          git checkout -b ${{ env.PR_BRANCH }}
+
+      - name: Create Changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        id: changelog
+        with:
+          github-token: ${{ github.token }}
+          git-user-name: 'github-actions[bot]'
+          git-user-email: 'github-actions[bot]@users.noreply.github.com'
+          git-branch: ${{ env.PR_BRANCH }}
+          skip-git-pull: true
+          output-file: false
+          version-file: package.json
+          create-summary: true
+
+      - name: Create Changelog PR
+        if: steps.changelog.outputs.skipped == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
+
+      - name: Approve Changelog PR
+        if: steps.changelog.outputs.skipped == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh pr review --approve ${{ env.PR_BRANCH }}
+
+      - name: Merge Changelog PR
+        if: steps.changelog.outputs.skipped == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
+
+  release:
+    name: Release
+    needs: changelog
+    if: github.event_name != 'pull_request' && needs.changelog.outputs.skipped == 'false'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          tag_name: ${{ needs.changelog.outputs.tag }}
+          prerelease: false
+          draft: false
+          files: bin/*
+          generate_release_notes: true
+          name: ${{ needs.changelog.outputs.tag }}
+          body: |
+            <details>
+              <summary>Changelog</summary>
+
+            ${{ needs.changelog.outputs.clean_changelog }}
+            </details>

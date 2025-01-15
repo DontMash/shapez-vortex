@@ -1,58 +1,68 @@
 <script lang="ts">
-	import '../app.css';
-	import { page } from '$app/stores';
-	import { add } from '$lib/client/toast.service';
+  import '../app.css';
+  import { page } from '$app/stores';
+  import { add } from '$lib/client/toast.service';
 
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import Toaster from '$lib/components/toast/Toaster.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+  import Header from '$lib/components/Header.svelte';
+  import Toaster from '$lib/components/toast/Toaster.svelte';
 
-	function onError(event: Event) {
-		const errorEvent = event as ErrorEvent;
-		add({ message: errorEvent.message ?? 'Error', type: 'ERROR' });
-	}
-	const BASE_KEYWORDS = new Set(['Shapez', 'Shapez 2', 'Visualization', 'Tools']);
-	function getKeywords(pageKeywords: Array<string>): Array<string> {
-		const keywords = new Set([...BASE_KEYWORDS]);
-		pageKeywords.forEach((keyword) => keywords.add(keyword));
-		return Array.from(keywords);
-	}
+  function onError(event: Event) {
+    const errorEvent = event as ErrorEvent;
+    add({ message: errorEvent.message ?? 'Error', type: 'ERROR' });
+  }
+  const BASE_KEYWORDS = new Set([
+    'Shapez',
+    'Shapez 2',
+    'Visualization',
+    'Tools',
+  ]);
+  function getKeywords(pageKeywords: Array<string>): Array<string> {
+    const keywords = new Set([...BASE_KEYWORDS]);
+    pageKeywords.forEach((keyword) => keywords.add(keyword));
+    return Array.from(keywords);
+  }
 </script>
 
 <svelte:head>
-	{#key $page.data}
-		{#if $page.data.seo}
-			<title>{$page.data.seo.title}</title>
-			<meta name="description" content={$page.data.seo.description} />
-			{#if $page.data.seo.keywords}
-				<meta name="keywords" content={getKeywords($page.data.seo.keywords).join(', ')} />
-			{/if}
+  {#key $page.data}
+    {#if $page.data.seo}
+      <title>{$page.data.seo.title}</title>
+      <meta name="description" content={$page.data.seo.description} />
+      {#if $page.data.seo.keywords}
+        <meta
+          name="keywords"
+          content={getKeywords($page.data.seo.keywords).join(', ')}
+        />
+      {/if}
 
-			<meta
-				property="og:title"
-				content={$page.data.seo.og?.title ??
-					`${$page.data.seo.title} - ${$page.data.seo.description}`}
-			/>
-			<meta property="og:type" content="website" />
-			<meta
-				property="og:image"
-				content={$page.data.seo.og?.image ?? `${$page.url.origin}/favicon.png`}
-			/>
-			<meta property="og:url" content={$page.url.href} />
-		{/if}
-	{/key}
+      <meta
+        property="og:title"
+        content={$page.data.seo.og?.title ??
+          `${$page.data.seo.title} - ${$page.data.seo.description}`}
+      />
+      <meta property="og:type" content="website" />
+      <meta
+        property="og:image"
+        content={$page.data.seo.og?.image ?? `${$page.url.origin}/favicon.png`}
+      />
+      <meta property="og:url" content={$page.url.href} />
+    {/if}
+  {/key}
 </svelte:head>
 <svelte:window on:error={(event) => onError(event)} />
 
 <Header />
-<main class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden pt-12 pb-16">
-	{#key $page.data}
-		{#if $page.data.seo?.title}
-			<h1 class="sr-only">{$page.data.seo.title}</h1>
-		{/if}
-	{/key}
+<main
+  class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden pb-16 pt-12"
+>
+  {#key $page.data}
+    {#if $page.data.seo?.title}
+      <h1 class="sr-only">{$page.data.seo.title}</h1>
+    {/if}
+  {/key}
 
-	<slot />
+  <slot />
 </main>
 <Toaster />
 <Footer />

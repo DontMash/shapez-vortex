@@ -2,21 +2,22 @@ import { error, type RequestHandler } from '@sveltejs/kit';
 import type { Blueprint } from '$lib/blueprint.types';
 import { encode } from '$lib/blueprint';
 
+export const POST = (({ request }) =>
+  new Promise<Response>((resolve, reject) => {
+    request
+      .json()
+      .then((value) => {
+        if (!(value instanceof Object))
+          return reject(error(400, 'invalid request body'));
 
-export const POST = (({ request }) => new Promise<Response>(
-    (resolve, reject) => {
-        request.json()
-            .then((value) => {
-                if (!(value instanceof Object)) return reject(error(400, 'invalid request body'));
-
-                const blueprint = value as Blueprint;
-                try {
-                    const data = encode(blueprint);
-                    return resolve(new Response(data));
-                } catch (reason) {
-                    const message = (reason as Error).message;
-                    return reject(error(400, message));
-                }
-            }).catch(reject);
-    })
-) satisfies RequestHandler;
+        const blueprint = value as Blueprint;
+        try {
+          const data = encode(blueprint);
+          return resolve(new Response(data));
+        } catch (reason) {
+          const message = (reason as Error).message;
+          return reject(error(400, message));
+        }
+      })
+      .catch(reject);
+  })) satisfies RequestHandler;
