@@ -124,16 +124,7 @@ See the [open issues][issues-url] for a full list of proposed features (and know
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+To contribute to this project, have a look at the [`CONTRIBUTING`][contributing-url] for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -160,6 +151,7 @@ Sören Maschmann - [E-Mail](mailto:work@soren.codes)
 [product-url]: https://shapez.soren.codes
 [product-image]: docs/images/product.png
 [project-url]: https://github.com/users/DontMash/projects/2/views/1
+[contributing-url]: https://github.com/DontMash/shapez-vortex/blob/main/docs/CONTRIBUTING.md
 
 <!-- SHIELDS -->
 [stars-shield]: https://img.shields.io/github/stars/DontMash/shapez-vortex.svg?style=for-the-badge
