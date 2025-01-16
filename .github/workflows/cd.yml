@@ -19,13 +19,15 @@ jobs:
           password: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build & Push
+      - name: Build
         working-directory: ./resources/deployment
         run: |
           docker compose -f resources/deployment/compose.production.yml build
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-base:latest
           docker tag shapez-base shapez-base:${{ github.ref_name }}
+          docker tag shapez-proxy shapez-proxy:${{ github.ref_name }}
+      - name: Push
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-base:latest
           docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-base:${{ github.ref_name }}
           docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-proxy:latest
-          docker tag shapez-proxy shapez-proxy:${{ github.ref_name }}
           docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-proxy:${{ github.ref_name }}
