@@ -1,0 +1,29 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build & Push
+        run: |
+          docker compose -f resources/deployment/compose.production.yml build
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-base:latest
+          docker tag shapez-base shapez-base:${{ github.ref_name }}
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-base:${{ github.ref_name }}
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-proxy:latest
+          docker tag shapez-proxy shapez-proxy:${{ github.ref_name }}
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-proxy:${{ github.ref_name }}
