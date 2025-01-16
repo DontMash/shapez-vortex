@@ -1,7 +1,7 @@
 services:
   caddy:
     container_name: shapez-proxy
-    image: shapez-proxy
+    image: dontmash/shapez-proxy
     build:
       dockerfile: caddy.dockerfile
     restart: unless-stopped

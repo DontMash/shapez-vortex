@@ -26,7 +26,7 @@ jobs:
           docker tag shapez-proxy shapez-proxy:${{ github.ref_name }}
       - name: Update env
         run: |
-          echo "REGISTRY_DIR=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
+          echo "REGISTRY_DIR=${GITHUB_REPOSITORY_OWNER@L}" >> "${GITHUB_ENV}"
       - name: Push
         run: |
           docker image ls

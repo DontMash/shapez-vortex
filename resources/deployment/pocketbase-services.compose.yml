@@ -1,7 +1,7 @@
 services:
   pocketbase:
     container_name: shapez-base
-    image: shapez-base
+    image: dontmash/shapez-base
     build:
       dockerfile: pocketbase.dockerfile
     restart: unless-stopped
