@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build & Push
     runs-on: ubuntu-latest
     steps:
       - name: Login to GitHub Container Registry
@@ -20,6 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build & Push
+        working-directory: ./resources/deployment
         run: |
           docker compose -f resources/deployment/compose.production.yml build
           docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/shapez-base:latest
