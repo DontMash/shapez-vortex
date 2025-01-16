@@ -27,9 +27,9 @@ jobs:
       - name: Update env
         run: |
           echo "REGISTRY_DIR=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
-          echo "${{ github.ref_name }}"
       - name: Push
         run: |
+          docker ps -a
           docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:latest
           docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ github.ref_name }}
           docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:latest
