@@ -30,7 +30,5 @@ jobs:
       - name: Push
         run: |
           docker image ls
-          docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:latest
-          docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ github.ref_name }}
-          docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:latest
-          docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:${{ github.ref_name }}
+          docker push -a ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base
+          docker push -a ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy
