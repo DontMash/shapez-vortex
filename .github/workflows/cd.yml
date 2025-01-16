@@ -27,7 +27,7 @@ jobs:
           docker tag shapez-proxy shapez-proxy:${{ github.ref_name }}
       - name: Push
         run: |
-          docker push ghcr.io/${{ github.repository }}/shapez-base:latest
-          docker push ghcr.io/${{ github.repository }}/shapez-base:${{ github.ref_name }}
-          docker push ghcr.io/${{ github.repository }}/shapez-proxy:latest
-          docker push ghcr.io/${{ github.repository }}/shapez-proxy:${{ github.ref_name }}
+          docker push ghcr.io/${{ github.repository_owner }}/shapez-base:latest
+          docker push ghcr.io/${{ github.repository_owner }}/shapez-base:${{ github.ref_name }}
+          docker push ghcr.io/${{ github.repository_owner }}/shapez-proxy:latest
+          docker push ghcr.io/${{ github.repository_owner }}/shapez-proxy:${{ github.ref_name }}
