@@ -113,13 +113,6 @@ jobs:
         run: |
           gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
 
-      - name: Approve Changelog PR
-        if: steps.changelog.outputs.skipped == 'false'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh pr review --approve ${{ env.PR_BRANCH }}
-
       - name: Merge Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
         env:
