@@ -1,12 +1,11 @@
 services:
   pocketbase:
     container_name: shapez-base
-    restart: unless-stopped
     image: shapez-base
     build:
-      dockerfile: pocketbase.Dockerfile
+      dockerfile: pocketbase.dockerfile
+    restart: unless-stopped
     volumes:
-      - ./pb_migrations:/pb/pb_migrations
       - db-data:/pb/pb_data
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:8080/api/health || exit 1

@@ -4,8 +4,10 @@ include:
 name: shapez-vortex-development
 services:
   db:
+    extends:
+      file: pocketbase-services.compose.yml
+      service: pocketbase
     ports:
       - 8080:8080
-    extends:
-      file: pocketbase.compose.yml
-      service: pocketbase
+    volumes:
+      - ./pb_migrations:/pb/pb_migrations

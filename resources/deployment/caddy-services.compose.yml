@@ -1,0 +1,14 @@
+services:
+  caddy:
+    container_name: shapez-proxy
+    image: shapez-proxy
+    build:
+      dockerfile: caddy.dockerfile
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    volumes:
+      - proxy_data:/data
+      - proxy_config:/config

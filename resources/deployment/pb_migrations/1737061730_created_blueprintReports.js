@@ -2,8 +2,8 @@
 migrate((db) => {
   const collection = new Collection({
     "id": "0z55yujym3tisf7",
-    "created": "2025-01-15 14:24:18.980Z",
-    "updated": "2025-01-15 14:24:18.980Z",
+    "created": "2025-01-16 21:08:50.322Z",
+    "updated": "2025-01-16 21:08:50.322Z",
     "name": "blueprintReports",
     "type": "base",
     "system": false,

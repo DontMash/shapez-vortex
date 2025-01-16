@@ -6,9 +6,9 @@ name: shapez-vortex
 services:
   proxy:
     extends:
-      file: caddy.compose.yml
+      file: caddy-services.compose.yml
       service: caddy
   db:
     extends:
-      file: pocketbase.compose.yml
+      file: pocketbase-services.compose.yml
       service: pocketbase
