@@ -29,7 +29,7 @@ jobs:
           echo "REGISTRY_DIR=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
       - name: Push
         run: |
-          docker ps -a
+          docker image ls
           docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:latest
           docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ github.ref_name }}
           docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:latest
