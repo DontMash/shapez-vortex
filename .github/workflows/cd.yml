@@ -25,9 +25,12 @@ jobs:
           docker compose -f compose.production.yml build
           docker tag shapez-base shapez-base:${{ github.ref_name }}
           docker tag shapez-proxy shapez-proxy:${{ github.ref_name }}
+      - name: Update env
+        run: |
+          echo "REGISTRY_DIR=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
       - name: Push
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/shapez-base:latest
-          docker push ghcr.io/${{ github.repository_owner }}/shapez-base:${{ github.ref_name }}
-          docker push ghcr.io/${{ github.repository_owner }}/shapez-proxy:latest
-          docker push ghcr.io/${{ github.repository_owner }}/shapez-proxy:${{ github.ref_name }}
+          docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:latest
+          docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ github.ref_name }}
+          docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:latest
+          docker push ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:${{ github.ref_name }}
