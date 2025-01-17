@@ -1,6 +1,6 @@
 {
   "name": "shapez-visualizer",
-  "version": "0.11.10",
+  "version": "0.11.11",
   "type": "module",
   "private": true,
   "scripts": {
