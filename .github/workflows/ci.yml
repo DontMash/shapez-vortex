@@ -84,7 +84,7 @@ jobs:
       version: ${{ steps.changelog.outputs.version }}
 
     env:
-      PR_BRANCH: release-ci-${{ github.sha }}
+      PR_BRANCH: release/ci-${{ github.sha }}
 
     steps:
       - uses: actions/checkout@v4
@@ -117,7 +117,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
+          gh pr merge --squash --delete-branch ${{ env.PR_BRANCH }}
 
   release:
     name: Release
