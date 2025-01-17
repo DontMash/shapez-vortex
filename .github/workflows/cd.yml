@@ -41,6 +41,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Create Context
         run: |
           docker context create shapez-vortex --docker host=ssh://root@${{ secrets.POCKETBASE_URL }}
