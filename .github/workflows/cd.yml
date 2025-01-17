@@ -43,13 +43,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Add ssh-key
-        run: |
-          ssh-add - <<< ${{ secrets.DEPLOYMENT_SSH_KEY }}
       - name: Create Context
-        run: |
-          docker context create shapez-vortex --docker host=ssh://root@${{ secrets.DEPLOYMENT_HOST }}
-          docker context use shapez-vortex
+        uses: amirmarmul/docker-context-ssh-action@v2.1.3
+        with:
+          ssh-host: ${{ secrets.DEPLOYMENT_SSH_HOST }}
+          ssh-username: ${{ secrets.DEPLOYMENT_SSH_USER }}
+          ssh-private-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
+          context-use: true
       - name: Deploy
         working-directory: ./resources/deployment
         run: |
