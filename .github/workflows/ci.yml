@@ -172,7 +172,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: build
+    needs: build-deploy
     environment: production
     runs-on: ubuntu-latest
 
