@@ -42,8 +42,8 @@ jobs:
     steps:
       - name: Create Context
         run: |
-          docker context create ${{ github.repository }} --docker host=ssh://root@${{ secrets.POCKETBASE_URL }}
-          docker context use ${{ github.repository }}
+          docker context create shapez-vortex --docker host=ssh://root@${{ secrets.POCKETBASE_URL }}
+          docker context use shapez-vortex
       - name: Deploy
         working-directory: ./resources/deployment
         run: |
