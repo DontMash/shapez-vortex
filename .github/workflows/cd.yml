@@ -44,8 +44,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Create Context
+        env:
+          DEPLOYMENT_HOST: ${{ secrets.DEPLOYMENT_HOST }}
         run: |
-          docker context create shapez-vortex --docker host=ssh://root@${{ secrets.DEPLOYMENT_HOST }}
+          docker context create shapez-vortex --docker host=ssh://root@${{ env.DEPLOYMENT_HOST }}
           docker context use shapez-vortex
       - name: Deploy
         working-directory: ./resources/deployment
