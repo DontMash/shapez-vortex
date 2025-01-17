@@ -162,8 +162,8 @@ jobs:
         working-directory: ./resources/deployment
         run: |
           docker compose -f compose.production.yml build
-          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ needs.changelog.output.tag }}
-          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:${{ needs.changelog.output.tag }}
+          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ needs.changelog.outputs.tag }}
+          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:${{ needs.changelog.outputs.tag }}
       - name: Push
         run: |
           docker image ls
