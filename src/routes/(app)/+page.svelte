@@ -8,7 +8,7 @@
 </script>
 
 <section class="mx-auto w-full max-w-5xl px-4 md:mt-8 lg:px-0" id="hero">
-  <div class="hero rounded-4xl bg-base-200 p-8 md:p-12">
+  <div class="hero rounded-lg bg-base-200 p-8 md:p-12">
     <div class="hero-content text-center">
       <div class="max-w-lg">
         <h2 class="text-4xl font-bold md:text-5xl">Shapez Vortex</h2>

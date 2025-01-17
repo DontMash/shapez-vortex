@@ -54,7 +54,7 @@
 
 <Header />
 <main
-  class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden pb-16 pt-12"
+  class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden py-12"
 >
   {#key $page.data}
     {#if $page.data.seo?.title}

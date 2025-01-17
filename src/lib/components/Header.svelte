@@ -45,7 +45,7 @@
 
 <header class="pointer-events-none sticky left-0 top-0 z-40 w-full p-4">
   <nav
-    class="navbar pointer-events-auto relative mx-auto max-w-5xl rounded-4xl border border-base-content/20 bg-base-200/50 shadow-lg backdrop-blur-lg"
+    class="navbar pointer-events-auto relative mx-auto max-w-5xl rounded-lg border border-base-content/20 bg-base-200/50 shadow-lg backdrop-blur-lg"
   >
     <div class="flex-1">
       <a
