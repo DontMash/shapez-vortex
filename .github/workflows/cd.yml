@@ -9,6 +9,7 @@ jobs:
   build:
     name: Build & Push
     runs-on: ubuntu-latest
+
     steps:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -25,12 +26,25 @@ jobs:
         working-directory: ./resources/deployment
         run: |
           docker compose -f compose.production.yml build
-          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:latest
           docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ github.ref_name }}
-          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:latest
           docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:${{ github.ref_name }}
       - name: Push
         run: |
           docker image ls
           docker push -a ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base
           docker push -a ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Context
+        run: |
+          docker context create ${{ github.repository }} --docker host=ssh://root@${{ secrets.POCKETBASE_URL }}
+          docker context use ${{ github.repository }}
+      - name: Deploy
+        working-directory: ./resources/deployment
+        run: |
+          docker compose -f compose.production.yml up -d
