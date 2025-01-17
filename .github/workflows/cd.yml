@@ -53,4 +53,4 @@ jobs:
       - name: Deploy
         working-directory: ./resources/deployment
         run: |
-          docker compose -f compose.production.yml up -d
+          docker compose -f compose.production.yml up -d --force-recreate
