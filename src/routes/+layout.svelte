@@ -1,5 +1,7 @@
 <script lang="ts">
   import '../app.css';
+  import '@fontsource-variable/outfit';
+
   import { page } from '$app/stores';
   import { add } from '$lib/client/toast.service';
 
