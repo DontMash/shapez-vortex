@@ -142,7 +142,7 @@
               <div class="flex items-center gap-2 border-b py-4 pl-4 pr-16">
                 <span class="icon-[tabler--search]" />
                 <Command.Input
-                  class="h-8 w-full bg-transparent outline-none placeholder:text-border"
+                  class="h-8 w-full bg-transparent outline-none placeholder:text-muted"
                   placeholder="Search the vortex..."
                   bind:el={searchInputElement}
                   bind:value={searchValue}
@@ -160,7 +160,7 @@
                   {@const blueprints = $page.data.searchBlueprints}
                   {#if blueprints.length > 0}
                     <Command.Group
-                      class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-sm [&>[data-cmdk-group-heading]]:text-border [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
+                      class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-sm [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
                       heading="Blueprints"
                       alwaysRender
                     >
@@ -202,7 +202,7 @@
                   {@const users = $page.data.searchUsers}
                   {#if users.length > 0}
                     <Command.Group
-                      class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-sm [&>[data-cmdk-group-heading]]:text-border [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
+                      class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-sm [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
                       heading="Users"
                     >
                       {#each users as user}
@@ -220,7 +220,7 @@
                 {/if}
 
                 <Command.Group
-                  class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-sm [&>[data-cmdk-group-heading]]:text-border [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
+                  class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-sm [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
                   heading="Features"
                 >
                   {#if isShapeIdentifier(searchValue)}
