@@ -55,7 +55,6 @@
     "@typescript-eslint/parser": "^8.0.1",
     "@vitest/coverage-v8": "^2.1.8",
     "autoprefixer": "^10.4.14",
-    "daisyui": "^4.12.10",
     "eslint": "8.57.0",
     "eslint-config-prettier": "8.10.0",
     "eslint-plugin-svelte": "^2.30.0",

@@ -10,16 +10,12 @@
     --muted: 0 0% 25%;
     --muted-foreground: 0 0% 65%;
 
-    --popover: 0 0% 13%;
-    --popover-foreground: 0 0% 94%;
-
-    --card: 0 0% 13%;
-    --card-foreground: 0 0% 94%;
-
-    --border: 0 0% 25%;
-    --input: 0 0% 25%;
+    --layer: 0 0% 13%;
+    --layer-foreground: 0 0% 94%;
 
     --primary: 198 59% 57%;
+    --primary-hover: 198 59% 49%;
+    --primary-active: 198 59% 41%;
     --primary-foreground: 0 0% 94%;
 
     --secondary: 38 97% 57%;
@@ -31,13 +27,19 @@
     --destructive: 0 76% 52%;
     --destructive-foreground: 0 0% 94%;
 
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
     --ring: 0 0% 25%;
-    --radius: 1.5rem;
+    --radius: 1.25rem;
 
-    @apply scroll-pt-64 scroll-smooth bg-base-100 text-base-content;
+    @apply scroll-pt-64 scroll-smooth bg-background text-foreground;
   }
 
   * {
     @apply border-border;
+  }
+
+  *[class*='icon-'] {
+    @apply shrink-0 text-2xl;
   }
 }

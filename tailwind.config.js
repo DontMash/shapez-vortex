@@ -1,7 +1,5 @@
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import plugin from 'tailwindcss/plugin';
-import daisyui from 'daisyui';
-import daisyuiTheme from 'daisyui/src/theming/themes';
 import aspectRatio from '@tailwindcss/aspect-ratio';
 import typography from '@tailwindcss/typography';
 import scrollbarHide from 'tailwind-scrollbar-hide';
@@ -11,71 +9,73 @@ import { addDynamicIconSelectors } from '@iconify/tailwind';
 const config = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
-    colors: {},
+    borderRadius: {
+      xs: 'calc(var(--radius) - 12px)',
+      sm: 'calc(var(--radius) - 8px)',
+      md: 'calc(var(--radius) - 4px)',
+      lg: 'var(--radius)',
+    },
+    colors: {
+      current: 'currentColor',
+      transparent: 'transparent',
+
+      primary: {
+        DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
+        hover: 'hsl(var(--primary-hover) / <alpha-value>)',
+        active: 'hsl(var(--primary-active) / <alpha-value>)',
+        foreground: 'hsl(var(--primary-foreground) / <alpha-value>)',
+      },
+      secondary: {
+        DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
+        foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)',
+      },
+      destructive: {
+        DEFAULT: 'hsl(var(--destructive) / <alpha-value>)',
+        foreground: 'hsl(var(--destructive-foreground) / <alpha-value>)',
+      },
+      muted: {
+        DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
+        foreground: 'hsl(var(--muted-foreground) / <alpha-value>)',
+      },
+      accent: {
+        DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
+        foreground: 'hsl(var(--accent-foreground) / <alpha-value>)',
+      },
+      layer: {
+        DEFAULT: 'hsl(var(--layer) / <alpha-value>)',
+        foreground: 'hsl(var(--layer-foreground) / <alpha-value>)',
+      },
+
+      background: 'hsl(var(--background) / <alpha-value>)',
+      foreground: 'hsl(var(--foreground) / <alpha-value>)',
+
+      border: 'hsl(var(--border) / <alpha-value>)',
+      input: 'hsl(var(--input) / <alpha-value>)',
+      ring: 'hsl(var(--ring) / <alpha-value>)',
+    },
+    fontFamily: {
+      sans: ['"Outfit Variable"', ...fontFamily.sans],
+    },
+    fontSize: {
+      inherit: 'inherit',
+      sm: '0.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem',
+      '2xl': '1.5rem',
+      '3xl': '2rem',
+      '4xl': '3rem',
+      hero: '4rem',
+    },
+    lineHeight: {
+      none: 'none',
+      sm: '1.125',
+      md: '1.25',
+      lg: '1.333',
+      xl: '1.5',
+    },
+
     extend: {
-      colors: {
-        primary: {
-          DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
-          foreground: 'hsl(var(--primary-foreground) / <alpha-value>)',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
-          foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive) / <alpha-value>)',
-          foreground: 'hsl(var(--destructive-foreground) / <alpha-value>)',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
-          foreground: 'hsl(var(--muted-foreground) / <alpha-value>)',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
-          foreground: 'hsl(var(--accent-foreground) / <alpha-value>)',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover) / <alpha-value>)',
-          foreground: 'hsl(var(--popover-foreground) / <alpha-value>)',
-        },
-        card: {
-          DEFAULT: 'hsl(var(--card) / <alpha-value>)',
-          foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
-        },
-
-        background: 'hsl(var(--background) / <alpha-value>)',
-        foreground: 'hsl(var(--foreground) / <alpha-value>)',
-
-        border: 'hsl(var(--border) / <alpha-value>)',
-        input: 'hsl(var(--input) / <alpha-value>)',
-        ring: 'hsl(var(--ring) / <alpha-value>)',
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
-      fontFamily: {
-        sans: ['"Outfit Variable"', ...fontFamily.sans],
-      },
-      fontSize: {
-        inherit: 'inherit',
-        sm: '0.875rem',
-        base: '1rem',
-        lg: '1.125rem',
-        xl: '1.25rem',
-        '2xl': '1.5rem',
-        '3xl': '2rem',
-        '4xl': '3rem',
-        hero: '4rem',
-      },
-      lineHeight: {
-        none: 'none',
-        sm: '1.125',
-        md: '1.25',
-        lg: '1.333',
-        xl: '1.5',
-      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
@@ -114,7 +114,6 @@ const config = {
     },
   },
   plugins: [
-    daisyui,
     aspectRatio,
     typography,
     scrollbarHide,
@@ -168,49 +167,6 @@ const config = {
       });
     }),
   ],
-  daisyui: {
-    logs: false,
-    themes: [
-      {
-        light: {
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
-          ...daisyuiTheme['[data-theme=light]'],
-
-          primary: '#52abd2',
-          'primary-focus': '#4191b4',
-          'primary-content': '#efefef',
-
-          secondary: '#fcae26',
-          'secondary-focus': '#e8a126',
-          'secondary-content': '#171717',
-
-          accent: '#efefef',
-          'accent-focus': '#dbdbdb',
-          'accent-content': '#171717',
-
-          neutral: '#212121',
-          'neutral-focus': '#404040',
-          'neutral-content': '#efefef',
-
-          'base-100': '#171717',
-          'base-200': '#212121',
-          'base-300': '#404040',
-          'base-content': '#efefef',
-
-          info: '#4191b4',
-          success: '#11ac20',
-          warning: '#e8a126',
-          error: '#e22828',
-
-          '--rounded-box': '2rem',
-          '--rounded-btn': '1rem',
-          '--rounded-badge': '2rem',
-
-          '--border-btn': '2px',
-        },
-      },
-    ],
-  },
 };
 
 export default config;
