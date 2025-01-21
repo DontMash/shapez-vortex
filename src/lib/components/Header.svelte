@@ -15,11 +15,6 @@
 
   let isSearchDialogOpen = false;
   let searchValue = '';
-  let searchInputElement: HTMLInputElement | undefined;
-
-  $: {
-    searchInputElement?.focus();
-  }
 
   function searchBlueprints(search: string) {
     const url = new URL('/blueprint/search', $page.url.origin);
@@ -152,8 +147,8 @@
                   <Command.Input
                     class="h-8 w-full bg-transparent outline-none placeholder:text-muted"
                     placeholder="Search the vortex..."
-                    bind:el={searchInputElement}
                     bind:value={searchValue}
+                    autofocus
                   />
                 </div>
 
