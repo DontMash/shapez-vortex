@@ -1,29 +1,37 @@
 <script lang="ts">
+  import { blur } from 'svelte/transition';
   import { toastStore, type ToastType } from '$lib/client/toast.service';
+  import { section } from '$lib/components/section';
 
   const ALERT_TYPES: Record<ToastType, string> = {
-    INFO: 'alert-info',
-    SUCCESS: 'alert-success',
-    WARNING: 'alert-warning',
-    ERROR: 'alert-error',
+    INFO: 'bg-layer/70',
+    SUCCESS: 'bg-success/70 text-success-foreground',
+    WARNING: 'bg-warning/70 text-warning-foreground',
+    ERROR: 'bg-error/70 text-error-foreground',
   };
 </script>
 
-<div class="toast-right toast toast-bottom z-50">
-  {#each $toastStore.reverse() as toast}
-    <div role="alert" class="alert {ALERT_TYPES[toast.type]} text-base-content">
-      {#if toast.type === 'SUCCESS'}
-        <span class="icon-[tabler--check] text-2xl">Check</span>
-      {:else if toast.type === 'WARNING'}
-        <span class="icon-[tabler--alert-triangle] text-2xl">Warning</span>
-      {:else if toast.type === 'ERROR'}
-        <span class="icon-[tabler--circle-x] text-2xl">Error</span>
+<div class="{section({ x: false, y: false })} fixed inset-x-0 bottom-4 z-50">
+  {#if $toastStore}
+    <div
+      class="{ALERT_TYPES[
+        $toastStore.type
+      ]} flex w-fit max-w-screen-sm items-center gap-2 rounded-sm border p-4 backdrop-blur-lg"
+      role="alert"
+      transition:blur={{ duration: 150 }}
+    >
+      {#if $toastStore.type === 'SUCCESS'}
+        <span class="icon-[tabler--check]">Success</span>
+      {:else if $toastStore.type === 'WARNING'}
+        <span class="icon-[tabler--alert-triangle]">Warning</span>
+      {:else if $toastStore.type === 'ERROR'}
+        <span class="icon-[tabler--circle-x]">Error</span>
       {:else}
-        <span class="icon-[tabler--info-circle] text-2xl">Info</span>
+        <span class="icon-[tabler--info-circle]">Info</span>
       {/if}
-      <span class="max-w-full truncate">
-        {toast.message}
+      <span class="truncate">
+        {$toastStore.message}
       </span>
     </div>
-  {/each}
+  {/if}
 </div>

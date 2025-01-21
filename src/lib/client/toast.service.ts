@@ -1,6 +1,7 @@
-import { writable, type Writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 const TOAST_DURATION = 3000;
+const TOAST_DELAY = 500;
 export const TOAST_TYPE = {
   INFO: 'INFO',
   SUCCESS: 'SUCCESS',
@@ -16,34 +17,32 @@ export type Toast = {
 type ToastOptions = Partial<Toast> & Pick<Toast, 'message'>;
 
 const queue: Array<Toast> = new Array<Toast>();
-export const toastStore: Writable<Array<Toast>> = writable<Array<Toast>>([]);
+export const toastStore = writable<Toast | undefined>(undefined);
 let timeout: number | undefined;
 
-export const subscribe: Writable<Array<Toast>>['subscribe'] =
-  toastStore.subscribe;
 export const add = (options: ToastOptions) => {
   const {
     message,
     type = TOAST_TYPE.INFO,
     duration = TOAST_DURATION,
   } = options;
-  const toast: Toast = { type, message, duration };
-  queue.unshift(toast);
-  toastStore.update(() => [...queue]);
+  queue.unshift({ type, message, duration });
 
-  if (timeout) return;
-  update(duration);
+  if (timeout) {
+    return;
+  }
+  update();
 };
-const update = (duration: number) => {
-  timeout = setTimeout(() => pop(), duration);
-};
-const pop = () => {
+const update = () => {
   const toast = queue.pop();
-  toastStore.update(() => [...queue]);
   if (!toast) {
     clearTimeout(timeout);
     timeout = undefined;
     return;
   }
-  update(toast.duration);
+  toastStore.update(() => toast);
+  timeout = setTimeout(() => {
+    toastStore.update(() => undefined);
+    setTimeout(() => update(), TOAST_DELAY);
+  }, toast.duration);
 };
