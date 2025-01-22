@@ -55,15 +55,7 @@
 <svelte:window on:error={(event) => onError(event)} />
 
 <Header />
-<main
-  class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden py-12"
->
-  {#key $page.data}
-    {#if $page.data.seo?.title}
-      <h1 class="sr-only">{$page.data.seo.title}</h1>
-    {/if}
-  {/key}
-
+<main class="flex min-h-screen flex-col">
   <slot />
 </main>
 <Toaster />
