@@ -4,6 +4,7 @@
   import { page } from '$app/stores';
   import { button } from '$lib/components/button';
   import { section } from '$lib/components/section';
+  import Logo from '$lib/components/Logo.svelte';
   import Search from '$lib/components/Search.svelte';
 
   import logo from '$lib/assets/images/logo.png';
@@ -16,20 +17,7 @@
       y: false,
     })} flex items-center rounded-lg border bg-layer/70 p-4 shadow-lg backdrop-blur-lg"
   >
-    <Button.Root
-      class={button({ type: 'icon', kind: 'ghost' })}
-      href="/"
-      title="To the frontpage"
-    >
-      <img
-        class="inline-block"
-        src={logo}
-        alt="Shapez Vortex Logo"
-        width="48"
-        height="48"
-      />
-      <span class="sr-only">Shapez Vortex</span>
-    </Button.Root>
+    <Logo />
 
     <div class="ml-auto flex items-center gap-4">
       <Search />
