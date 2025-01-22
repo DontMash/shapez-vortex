@@ -6,8 +6,6 @@
   import { section } from '$lib/components/section';
   import Logo from '$lib/components/Logo.svelte';
   import Search from '$lib/components/Search.svelte';
-
-  import logo from '$lib/assets/images/logo.png';
 </script>
 
 <header class="sticky left-0 top-0 z-10 w-full p-4">
@@ -23,7 +21,7 @@
       <Search />
 
       <Button.Root
-        class={button({ type: 'icon' })}
+        class="{button({ type: 'icon' })} hidden sm:inline-flex"
         href="/blueprint/upload"
         title="Upload a blueprint to Shapez Vortex"
       >
