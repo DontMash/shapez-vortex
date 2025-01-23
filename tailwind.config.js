@@ -27,6 +27,8 @@ const config = {
       },
       secondary: {
         DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
+        hover: 'hsl(var(--secondary-hover) / <alpha-value>)',
+        active: 'hsl(var(--secondary-active) / <alpha-value>)',
         foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)',
       },
       accent: {
@@ -175,31 +177,31 @@ const config = {
 
         '.heading-6': {
           '@apply text-base lg:text-lg': '',
-          lineHeight: theme('lineHeight.xl'),
+          lineHeight: theme('lineHeight.lg'),
           fontWeight: theme('fontWeight.medium'),
         },
         '.heading-5': {
-          '@apply text-lg lg:text-xl': '',
+          '@apply text-base sm:text-lg lg:text-xl': '',
           lineHeight: theme('lineHeight.xl'),
           fontWeight: theme('fontWeight.medium'),
         },
         '.heading-4': {
-          '@apply text-xl lg:text-2xl': '',
+          '@apply text-lg sm:text-xl lg:text-2xl': '',
           lineHeight: theme('lineHeight.md'),
           fontWeight: theme('fontWeight.medium'),
         },
         '.heading-3': {
-          '@apply text-2xl lg:text-3xl': '',
+          '@apply text-xl sm:text-2xl lg:text-3xl': '',
           lineHeight: theme('lineHeight.lg'),
           fontWeight: theme('fontWeight.medium'),
         },
         '.heading-2': {
-          '@apply text-3xl lg:text-4xl': '',
+          '@apply text-2xl sm:text-3xl lg:text-4xl': '',
           lineHeight: theme('lineHeight.xl'),
           fontWeight: theme('fontWeight.semibold'),
         },
         '.heading-1': {
-          '@apply text-4xl lg:text-hero': '',
+          '@apply text-3xl sm:text-4xl lg:text-hero': '',
           lineHeight: theme('lineHeight.md'),
           fontWeight: theme('fontWeight.bold'),
         },
