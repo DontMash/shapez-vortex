@@ -18,6 +18,8 @@
     --accent-foreground: 0 0% 9%;
 
     --muted: 0 0% 25%;
+    --muted-hover: 0 0% 17%;
+    --muted-active: 0 0% 9%;
     --muted-foreground: 0 0% 94%;
 
     --layer: 0 0% 13%;
@@ -30,6 +32,8 @@
     --warning-foreground: 0 0% 9%;
 
     --error: 0 76% 52%;
+    --error-hover: 0 76% 44%;
+    --error-active: 0 76% 36%;
     --error-foreground: 0 0% 94%;
 
     --background: 0 0% 9%;

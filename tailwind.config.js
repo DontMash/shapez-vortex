@@ -37,6 +37,8 @@ const config = {
       },
       muted: {
         DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
+        hover: 'hsl(var(--muted-hover) / <alpha-value>)',
+        active: 'hsl(var(--muted-active) / <alpha-value>)',
         foreground: 'hsl(var(--muted-foreground) / <alpha-value>)',
       },
       layer: {
@@ -53,6 +55,8 @@ const config = {
       },
       error: {
         DEFAULT: 'hsl(var(--error) / <alpha-value>)',
+        hover: 'hsl(var(--error-hover) / <alpha-value>)',
+        active: 'hsl(var(--error-active) / <alpha-value>)',
         foreground: 'hsl(var(--error-foreground) / <alpha-value>)',
       },
 
