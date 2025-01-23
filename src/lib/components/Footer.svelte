@@ -41,7 +41,7 @@
     <nav>
       <p class="heading-6 mb-2 text-muted-foreground">Features</p>
 
-      <ul>
+      <ul class="space-y-4">
         <li>
           <Button.Root
             class={button({ kind: 'link' })}
@@ -257,7 +257,7 @@
 
     <aside class="col-span-full flex justify-center">
       <Button.Root
-        class={button({ type: 'icon', kind: 'outline', size: 'lg' })}
+        class={button({ kind: 'outline', intent: 'muted', size: 'icon-lg' })}
         href="#top"
         title="To the top of the page"
       >

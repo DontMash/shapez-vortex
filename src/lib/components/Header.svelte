@@ -8,12 +8,13 @@
   import Search from '$lib/components/Search.svelte';
 </script>
 
-<header class="sticky left-0 top-0 z-10 w-full p-4">
+<header
+  class="{section({
+    y: false,
+  })} sticky inset-x-0 top-0 z-10 w-full py-4"
+>
   <nav
-    class="{section({
-      x: false,
-      y: false,
-    })} flex items-center rounded-lg border bg-layer/70 p-4 shadow-lg backdrop-blur-lg"
+    class="flex items-center rounded-lg border bg-layer/70 p-4 shadow-lg backdrop-blur-lg"
   >
     <Logo />
 
@@ -30,7 +31,7 @@
 
       {#if !$page.data.user}
         <Button.Root
-          class={button({ type: 'icon' })}
+          class={button()}
           title="Login into Shapez Vortex"
           href="/login"
         >
