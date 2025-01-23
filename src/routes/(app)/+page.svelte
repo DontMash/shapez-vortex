@@ -7,7 +7,7 @@
 
   import shapeViewerImage from '$lib/assets/images/shape-viewer-example.png';
   import blueprintViewerImage from '$lib/assets/images/blueprint-viewer-example.png';
-  import searchImage from '$lib/assets/images/search-example.png';
+  import searchImage from '$lib/assets/images/search-example.jpg';
 
   type Feature = {
     image: {
