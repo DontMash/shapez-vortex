@@ -42,7 +42,9 @@
       {#if $page.data.user}
         <Menubar.Root>
           <Menubar.Menu loop>
-            <Menubar.Trigger class={button({ type: 'icon', kind: 'outline' })}>
+            <Menubar.Trigger
+              class={button({ kind: 'outline', intent: 'muted' })}
+            >
               <span class="icon-[tabler--user]">User</span>
             </Menubar.Trigger>
 
