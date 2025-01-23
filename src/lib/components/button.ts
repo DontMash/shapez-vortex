@@ -28,6 +28,7 @@ export const button = cva(
         secondary: [],
         accent: [],
         muted: [],
+        error: [],
       },
       size: {
         'icon-sm': ['rounded-xs', 'size-8', 'p-1'],
@@ -79,7 +80,6 @@ export const button = cva(
           'hover:text-primary-foreground',
           'active:bg-primary-active',
           'focus-visible:hover:outline-primary',
-          'focus-visible:active:outline-primary-active',
         ],
       },
       {
@@ -91,7 +91,6 @@ export const button = cva(
           'hover:text-secondary-foreground',
           'active:bg-secondary-active',
           'focus-visible:hover:outline-secondary',
-          'focus-visible:active:outline-secondary-active',
         ],
       },
       {
@@ -103,7 +102,17 @@ export const button = cva(
           'hover:text-muted-foreground',
           'active:bg-muted-active',
           'focus-visible:hover:outline-muted',
-          'focus-visible:active:outline-muted-active',
+        ],
+      },
+      {
+        kind: 'outline',
+        intent: 'error',
+        class: [
+          'hover:bg-error',
+          'hover:border-error',
+          'hover:text-error-foreground',
+          'active:bg-error-active',
+          'focus-visible:hover:outline-error',
         ],
       },
       {
