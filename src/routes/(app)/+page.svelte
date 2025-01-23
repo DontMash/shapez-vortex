@@ -86,9 +86,9 @@
 </section>
 
 <section class={section()} id="features">
-  <h2 class="heading-2">Features</h2>
+  <h2 class="heading-2 mb-2">Features</h2>
 
-  <div class="mx-auto mt-2 grid grid-cols-1 gap-4 lg:grid-cols-3">
+  <div class="mx-auto grid grid-cols-1 gap-4 lg:grid-cols-3">
     {#each features as feature}
       <div class="overflow-hidden rounded-md border bg-layer shadow-md">
         <a
