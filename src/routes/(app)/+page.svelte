@@ -1,35 +1,43 @@
 <script lang="ts">
   import type { PageData } from './$types';
 
-  import { Button } from '$lib/components/ui/button';
+  import { Button } from 'bits-ui';
   import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
+  import { section } from '$lib/components/section';
+  import { button } from '$lib/components/button';
 
   export let data: PageData;
 </script>
 
-<section class="mx-auto w-full max-w-5xl px-4 md:mt-8 lg:px-0" id="hero">
-  <div class="hero rounded-lg bg-base-200 p-8 md:p-12">
-    <div class="hero-content text-center">
-      <div class="max-w-lg">
-        <h2 class="text-4xl font-bold md:text-5xl">Shapez Vortex</h2>
-        <p class="py-6 text-2xl md:text-3xl">
-          Discover, interact and share Shapez 2 content with the community!
-        </p>
-        <ul class="flex justify-center space-x-4">
-          <li>
-            <a
-              class="btn btn-primary"
-              title={data.user ? 'Upload blueprint' : 'Create an account'}
-              href={data.user ? '/blueprint/upload' : '/register'}
-              >Get Started</a
-            >
-          </li>
-          <li>
-            <a class="btn btn-secondary" href="#features">Features</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+<section class={section()} id="hero">
+  <div class="rounded-lg border bg-layer px-4 py-12 sm:px-12 shadow-lg">
+    <hgroup class="mx-auto max-w-screen-sm text-center">
+      <h1 class="heading-1">Shapez Vortex</h1>
+      <p class="heading-3 mt-2">
+        Discover, interact and share content with the community!
+      </p>
+    </hgroup>
+
+    <ul class="mt-8 flex justify-center gap-4">
+      <li>
+        <Button.Root
+          class={button()}
+          href={data.user ? '/blueprint/upload' : '/register'}
+          title={data.user ? 'Upload a blueprint' : 'Create an account'}
+        >
+          Get Started
+        </Button.Root>
+      </li>
+      <li>
+        <Button.Root
+          class={button({ kind: 'outline', intent: 'secondary' })}
+          href="#features"
+          title="Checkout Shapez Vortex features"
+        >
+          Features
+        </Button.Root>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -137,9 +145,7 @@
     />
 
     <div class="flex justify-center">
-      <Button href="/blueprint/search" size="lg" variant="outline"
-        >Show more</Button
-      >
+      <Button.Root href="/blueprint/search">Show more</Button.Root>
     </div>
   </section>
 {/if}
