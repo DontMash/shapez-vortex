@@ -41,7 +41,7 @@
     <nav>
       <p class="heading-6 mb-2 text-muted-foreground">Features</p>
 
-      <ul class="space-y-4">
+      <ul class="space-y-3">
         <li>
           <Button.Root
             class={button({ kind: 'link' })}
@@ -90,10 +90,10 @@
 
       <nav>
         <span> Follow Shapez 2 </span>
-        <ul class="flex gap-4">
+        <ul class="flex gap-2">
           <li>
             <Button.Root
-              class={button({ kind: 'link' })}
+              class={button({ kind: 'ghost', size: 'icon-sm' })}
               href="https://shapez2.com/"
               title="Shapez 2 Website"
               target="_blank"
@@ -106,7 +106,7 @@
           </li>
           <li>
             <Button.Root
-              class={button({ kind: 'link' })}
+              class={button({ kind: 'ghost', size: 'icon-sm' })}
               href="https://discord.gg/shapez-2-1000343719314198548"
               title="Shapez 2 Community Discord"
               target="_blank"
@@ -119,7 +119,7 @@
           </li>
           <li>
             <Button.Root
-              class={button({ kind: 'link' })}
+              class={button({ kind: 'ghost', size: 'icon-sm' })}
               href="https://store.steampowered.com/app/2162800/shapez_2/"
               title="Shapez 2 on Steam"
               target="_blank"
@@ -132,7 +132,7 @@
           </li>
           <li>
             <Button.Root
-              class={button({ kind: 'link' })}
+              class={button({ kind: 'ghost', size: 'icon-sm' })}
               href="https://www.reddit.com/r/shapezio/"
               title="Reddit - r/shapezio"
               target="_blank"
@@ -148,10 +148,10 @@
 
       <nav>
         <span> Follow tobspr Games </span>
-        <ul class="flex gap-4">
+        <ul class="flex gap-2">
           <li>
             <Button.Root
-              class={button({ kind: 'link' })}
+              class={button({ kind: 'ghost', size: 'icon-sm' })}
               href="https://tobspr.io/"
               title="tobspr Games Website"
               target="_blank"
@@ -164,7 +164,7 @@
           </li>
           <li>
             <Button.Root
-              class={button({ kind: 'link' })}
+              class={button({ kind: 'ghost', size: 'icon-sm' })}
               href="https://x.com/tobspr"
               title="tobspr Games on X"
               target="_blank"
@@ -177,7 +177,7 @@
           </li>
           <li>
             <Button.Root
-              class={button({ kind: 'link' })}
+              class={button({ kind: 'ghost', size: 'icon-sm' })}
               href="https://www.youtube.com/@tobsprGames"
               title="tobspr Games YouTube"
               target="_blank"
@@ -190,7 +190,7 @@
           </li>
           <li>
             <Button.Root
-              class={button({ kind: 'link' })}
+              class={button({ kind: 'ghost', size: 'icon-sm' })}
               href="https://www.patreon.com/tobsprgamess"
               title="tobspr Games Patreon"
               target="_blank"
@@ -217,7 +217,7 @@
     <nav class="flex flex-col justify-stretch">
       <p class="heading-6 mb-2 text-muted-foreground">More</p>
 
-      <ul>
+      <ul class="space-y-3">
         <li>
           <Button.Root
             class={button({ kind: 'link' })}

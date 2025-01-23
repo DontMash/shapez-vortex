@@ -3,6 +3,7 @@ import { cva } from 'class-variance-authority';
 export const button = cva(
   [
     'inline-flex',
+    'justify-center',
     'items-center',
     'gap-2',
     'focus-visible:outline-current',
@@ -29,11 +30,11 @@ export const button = cva(
         muted: [],
       },
       size: {
-        'icon-sm': ['justify-center', 'rounded-xs', 'size-8', 'p-1'],
-        icon: ['justify-center', 'rounded-sm', 'size-12', 'p-1'],
-        'icon-lg': ['justify-center', 'rounded-sm', 'size-16', 'p-3'],
+        'icon-sm': ['rounded-xs', 'size-8', 'p-1'],
+        icon: ['rounded-sm', 'size-12', 'p-1'],
+        'icon-lg': ['rounded-sm', 'size-16', 'p-3'],
         sm: ['rounded-xs', 'px-2', 'py-1', 'h-12'],
-        md: ['rounded-sm', 'px-3', 'py-2', 'h-12'],
+        md: ['rounded-sm'],
         lg: ['rounded-md', 'px-5', 'py-3', 'h-12'],
       },
     },
@@ -102,14 +103,19 @@ export const button = cva(
         ],
       },
       {
-        kind: 'link',
+        kind: ['fill', 'ghost', 'outline'],
         size: 'sm',
-        class: ['-mx-2', '-my-1'],
+        class: ['px-2', 'py-1', 'h-12'],
       },
       {
-        kind: 'link',
+        kind: ['fill', 'ghost', 'outline'],
         size: 'md',
-        class: ['-mx-3', '-my-2'],
+        class: ['px-3', 'py-2', 'h-12'],
+      },
+      {
+        kind: ['fill', 'ghost', 'outline'],
+        size: 'lg',
+        class: ['px-5', 'py-3', 'h-12'],
       },
     ],
     defaultVariants: {
