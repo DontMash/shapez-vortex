@@ -22,7 +22,7 @@
       <Search />
 
       <Button.Root
-        class="{button({ type: 'icon' })} hidden sm:inline-flex"
+        class="{button({ size: 'icon' })} hidden sm:inline-flex"
         href="/blueprint/upload"
         title="Upload a blueprint to Shapez Vortex"
       >
@@ -43,7 +43,7 @@
         <Menubar.Root>
           <Menubar.Menu loop>
             <Menubar.Trigger
-              class={button({ kind: 'outline', intent: 'muted' })}
+              class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
             >
               <span class="icon-[tabler--user]">User</span>
             </Menubar.Trigger>
