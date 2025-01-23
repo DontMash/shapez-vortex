@@ -32,7 +32,7 @@ export const button = cva(
       size: {
         'icon-sm': ['rounded-xs', 'size-8', 'p-1'],
         icon: ['rounded-sm', 'size-12', 'p-1'],
-        'icon-lg': ['rounded-sm', 'size-16', 'p-3'],
+        'icon-lg': ['rounded-md', 'size-16', 'p-3'],
         sm: ['rounded-xs', 'px-2', 'py-1', 'h-12'],
         md: ['rounded-sm'],
         lg: ['rounded-md', 'px-5', 'py-3', 'h-12'],
