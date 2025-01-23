@@ -12,13 +12,9 @@ export const button = cva(
   ],
   {
     variants: {
-      type: {
-        default: [],
-        icon: ['justify-center'],
-      },
       kind: {
         fill: [],
-        outline: ['border', 'hover:bg-border'],
+        outline: ['border'],
         ghost: ['border', 'border-transparent', 'hover:bg-border'],
         link: [
           'hover:underline',
@@ -28,11 +24,17 @@ export const button = cva(
       },
       intent: {
         primary: [],
+        secondary: [],
+        accent: [],
+        muted: [],
       },
       size: {
-        sm: ['rounded-xs'],
-        md: ['rounded-sm'],
-        lg: ['rounded-md'],
+        'icon-sm': ['justify-center', 'rounded-xs', 'size-8', 'p-1'],
+        icon: ['justify-center', 'rounded-sm', 'size-12', 'p-1'],
+        'icon-lg': ['justify-center', 'rounded-sm', 'size-16', 'p-3'],
+        sm: ['rounded-xs', 'px-2', 'py-1', 'h-12'],
+        md: ['rounded-sm', 'px-3', 'py-2', 'h-12'],
+        lg: ['rounded-md', 'px-5', 'py-3', 'h-12'],
       },
     },
     compoundVariants: [
@@ -45,6 +47,7 @@ export const button = cva(
         intent: 'primary',
         class: [
           'bg-primary',
+          'text-primary-foreground',
           'hover:bg-primary-hover',
           'active:bg-primary-active',
           'focus-visible:outline-primary',
@@ -63,29 +66,40 @@ export const button = cva(
         ],
       },
       {
-        type: 'icon',
-        size: 'sm',
-        class: ['size-8', 'p-1'],
+        kind: 'outline',
+        intent: 'primary',
+        class: [
+          'hover:bg-primary',
+          'hover:border-primary',
+          'hover:text-primary-foreground',
+          'active:bg-primary-active',
+          'focus-visible:hover:outline-primary',
+          'focus-visible:active:outline-primary-active',
+        ],
       },
       {
-        type: 'icon',
-        size: 'md',
-        class: ['size-12', 'p-1'],
+        kind: 'outline',
+        intent: 'secondary',
+        class: [
+          'hover:bg-secondary',
+          'hover:border-secondary',
+          'hover:text-secondary-foreground',
+          'active:bg-secondary-active',
+          'focus-visible:hover:outline-secondary',
+          'focus-visible:active:outline-secondary-active',
+        ],
       },
       {
-        type: 'icon',
-        size: 'lg',
-        class: ['size-16', 'p-3'],
-      },
-      {
-        type: 'default',
-        size: 'sm',
-        class: ['px-2', 'py-1', 'h-12'],
-      },
-      {
-        type: 'default',
-        size: 'md',
-        class: ['px-3', 'py-2', 'h-12'],
+        kind: 'outline',
+        intent: 'muted',
+        class: [
+          'hover:bg-muted',
+          'hover:border-muted',
+          'hover:text-muted-foreground',
+          'active:bg-muted-active',
+          'focus-visible:hover:outline-muted',
+          'focus-visible:active:outline-muted-active',
+        ],
       },
       {
         kind: 'link',
@@ -99,7 +113,6 @@ export const button = cva(
       },
     ],
     defaultVariants: {
-      type: 'default',
       kind: 'fill',
       intent: 'primary',
       size: 'md',
