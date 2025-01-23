@@ -37,6 +37,10 @@ export const button = cva(
         md: ['rounded-sm'],
         lg: ['rounded-md', 'px-5', 'py-3', 'h-12'],
       },
+      block: {
+        false: ['inline-flex'],
+        true: ['flex'],
+      },
     },
     compoundVariants: [
       {
