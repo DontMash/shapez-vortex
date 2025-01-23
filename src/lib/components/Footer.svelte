@@ -39,7 +39,7 @@
     </aside>
 
     <nav>
-      <p class="heading-6 mb-2 text-muted-foreground">Features</p>
+      <p class="heading-6 mb-2 text-muted">Features</p>
 
       <ul class="space-y-3">
         <li>
@@ -86,7 +86,7 @@
     </nav>
 
     <div>
-      <p class="heading-6 mb-2 text-muted-foreground">Game</p>
+      <p class="heading-6 mb-2 text-muted">Game</p>
 
       <nav>
         <span> Follow Shapez 2 </span>
@@ -215,7 +215,7 @@
     </div>
 
     <nav class="flex flex-col justify-stretch">
-      <p class="heading-6 mb-2 text-muted-foreground">More</p>
+      <p class="heading-6 mb-2 text-muted">More</p>
 
       <ul class="space-y-3">
         <li>
