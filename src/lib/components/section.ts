@@ -8,7 +8,7 @@ export const section = cva(['mx-auto', 'w-full', 'max-w-5xl'], {
     },
     y: {
       false: null,
-      true: ['py-12', 'sm:py-24'],
+      true: ['py-8', 'sm:py-16'],
     },
   },
   defaultVariants: { x: true, y: true },
