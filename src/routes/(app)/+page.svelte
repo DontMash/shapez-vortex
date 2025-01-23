@@ -1,16 +1,60 @@
 <script lang="ts">
   import type { PageData } from './$types';
-
   import { Button } from 'bits-ui';
   import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
   import { section } from '$lib/components/section';
   import { button } from '$lib/components/button';
 
+  import shapeViewerImage from '$lib/assets/images/shape-viewer-example.png';
+  import blueprintViewerImage from '$lib/assets/images/blueprint-viewer-example.png';
+  import searchImage from '$lib/assets/images/search-example.png';
+
+  type Feature = {
+    image: {
+      src: string;
+      alt: string;
+    };
+    title: string;
+    description: string;
+    url: string;
+  };
+  const features: Array<Feature> = [
+    {
+      image: {
+        src: shapeViewerImage,
+        alt: 'Example of a 3D shape view',
+      },
+      title: 'Shape Viewer',
+      description:
+        'Explore multiple layers and parts of a 3D visualization of a shape.',
+      url: '/shape',
+    },
+    {
+      image: {
+        src: blueprintViewerImage,
+        alt: 'Example of a 3D blueprint',
+      },
+      title: 'Blueprint Viewer',
+      description: 'View your blueprints in 3D and share them with others.',
+      url: '/blueprint',
+    },
+    {
+      image: {
+        src: searchImage,
+        alt: 'Void of the Shapez universe',
+      },
+      title: 'Browse blueprints',
+      description:
+        'Search a near infinite collection of community made blueprints.',
+      url: '/blueprint/search',
+    },
+  ];
+
   export let data: PageData;
 </script>
 
 <section class={section()} id="hero">
-  <div class="rounded-lg border bg-layer px-4 py-12 sm:px-12 shadow-lg">
+  <div class="rounded-lg border bg-layer px-4 py-12 shadow-lg sm:px-12">
     <hgroup class="mx-auto max-w-screen-sm text-center">
       <h1 class="heading-1">Shapez Vortex</h1>
       <p class="heading-3 mt-2">
@@ -41,94 +85,41 @@
   </div>
 </section>
 
-<section
-  class="mx-auto mt-16 w-full max-w-5xl px-4 md:mt-24 lg:px-0"
-  id="features"
->
-  <div
-    class="mx-auto grid max-w-screen-sm grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3 lg:gap-4"
-  >
-    <h2 class="sr-only">Features</h2>
+<section class={section()} id="features">
+  <h2 class="heading-2">Features</h2>
 
-    <div class="card card-bordered bg-base-200 shadow-xl">
-      <figure>
-        <a class="w-full" href="/shape" title="Shape Viewer">
-          <img
-            class="h-64 w-full object-cover"
-            src="/shape-viewer-example.png"
-            alt="Example of a 3D shape"
-          />
-        </a>
-      </figure>
-
-      <div class="card-body">
-        <h3 class="card-title">Shape Viewer</h3>
-        <p>
-          Explore multiple layers and parts of a 3D visualization of a shape.
-        </p>
-      </div>
-
-      <a
-        class="btn btn-primary no-animation btn-block rounded-t-none"
-        href="/shape"
-        title="Shape Viewer"
-      >
-        Start
-        <span class="sr-only">Shape Viewer</span>
-      </a>
-    </div>
-
-    <div class="card card-bordered bg-base-200 shadow-xl">
-      <figure>
-        <a class="w-full" href="/blueprint" title="Blueprint Viewer">
-          <img
-            class="h-64 w-full object-cover"
-            src="/blueprint-viewer-example.png"
-            alt="Example of a 3D blueprint"
-          />
-        </a>
-      </figure>
-
-      <div class="card-body">
-        <h3 class="card-title">Blueprint Viewer</h3>
-        <p>View your blueprints in 3D and share them with others.</p>
-      </div>
-
-      <a
-        class="btn btn-primary no-animation btn-block rounded-t-none"
-        href="/blueprint"
-        title="Blueprint Viewer"
-      >
-        Start
-        <span class="sr-only"> Blueprint Viewer</span>
-      </a>
-    </div>
-
-    <div class="card card-bordered bg-base-200 shadow-xl">
-      <figure class="bg-base-100">
+  <div class="mx-auto mt-2 grid grid-cols-1 gap-4 lg:grid-cols-3">
+    {#each features as feature}
+      <div class="overflow-hidden rounded-md border bg-layer shadow-md">
         <a
-          class="flex h-64 w-full flex-col items-center justify-center"
-          href="/blueprint/search"
-          title="Browse blueprints"
+          class="aspect-h-2 aspect-w-3 inline-block w-full"
+          href={feature.url}
+          title="Start {feature.title}"
         >
-          <img class="size-32" src="/favicon.png" alt="Blueprint Icon" />
+          <img
+            class="object-contain lg:object-cover"
+            src={feature.image.src}
+            alt={feature.image.alt}
+          />
         </a>
-      </figure>
 
-      <div class="card-body">
-        <h3 class="card-title">Browse blueprints</h3>
-        <p>Search an infinite collection of community made blueprints.</p>
+        <div class="flex flex-col p-4 lg:h-56">
+          <h3 class="heading-3">{feature.title}</h3>
+          <p class="mt-2">
+            {feature.description}
+          </p>
+
+          <Button.Root
+            class="{button({ block: true })} mt-8 lg:mt-auto"
+            href={feature.url}
+            title="Start {feature.title}"
+          >
+            Start
+            <span class="sr-only">{feature.title}</span>
+          </Button.Root>
+        </div>
       </div>
-
-      <a
-        class="btn btn-primary no-animation btn-block rounded-t-none"
-        href="/blueprint/search"
-        title="Browse blueprints"
-      >
-        Start
-        <span class="sr-only"> blueprint search </span>
-      </a>
-    </div>
+    {/each}
   </div>
 </section>
 
