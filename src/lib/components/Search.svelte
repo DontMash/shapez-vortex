@@ -51,7 +51,7 @@
   }}
 >
   <Dialog.Trigger
-    class={button({ kind: 'outline' })}
+    class={button({ kind: 'outline', intent: 'muted' })}
     title="Search the Shapez Vortex"
   >
     <span class="icon-[tabler--search]" />
@@ -106,9 +106,9 @@
         >
           <Dialog.Close
             class="{button({
-              type: 'icon',
               kind: 'outline',
-              size: 'sm',
+              intent: 'error',
+              size: 'icon-sm',
             })} rounded-full absolute right-4 top-4 size-8 border"
           >
             <span class="icon-[tabler--x] text-lg">Close search dialog</span>
@@ -133,7 +133,7 @@
               {@const blueprints = $page.data.searchBlueprints}
               {#if blueprints.length > 0}
                 <Command.Group
-                  class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
+                  class="[&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
                   heading="Blueprints"
                   alwaysRender
                 >
@@ -151,7 +151,7 @@
                       </span>
                       {#if blueprint.expand && blueprint.expand['creator']}
                         <span
-                          class="ml-auto rounded-xs bg-accent px-1 py-0.5:small text-accent-foreground"
+                          class="py-0.5:small ml-auto rounded-xs bg-accent px-1 text-accent-foreground"
                         >
                           @{blueprint.expand['creator'].displayname}
                         </span>
@@ -173,7 +173,7 @@
               {@const users = $page.data.searchUsers}
               {#if users.length > 0}
                 <Command.Group
-                  class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
+                  class="[&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
                   heading="Users"
                 >
                   {#each users as user}
@@ -193,7 +193,7 @@
             {/if}
 
             <Command.Group
-              class="[&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
+              class="[&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
               heading="Features"
             >
               {#if isShapeIdentifier(searchValue)}
