@@ -179,6 +179,7 @@ export const button = cva(
       kind: 'fill',
       intent: 'primary',
       size: 'md',
+      block: false,
     },
   },
 );
