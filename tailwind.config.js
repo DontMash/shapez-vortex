@@ -33,6 +33,8 @@ const config = {
       },
       accent: {
         DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
+        hover: 'hsl(var(--accent-hover) / <alpha-value>)',
+        active: 'hsl(var(--accent-active) / <alpha-value>)',
         foreground: 'hsl(var(--accent-foreground) / <alpha-value>)',
       },
       muted: {

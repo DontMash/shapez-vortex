@@ -63,6 +63,19 @@ export const button = cva(
         ],
       },
       {
+        kind: 'fill',
+        intent: 'accent',
+        class: [
+          'bg-accent',
+          'text-accent-foreground',
+          'hover:bg-accent-hover',
+          'active:bg-accent-active',
+          'focus-visible:outline-accent',
+          'focus-visible:hover:outline-accent-hover',
+          'focus-visible:active:outline-accent-active',
+        ],
+      },
+      {
         kind: 'link',
         intent: 'primary',
         class: [
