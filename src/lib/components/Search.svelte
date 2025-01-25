@@ -6,6 +6,7 @@
   import { page } from '$app/stores';
   import { isShapeIdentifier } from '$lib/shape.types';
   import { button } from '$lib/components/button';
+  import * as dialog from '$lib/components/dialog';
 
   const OPERATING_SYSTEMS = ['Mac OS', 'Windows', 'Linux'] as const;
   $: os = $page.data.agent?.os;
@@ -80,13 +81,13 @@
 
   <Dialog.Portal>
     <Dialog.Overlay
-      class="fixed inset-0 z-50 bg-background/70 backdrop-blur-lg"
+      class={dialog.overlay()}
       transition={blur}
       transitionConfig={{ duration: 150 }}
     />
 
     <Dialog.Content
-      class="fixed left-1/2 top-0 z-50 w-full max-w-screen-sm -translate-x-1/2 p-4 outline-none"
+      class={dialog.content()}
       transition={fade}
       transitionConfig={{ duration: 150 }}
     >
@@ -107,9 +108,9 @@
           <Dialog.Close
             class="{button({
               kind: 'outline',
-              intent: 'error',
+              intent: 'muted',
               size: 'icon-sm',
-            })} rounded-full absolute right-4 top-4 size-8 border"
+            })} absolute right-4 top-4"
           >
             <span class="icon-[tabler--x] text-lg">Close search dialog</span>
           </Dialog.Close>
