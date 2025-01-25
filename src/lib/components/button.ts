@@ -34,9 +34,10 @@ export const button = cva(
         'icon-sm': ['rounded-xs', 'size-8', 'p-1'],
         icon: ['rounded-sm', 'size-12', 'p-1'],
         'icon-lg': ['rounded-md', 'size-16', 'p-3'],
-        sm: ['rounded-xs', 'px-2', 'py-1', 'h-12'],
+        xs: ['rounded-xs'],
+        sm: ['rounded-xs'],
         md: ['rounded-sm'],
-        lg: ['rounded-md', 'px-5', 'py-3', 'h-12'],
+        lg: ['rounded-md'],
       },
       block: {
         false: ['inline-flex'],
@@ -114,6 +115,11 @@ export const button = cva(
           'active:bg-error-active',
           'focus-visible:hover:outline-error',
         ],
+      },
+      {
+        kind: ['fill', 'ghost', 'outline'],
+        size: 'xs',
+        class: ['px-1', 'py-0.5', 'h-6'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
