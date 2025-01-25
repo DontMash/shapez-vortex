@@ -1,7 +1,13 @@
 <script lang="ts">
+  import { Button } from 'bits-ui';
+  import { button } from '$lib/components/button';
+
   export let name: string;
 </script>
 
-<a class="badge link-hover badge-accent text-xs" href="/user/@{name}">
+<Button.Root
+  class={button({ intent: 'accent', size: 'xs' })}
+  href="/user/@{name}"
+>
   @{name}
-</a>
+</Button.Root>

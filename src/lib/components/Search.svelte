@@ -150,9 +150,7 @@
                         {blueprint.title}
                       </span>
                       {#if blueprint.expand && blueprint.expand['creator']}
-                        <span
-                          class="py-0.5:small ml-auto rounded-xs bg-accent px-1 text-accent-foreground"
-                        >
+                        <span class={button({ intent: 'accent', size: 'xs' })}>
                           @{blueprint.expand['creator'].displayname}
                         </span>
                       {/if}
