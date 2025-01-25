@@ -98,7 +98,9 @@ export const button = cva(
           'hover:border-primary',
           'hover:text-primary-foreground',
           'active:bg-primary-active',
+          'active:border-primary-active',
           'focus-visible:hover:outline-primary',
+          'focus-visible:active:outline-primary-active',
         ],
       },
       {
@@ -109,7 +111,9 @@ export const button = cva(
           'hover:border-secondary',
           'hover:text-secondary-foreground',
           'active:bg-secondary-active',
+          'active:border-secondary-active',
           'focus-visible:hover:outline-secondary',
+          'focus-visible:active:outline-secondary-active',
         ],
       },
       {
@@ -120,7 +124,9 @@ export const button = cva(
           'hover:border-muted',
           'hover:text-muted-foreground',
           'active:bg-muted-active',
+          'active:border-muted-active',
           'focus-visible:hover:outline-muted',
+          'focus-visible:active:outline-muted-active',
         ],
       },
       {
@@ -131,7 +137,9 @@ export const button = cva(
           'hover:border-error',
           'hover:text-error-foreground',
           'active:bg-error-active',
+          'active:border-error-active',
           'focus-visible:hover:outline-error',
+          'focus-visible:active:outline-error-active',
         ],
       },
       {
