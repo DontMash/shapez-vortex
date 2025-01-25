@@ -76,6 +76,19 @@ export const button = cva(
         ],
       },
       {
+        kind: 'fill',
+        intent: 'error',
+        class: [
+          'bg-error',
+          'text-error-foreground',
+          'hover:bg-error-hover',
+          'active:bg-error-active',
+          'focus-visible:outline-error',
+          'focus-visible:hover:outline-error-hover',
+          'focus-visible:active:outline-error-active',
+        ],
+      },
+      {
         kind: 'link',
         intent: 'primary',
         class: [
