@@ -17,6 +17,7 @@
     title: string;
     description: string;
     url: string;
+    tooltip: string;
   };
   const features: Array<Feature> = [
     {
@@ -28,6 +29,7 @@
       description:
         'Explore multiple layers and parts of a 3D visualization of a shape.',
       url: '/shape',
+      tooltip: 'Start Shape Viewer',
     },
     {
       image: {
@@ -37,6 +39,7 @@
       title: 'Blueprint Viewer',
       description: 'View your blueprints in 3D and share them with others.',
       url: '/blueprint',
+      tooltip: 'Start Blueprint Viewer',
     },
     {
       image: {
@@ -47,6 +50,7 @@
       description:
         'Search a near infinite collection of community made blueprints.',
       url: '/blueprint/search',
+      tooltip: 'Start browsing blueprints',
     },
   ];
 
@@ -91,17 +95,17 @@
   <div class="mx-auto grid grid-cols-1 gap-4 lg:grid-cols-3">
     {#each features as feature}
       <div class="overflow-hidden rounded-md border bg-layer shadow-md">
-        <a
+        <Button.Root
           class="aspect-h-2 aspect-w-3 inline-block w-full"
           href={feature.url}
-          title="Start {feature.title}"
+          title={feature.tooltip}
         >
           <img
             class="object-contain lg:object-cover"
             src={feature.image.src}
             alt={feature.image.alt}
           />
-        </a>
+        </Button.Root>
 
         <div class="flex flex-col p-4 lg:h-56">
           <h3 class="heading-3">{feature.title}</h3>
@@ -112,7 +116,7 @@
           <Button.Root
             class="{button({ block: true })} mt-8 lg:mt-auto"
             href={feature.url}
-            title="Start {feature.title}"
+            title={feature.tooltip}
           >
             Start
             <span class="sr-only">{feature.title}</span>
