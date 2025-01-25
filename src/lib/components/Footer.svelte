@@ -25,7 +25,7 @@
       <p class="mt-8">
         <i>
           <Button.Root
-            class={button({ kind: 'link' })}
+            class={button({ kind: 'link', size: 'xs' })}
             href="https://github.com/DontMash/shapez-vortex/releases/tag/v{version}"
             title="Github Release - shapez-vortex"
             target="_blank"
@@ -44,7 +44,7 @@
       <ul class="space-y-3">
         <li>
           <Button.Root
-            class={button({ kind: 'link' })}
+            class={button({ kind: 'link', size: 'xs' })}
             href="/shape"
             title="Checkout the shape viewer"
           >
@@ -54,7 +54,7 @@
         </li>
         <li>
           <Button.Root
-            class={button({ kind: 'link' })}
+            class={button({ kind: 'link', size: 'xs' })}
             href="/blueprint"
             title="Checkout the blueprint viewer"
           >
@@ -64,7 +64,7 @@
         </li>
         <li>
           <Button.Root
-            class={button({ kind: 'link' })}
+            class={button({ kind: 'link', size: 'xs' })}
             href="https://tobspr.io/privacy"
             target="_blank"
             rel="noreferrer"
@@ -74,7 +74,7 @@
         </li>
         <li>
           <Button.Root
-            class={button({ kind: 'link' })}
+            class={button({ kind: 'link', size: 'xs' })}
             href="https://tobspr.io/imprint"
             target="_blank"
             rel="noreferrer"
@@ -205,7 +205,7 @@
       </nav>
 
       <Button.Root
-        class={button({ kind: 'link' })}
+        class={button({ kind: 'link', size: 'xs' })}
         href="https://shapez2.wiki.gg/wiki/Shapez_2_Wiki"
         target="_blank"
         rel="noreferrer"
@@ -220,7 +220,7 @@
       <ul class="space-y-3">
         <li>
           <Button.Root
-            class={button({ kind: 'link' })}
+            class={button({ kind: 'link', size: 'xs' })}
             href="https://github.com/DontMash/shapez-vortex/issues"
             target="_blank"
             rel="noreferrer"
@@ -231,7 +231,7 @@
         </li>
         <li>
           <Button.Root
-            class={button({ kind: 'link' })}
+            class={button({ kind: 'link', size: 'xs' })}
             href="https://ko-fi.com/smaschmann"
             target="_blank"
             rel="noreferrer"
@@ -247,7 +247,7 @@
         <span class="icon-[tabler--heart-filled] text-lg">love</span>
         by
         <Button.Root
-          class={button({ kind: 'link' })}
+          class={button({ kind: 'link', size: 'xs' })}
           href="https://soren.codes"
           target="_blank"
           rel="noreferrer">@DontMash</Button.Root

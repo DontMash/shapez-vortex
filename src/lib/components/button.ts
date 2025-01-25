@@ -6,7 +6,6 @@ export const button = cva(
     'justify-center',
     'items-center',
     'gap-2',
-    'focus-visible:outline-current',
     'focus-visible:outline-2',
     'focus-visible:outline',
     'transition',
@@ -15,12 +14,18 @@ export const button = cva(
     variants: {
       kind: {
         fill: [],
-        outline: ['border'],
-        ghost: ['border', 'border-transparent', 'hover:bg-border'],
+        outline: ['border', 'focus-visible:outline-foreground'],
+        ghost: [
+          'border',
+          'border-transparent',
+          'hover:bg-border',
+          'focus-visible:outline-foreground',
+        ],
         link: [
           'hover:underline',
           'focus-visible:underline',
-          'focus-visible:-outline-offset-4',
+          'focus-visible:outline-foreground',
+          'focus-visible:outline-offset-4',
         ],
       },
       intent: {
