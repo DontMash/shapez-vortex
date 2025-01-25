@@ -14,13 +14,8 @@ export const button = cva(
     variants: {
       kind: {
         fill: [],
-        outline: ['border', 'focus-visible:outline-foreground'],
-        ghost: [
-          'border',
-          'border-transparent',
-          'hover:bg-border',
-          'focus-visible:outline-foreground',
-        ],
+        outline: [],
+        ghost: ['border-transparent'],
         link: [
           'hover:underline',
           'focus-visible:underline',
@@ -91,7 +86,7 @@ export const button = cva(
         ],
       },
       {
-        kind: 'outline',
+        kind: ['ghost', 'outline'],
         intent: 'primary',
         class: [
           'hover:bg-primary',
@@ -104,7 +99,7 @@ export const button = cva(
         ],
       },
       {
-        kind: 'outline',
+        kind: ['ghost', 'outline'],
         intent: 'secondary',
         class: [
           'hover:bg-secondary',
@@ -117,7 +112,20 @@ export const button = cva(
         ],
       },
       {
-        kind: 'outline',
+        kind: ['ghost', 'outline'],
+        intent: 'accent',
+        class: [
+          'hover:bg-accent',
+          'hover:border-accent',
+          'hover:text-accent-foreground',
+          'active:bg-accent-active',
+          'active:border-accent-active',
+          'focus-visible:hover:outline-accent',
+          'focus-visible:active:outline-accent-active',
+        ],
+      },
+      {
+        kind: ['ghost', 'outline'],
         intent: 'muted',
         class: [
           'hover:bg-muted',
@@ -130,7 +138,7 @@ export const button = cva(
         ],
       },
       {
-        kind: 'outline',
+        kind: ['ghost', 'outline'],
         intent: 'error',
         class: [
           'hover:bg-error',
@@ -141,6 +149,10 @@ export const button = cva(
           'focus-visible:hover:outline-error',
           'focus-visible:active:outline-error-active',
         ],
+      },
+      {
+        kind: ['ghost', 'outline'],
+        class: ['border', 'focus-visible:outline-foreground'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
