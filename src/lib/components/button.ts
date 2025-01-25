@@ -36,7 +36,7 @@ export const button = cva(
         'icon-lg': ['rounded-md', 'size-16', 'p-3'],
         xs: ['rounded-xs'],
         sm: ['rounded-xs'],
-        md: ['rounded-sm'],
+        md: ['rounded-sm', 'min-h-12'],
         lg: ['rounded-md'],
       },
       block: {
@@ -157,22 +157,22 @@ export const button = cva(
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'xs',
-        class: ['px-1', 'py-0.5', 'h-6'],
+        class: ['px-1', 'py-0.5'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'sm',
-        class: ['px-2', 'py-1', 'h-12'],
+        class: ['px-2', 'py-1'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'md',
-        class: ['px-3', 'py-2', 'h-12'],
+        class: ['px-3', 'py-2'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'lg',
-        class: ['px-5', 'py-3', 'h-12'],
+        class: ['px-5', 'py-3'],
       },
     ],
     defaultVariants: {
