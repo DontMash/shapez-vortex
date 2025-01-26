@@ -25,7 +25,7 @@
   </PageHeader>
 
   <div class="mx-auto max-w-screen-sm space-y-4 rounded-md border bg-layer p-4">
-    <form class="space-y-4" method="post" action="?/reset" use:enhance>
+    <form class="flex flex-col gap-2" method="post" action="?/reset" use:enhance>
       <Field {form} name="email" let:constraints>
         <Control let:attrs>
           <div class={input.group()}>
@@ -33,7 +33,7 @@
             <Label class="sr-only">Email</Label>
             <input
               class={input.field()}
-              type="text"
+              type="email"
               placeholder="Email"
               {...attrs}
               {...constraints}
