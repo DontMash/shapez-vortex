@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@iconify-json/material-symbols": "^1.1.85",
-    "@iconify-json/simple-icons": "^1.1.111",
-    "@iconify-json/tabler": "^1.1.118",
+    "@iconify-json/simple-icons": "^1.2.21",
+    "@iconify-json/tabler": "^1.2.15",
     "@iconify/tailwind": "^1.1.2",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/kit": "^2.0.0",
