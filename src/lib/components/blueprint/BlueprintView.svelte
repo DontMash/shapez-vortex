@@ -216,13 +216,13 @@
           >
             {#if !isFullscreen}
               <span
-                class="icon-[material-symbols--fullscreen-rounded] align-text-bottom text-2xl"
+                class="icon-[tabler--maximize] align-text-bottom text-2xl"
               >
                 Turn fullscreen on
               </span>
             {:else}
               <span
-                class="icon-[material-symbols--fullscreen-exit-rounded] align-text-bottom text-2xl"
+                class="icon-[tabler--maximize-off] align-text-bottom text-2xl"
               >
                 Turn fullscreen off
               </span>

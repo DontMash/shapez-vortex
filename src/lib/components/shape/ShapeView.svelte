@@ -177,11 +177,11 @@
         >
           {#if isFullscreen}
             <span
-              class="icon-[material-symbols--fullscreen-exit-rounded] text-2xl"
+              class="icon-[tabler--maximize-off] text-2xl"
             />
           {:else}
             <span
-              class="icon-[material-symbols--fullscreen-rounded] text-2xl"
+              class="icon-[tabler--maximize] text-2xl"
             />
           {/if}
         </button>
