@@ -1,30 +1,83 @@
 <script lang="ts">
   import type { PageData } from './$types';
+  import { Button } from 'bits-ui';
+
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import { section } from '$lib/components/section';
+
+  import blueprintImage from '$lib/assets/images/blueprint-library.png';
+  import bookmarkImage from '$lib/assets/images/folder.png';
 
   export let data: PageData;
+
+  type ProfileFeature = {
+    image: {
+      src: string;
+      alt: string;
+    };
+    title: string;
+    description: string;
+    url: string;
+    tooltip: string;
+  };
+  const features: Array<ProfileFeature> = [
+    {
+      image: {
+        src: bookmarkImage,
+        alt: 'Blueprint library',
+      },
+      title: 'Blueprints',
+      description:
+        data.profile.id === data.user?.id
+          ? 'View your uploaded blueprints.'
+          : `View the blueprints of @${data.profile.displayname}.`,
+      url: `/user/@${data.profile.displayname}/blueprints`,
+      tooltip: 'View blueprints',
+    },
+    {
+      image: {
+        src: blueprintImage,
+        alt: 'Bookmark library',
+      },
+      title: 'Bookmarks',
+      description:
+        data.profile.id === data.user?.id
+          ? 'View your bookmarked blueprints.'
+          : `View the bookmarked blueprints of @${data.profile.displayname}.`,
+      url: `/user/@${data.profile.displayname}/bookmarks`,
+      tooltip: 'View bookmarks',
+    },
+  ];
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-  >
-    <h2 class="text-lg font-bold">
-      <span class="icon-[tabler--user] align-text-bottom text-2xl">User</span>
-      {data.profile.displayname}
-    </h2>
-  </header>
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--user] heading-2">User</span>
+    {data.profile.displayname}
+  </PageHeader>
 
-  <ul class="flex flex-col items-center justify-center space-y-4">
-    <li>
-      <a
-        class="underline"
-        href={`/user/@${data.profile.displayname}/blueprints`}>Blueprints</a
-      >
-    </li>
-    <li>
-      <a class="underline" href={`/user/@${data.profile.displayname}/bookmarks`}
-        >Bookmarks</a
-      >
-    </li>
+  <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {#each features as feature}
+      <li>
+        <Button.Root
+          class="inline-block w-full overflow-hidden rounded-md border bg-layer shadow-lg"
+          href={feature.url}
+          title={feature.tooltip}
+        >
+          <div class="aspect-h-2 aspect-w-3 border-b">
+            <img
+              class="object-contain lg:object-cover"
+              src={feature.image.src}
+              alt={feature.image.alt}
+            />
+          </div>
+
+          <div class="p-4">
+            <h2 class="heading-3">{feature.title}</h2>
+            <p class="mt-2">{feature.description}</p>
+          </div>
+        </Button.Root>
+      </li>
+    {/each}
   </ul>
 </section>
