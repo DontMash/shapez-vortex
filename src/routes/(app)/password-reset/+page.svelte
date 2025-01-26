@@ -1,57 +1,51 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import type { PageData } from './$types';
+  import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
+
+  import * as input from '$lib/components/input';
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import { section } from '$lib/components/section';
+  import { PASSWORD_RESET_FORM_SCHEMA } from '$lib/user.types';
+  import { button } from '$lib/components/button';
 
   export let data: PageData;
+
+  const form = superForm(data.form, {
+    validators: zodClient(PASSWORD_RESET_FORM_SCHEMA),
+  });
+  const { form: formData, enhance } = form;
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-  >
-    <hgroup>
-      <h2 class="text-lg font-bold">
-        <span class="icon-[tabler--lock-access] align-text-bottom text-2xl" />
-        {data.seo.title}
-      </h2>
-    </hgroup>
-  </header>
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--lock-access] heading-2" />
+    {data.seo.title}
+  </PageHeader>
 
-  <div
-    class="card card-bordered mx-auto max-w-screen-sm rounded-none border-x-0 border-base-content/20 bg-base-200 shadow-lg transition-[border-radius] sm:rounded-box sm:border-x"
-  >
-    <form class="card-body" method="post" action="?/reset">
-      <label class="form-control" for="email">
-        <div class="label">
-          <span class="label-text">Email</span>
-        </div>
-        <div class="input input-bordered flex items-center space-x-2">
-          <span class="icon-[tabler--mail] align-text-bottom text-2xl" />
-          <input
-            class="w-full"
-            type="email"
-            name="email"
-            id="email"
-            value={$page.form && !$page.form.success
-              ? $page.form.data.email
-              : null}
-            required
-          />
-        </div>
-      </label>
+  <div class="mx-auto max-w-screen-sm space-y-4 rounded-md border bg-layer p-4">
+    <form class="space-y-4" method="post" action="?/reset" use:enhance>
+      <Field {form} name="email" let:constraints>
+        <Control let:attrs>
+          <div class={input.group()}>
+            <span class="icon-[tabler--mail]" />
+            <Label class="sr-only">Email</Label>
+            <input
+              class={input.field()}
+              type="text"
+              placeholder="Email"
+              {...attrs}
+              {...constraints}
+              bind:value={$formData.email}
+            />
+          </div>
+        </Control>
+        <FieldErrors class="text-error" />
+      </Field>
 
-      {#if $page.form && !$page.form.success && $page.form.issues}
-        <ul class="inline-block font-medium italic text-error">
-          {#each $page.form.issues as issue}
-            <li>
-              {issue.message}
-            </li>
-          {/each}
-        </ul>
-      {/if}
-
-      <button class="btn btn-primary mt-4">
-        <span class="icon-[tabler--send-2] text-2xl" />
+      <button class={button({ block: true })} title="Request a password reset">
+        <span class="icon-[tabler--send-2]" />
         Request
       </button>
     </form>

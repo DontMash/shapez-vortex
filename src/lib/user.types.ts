@@ -23,6 +23,9 @@ export const USER_LOGIN_FORM_SCHEMA = z.object({
   password: PASSWORD_SCHEMA,
   redirect: z.string().optional(),
 });
+export const PASSWORD_RESET_FORM_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({
+  email: true,
+});
 
 export const USER_FORM_ERROR_MESSAGES: Record<string, string> = {
   username: 'Username unavailable',
