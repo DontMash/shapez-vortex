@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { PASSWORD_MIN_LENGTH, USERNAME_REGEX } from '$lib/user.types';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -39,7 +38,6 @@
             value={$page.form && !$page.form.success
               ? $page.form.data.username
               : null}
-            pattern={USERNAME_REGEX.source}
           />
         </div>
       </label>
@@ -58,7 +56,6 @@
               ? $page.form.data.displayname
               : null}
             required
-            pattern={USERNAME_REGEX.source}
           />
         </div>
       </label>
@@ -98,7 +95,6 @@
               : null}
             placeholder=""
             required
-            minlength={PASSWORD_MIN_LENGTH}
           />
           <button
             class="btn btn-square btn-ghost btn-sm"
