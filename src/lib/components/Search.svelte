@@ -151,7 +151,7 @@
                         {blueprint.title}
                       </span>
                       {#if blueprint.expand && blueprint.expand['creator']}
-                        <span class={button({ intent: 'accent', size: 'xs' })}>
+                        <span class="{button({ intent: 'accent', size: 'xs' })} ml-auto">
                           @{blueprint.expand['creator'].displayname}
                         </span>
                       {/if}

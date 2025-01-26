@@ -170,7 +170,7 @@ export const button = cva(
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'xs',
-        class: ['px-1', 'py-0.5', 'rounded-2xs'],
+        class: ['px-1', 'py-0.5', 'rounded-xs'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
