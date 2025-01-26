@@ -107,8 +107,10 @@
     </form>
 
     <div class="flex justify-between">
-      <a class="link link-accent" href="/register"> Create an account? </a>
-      <a class="link link-accent text-right" href="/password-reset">
+      <a class={button({ kind: 'link' })} href="/register">
+        Create an account?
+      </a>
+      <a class={button({ kind: 'link' })} href="/password-reset">
         Forgot your password?
       </a>
     </div>
