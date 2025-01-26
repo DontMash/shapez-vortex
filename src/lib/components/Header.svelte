@@ -31,7 +31,7 @@
 
       {#if !$page.data.user}
         <Button.Root
-          class={button()}
+          class={button({ size: 'icon' })}
           title="Login into Shapez Vortex"
           href="/login"
         >
