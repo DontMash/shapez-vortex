@@ -143,7 +143,7 @@ export const button = cva(
         class: [
           'hover:bg-muted',
           'hover:border-muted',
-          'hover:text-muted-foreground',
+          'hover:text-foreground',
           'active:bg-muted-active',
           'active:border-muted-active',
           'focus-visible:hover:outline-muted',

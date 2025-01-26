@@ -177,7 +177,7 @@ const config = {
           lineHeight: theme('lineHeight.xl'),
         },
         '.paragraph': {
-          '@apply text-base lg:text-lg': '',
+          '@apply text-base': '',
           lineHeight: theme('lineHeight.xl'),
         },
 
