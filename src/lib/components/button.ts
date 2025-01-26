@@ -2,7 +2,6 @@ import { cva } from 'class-variance-authority';
 
 export const button = cva(
   [
-    'inline-flex',
     'justify-center',
     'items-center',
     'gap-2',
@@ -41,7 +40,7 @@ export const button = cva(
       },
       block: {
         false: ['inline-flex'],
-        true: ['flex'],
+        true: ['flex', 'w-full'],
       },
     },
     compoundVariants: [
