@@ -128,19 +128,18 @@
 </section>
 
 {#if data.searchBlueprints && data.searchBlueprints.length && data.blueprintImages}
-  <section
-    class="mx-auto mt-16 w-full max-w-5xl space-y-4 px-4 md:mb-8 md:mt-24 lg:px-0"
-    id="latest"
-  >
-    <h2 class="text-3xl font-bold md:text-4xl">Latest blueprints</h2>
+  <section class={section()} id="latest-blueprints">
+    <h2 class="heading-2 mb-2">Latest blueprints</h2>
 
     <BlueprintItemList
       items={data.searchBlueprints.slice(0, 3)}
       images={data.blueprintImages}
     />
 
-    <div class="flex justify-center">
-      <Button.Root href="/blueprint/search">Show more</Button.Root>
+    <div class="mt-4 flex justify-center">
+      <Button.Root class={button({ kind: 'outline' })} href="/blueprint/search">
+        Show more
+      </Button.Root>
     </div>
   </section>
 {/if}
