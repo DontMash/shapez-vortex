@@ -1,114 +1,116 @@
 <script lang="ts">
-  import type { Page } from '@sveltejs/kit';
-  import { page } from '$app/stores';
-  import { PASSWORD_MIN_LENGTH, USERNAME_REGEX } from '$lib/user.types';
   import type { PageData } from './$types';
+  import { Field, Control, Label, FieldErrors } from 'formsnap';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
+  import { page } from '$app/stores';
+  import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';
+
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import * as input from '$lib/components/input';
+  import { section } from '$lib/components/section';
+  import { button } from '$lib/components/button';
 
   export let data: PageData;
 
+  const form = superForm(data.form, {
+    validators: zodClient(USER_LOGIN_FORM_SCHEMA),
+  });
+  const { form: formData, enhance } = form;
   let isPasswordHidden = true;
-  function getRedirectParam(page: Page) {
-    return page.url.searchParams.get('redirect');
-  }
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-  >
-    <hgroup>
-      <h2 class="text-lg font-bold">
-        <span class="icon-[tabler--login-2] align-text-bottom text-2xl" />
-        {data.seo.title}
-      </h2>
-    </hgroup>
-  </header>
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--login-2] heading-2" />
+    {data.seo.title}
+  </PageHeader>
 
-  <div
-    class="card card-bordered mx-auto max-w-screen-sm rounded-none border-x-0 border-base-content/20 bg-base-200 shadow-lg transition-[border-radius] sm:rounded-box sm:border-x"
-  >
-    <form class="card-body" action="?/login" method="post">
-      {#if getRedirectParam($page)}
-        <input type="hidden" name="redirect" value={getRedirectParam($page)} />
+  <div class="mx-auto max-w-screen-sm space-y-4 rounded-md border bg-layer p-4">
+    <form
+      class="flex flex-col gap-2"
+      method="post"
+      action="?/login"
+      use:enhance
+    >
+      {#if $page}
+        {@const redirect = $page.url.searchParams.get('redirect')}
+        {#if redirect}
+          <input type="hidden" name="redirect" value={redirect} />
+        {/if}
       {/if}
 
-      <label class="form-control" for="username">
-        <div class="label">
-          <span class="label-text">Username</span>
-        </div>
-        <div class="input input-bordered flex items-center space-x-2">
-          <span class="icon-[tabler--user] text-2xl" />
-          <input
-            class="w-full"
-            type="text"
-            name="username"
-            id="username"
-            required
-            value={$page.form && !$page.form.success
-              ? $page.form.data.username
-              : null}
-            pattern={USERNAME_REGEX.source}
-          />
-        </div>
-      </label>
+      <Field {form} name="username" let:constraints>
+        <Control let:attrs>
+          <div class={input.group()}>
+            <span class="icon-[tabler--user]" />
+            <Label class="sr-only">Username</Label>
+            <input
+              class={input.field()}
+              type="text"
+              placeholder="Username"
+              {...attrs}
+              {...constraints}
+              bind:value={$formData.username}
+            />
+          </div>
+        </Control>
+        <FieldErrors class="text-error" />
+      </Field>
 
-      <label class="form-control" for="password">
-        <div class="label">
-          <span class="label-text">Password</span>
-        </div>
-        <div class="input input-bordered flex items-center space-x-2">
-          <span class="icon-[tabler--password] text-2xl" />
-          <input
-            class="w-full"
-            type={isPasswordHidden ? 'password' : 'text'}
-            name="password"
-            id="password"
-            value={$page.form && !$page.form.success
-              ? $page.form.data.password
-              : null}
-            placeholder=""
-            required
-            minlength={PASSWORD_MIN_LENGTH}
-          />
-          <button
-            class="btn btn-square btn-ghost btn-sm"
-            type="button"
-            title={isPasswordHidden ? 'Show password' : 'Hide password'}
-            on:click={() => (isPasswordHidden = !isPasswordHidden)}
-          >
-            <span class="sr-only">{isPasswordHidden ? 'Show' : 'Hide'}</span>
-            {#if isPasswordHidden}
-              <span class="icon-[tabler--eye-off] text-lg"
-                >Password is shown</span
-              >
-            {:else}
-              <span class="icon-[tabler--eye] text-lg">Password is hidden</span>
-            {/if}
-          </button>
-        </div>
-      </label>
+      <Field {form} name="password" let:constraints>
+        <Control let:attrs>
+          <Label class={input.group()}>
+            <span class="icon-[tabler--lock-password]" />
+            <span class="sr-only">Password</span>
+            <input
+              class={input.field()}
+              type={isPasswordHidden ? 'password' : 'text'}
+              placeholder="Password"
+              {...attrs}
+              {...constraints}
+              value={$formData.password}
+              on:input={(event) => {
+                $formData.password = event.currentTarget.value;
+              }}
+            />
+            <button
+              class={button({
+                kind: 'ghost',
+                intent: 'muted',
+                size: 'icon-sm',
+              })}
+              type="button"
+              title={isPasswordHidden ? 'Show password' : 'Hide password'}
+              on:click={() => (isPasswordHidden = !isPasswordHidden)}
+            >
+              <span class="sr-only">{isPasswordHidden ? 'Show' : 'Hide'}</span>
+              {#if isPasswordHidden}
+                <span class="icon-[tabler--eye-off] text-lg"
+                  >Password is shown</span
+                >
+              {:else}
+                <span class="icon-[tabler--eye] text-lg"
+                  >Password is hidden</span
+                >
+              {/if}
+            </button>
+          </Label>
+        </Control>
+        <FieldErrors class="text-error" />
+      </Field>
 
-      {#if $page.form && !$page.form.success && $page.form.issues}
-        <ul class="inline-block font-medium italic text-error">
-          {#each $page.form.issues as issue}
-            <li>
-              {issue.message}
-            </li>
-          {/each}
-        </ul>
-      {/if}
-
-      <button class="btn btn-primary my-4" title="Login to your account">
-        <span class="icon-[tabler--login-2] text-2xl" />
+      <button class={button({ block: true })} title="Login to your account">
+        <span class="icon-[tabler--login-2]" />
         Login
       </button>
-
-      <div class="flex justify-between">
-        <a class="link link-accent" href="/register"> Create an account? </a>
-        <a class="link link-accent text-right" href="/password-reset">
-          Forgot your password?
-        </a>
-      </div>
     </form>
+
+    <div class="flex justify-between">
+      <a class="link link-accent" href="/register"> Create an account? </a>
+      <a class="link link-accent text-right" href="/password-reset">
+        Forgot your password?
+      </a>
+    </div>
   </div>
 </section>
