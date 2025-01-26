@@ -10,9 +10,9 @@
 <footer class="border-t bg-layer px-4" id="footer">
   <div
     class="{section({
-      x: false,
+      x: true,
       y: false,
-    })} grid grid-cols-1 gap-8 py-8 sm:grid-cols-2 lg:grid-cols-4"
+    })} grid grid-cols-1 gap-4 py-8 sm:grid-cols-2 lg:grid-cols-4"
   >
     <aside class="flex flex-col justify-stretch">
       <div class="flex items-center">
@@ -22,8 +22,8 @@
         A community-platform with tools to view, share & modify content of the
         game Shapez 2.
       </p>
-      <p class="mt-8">
-        <i>
+      <p class="mt-8 lg:mt-auto">
+        <i class="small">
           <Button.Root
             class={button({ kind: 'link', size: 'xs' })}
             href="https://github.com/DontMash/shapez-vortex/releases/tag/v{version}"
@@ -38,8 +38,8 @@
       </p>
     </aside>
 
-    <nav>
-      <p class="heading-6 mb-2 text-muted">Features</p>
+    <nav class="mt-5">
+      <p class="heading-6 mb-6 text-muted">Features</p>
 
       <ul class="space-y-3">
         <li>
@@ -85,8 +85,8 @@
       </ul>
     </nav>
 
-    <div>
-      <p class="heading-6 mb-2 text-muted">Game</p>
+    <div class="mt-5">
+      <p class="heading-6 mb-6 text-muted">Game</p>
 
       <nav>
         <span> Follow Shapez 2 </span>
@@ -246,8 +246,8 @@
       </Button.Root>
     </div>
 
-    <nav class="flex flex-col justify-stretch">
-      <p class="heading-6 mb-2 text-muted">More</p>
+    <nav class="mt-5 flex flex-col justify-stretch">
+      <p class="heading-6 mb-6 text-muted">More</p>
 
       <ul class="space-y-3">
         <li>
@@ -274,7 +274,7 @@
         </li>
       </ul>
 
-      <p class="mt-8 flex items-center gap-1 sm:mt-auto">
+      <p class="mt-8 flex flex-wrap items-center gap-1 sm:mt-auto small">
         Created with
         <span class="icon-[tabler--heart-filled] text-lg">love</span>
         by
@@ -287,7 +287,7 @@
       </p>
     </nav>
 
-    <aside class="col-span-full flex justify-center">
+    <aside class="col-span-full flex justify-center mt-4">
       <Button.Root
         class={button({ kind: 'outline', intent: 'muted', size: 'icon-lg' })}
         href="#top"
