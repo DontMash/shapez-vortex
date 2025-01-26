@@ -106,11 +106,11 @@
       </button>
     </form>
 
-    <div class="flex justify-between">
+    <div class="flex justify-between gap-4">
       <a class={button({ kind: 'link' })} href="/register">
         Create an account?
       </a>
-      <a class={button({ kind: 'link' })} href="/password-reset">
+      <a class="{button({ kind: 'link' })} text-right" href="/password-reset">
         Forgot your password?
       </a>
     </div>
