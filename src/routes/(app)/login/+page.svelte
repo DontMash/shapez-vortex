@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
+  import { Button } from 'bits-ui';
   import { Field, Control, Label, FieldErrors } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
@@ -107,12 +108,15 @@
     </form>
 
     <div class="flex justify-between gap-4">
-      <a class={button({ kind: 'link' })} href="/register">
+      <Button.Root class={button({ kind: 'link' })} href="/register">
         Create an account?
-      </a>
-      <a class="{button({ kind: 'link' })} text-right" href="/password-reset">
+      </Button.Root>
+      <Button.Root
+        class="{button({ kind: 'link' })} text-right"
+        href="/password-reset"
+      >
         Forgot your password?
-      </a>
+      </Button.Root>
     </div>
   </div>
 </section>
