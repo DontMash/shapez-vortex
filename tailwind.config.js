@@ -10,6 +10,7 @@ const config = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     borderRadius: {
+      '2xs': 'calc(var(--radius) - 16px)',
       xs: 'calc(var(--radius) - 12px)',
       sm: 'calc(var(--radius) - 8px)',
       md: 'calc(var(--radius) - 4px)',

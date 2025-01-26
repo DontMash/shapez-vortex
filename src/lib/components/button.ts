@@ -16,6 +16,7 @@ export const button = cva(
         outline: [],
         ghost: ['border-transparent'],
         link: [
+          'rounded-2xs',
           'hover:underline',
           'focus-visible:underline',
           'focus-visible:outline-foreground',
@@ -33,10 +34,10 @@ export const button = cva(
         'icon-sm': ['rounded-xs', 'size-8', 'p-1'],
         icon: ['rounded-sm', 'size-12', 'p-1'],
         'icon-lg': ['rounded-md', 'size-16', 'p-3'],
-        xs: ['rounded-xs'],
-        sm: ['rounded-xs'],
-        md: ['rounded-sm', 'min-h-12'],
-        lg: ['rounded-md'],
+        xs: [],
+        sm: [],
+        md: [],
+        lg: [],
       },
       block: {
         false: ['inline-flex'],
@@ -169,22 +170,22 @@ export const button = cva(
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'xs',
-        class: ['px-1', 'py-0.5'],
+        class: ['px-1', 'py-0.5', 'rounded-2xs'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'sm',
-        class: ['px-2', 'py-1'],
+        class: ['px-2', 'py-1', 'rounded-xs'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'md',
-        class: ['px-3', 'py-2'],
+        class: ['px-3', 'py-2', 'min-h-12', 'rounded-sm'],
       },
       {
         kind: ['fill', 'ghost', 'outline'],
         size: 'lg',
-        class: ['px-5', 'py-3'],
+        class: ['px-5', 'py-3', 'rounded-md'],
       },
     ],
     defaultVariants: {

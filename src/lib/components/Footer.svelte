@@ -2,6 +2,7 @@
   import { Button } from 'bits-ui';
   import { version } from '$app/environment';
   import { GAME_VERSION } from '$lib/blueprint.types';
+
   import { button } from '$lib/components/button';
   import Logo from '$lib/components/Logo.svelte';
   import { section } from '$lib/components/section';
@@ -25,7 +26,7 @@
       <p class="mt-8 lg:mt-auto">
         <i class="small">
           <Button.Root
-            class={button({ kind: 'link', size: 'xs' })}
+            class={button({ kind: 'link' })}
             href="https://github.com/DontMash/shapez-vortex/releases/tag/v{version}"
             title="Github Release - shapez-vortex"
             target="_blank"
@@ -44,7 +45,7 @@
       <ul class="space-y-3">
         <li>
           <Button.Root
-            class={button({ kind: 'link', size: 'xs' })}
+            class={button({ kind: 'link' })}
             href="/shape"
             title="Checkout the shape viewer"
           >
@@ -54,7 +55,7 @@
         </li>
         <li>
           <Button.Root
-            class={button({ kind: 'link', size: 'xs' })}
+            class={button({ kind: 'link' })}
             href="/blueprint"
             title="Checkout the blueprint viewer"
           >
@@ -64,7 +65,7 @@
         </li>
         <li>
           <Button.Root
-            class={button({ kind: 'link', size: 'xs' })}
+            class={button({ kind: 'link' })}
             href="https://tobspr.io/privacy"
             target="_blank"
             rel="noreferrer"
@@ -74,7 +75,7 @@
         </li>
         <li>
           <Button.Root
-            class={button({ kind: 'link', size: 'xs' })}
+            class={button({ kind: 'link' })}
             href="https://tobspr.io/imprint"
             target="_blank"
             rel="noreferrer"
@@ -237,7 +238,7 @@
       </nav>
 
       <Button.Root
-        class={button({ kind: 'link', size: 'xs' })}
+        class={button({ kind: 'link' })}
         href="https://shapez2.wiki.gg/wiki/Shapez_2_Wiki"
         target="_blank"
         rel="noreferrer"
@@ -252,7 +253,7 @@
       <ul class="space-y-3">
         <li>
           <Button.Root
-            class={button({ kind: 'link', size: 'xs' })}
+            class={button({ kind: 'link' })}
             href="https://github.com/DontMash/shapez-vortex/issues"
             target="_blank"
             rel="noreferrer"
@@ -263,7 +264,7 @@
         </li>
         <li>
           <Button.Root
-            class={button({ kind: 'link', size: 'xs' })}
+            class={button({ kind: 'link' })}
             href="https://ko-fi.com/smaschmann"
             target="_blank"
             rel="noreferrer"
@@ -276,10 +277,10 @@
 
       <p class="mt-8 flex flex-wrap items-center gap-1 sm:mt-auto small">
         Created with
-        <span class="icon-[tabler--heart-filled] text-lg">love</span>
+        <span class="icon-[tabler--heart-filled] text-lg">passion</span>
         by
         <Button.Root
-          class={button({ kind: 'link', size: 'xs' })}
+          class={button({ kind: 'link' })}
           href="https://soren.codes"
           target="_blank"
           rel="noreferrer">@DontMash</Button.Root
