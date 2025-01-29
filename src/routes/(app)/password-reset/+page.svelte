@@ -25,12 +25,16 @@
   </PageHeader>
 
   <div class="mx-auto max-w-screen-sm space-y-4 rounded-md border bg-layer p-4">
-    <form class="flex flex-col gap-2" method="post" action="?/reset" use:enhance>
+    <form
+      class="flex flex-col gap-2"
+      method="post"
+      action="?/reset"
+      use:enhance
+    >
       <Field {form} name="email" let:constraints>
         <Control let:attrs>
-          <div class={input.group()}>
-            <span class="icon-[tabler--mail]" />
-            <Label class="sr-only">Email</Label>
+          <Label class={input.group()}>
+            <span class="icon-[tabler--mail]">Email</span>
             <input
               class={input.field()}
               type="email"
@@ -39,7 +43,7 @@
               {...constraints}
               bind:value={$formData.email}
             />
-          </div>
+          </Label>
         </Control>
         <FieldErrors class="text-error" />
       </Field>
