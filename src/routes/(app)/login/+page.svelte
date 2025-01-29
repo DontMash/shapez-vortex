@@ -43,9 +43,8 @@
 
       <Field {form} name="username" let:constraints>
         <Control let:attrs>
-          <div class={input.group()}>
-            <span class="icon-[tabler--user]" />
-            <Label class="sr-only">Username</Label>
+          <Label class={input.group()}>
+            <span class="icon-[tabler--user]">Username</span>
             <input
               class={input.field()}
               type="text"
@@ -54,7 +53,7 @@
               {...constraints}
               bind:value={$formData.username}
             />
-          </div>
+          </Label>
         </Control>
         <FieldErrors class="text-error" />
       </Field>
