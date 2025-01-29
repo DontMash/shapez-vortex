@@ -5,17 +5,21 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { page } from '$app/stores';
+  import { add } from '$lib/client/toast.service';
   import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';
 
-  import PageHeader from '$lib/components/PageHeader.svelte';
-  import * as input from '$lib/components/input';
-  import { section } from '$lib/components/section';
   import { button } from '$lib/components/button';
+  import * as input from '$lib/components/input';
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import { section } from '$lib/components/section';
 
   export let data: PageData;
 
   const form = superForm(data.form, {
     validators: zodClient(USER_LOGIN_FORM_SCHEMA),
+    onError({ result }) {
+      add({ message: result.error.message, type: 'ERROR' });
+    },
   });
   const { form: formData, enhance } = form;
   let isPasswordHidden = true;
@@ -61,8 +65,7 @@
       <Field {form} name="password" let:constraints>
         <Control let:attrs>
           <Label class={input.group()}>
-            <span class="icon-[tabler--lock-password]" />
-            <span class="sr-only">Password</span>
+            <span class="icon-[tabler--lock-password]">Password</span>
             <input
               class={input.field()}
               type={isPasswordHidden ? 'password' : 'text'}

@@ -1,6 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect, isRedirect } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms';
+import { ClientResponseError } from 'pocketbase';
+import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';
 
@@ -38,6 +39,9 @@ export const actions = {
     } catch (err) {
       if (isRedirect(err)) {
         throw err;
+      }
+      if (err instanceof ClientResponseError) {
+        return setError(form, 'password', err.message);
       }
     }
   },
