@@ -27,12 +27,16 @@
   </PageHeader>
 
   <div class="mx-auto max-w-screen-sm space-y-4 rounded-md border bg-layer p-4">
-    <form class="flex flex-col gap-2" action="?/register" method="post" use:enhance>
+    <form
+      class="flex flex-col gap-2"
+      action="?/register"
+      method="post"
+      use:enhance
+    >
       <Field {form} name="username" let:constraints>
         <Control let:attrs>
-          <div class={input.group()}>
-            <span class="icon-[tabler--user]" />
-            <Label class="sr-only">Username</Label>
+          <Label class={input.group()}>
+            <span class="icon-[tabler--user]">Username</span>
             <input
               class={input.field()}
               type="text"
@@ -41,16 +45,15 @@
               {...constraints}
               bind:value={$formData.username}
             />
-          </div>
+          </Label>
         </Control>
         <FieldErrors class="text-error" />
       </Field>
 
       <Field {form} name="displayname" let:constraints>
         <Control let:attrs>
-          <div class={input.group()}>
-            <span class="icon-[tabler--message-user]" />
-            <Label class="sr-only">Displayname</Label>
+          <Label class={input.group()}>
+            <span class="icon-[tabler--message-user]">Displayname</span>
             <input
               class={input.field()}
               type="text"
@@ -59,16 +62,15 @@
               {...constraints}
               bind:value={$formData.displayname}
             />
-          </div>
+          </Label>
         </Control>
         <FieldErrors class="text-error" />
       </Field>
 
       <Field {form} name="email" let:constraints>
         <Control let:attrs>
-          <div class={input.group()}>
-            <span class="icon-[tabler--mail]" />
-            <Label class="sr-only">email</Label>
+          <Label class={input.group()}>
+            <span class="icon-[tabler--mail]">Email</span>
             <input
               class={input.field()}
               type="email"
@@ -77,7 +79,7 @@
               {...constraints}
               bind:value={$formData.email}
             />
-          </div>
+          </Label>
         </Control>
         <FieldErrors class="text-error" />
       </Field>
@@ -85,8 +87,7 @@
       <Field {form} name="password" let:constraints>
         <Control let:attrs>
           <Label class={input.group()}>
-            <span class="icon-[tabler--lock-password]" />
-            <span class="sr-only">Password</span>
+            <span class="icon-[tabler--lock-password]">Password</span>
             <input
               class={input.field()}
               type={isPasswordHidden ? 'password' : 'text'}
