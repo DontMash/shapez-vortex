@@ -127,7 +127,7 @@
         </div>
       </div>
 
-      <h1 class="heading-1">
+      <h1 class="heading-2 break-words">
         {data.blueprint.entry.title}
       </h1>
     </header>
