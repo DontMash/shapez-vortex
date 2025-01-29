@@ -3,7 +3,8 @@ import { cva } from 'class-variance-authority';
 export const group = cva([
   'group',
   'flex',
-  'h-12',
+  'min-h-12',
+  'max-h-64',
   'items-center',
   'gap-2',
   'rounded-md',
@@ -14,7 +15,7 @@ export const group = cva([
   'focus-within:outline',
   'focus-within:outline-2',
   'focus-within:outline-offset-2',
-  'hover:cursor-pointer',
+  'hover:cursor-text',
 ]);
 export const field = cva([
   'h-full',
