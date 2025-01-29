@@ -11,7 +11,7 @@
   };
 </script>
 
-<div class="{section({ x: false, y: false })} fixed inset-x-0 bottom-4 z-50">
+<div class="{section({ y: false })} fixed inset-x-0 bottom-4 z-50">
   {#if $toastStore}
     <div
       class="{ALERT_TYPES[
