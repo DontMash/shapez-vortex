@@ -55,7 +55,7 @@
 <svelte:window on:error={(event) => onError(event)} />
 
 <Header />
-<main class="flex min-h-screen flex-col">
+<main class="flex min-h-screen flex-col overflow-x-hidden">
   <slot />
 </main>
 <Toaster />
