@@ -30,6 +30,7 @@
     "pocketbase": "^0.21.0",
     "screenfull": "^6.0.2",
     "sveltekit-superforms": "^2.17.0",
+    "swiper": "^11.2.1",
     "tailwind-merge": "^2.5.2",
     "tailwind-variants": "^0.2.1",
     "three": "0.172.0",

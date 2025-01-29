@@ -23,12 +23,9 @@ export const load = (async ({ depends, locals, params }) => {
     }));
     const data = decode(blueprint.data);
 
-    let isBookmarked = false;
+    let user = undefined;
     if (locals.user) {
-      const user = await locals.pb
-        .collection('users')
-        .getOne<User>(locals.user?.id);
-      isBookmarked = user.bookmarks.includes(blueprint.id);
+      user = await locals.pb.collection('users').getOne<User>(locals.user?.id);
     }
     if (
       locals.user &&
@@ -42,7 +39,7 @@ export const load = (async ({ depends, locals, params }) => {
         .update(blueprint.id, { 'viewCount+': 1 });
     }
 
-    depends('update:blueprint');
+    depends('blueprint:update');
     const title = `Blueprint - ${blueprint.title}`;
     return {
       seo: {
@@ -57,7 +54,7 @@ export const load = (async ({ depends, locals, params }) => {
         entry: blueprint,
         images,
         data,
-        isBookmarked,
+        user,
       },
     };
   } catch {
