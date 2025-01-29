@@ -49,7 +49,7 @@
             </Menubar.Trigger>
 
             <Menubar.Content
-              class="z-20 space-y-1 rounded-lg border bg-layer/70 p-2 outline-none backdrop-blur-lg"
+              class="z-20 space-y-1 rounded-lg border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
               transition={blur}
               transitionConfig={{ duration: 150 }}
               side="bottom"
