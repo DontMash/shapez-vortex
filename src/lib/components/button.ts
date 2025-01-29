@@ -64,6 +64,19 @@ export const button = cva(
       },
       {
         kind: 'fill',
+        intent: 'secondary',
+        class: [
+          'bg-secondary',
+          'text-secondary-foreground',
+          'hover:bg-secondary-hover',
+          'active:bg-secondary-active',
+          'focus-visible:outline-secondary',
+          'focus-visible:hover:outline-secondary-hover',
+          'focus-visible:active:outline-secondary-active',
+        ],
+      },
+      {
+        kind: 'fill',
         intent: 'accent',
         class: [
           'bg-accent',
