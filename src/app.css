@@ -54,6 +54,6 @@
   }
 
   *[class*='icon-'] {
-    @apply shrink-0 text-2xl;
+    @apply shrink-0 align-bottom text-2xl;
   }
 }
