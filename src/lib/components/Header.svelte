@@ -11,7 +11,7 @@
 <header
   class="{section({
     y: false,
-  })} sticky inset-x-0 top-0 z-10 w-full py-4"
+  })} sticky inset-x-0 top-0 z-50 w-full py-4"
 >
   <nav
     class="flex items-center rounded-lg border bg-layer/70 p-4 shadow-lg backdrop-blur-lg"
@@ -59,7 +59,7 @@
               strategy="fixed"
             >
               <Menubar.Item
-                class="flex items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border"
+                class="flex items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
                 href="/user"
                 title="Go to your user profile"
               >
@@ -67,7 +67,7 @@
                 Profile
               </Menubar.Item>
               <Menubar.Item
-                class="flex items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border"
+                class="flex items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
                 href="/settings"
                 title="Go to your user settings"
               >
@@ -77,7 +77,7 @@
               <Menubar.Item asChild let:builder>
                 <form action="/logout" method="post">
                   <button
-                    class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border"
+                    class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
                     title="Logout"
                     use:builder.action
                     {...builder}
