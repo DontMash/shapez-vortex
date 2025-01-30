@@ -1,22 +1,33 @@
 import { cva } from 'class-variance-authority';
 
-export const group = cva([
-  'group',
-  'flex',
-  'min-h-12',
-  'max-h-64',
-  'items-center',
-  'gap-2',
-  'rounded-md',
-  'border',
-  'bg-background',
-  'px-4',
-  'transition',
-  'focus-within:outline',
-  'focus-within:outline-2',
-  'focus-within:outline-offset-2',
-  'hover:cursor-text',
-]);
+export const group = cva(
+  [
+    'group',
+    'flex',
+    'max-h-64',
+    'items-center',
+    'gap-2',
+    'rounded-md',
+    'border',
+    'bg-background',
+    'transition',
+    'focus-within:outline',
+    'focus-within:outline-2',
+    'focus-within:outline-offset-2',
+    'hover:cursor-text',
+  ],
+  {
+    variants: {
+      size: {
+        sm: ['min-h-8', 'px-2'],
+        md: ['min-h-12', 'px-4'],
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+    },
+  },
+);
 export const field = cva([
   'h-full',
   'w-full',
