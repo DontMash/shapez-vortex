@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { DropdownMenu } from 'bits-ui';
+  import screenfull from 'screenfull';
   import type { SvelteComponent } from 'svelte';
+  import { blur } from 'svelte/transition';
   import { page } from '$app/stores';
   import { type Mesh, type Object3D } from 'three';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
@@ -15,6 +18,8 @@
     type ShapeData,
   } from '$lib/shape.types';
 
+  import { button } from '$lib/components/button';
+  import * as input from '$lib/components/input';
   import ShapePart from '$lib/components/shape/ShapePart.svelte';
   import ShapeDefaultSupport from '$lib/components/models/shapes/ShapeDefaultSupport.svelte';
 
@@ -37,7 +42,6 @@
   let viewer: HTMLElement | undefined;
   let orbitControls: OrbitControls | undefined;
   let baseComponentModel: SvelteComponent | undefined;
-  let isFullscreen: boolean = false;
 
   function onCapture() {
     ctx?.renderer.domElement.toBlob(
@@ -90,153 +94,175 @@
   };
 </script>
 
-<figure class="relative bg-base-100" bind:this={viewer}>
-  <div class="mx-auto max-w-[100vh]">
-    <div
-      class="left-0 right-0 top-0 z-10 mx-auto flex h-fit flex-wrap justify-center gap-4 px-4 pt-4 sm:absolute"
-    >
-      <div class="join">
-        <form class="btn btn-square btn-primary join-item" action="/shape">
-          <input name="identifier" type="hidden" value={data.identifier} />
-          <input name="extend" type="hidden" value={!isExtended} />
-          <input name="expand" type="hidden" value={isExpanded} />
-          <button
-            class="h-full w-full"
-            title="{isExtended ? 'Contract' : 'Extend'} layers"
-            type="submit"
-          >
-            {#if isExtended}
-              <span
-                class="icon-[tabler--stack-forward] align-text-bottom text-2xl"
-              />
-            {:else}
-              <span class="icon-[tabler--stack] align-text-bottom text-2xl" />
-            {/if}
-          </button>
-        </form>
-        <form class="btn btn-square btn-primary join-item" action="/shape">
-          <input name="identifier" type="hidden" value={data.identifier} />
-          <input name="extend" type="hidden" value={isExtended} />
-          <input name="expand" type="hidden" value={!isExpanded} />
-          <button
-            class="h-full w-full"
-            title="{isExpanded ? 'Collapse' : 'Expand'} Parts"
-            type="submit"
-          >
-            {#if isExpanded}
-              <span
-                class="icon-[tabler--border-none] align-text-bottom text-2xl"
-              />
-            {:else}
-              <span
-                class="icon-[tabler--border-all] align-text-bottom text-2xl"
-              />
-            {/if}
-          </button>
-        </form>
-        <form
-          class="btn btn-square btn-primary join-item"
-          method="post"
-          action="/shape/?/random"
-        >
-          <button class="h-full w-full" title="Randomize shape" type="submit">
-            <span
-              class="icon-[tabler--arrows-shuffle] align-text-bottom text-2xl"
-              >Shuffle</span
-            >
-          </button>
-        </form>
-      </div>
+<figure
+  class="relative rounded-lg border bg-background pt-4"
+  bind:this={viewer}
+>
+  <div class="flex flex-wrap justify-center gap-4 px-4">
+    <form class="flex items-center grow gap-2 rounded-md border bg-layer p-2">
+      <label
+        class="{input.group()} w-full"
+        for="shape-identifier"
+        aria-label="Shape identifier"
+      >
+        <input
+          class={input.field()}
+          type="text"
+          id="shape-identifier"
+          name="identifier"
+          placeholder="Shape code..."
+          value={$page.data.shape?.identifier ?? null}
+          required
+          minlength="2"
+        />
 
-      <div class="join">
         <button
-          class="btn btn-square btn-secondary join-item"
-          title="Copy shape"
-          use:copy={{ value: data.identifier }}
-          on:copy={() => add({ message: 'Shape identifier copied' })}
-          on:error={(event) =>
-            add({ message: event.detail.message, type: 'ERROR' })}
+          class={button({ kind: 'ghost', intent: 'muted', size: 'icon-sm' })}
+          type="reset"
+          title="Clear shape input"
         >
-          <span class="icon-[tabler--copy] text-2xl" />
+          <span class="icon-[tabler--x] text-lg" />
         </button>
+      </label>
+
+      <button class="{button({ size: 'icon' })} shrink-0">
+        <span class="icon-[tabler--arrow-narrow-right]">View</span>
+      </button>
+    </form>
+
+    <div class="flex gap-2 rounded-md border bg-layer p-2">
+      <form class="contents" action="/shape">
+        <input name="identifier" type="hidden" value={data.identifier} />
+        <input name="extend" type="hidden" value={!isExtended} />
+        <input name="expand" type="hidden" value={isExpanded} />
         <button
-          class="btn btn-square btn-secondary join-item"
-          title="Capture shape"
-          on:click={onCapture}
+          class={button({ intent: 'accent', size: 'icon' })}
+          title="{isExtended ? 'Contract' : 'Extend'} layers"
         >
-          <span class="icon-[tabler--camera] text-2xl" />
-        </button>
-        <button
-          class="btn btn-square btn-secondary join-item"
-          type="button"
-          title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
-          use:fullscreen={{ fullscreenElement: viewer }}
-          on:change={(event) => (isFullscreen = event.detail)}
-          on:error={(event) =>
-            add({ message: event.detail.message, type: 'ERROR' })}
-        >
-          {#if isFullscreen}
-            <span
-              class="icon-[tabler--maximize-off] text-2xl"
-            />
+          {#if isExtended}
+            <span class="icon-[tabler--stack-forward]">Contraact layers</span>
           {:else}
-            <span
-              class="icon-[tabler--maximize] text-2xl"
-            />
+            <span class="icon-[tabler--stack]">Extend layers</span>
           {/if}
         </button>
+      </form>
+      <form class="contents" action="/shape">
+        <input name="identifier" type="hidden" value={data.identifier} />
+        <input name="extend" type="hidden" value={isExtended} />
+        <input name="expand" type="hidden" value={!isExpanded} />
         <button
-          class="btn btn-square btn-secondary join-item"
-          type="button"
-          title="View top down"
-          on:click={onTop}
+          class={button({ intent: 'accent', size: 'icon' })}
+          title="{isExpanded ? 'Collapse' : 'Expand'} parts"
         >
-          <span class="icon-[tabler--circle] text-2xl" />
-        </button>
-        <form class="btn btn-square btn-secondary join-item" action="/shape">
-          <input name="identifier" type="hidden" value={data.identifier} />
-          <button
-            class="h-full w-full"
-            title="Reset controls"
-            type="submit"
-            on:click={onReset}
-          >
-            <span class="icon-[tabler--reload] align-text-bottom text-2xl" />
-          </button>
-        </form>
-      </div>
-
-      <form class="join">
-        <label
-          class="input join-item input-bordered flex items-center space-x-2"
-          for="shape-identifier"
-          aria-label="Shape identifier"
-        >
-          <input
-            class="grow"
-            type="text"
-            id="shape-identifier"
-            name="identifier"
-            placeholder="Shape code..."
-            value={$page.data.shape?.identifier ?? null}
-            required
-            minlength="2"
-          />
-
-          <button
-            class="btn btn-square btn-ghost btn-sm"
-            type="reset"
-            title="Clear shape input"
-          >
-            <span class="icon-[tabler--x] text-lg" />
-          </button>
-        </label>
-        <button class="btn btn-square btn-accent join-item">
-          <span class="icon-[tabler--arrow-narrow-right] text-2xl" />
+          {#if isExpanded}
+            <span class="icon-[tabler--border-none]">Collapse parts</span>
+          {:else}
+            <span class="icon-[tabler--border-all]">Expand parts</span>
+          {/if}
         </button>
       </form>
-    </div>
+      <form class="contents" method="post" action="/shape/?/random">
+        <button
+          class={button({ intent: 'accent', size: 'icon' })}
+          title="Randomize shape"
+        >
+          <span class="icon-[tabler--arrows-shuffle]">Shuffle</span>
+        </button>
+      </form>
 
+      <DropdownMenu.Root preventScroll={false} portal={viewer}>
+        <DropdownMenu.Trigger
+          class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
+        >
+          <span class="icon-[tabler--dots]">More options</span>
+        </DropdownMenu.Trigger>
+
+        <DropdownMenu.Content
+          class="z-20 space-y-1 rounded-md border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
+          transition={blur}
+          transitionConfig={{ duration: 150 }}
+          sideOffset={16}
+          align="end"
+          alignOffset={8}
+        >
+          <DropdownMenu.Item asChild let:builder>
+            <button
+              class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+              title="Copy shape"
+              use:copy={{ value: data.identifier }}
+              on:copy={() => add({ message: 'Shape identifier copied' })}
+              on:error={(event) =>
+                add({ message: event.detail.message, type: 'ERROR' })}
+              {...builder}
+            >
+              <span class="icon-[tabler--copy] text-lg" />
+              Copy shape
+            </button>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item asChild let:builder>
+            <button
+              class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+              title="Capture shape"
+              on:click={onCapture}
+              {...builder}
+            >
+              <span class="icon-[tabler--camera] text-lg" />
+              Take picture
+            </button>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item asChild let:builder>
+            <button
+              class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+              type="button"
+              title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
+              use:fullscreen={{ fullscreenElement: viewer }}
+              on:error={(event) =>
+                add({ message: event.detail.message, type: 'ERROR' })}
+              {...builder}
+            >
+              {#if screenfull.isFullscreen}
+                <span class="icon-[tabler--maximize-off] text-lg" />
+              {:else}
+                <span class="icon-[tabler--maximize] text-lg" />
+              {/if}
+              Fullscreen
+            </button>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item asChild let:builder>
+            <button
+              class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+              type="button"
+              title="View top down"
+              on:click={onTop}
+              {...builder}
+            >
+              <span class="icon-[tabler--circle] text-lg" />
+              View top
+            </button>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item asChild let:builder>
+            <form class="contents" action="/shape">
+              <input name="identifier" type="hidden" value={data.identifier} />
+              <button
+                class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                title="Reset controls"
+                on:click={onReset}
+                {...builder}
+              >
+                <span class="icon-[tabler--reload] text-lg" />
+                Reset
+              </button>
+            </form>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    </div>
+  </div>
+
+  <div
+    class="mx-auto max-w-[60vh] data-[is-fullscreen=true]:max-w-[100vh]"
+    data-is-fullscreen={screenfull.isFullscreen}
+  >
     <div class="aspect-h-1 aspect-w-1">
       <div>
         <Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
