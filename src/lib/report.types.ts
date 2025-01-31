@@ -1,15 +1,13 @@
 import type { RecordModel } from 'pocketbase';
 import { z } from 'zod';
 
-const ID_LENGTH = 15;
-
-export const REPORT_REASONS = [
-  'Illegal',
-  'Discriminatory',
-  'Disrespectful',
-  'Other',
-] as const;
-type ReportReason = (typeof REPORT_REASONS)[number];
+export const REPORT_REASONS = {
+  illegal: 'Illegal',
+  discriminatory: 'Discriminatory',
+  disrespectful: 'Disrespectful',
+  other: 'Other',
+} as const;
+type ReportReason = keyof typeof REPORT_REASONS;
 export type ReportRecord = RecordModel & {
   blueprint: string;
   reason: ReportReason;
@@ -18,9 +16,11 @@ export type ReportRecord = RecordModel & {
   resolved: boolean | undefined;
 };
 export const REPORT_CREATE_SCHEMA = z.object({
-  blueprint: z.string().length(ID_LENGTH),
+  blueprint: z.string().length(15),
+  user: z.string(),
   reason: z
-    .string()
-    .refine((value) => REPORT_REASONS.includes(value as ReportReason)),
+    .enum(Object.keys(REPORT_REASONS) as [ReportReason, ...ReportReason[]])
+    .default('other'),
   message: z.string().max(256),
+  resolved: z.boolean().optional(),
 });

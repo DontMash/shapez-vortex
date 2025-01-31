@@ -1,7 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { z } from 'zod';
-import { USERNAME_REGEX } from '$lib/user.types';
+import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
 
 export const load = (async () => {
   return {
@@ -27,9 +26,7 @@ export const actions = {
 
     const formData = await request.formData();
     const entries = Object.fromEntries(formData);
-    const schema = z.object({
-      newDisplayname: z.string().regex(USERNAME_REGEX),
-    });
+    const schema = USER_REGISTER_FORM_SCHEMA.pick({ displayname: true });
     const result = schema.safeParse(entries);
     if (!result.success) {
       return fail(400, {

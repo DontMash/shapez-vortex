@@ -1,5 +1,7 @@
 <script lang="ts">
   import '../app.css';
+  import '@fontsource-variable/outfit';
+
   import { page } from '$app/stores';
   import { add } from '$lib/client/toast.service';
 
@@ -53,15 +55,7 @@
 <svelte:window on:error={(event) => onError(event)} />
 
 <Header />
-<main
-  class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden pb-16 pt-12"
->
-  {#key $page.data}
-    {#if $page.data.seo?.title}
-      <h1 class="sr-only">{$page.data.seo.title}</h1>
-    {/if}
-  {/key}
-
+<main class="flex min-h-screen flex-col overflow-x-hidden">
   <slot />
 </main>
 <Toaster />
