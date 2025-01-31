@@ -8,7 +8,10 @@
   import { section } from '$lib/components/section';
 </script>
 
-<footer class="border-t bg-layer px-4" id="footer">
+<footer
+  class="relative bg-layer px-4 before:absolute before:inset-x-0 before:-top-8 before:h-8 before:bg-layer after:absolute after:inset-x-0 after:-top-8 after:h-8 after:rounded-b-lg after:border-b after:border-border after:bg-background"
+  id="footer"
+>
   <div
     class="{section({
       x: true,
@@ -275,7 +278,7 @@
         </li>
       </ul>
 
-      <p class="mt-8 flex flex-wrap items-center gap-1 sm:mt-auto small">
+      <p class="small mt-8 flex flex-wrap items-center gap-1 sm:mt-auto">
         Created with
         <span class="icon-[tabler--heart-filled] text-lg">passion</span>
         by
@@ -288,7 +291,7 @@
       </p>
     </nav>
 
-    <aside class="col-span-full flex justify-center mt-4">
+    <aside class="col-span-full mt-4 flex justify-center">
       <Button.Root
         class={button({ kind: 'outline', intent: 'muted', size: 'icon-lg' })}
         href="#top"
