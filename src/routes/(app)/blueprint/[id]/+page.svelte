@@ -132,6 +132,58 @@
       </h1>
     </header>
 
+    <section>
+      <h2 class="sr-only">Images</h2>
+
+      <div class="relative overflow-hidden" bind:this={slider.root}>
+        <div class="swiper-wrapper flex">
+          {#each data.blueprint.images as image, index}
+            <div class="swiper-slide relative shrink-0">
+              <div class="aspect-h-2 aspect-w-3">
+                <img class="object-fit" src={image.src} alt="Image #{index}" />
+              </div>
+
+              <Button.Root
+                class="{button({
+                  intent: 'accent',
+                  size: 'icon-sm',
+                })} absolute right-4 top-4"
+                title="Zoom image"
+                href={image.src}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span class="icon-[tabler--window-maximize]">
+                  Open in new Tab
+                </span>
+              </Button.Root>
+            </div>
+          {/each}
+        </div>
+
+        {#if data.blueprint.images.length > 1}
+          <button
+            class="{button({
+              intent: 'accent',
+              size: 'icon-sm',
+            })} absolute left-4 top-1/2 -translate-y-1/2 shadow-lg"
+            bind:this={slider.prevButton}
+          >
+            <span class="icon-[tabler--chevron-left]"> Prev </span>
+          </button>
+          <button
+            class="{button({
+              intent: 'accent',
+              size: 'icon-sm',
+            })} absolute right-4 top-1/2 -translate-y-1/2 shadow-lg"
+            bind:this={slider.nextButton}
+          >
+            <span class="icon-[tabler--chevron-right]"> Next </span>
+          </button>
+        {/if}
+      </div>
+    </section>
+
     <section class="flex flex-col gap-4 p-4">
       <h2 class="sr-only">Description</h2>
 
@@ -205,58 +257,6 @@
             {/each}
           </ul>
         {/each}
-      </div>
-    </section>
-
-    <section>
-      <h2 class="sr-only">Images</h2>
-
-      <div class="relative overflow-hidden" bind:this={slider.root}>
-        <div class="swiper-wrapper flex">
-          {#each data.blueprint.images as image, index}
-            <div class="swiper-slide relative shrink-0">
-              <div class="aspect-h-2 aspect-w-3">
-                <img class="object-fit" src={image.src} alt="Image #{index}" />
-              </div>
-
-              <Button.Root
-                class="{button({
-                  intent: 'accent',
-                  size: 'icon-sm',
-                })} absolute right-4 top-4"
-                title="Zoom image"
-                href={image.src}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span class="icon-[tabler--window-maximize]">
-                  Open in new Tab
-                </span>
-              </Button.Root>
-            </div>
-          {/each}
-        </div>
-
-        {#if data.blueprint.images.length > 1}
-          <button
-            class="{button({
-              intent: 'accent',
-              size: 'icon-sm',
-            })} absolute left-4 top-1/2 -translate-y-1/2 shadow-lg"
-            bind:this={slider.prevButton}
-          >
-            <span class="icon-[tabler--chevron-left]"> Prev </span>
-          </button>
-          <button
-            class="{button({
-              intent: 'accent',
-              size: 'icon-sm',
-            })} absolute right-4 top-1/2 -translate-y-1/2 shadow-lg"
-            bind:this={slider.nextButton}
-          >
-            <span class="icon-[tabler--chevron-right]"> Next </span>
-          </button>
-        {/if}
       </div>
     </section>
   </article>
