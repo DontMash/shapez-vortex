@@ -13,6 +13,9 @@
 
   let isSearchDialogOpen = false;
   let searchValue = '';
+  $: {
+    searchValue = isSearchDialogOpen ? '' : '';
+  }
 
   function searchBlueprints(search: string) {
     const url = new URL('/blueprint/search', $page.url.origin);
@@ -45,12 +48,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<Dialog.Root
-  bind:open={isSearchDialogOpen}
-  onOpenChange={() => {
-    searchValue = '';
-  }}
->
+<Dialog.Root bind:open={isSearchDialogOpen}>
   <Dialog.Trigger
     class={button({ kind: 'outline', intent: 'muted' })}
     title="Search the Shapez Vortex"
@@ -151,7 +149,12 @@
                         {blueprint.title}
                       </span>
                       {#if blueprint.expand && blueprint.expand['creator']}
-                        <span class="{button({ intent: 'accent', size: 'xs' })} ml-auto">
+                        <span
+                          class="{button({
+                            intent: 'accent',
+                            size: 'xs',
+                          })} ml-auto"
+                        >
                           @{blueprint.expand['creator'].displayname}
                         </span>
                       {/if}
