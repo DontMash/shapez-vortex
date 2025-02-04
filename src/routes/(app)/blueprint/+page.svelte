@@ -1,19 +1,19 @@
 <script lang="ts">
   import type { PageData } from './$types';
+  import { Button, Tooltip } from 'bits-ui';
+  import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { blur } from 'svelte/transition';
-  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
   import { superForm } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
-  import { BLUEPRINT_VIEW_SCHEMA } from '$lib/blueprint.schema';
   import { isBlueprintIdentifier } from '$lib/blueprint';
+  import { BLUEPRINT_VIEW_SCHEMA } from '$lib/blueprint.schema';
+  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
   import { add } from '$lib/client/toast.service';
 
-  import PageHeader from '$lib/components/PageHeader.svelte';
-  import { section } from '$lib/components/section';
-  import { Control, Field, FieldErrors, Label } from 'formsnap';
-  import { Button, Tooltip } from 'bits-ui';
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import { section } from '$lib/components/section';
 
   export let data: PageData;
 
