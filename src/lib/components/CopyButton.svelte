@@ -2,13 +2,19 @@
   import { copy } from '$lib/client/actions/clipboard';
   import { add } from '$lib/client/toast.service';
 
+  import { button } from '$lib/components/button';
+
   export let value: string;
 
   let isLoading = false;
 </script>
 
 <button
-  class="btn btn-square btn-accent fill-accent-content data-[loading=true]:animate-spin"
+  class="{button({
+    kind: 'ghost',
+    intent: 'muted',
+    size: 'icon-sm',
+  })} data-[loading=true]:animate-spin"
   data-loading={isLoading}
   type="button"
   title="Copy"
