@@ -1,94 +1,94 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import type { PageData } from './$types';
-  import { GAME_VERSION } from '$lib/blueprint.types';
+  import { Button } from 'bits-ui';
+  import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { superForm } from 'sveltekit-superforms';
 
+  import { button } from '$lib/components/button';
   import CopyButton from '$lib/components/CopyButton.svelte';
+  import * as input from '$lib/components/input';
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import { section } from '$lib/components/section';
 
   export let data: PageData;
+
+  const form = superForm(data.form, {
+    resetForm: true,
+  });
+  const { form: formData, enhance, message } = form;
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-  >
-    <hgroup>
-      <h2 class="text-lg font-bold">
-        <span class="icon-[tabler--braces] align-text-bottom text-2xl" />
-        {data.seo.title}
-      </h2>
-      <p>
-        This tool modifies any blueprint to work in the current version of the
-        game.
-      </p>
-      <i class="text-xs">
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--refresh] heading-2" />
+    {data.seo.title}
+
+    <svelte:fragment slot="description">
+      This tool modifies any blueprint to work in the current version of the
+      game. <br />
+      <i class="small">
         No guarantee for older blueprints to work in newer versions of the game!
       </i>
-    </hgroup>
-  </header>
+    </svelte:fragment>
+  </PageHeader>
 
-  <form
-    class="join join-vertical w-full px-4 lg:px-0"
-    method="post"
-    action="?/update"
-  >
-    <label class="form-control join-item" for="blueprint-version">
-      <div class="label">
-        <span class="label-text"> Blueprint version </span>
-        {#if $page.form && $page.form.invalid && $page.form.identifier}
-          <span class="label-text-alt font-medium italic text-error">
-            Blueprint identifier is invalid
-          </span>
-        {/if}
-      </div>
-      <div
-        class="input input-lg input-bordered flex items-center space-x-2 rounded-b-none"
-      >
-        <span class="icon-[tabler--square-rounded-letter-v] text-2xl" />
-        <input
-          class=""
-          name="blueprint-version"
-          id="blueprint-version"
-          type="text"
-          inputmode="numeric"
-          value={GAME_VERSION}
-          pattern="^\d\d\d\d$"
-          required
-        />
-      </div>
-    </label>
+  <form class="flex flex-col gap-2" method="post" action="?/update" use:enhance>
+    <Field {form} name="version" let:constraints>
+      <Control let:attrs>
+        <Label class={input.group()}>
+          <span class="icon-[tabler--square-rounded-letter-v]"
+            >Game version</span
+          >
+          <input
+            class={input.field()}
+            type="text"
+            inputmode="numeric"
+            placeholder="Game version"
+            {...attrs}
+            {...constraints}
+            bind:value={$formData.version}
+          />
+        </Label>
+      </Control>
+      <FieldErrors class="text-error" />
+    </Field>
 
-    <label
-      class="form-control join-item h-80"
-      for="blueprint-identifier-update"
-    >
-      <textarea
-        class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-none"
-        name="blueprint-identifier"
-        id="blueprint-identifier-update"
-        placeholder="Blueprint identifier..."
-        value={$page.form && $page.form.invalid && $page.form.identifier
-          ? $page.form.identifier
-          : ''}
-        required
-      />
-      <span class="sr-only">Blueprint identifier</span>
-    </label>
-    <button
-      class="btn btn-primary join-item"
-      title="Update blueprint"
-      type="submit">Update</button
-    >
+    <Field {form} name="identifier" let:constraints>
+      <Control let:attrs>
+        <Label
+          class="{input.group()} relative inline-grid overflow-y-auto whitespace-pre-wrap break-all after:invisible after:col-start-1 after:row-start-1 after:py-2 after:content-[attr(data-value)]"
+        >
+          <span class="sr-only">Blueprint identifier</span>
+          <textarea
+            class="{input.field()} col-start-1 row-start-1 min-w-64 resize-none overflow-hidden py-2"
+            placeholder="Blueprint identifier"
+            rows={5}
+            {...attrs}
+            {...constraints}
+            oninput="this.parentNode.dataset.value = this.value"
+            onfocus="this.parentNode.dataset.value = this.value"
+            bind:value={$formData.identifier}
+          ></textarea>
+        </Label>
+      </Control>
+      <FieldErrors class="text-error" />
+    </Field>
+
+    <Button.Root class={button()}>
+      <span class="icon-[tabler--arrow-big-up-line]" />
+      Update
+    </Button.Root>
   </form>
-
-  {#if $page.form && $page.form.success && $page.form.identifier}
-    <p
-      class="textarea textarea-bordered textarea-lg mt-16 h-80 overflow-y-auto break-words px-4"
-    >
-      <span class="float-right">
-        <CopyButton value={$page.form.identifier} />
-      </span>
-      {$page.form.identifier}
-    </p>
-  {/if}
 </section>
+
+{#if $message}
+  <section class={section()}>
+    <h2 class="heading-3 mb-2">Updated blueprint:</h2>
+    <p class="h-80 overflow-y-auto break-words rounded-md border p-4 px-4">
+      <span class="float-right">
+        <CopyButton value={$message} />
+      </span>
+      {$message}
+    </p>
+  </section>
+{/if}

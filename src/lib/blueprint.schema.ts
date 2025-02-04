@@ -3,6 +3,7 @@ import { decode } from '$lib/blueprint';
 import {
   BLUEPRINT_IDENTIFIER_REGEX,
   BLUEPRINT_TYPES,
+  GAME_VERSION,
   type BlueprintIdentifier,
 } from '$lib/blueprint.types';
 
@@ -141,4 +142,13 @@ export const BLUEPRINT_DECODE_SCHEMA = z.object({
 });
 export const BLUEPRINT_ENCODE_SCHEMA = z.object({
   data: z.string(),
+});
+
+export const BLUEPRINT_CONVERT_SCHEMA = z.object({
+  version: z
+    .number()
+    .min(1000)
+    .max(GAME_VERSION)
+    .default(GAME_VERSION),
+  identifier: z.string().max(12500).pipe(BLUEPRINT_DATA_SCHEMA),
 });
