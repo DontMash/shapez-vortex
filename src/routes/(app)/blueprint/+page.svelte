@@ -116,6 +116,7 @@
         <Tooltip.Content
           class="rounded-sm border bg-layer/70 p-2 shadow-lg backdrop-blur-lg"
           transition={blur}
+          transitionConfig={{ duration: 150 }}
           sideOffset={8}
         >
           <p>The content of the file will be pasted into the field below.</p>
@@ -152,6 +153,7 @@
             <Tooltip.Content
               class="rounded-sm border bg-layer/70 p-2 shadow-lg backdrop-blur-lg"
               transition={blur}
+              transitionConfig={{ duration: 150 }}
               sideOffset={8}
             >
               <p>
