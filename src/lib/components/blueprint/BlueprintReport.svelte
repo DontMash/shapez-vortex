@@ -155,7 +155,7 @@
                   ></textarea>
                 </Label>
               </Control>
-              <FieldErrors class="text-errors" />
+              <FieldErrors class="text-error" />
             </Field>
 
             <div class="flex items-center gap-2">
