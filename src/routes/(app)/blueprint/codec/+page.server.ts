@@ -1,9 +1,18 @@
-import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { Blueprint, BlueprintIdentifier } from '$lib/blueprint.types';
+import { fail } from '@sveltejs/kit';
+import { message, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
 import { decode, encode } from '$lib/blueprint';
+import {
+  BLUEPRINT_DECODE_SCHEMA,
+  BLUEPRINT_ENCODE_SCHEMA,
+} from '$lib/blueprint.schema';
+import type { Blueprint, BlueprintIdentifier } from '$lib/blueprint.types';
 
-export const load = (() => {
+export const load = (async () => {
+  const decodeForm = await superValidate(zod(BLUEPRINT_DECODE_SCHEMA));
+  const encodeForm = await superValidate(zod(BLUEPRINT_ENCODE_SCHEMA));
+
   return {
     seo: {
       title: 'Blueprint Codec',
@@ -11,37 +20,45 @@ export const load = (() => {
         'Decode or encode existing blueprints. Make changes within the blueprint to customize it according to your specific requirements.',
       keywords: ['Blueprint', 'Modify', 'Decode', 'Encode'],
     },
+    decodeForm,
+    encodeForm,
   };
 }) satisfies PageServerLoad;
 
 export const actions = {
   decode: async ({ request }) => {
-    const data = await request.formData();
-    const blueprintIdentifier = data.get('blueprint-identifier') as string;
-    if (!blueprintIdentifier)
-      return fail(400, { blueprintIdentifier, missing: true });
+    const decodeForm = await superValidate(
+      request,
+      zod(BLUEPRINT_DECODE_SCHEMA),
+    );
 
+    if (!decodeForm.valid) return fail(400, { decodeForm });
+
+    const blueprintIdentifier = decodeForm.data.identifier;
     try {
       const blueprint = decode(
         blueprintIdentifier.trim() as BlueprintIdentifier,
       );
-      return { blueprint, success: true };
+      return message(decodeForm, blueprint);
     } catch {
-      return fail(400, { blueprintIdentifier, invalid: true });
+      return fail(400, { decodeForm });
     }
   },
 
   encode: async ({ request }) => {
-    const data = await request.formData();
-    const blueprintData = data.get('blueprint-data');
-    if (!blueprintData) return fail(400, { blueprintData, missing: true });
+    const encodeForm = await superValidate(
+      request,
+      zod(BLUEPRINT_ENCODE_SCHEMA),
+    );
 
+    if (!encodeForm.valid) return fail(400, { decodeForm: encodeForm });
+
+    const blueprint = JSON.parse(encodeForm.data.data) as Blueprint;
     try {
-      const blueprint = JSON.parse(blueprintData as string) as Blueprint;
       const blueprintIdentifier = encode(blueprint);
-      return { blueprintIdentifier, success: true };
+      return message(encodeForm, blueprintIdentifier);
     } catch {
-      return fail(400, { blueprintData, invalid: true });
+      return fail(400, { encodeForm });
     }
   },
 } satisfies Actions;

@@ -140,5 +140,5 @@ export const BLUEPRINT_DECODE_SCHEMA = z.object({
   identifier: z.string().max(12500).pipe(BLUEPRINT_DATA_SCHEMA),
 });
 export const BLUEPRINT_ENCODE_SCHEMA = z.object({
-  data: BLUEPRINT_SCHEMA,
+  data: z.string(),
 });

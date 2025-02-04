@@ -1,113 +1,122 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import type { PageData } from './$types';
+  import { Button } from 'bits-ui';
+  import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { superForm } from 'sveltekit-superforms';
+  import { page } from '$app/stores';
+
+  import { button } from '$lib/components/button';
+  import * as input from '$lib/components/input';
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import { section } from '$lib/components/section';
 
   export let data: PageData;
+
+  const decodeForm = superForm(data.decodeForm, {
+    resetForm: true,
+  });
+  const {
+    form: decodeFormData,
+    enhance: decodeEnhance,
+    message: decodeMessage,
+  } = decodeForm;
+
+  const encodeForm = superForm(data.encodeForm, {
+    resetForm: true,
+  });
+  const {
+    form: encodeFormData,
+    enhance: encodeEnhance,
+    message: encodeMessage,
+  } = encodeForm;
+
+  $: {
+    $encodeFormData.data = JSON.stringify($decodeMessage, null, 4);
+    $decodeFormData.identifier = $encodeMessage
+  }
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--braces] heading-2" />
+    {data.seo.title}
+
+    <svelte:fragment slot="description">
+      This tool decodes any blueprint to a human-readable
+      <Button.Root
+        class={button({ kind: 'link' })}
+        href="https://developer.mozilla.org/en-US/docs/Glossary/JSON"
+        target="_blank"
+        rel="noreferrer">JSON-Object</Button.Root
+      >. <br />
+      It is also able to encode said object to a blueprint identifier which can be
+      used in the game.
+    </svelte:fragment>
+  </PageHeader>
+
+  <form
+    class="flex flex-col gap-2"
+    method="post"
+    action="?/decode"
+    use:decodeEnhance
   >
-    <hgroup>
-      <h2 class="text-lg font-bold">
-        <span class="icon-[tabler--braces] align-text-bottom text-2xl" />
-        {data.seo.title}
-      </h2>
-      <p>
-        This tool decodes any blueprint to a human-readable
-        <a
-          class="underline"
-          href="https://developer.mozilla.org/en-US/docs/Glossary/JSON"
-          target="_blank">JSON-Object</a
-        >.
-      </p>
-      <p>
-        It is also able to encode said object to a blueprint identifier which
-        can be used in the game.
-      </p>
-    </hgroup>
-  </header>
+    <Field form={decodeForm} name="identifier" let:constraints>
+      <Control let:attrs>
+        <Label
+          class="{input.group()} relative inline-grid overflow-y-auto whitespace-pre-wrap break-all after:invisible after:col-start-1 after:row-start-1 after:py-2 after:content-[attr(data-value)]"
+        >
+          <span class="sr-only">Blueprint identifier</span>
+          <textarea
+            class="{input.field()} col-start-1 row-start-1 min-w-64 resize-none overflow-hidden py-2"
+            placeholder="Blueprint identifier"
+            rows={5}
+            {...attrs}
+            {...constraints}
+            oninput="this.parentNode.dataset.value = this.value"
+            onfocus="this.parentNode.dataset.value = this.value"
+            bind:value={$decodeFormData.identifier}
+          ></textarea>
+        </Label>
+      </Control>
+      <FieldErrors class="text-error" />
+    </Field>
 
-  <div class="join join-vertical w-full px-4 lg:px-0">
-    <form class="join-item" method="post" action="?/decode">
-      <label class="form-control h-80" for="blueprint-identifier-decode">
-        <div class="label">
-          {#if $page.form && $page.form.invalid && $page.form.blueprintIdentifier}
-            <span class="label-text-text font-medium italic text-error">
-              Blueprint identifier is invalid
-            </span>
-          {/if}
-          <span class="label-text-alt sr-only">Blueprint identifier</span>
-        </div>
-        {#if $page.form && $page.form.blueprintIdentifier}
-          <textarea
-            class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-b-none"
-            name="blueprint-identifier"
-            id="blueprint-identifier-decode"
-            placeholder="Blueprint identifier..."
-            value={$page.form.blueprintIdentifier}
-            required
-          />
-        {:else}
-          <textarea
-            class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-b-none"
-            name="blueprint-identifier"
-            id="blueprint-identifier-decode"
-            placeholder="Blueprint identifier..."
-            required
-          />
-        {/if}
-      </label>
-      <button
-        class="btn btn-primary btn-block rounded-none"
-        title="Decode blueprint identifier"
-        type="submit"
-      >
-        <span class="icon-[tabler--code-dots] text-2xl" />
-        Decode
-      </button>
-    </form>
+    <Button.Root class={button()}>
+      <span class="icon-[tabler--code-dots]" />
+      Decode
+    </Button.Root>
+  </form>
 
-    <form class="join-item" method="post" action="?/encode">
-      <button
-        class="btn btn-accent btn-block rounded-none text-primary"
-        title="Encode blueprint data"
-        type="submit"
-      >
-        <span class="icon-[tabler--code-minus] text-2xl" />
-        Encode
-      </button>
-      <label class="form-control h-80" for="blueprint-data-encode">
-        {#if $page.form && ($page.form.blueprint || $page.form.blueprintData)}
+  <form
+    class="mt-4 flex flex-col gap-2"
+    method="post"
+    action="?/encode"
+    use:encodeEnhance
+  >
+    <Button.Root class={button({ intent: 'accent' })}>
+      <span class="icon-[tabler--code-minus]" />
+      Encode</Button.Root
+    >
+
+    <Field form={encodeForm} name="data" let:constraints>
+      <Control let:attrs>
+        <Label
+          class="{input.group()} relative inline-grid overflow-y-auto whitespace-pre-wrap break-all after:invisible after:col-start-1 after:row-start-1 after:py-2 after:content-[attr(data-value)]"
+        >
+          <span class="sr-only">Blueprint data</span>
           <textarea
-            class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-t-none"
-            name="blueprint-data"
-            id="blueprint-data-encode"
-            placeholder="Blueprint data..."
-            value={$page.form.invalid
-              ? $page.form.blueprintData
-              : JSON.stringify($page.form.blueprint, null, 4)}
-            required
-          />
-        {:else}
-          <textarea
-            class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-t-none"
-            name="blueprint-data"
-            id="blueprint-data-encode"
-            placeholder="Blueprint data..."
-            required
-          />
-        {/if}
-        <div class="label">
-          {#if $page.form && $page.form.invalid && $page.form.blueprintData}
-            <span class="label-text-text font-medium italic text-error">
-              Blueprint data is invalid
-            </span>
-          {/if}
-          <span class="label-text-alt sr-only">Blueprint data</span>
-        </div>
-      </label>
-    </form>
-  </div>
+            class="{input.field()} col-start-1 row-start-1 min-w-64 resize-none overflow-hidden py-2"
+            placeholder="Blueprint data"
+            rows={5}
+            {...attrs}
+            {...constraints}
+            oninput="this.parentNode.dataset.value = this.value"
+            onfocus="this.parentNode.dataset.value = this.value"
+            bind:value={$encodeFormData.data}
+          ></textarea>
+        </Label>
+      </Control>
+      <FieldErrors class="text-error" />
+    </Field>
+  </form>
 </section>
