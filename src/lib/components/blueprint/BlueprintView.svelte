@@ -95,7 +95,7 @@
   class="{isFullscreen ? '' : 'aspect-h-3 aspect-w-4'} relative"
   bind:this={viewer}
 >
-  {#if controls}
+  {#if Object.values(controls).filter((value) => value === true).length}
     <div
       class="absolute left-1/2 top-4 z-10 flex h-fit w-fit max-w-5xl -translate-x-1/2 justify-center gap-2 rounded-md border bg-layer/70 p-2 backdrop-blur-lg"
     >
@@ -188,7 +188,7 @@
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content
-            class="z-20 space-y-1 w-fit h-fit rounded-md border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
+            class="z-20 h-fit w-fit space-y-1 rounded-md border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
             transition={blur}
             transitionConfig={{ duration: 150 }}
             sideOffset={16}
