@@ -98,8 +98,8 @@
   class="relative rounded-lg border bg-background pt-4"
   bind:this={viewer}
 >
-  <div class="flex flex-wrap justify-center gap-4 px-4">
-    <form class="flex items-center grow gap-2 rounded-md border bg-layer p-2">
+  <div class="mx-auto flex max-w-5xl flex-wrap justify-center gap-4 px-4">
+    <form class="flex grow items-center gap-2 rounded-md border bg-layer p-2">
       <label
         class="{input.group()} w-full"
         for="shape-identifier"
@@ -333,5 +333,6 @@
       </div>
     </div>
   </div>
+
   <figcaption class="sr-only">Shape Viewer: {data.identifier}</figcaption>
 </figure>
