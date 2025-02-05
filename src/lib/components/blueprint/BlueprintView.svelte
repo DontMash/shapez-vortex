@@ -1,6 +1,9 @@
 <script lang="ts">
   import { Canvas, T, type ThrelteContext } from '@threlte/core';
   import { OrbitControls } from '@threlte/extras';
+  import { DropdownMenu } from 'bits-ui';
+  import screenfull from 'screenfull';
+  import { blur } from 'svelte/transition';
   import { MOUSE } from 'three';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
   import {
@@ -18,6 +21,8 @@
   import { add } from '$lib/client/toast.service';
 
   import BlueprintBuilding from './BlueprintBuilding.svelte';
+
+  import { button } from '$lib/components/button';
 
   type ControlOptions = {
     download?: boolean;
@@ -92,160 +97,157 @@
 >
   {#if controls}
     <div
-      class="absolute left-1/2 top-0 z-10 flex h-fit w-fit -translate-x-1/2 justify-center space-x-4 p-4"
+      class="absolute left-1/2 top-4 z-10 flex h-fit w-fit max-w-5xl -translate-x-1/2 justify-center gap-2 rounded-md border bg-layer/70 p-2 backdrop-blur-lg"
     >
       {#if controls.upload || controls.download}
-        <div class="join">
-          {#if controls.upload}
-            <form
-              class="btn btn-square btn-primary join-item"
-              method="post"
-              action="/blueprint/?/upload"
-              enctype="multipart/form-data"
-            >
-              <label
-                class="flex h-full w-full items-center justify-center"
-                for="blueprint-file"
-              >
-                <input
-                  class="sr-only"
-                  id="blueprint-file"
-                  name="file"
-                  type="file"
-                  accept={BLUEPRINT_FILE_FORMAT}
-                  required
-                  on:change={(event) => onFileChange(event)}
-                />
-                <span
-                  class="icon-[tabler--file-upload] align-text-bottom text-2xl"
-                  >Load blueprint</span
-                >
-              </label>
-            </form>
-          {/if}
-          {#if controls.download}
-            <form
-              class="btn btn-square btn-primary join-item"
-              action="/api/v1/blueprint/download"
+        {#if controls.upload}
+          <form
+            class="contents"
+            method="post"
+            action="/blueprint/?/upload"
+            enctype="multipart/form-data"
+          >
+            <label
+              class="{button({
+                intent: 'accent',
+                size: 'icon',
+              })} cursor-pointer focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent focus-within:hover:outline-accent-hover focus-within:active:outline-accent-active"
+              for="blueprint-file"
             >
               <input
-                name="identifier"
-                type="hidden"
-                value={identifier}
+                class="sr-only"
+                id="blueprint-file"
+                name="file"
+                type="file"
+                accept={BLUEPRINT_FILE_FORMAT}
                 required
+                on:change={(event) => onFileChange(event)}
               />
-              <button
-                class="h-full w-full"
-                title="Download blueprint"
-                type="submit"
-              >
-                <span
-                  class="icon-[tabler--file-download] align-text-bottom text-2xl"
-                  >Download</span
-                >
-              </button>
-            </form>
-          {/if}
-          {#if controls.upload}
-            <form class="btn btn-square btn-primary join-item">
-              <input name="identifier" type="hidden" required />
-              <button
-                class="h-full w-full"
-                title="Paste blueprint"
-                type="button"
-                use:paste
-                on:paste={(event) => onPaste(event)}
-                on:error={(event) =>
-                  add({
-                    message: event.detail.message,
-                    type: 'ERROR',
-                  })}
-              >
-                <span
-                  class="icon-[tabler--clipboard-text] align-text-bottom text-2xl"
-                  >Paste</span
-                >
-              </button>
-            </form>
-          {/if}
-          {#if controls.download}
+              <span class="icon-[tabler--file-upload]">Load blueprint</span>
+            </label>
+          </form>
+        {/if}
+        {#if controls.download}
+          <form class="contents" action="/api/v1/blueprint/download">
+            <input
+              name="identifier"
+              type="hidden"
+              value={identifier}
+              required
+            />
             <button
-              class="btn btn-square btn-primary join-item"
-              title="Copy blueprint"
-              use:copy={{ value: identifier }}
-              on:copy={() => add({ message: 'Content copied' })}
+              class={button({ intent: 'accent', size: 'icon' })}
+              title="Download blueprint"
+            >
+              <span class="icon-[tabler--file-download]">Download</span>
+            </button>
+          </form>
+        {/if}
+        {#if controls.upload}
+          <form class="contents">
+            <input name="identifier" type="hidden" required />
+            <button
+              class={button({ intent: 'accent', size: 'icon' })}
+              title="Paste blueprint"
+              type="button"
+              use:paste
+              on:paste={(event) => onPaste(event)}
               on:error={(event) =>
                 add({
                   message: event.detail.message,
                   type: 'ERROR',
                 })}
             >
-              <span class="icon-[tabler--copy] align-text-bottom text-2xl"
-                >Copy</span
-              >
+              <span class="icon-[tabler--clipboard-text]">Paste</span>
             </button>
-          {/if}
-        </div>
-      {/if}
-
-      {#if controls.utils}
-        <div class="join">
+          </form>
+        {/if}
+        {#if controls.download}
           <button
-            class="btn btn-square btn-secondary join-item"
-            title="Capture blueprint"
-            use:capture={{
-              captureElement:
-                ctx?.renderer.domElement ?? document.createElement('canvas'),
-              filename: title,
-            }}
-          >
-            <span class="icon-[tabler--camera] align-text-bottom text-2xl"
-              >Camera</span
-            >
-          </button>
-          <button
-            class="btn btn-square btn-secondary join-item"
-            title={`Turn fullscreen ${isFullscreen ? 'off' : 'on'}`}
-            use:fullscreen={{ fullscreenElement: viewer }}
-            on:change={(event) => (isFullscreen = event.detail)}
+            class={button({ intent: 'accent', size: 'icon' })}
+            title="Copy blueprint"
+            use:copy={{ value: identifier }}
+            on:copy={() => add({ message: 'Content copied' })}
             on:error={(event) =>
               add({
                 message: event.detail.message,
                 type: 'ERROR',
               })}
           >
-            {#if !isFullscreen}
-              <span
-                class="icon-[tabler--maximize] align-text-bottom text-2xl"
-              >
-                Turn fullscreen on
-              </span>
-            {:else}
-              <span
-                class="icon-[tabler--maximize-off] align-text-bottom text-2xl"
-              >
-                Turn fullscreen off
-              </span>
-            {/if}
+            <span class="icon-[tabler--copy]">Copy</span>
           </button>
-          <button
-            class="btn btn-square btn-secondary join-item"
-            title="Reset controls"
-            on:click={() => reset()}
+        {/if}
+      {/if}
+
+      {#if controls.utils}
+        <DropdownMenu.Root preventScroll={false} portal={viewer}>
+          <DropdownMenu.Trigger
+            class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
           >
-            <span class="icon-[tabler--reload] align-text-bottom text-2xl"
-              >Reset</span
-            >
-          </button>
-        </div>
+            <span class="icon-[tabler--dots]">More options</span>
+          </DropdownMenu.Trigger>
+
+          <DropdownMenu.Content
+            class="z-20 space-y-1 w-fit h-fit rounded-md border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
+            transition={blur}
+            transitionConfig={{ duration: 150 }}
+            sideOffset={16}
+            align="end"
+            alignOffset={8}
+          >
+            <DropdownMenu.Item asChild let:builder>
+              <button
+                class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                title="Capture blueprint"
+                use:capture={{
+                  captureElement:
+                    ctx?.renderer.domElement ??
+                    document.createElement('canvas'),
+                  filename: title,
+                }}
+                {...builder}
+              >
+                <span class="icon-[tabler--camera] text-lg" />
+                Take picture
+              </button>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item asChild let:builder>
+              <button
+                class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                type="button"
+                title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
+                use:fullscreen={{ fullscreenElement: viewer }}
+                on:error={(event) =>
+                  add({ message: event.detail.message, type: 'ERROR' })}
+                {...builder}
+              >
+                {#if screenfull.isFullscreen}
+                  <span class="icon-[tabler--maximize-off] text-lg" />
+                {:else}
+                  <span class="icon-[tabler--maximize] text-lg" />
+                {/if}
+                Fullscreen
+              </button>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item asChild let:builder>
+              <button
+                class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                title="Reset controls"
+                on:click={() => reset()}
+                {...builder}
+              >
+                <span class="icon-[tabler--reload] text-lg" />
+                Reset
+              </button>
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       {/if}
     </div>
   {/if}
 
   <div
-    class="h-full overflow-hidden border-base-content/20 bg-base-100 shadow-lg outline-none transition-[border-radius] {!isFullscreen
-      ? 'border lg:rounded-md'
-      : ''}"
+    class="h-full overflow-hidden rounded-lg border bg-background shadow-lg outline-none transition"
   >
     <Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
       <T.PerspectiveCamera makeDefault position={[0, 15, 15]} fov={55}>

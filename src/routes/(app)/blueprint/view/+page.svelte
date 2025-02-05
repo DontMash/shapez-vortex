@@ -2,11 +2,12 @@
   import type { PageData } from './$types';
 
   import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
+  import { section } from '$lib/components/section';
 
   export let data: PageData;
 </script>
 
-<section class="relative mx-auto w-full max-w-5xl">
+<section class={section()}>
   <BlueprintView
     identifier={data.blueprint.identifier}
     blueprint={data.blueprint.data}
