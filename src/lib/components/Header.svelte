@@ -87,6 +87,19 @@
                   >
                 </form>
               </Menubar.Item>
+
+              <Menubar.Separator
+                class="my-1 sm:hidden h-px bg-muted"
+              />
+
+              <Menubar.Item
+                class="sm:hidden items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border flex"
+                href="/blueprint/upload"
+                title="Upload a blueprint to Shapez Vortex"
+              >
+                <span class="icon-[tabler--upload] text-lg" />
+                Upload
+              </Menubar.Item>
             </Menubar.Content>
           </Menubar.Menu>
         </Menubar.Root>
