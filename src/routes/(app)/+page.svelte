@@ -137,7 +137,10 @@
     />
 
     <div class="mt-4 flex justify-center">
-      <Button.Root class={button({ kind: 'outline' })} href="/blueprint/search">
+      <Button.Root
+        class={button({ kind: 'outline', intent: 'accent' })}
+        href="/blueprint/search"
+      >
         Show more
       </Button.Root>
     </div>
