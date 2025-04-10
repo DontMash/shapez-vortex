@@ -15,6 +15,7 @@
 >
   <nav
     class="flex items-center rounded-lg border bg-layer/70 p-4 shadow-lg backdrop-blur-lg"
+    aria-label="Main"
   >
     <Logo />
 

@@ -143,7 +143,7 @@
                 <img
                   class="object-cover"
                   src={image.src}
-                  alt="Image #{index}"
+                  alt="Image #{index} of {data.blueprint.entry.title}"
                 />
               </div>
 

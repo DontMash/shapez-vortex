@@ -42,7 +42,7 @@
       </p>
     </aside>
 
-    <nav class="mt-5">
+    <nav class="mt-5" aria-label="Features">
       <p class="heading-6 mb-6 text-muted">Features</p>
 
       <ul class="space-y-3">
@@ -166,7 +166,7 @@
         </ul>
       </nav>
 
-      <nav>
+      <nav aria-label="Socials & external links">
         <span> Follow tobspr Games </span>
         <ul class="flex gap-2">
           <li>
@@ -250,7 +250,7 @@
       </Button.Root>
     </div>
 
-    <nav class="mt-5 flex flex-col justify-stretch">
+    <nav class="mt-5 flex flex-col justify-stretch" aria-label="Support & more">
       <p class="heading-6 mb-6 text-muted">More</p>
 
       <ul class="space-y-3">
