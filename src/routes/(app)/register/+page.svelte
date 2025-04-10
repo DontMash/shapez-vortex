@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { Button } from 'bits-ui';
+  import { Button, Toggle } from 'bits-ui';
   import { Field, Control, Label, FieldErrors } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
@@ -99,17 +99,15 @@
                 $formData.password = event.currentTarget.value;
               }}
             />
-            <button
+            <Toggle.Root
               class={button({
                 kind: 'ghost',
                 intent: 'muted',
                 size: 'icon-sm',
               })}
-              type="button"
               title={isPasswordHidden ? 'Show password' : 'Hide password'}
-              on:click={() => (isPasswordHidden = !isPasswordHidden)}
+              bind:pressed={isPasswordHidden}
             >
-              <span class="sr-only">{isPasswordHidden ? 'Show' : 'Hide'}</span>
               {#if isPasswordHidden}
                 <span class="icon-[tabler--eye-off] text-lg"
                   >Password is shown</span
@@ -119,16 +117,16 @@
                   >Password is hidden</span
                 >
               {/if}
-            </button>
+            </Toggle.Root>
           </Label>
         </Control>
         <FieldErrors class="text-error" />
       </Field>
 
-      <button class={button({ block: true })} title="Create your account">
+      <Button.Root class={button({ block: true })} title="Create your account">
         <span class="icon-[tabler--edit]" />
         Register
-      </button>
+      </Button.Root>
     </form>
 
     <Button.Root class={button({ kind: 'link' })} href="/login">

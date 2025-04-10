@@ -9,6 +9,7 @@
   import { section } from '$lib/components/section';
   import { PASSWORD_RESET_FORM_SCHEMA } from '$lib/user.types';
   import { button } from '$lib/components/button';
+  import { Button } from 'bits-ui';
 
   export let data: PageData;
 
@@ -48,10 +49,13 @@
         <FieldErrors class="text-error" />
       </Field>
 
-      <button class={button({ block: true })} title="Request a password reset">
+      <Button.Root
+        class={button({ block: true })}
+        title="Request a password reset"
+      >
         <span class="icon-[tabler--send-2]" />
         Request
-      </button>
+      </Button.Root>
     </form>
   </div>
 </section>
