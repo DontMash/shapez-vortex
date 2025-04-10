@@ -7,7 +7,7 @@
   export let data: PageData;
 </script>
 
-<section class="{section()}">
+<section class={section()}>
   <ShapeView
     data={data.shape}
     isExtended={data.extend}

@@ -287,7 +287,7 @@
     </div>
   </label>
 
-  <Collapsible.Root class="group rounded-md border bg-card">
+  <Collapsible.Root class="bg-card group rounded-md border">
     <Collapsible.Trigger asChild let:builder>
       <Button
         builders={[builder]}

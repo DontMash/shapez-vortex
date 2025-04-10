@@ -140,7 +140,11 @@
           {#each data.blueprint.images as image, index}
             <div class="swiper-slide relative shrink-0">
               <div class="aspect-h-2 aspect-w-3">
-                <img class="object-cover" src={image.src} alt="Image #{index}" />
+                <img
+                  class="object-cover"
+                  src={image.src}
+                  alt="Image #{index}"
+                />
               </div>
 
               <Button.Root

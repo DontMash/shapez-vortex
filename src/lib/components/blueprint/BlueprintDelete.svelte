@@ -5,7 +5,6 @@
 
   import { button } from '$lib/components/button';
   import * as dialog from '$lib/components/dialog';
-  import { Description } from '../ui/form';
 
   export let blueprint: Pick<BlueprintRecord, 'id' | 'title'>;
 

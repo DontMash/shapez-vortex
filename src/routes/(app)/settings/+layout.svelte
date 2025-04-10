@@ -33,7 +33,7 @@
   <div>
     {#if $page.data.seo}
       <header
-        class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
+        class="border-base-content/20 mb-12 flex w-full items-end space-x-4 border-b px-4 pb-4"
       >
         <h2 class="text-lg font-bold">
           {$page.data.seo.title}

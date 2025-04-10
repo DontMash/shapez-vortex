@@ -8,7 +8,7 @@
 </script>
 
 <Button.Root
-    class={button({kind:'outline', size:'xs'})}
+  class={button({ kind: 'outline', size: 'xs' })}
   href="/blueprint/search?filter={encodeURIComponent(`tags=${data.name}`)}"
 >
   #{data.name}

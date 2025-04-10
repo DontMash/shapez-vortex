@@ -3,7 +3,6 @@
   import { Button } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
-  import { page } from '$app/stores';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
@@ -32,7 +31,7 @@
 
   $: {
     $encodeFormData.data = JSON.stringify($decodeMessage, null, 4);
-    $decodeFormData.identifier = $encodeMessage
+    $decodeFormData.identifier = $encodeMessage;
   }
 </script>
 

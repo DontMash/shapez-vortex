@@ -145,10 +145,6 @@ export const BLUEPRINT_ENCODE_SCHEMA = z.object({
 });
 
 export const BLUEPRINT_CONVERT_SCHEMA = z.object({
-  version: z
-    .number()
-    .min(1000)
-    .max(GAME_VERSION)
-    .default(GAME_VERSION),
+  version: z.number().min(1000).max(GAME_VERSION).default(GAME_VERSION),
   identifier: z.string().max(12500).pipe(BLUEPRINT_DATA_SCHEMA),
 });
