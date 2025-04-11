@@ -60,7 +60,7 @@
     {#each features as feature}
       <li>
         <Button.Root
-          class="inline-block h-full w-full overflow-hidden rounded-md border bg-layer shadow-lg"
+          class="inline-block h-full w-full overflow-hidden rounded-md border bg-layer shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
           href={feature.url}
           title={feature.tooltip}
         >

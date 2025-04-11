@@ -101,7 +101,10 @@
         <FieldErrors class="text-error" />
       </Field>
 
-      <Button.Root class={button({ block: true })} title="Login to your account">
+      <Button.Root
+        class={button({ block: true })}
+        title="Login to your account"
+      >
         <span class="icon-[tabler--login-2]" />
         Login
       </Button.Root>
