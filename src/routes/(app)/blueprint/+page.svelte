@@ -59,13 +59,12 @@
   </PageHeader>
 
   <form class="flex flex-col gap-2" action="?/view" method="post" use:enhance>
-    <label class="relative" for="blueprint-file">
+    <label
+      class="{input.group({ type: 'file' })} relative h-32"
+      for="blueprint-file"
+    >
       <input
-        class="{button({
-          kind: 'outline',
-          intent: 'muted',
-          block: true,
-        })} peer h-32 cursor-pointer [text-indent:-9999rem]"
+        class="{input.field()} cursor-pointer [text-indent:-9999rem]"
         type="file"
         id="blueprint-file"
         accept={BLUEPRINT_FILE_FORMAT}
@@ -97,47 +96,38 @@
           });
         }}
       />
-      <div
-        class="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center transition"
-      >
-        <span class="icon-[tabler--file-upload] text-3xl" />
-        <span>Blueprint file</span>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div>
+          <span class="icon-[tabler--file-upload] size-8 align-middle" />
+          <span>Blueprint file</span>
+        </div>
+        <Tooltip.Root>
+          <Tooltip.Trigger
+            class="{button({
+              kind: 'ghost',
+              intent: 'muted',
+              size: 'icon-sm',
+            })} absolute right-4 top-3"
+          >
+            <span class="icon-[tabler--info-circle]" />
+          </Tooltip.Trigger>
+          <Tooltip.Content class="rounded-md border bg-layer p-2">
+            <p>The content of the file will be pasted into the field below.</p>
+          </Tooltip.Content>
+        </Tooltip.Root>
       </div>
-      <Tooltip.Root>
-        <Tooltip.Trigger
-          class="{button({
-            kind: 'ghost',
-            intent: 'muted',
-            size: 'icon-sm',
-          })} absolute right-2 top-2"
-        >
-          <span class="icon-[tabler--info-circle]" />
-        </Tooltip.Trigger>
-        <Tooltip.Content
-          class="rounded-sm border bg-layer/70 p-2 shadow-lg backdrop-blur-lg"
-          transition={blur}
-          transitionConfig={{ duration: 150 }}
-          sideOffset={8}
-        >
-          <p>The content of the file will be pasted into the field below.</p>
-        </Tooltip.Content>
-      </Tooltip.Root>
     </label>
 
     <Field {form} name="identifier" let:constraints>
       <Control let:attrs>
-        <Label
-          class="{input.group()} relative inline-grid overflow-y-auto whitespace-pre-wrap break-all after:invisible after:col-start-1 after:row-start-1 after:py-2 after:content-[attr(data-value)]"
-        >
-          <span class="sr-only">Blueprint Identifier</span>
+        <Label class="{input.group()} max-h-none !items-start">
+          <span class="icon-[tabler--braces] my-4">Blueprint Identifier</span>
           <textarea
-            class="{input.field()} col-start-1 row-start-1 min-w-64 resize-none overflow-hidden py-2"
+            class="{input.field()} min-h-14 py-4"
+            rows={10}
             placeholder="Blueprint identifier"
-            rows={6}
             {...attrs}
             {...constraints}
-            oninput="this.parentNode.dataset.value = this.value"
-            onfocus="this.parentNode.dataset.value = this.value"
             bind:value={$formData.identifier}
           ></textarea>
           <Tooltip.Root>
@@ -146,7 +136,7 @@
                 kind: 'ghost',
                 intent: 'muted',
                 size: 'icon-sm',
-              })} absolute right-2 top-2"
+              })} my-3"
             >
               <span class="icon-[tabler--info-circle]" />
             </Tooltip.Trigger>
@@ -157,8 +147,9 @@
               sideOffset={8}
             >
               <p>
-                The blueprint identifier needs to be <br />in the standard
-                format of the game.
+                The blueprint identifier needs to be <br />
+                in the standard format of the game: <br />
+                <i>SHAPEZ-2 ... $</i>
               </p>
             </Tooltip.Content>
           </Tooltip.Root>
