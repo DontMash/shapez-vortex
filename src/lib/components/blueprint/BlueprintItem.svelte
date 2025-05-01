@@ -49,7 +49,7 @@
     {#if data.expand && data.expand['tags']}
       <ul class="flex items-center gap-2">
         {#each data.expand['tags'] as tag}
-          <li>
+          <li class="shrink-0">
             <BlueprintTag data={tag} />
           </li>
         {/each}
