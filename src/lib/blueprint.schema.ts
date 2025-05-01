@@ -16,12 +16,10 @@ export const BLUEPRINT_DESCRIPTION_MAX_LENGTH = 2048;
 export const BLUEPRINT_TAG_MIN_LENGTH = 3;
 export const BLUEPRINT_TAG_MAX_LENGTH = 24;
 export const BLUEPRINT_TAG_REGEX = new RegExp(
-  `[\\w-]{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}}`,
+  `^[\\w-]{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}}$`,
 );
 export const BLUEPRINT_TAGS_MAX = 8;
-export const BLUEPRINT_TAGS_REGEX = new RegExp(
-  `^\\s*(${BLUEPRINT_TAG_REGEX.source}(\\s*,+\\s*${BLUEPRINT_TAG_REGEX.source})*)?\\s*$`,
-);
+export const BLUEPRINT_TAG_NEW_SYMBOL = '$';
 export const BLUEPRINT_IMAGE_MAX_FILE_SIZE = 1_048_576;
 export const BLUEPRINT_IMAGE_TYPES = [
   'image/jpeg',
@@ -73,14 +71,17 @@ const BLUEPRINT_IMAGES_SCHEMA = z
   );
 const BLUEPRINT_TAGS_SCHEMA = z
   .string()
-  .regex(
-    BLUEPRINT_TAGS_REGEX,
+  .transform((value, ctx): Array<string> => {
+    try {
+      return JSON.parse(value)
+    } catch (e) {
+      ctx.addIssue({ code: 'custom', message: 'Invalid JSON' })
+      return z.NEVER
+    }
+  })
+  .refine((value) => value.reduce((result, value) => result && (!value.startsWith(BLUEPRINT_TAG_NEW_SYMBOL) || BLUEPRINT_TAG_REGEX.test(value.slice(1))), true),
     'String must only contain these characters: "A-Za-z0-9_-"',
   )
-  .refine(
-    (value) => value.split(',').length <= BLUEPRINT_TAGS_MAX,
-    `Max. amount of tags is ${BLUEPRINT_TAGS_MAX}`,
-  );
 export const BLUEPRINT_FORM_SCHEMA = z.object({
   title: BLUEPRINT_TITLE_SCHEMA,
   description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),

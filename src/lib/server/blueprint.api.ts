@@ -10,7 +10,7 @@ import {
 } from '$lib/blueprint';
 import {
   BLUEPRINT_CREATE_SCHEMA,
-  BLUEPRINT_TAGS_MAX,
+  BLUEPRINT_TAG_NEW_SYMBOL,
   type BlueprintFormData,
 } from '$lib/blueprint.schema';
 import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
@@ -137,35 +137,22 @@ export const put = async (
   return record;
 };
 
-const createBlueprintTags = async (pb: PocketBase, value: string) =>
-  new Promise<Array<BlueprintTag>>((resolve) => {
+const createBlueprintTags = async (pb: PocketBase, value: Array<string>) =>
+  new Promise<Array<string>>((resolve) => {
     const user = pb.authStore.model;
-    const tags = new Set(
-      value
-        .replace(/\s+/gi, '')
-        .toLocaleLowerCase()
-        .split(',')
-        .filter((tag) => tag.length !== 0)
-        .slice(0, BLUEPRINT_TAGS_MAX),
-    );
+    const tags = new Set(value);
     const promises = [...tags].map(
       (tag) =>
-        new Promise<BlueprintTag>((resolve, reject) => {
+        new Promise<string>((resolve) => {
+          if (!tag.startsWith(BLUEPRINT_TAG_NEW_SYMBOL)) {
+            return resolve(tag);
+          }
           pb.collection('tags')
             .create<BlueprintTag>(
-              { name: tag, creator: user?.id },
+              { name: tag.slice(1), creator: user?.id },
               { requestKey: null },
             )
-            .then(resolve)
-            .catch(() =>
-              pb
-                .collection('tags')
-                .getFirstListItem<BlueprintTag>(`name="${tag}"`, {
-                  requestKey: null,
-                })
-                .then(resolve)
-                .catch(reject),
-            );
+            .then((tag) => resolve(tag.id));
         }),
     );
     resolve(Promise.all(promises));
@@ -174,7 +161,7 @@ const createBlueprintTags = async (pb: PocketBase, value: string) =>
 const getBlueprintFormData = (
   pb: PocketBase,
   value: BlueprintFormData,
-  tags: Array<BlueprintTag>,
+  tags: Array<string>,
 ): FormData => {
   const { title, data, description, images } = value;
 
@@ -189,7 +176,7 @@ const getBlueprintFormData = (
   formData.append('data', data);
   formData.append('description', description ?? '');
   images?.forEach((image) => formData.append('images', image));
-  tags.forEach((tag) => formData.append('tags', tag.id));
+  tags.forEach((tag) => formData.append('tags', tag));
   formData.append('type', blueprint.BP.$type);
   formData.append('cost', cost.toString());
   formData.append('buildings', JSON.stringify(Object.fromEntries(buildings)));

@@ -1,15 +1,25 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import {
-    superForm,
+    AlertDialog,
+    Button,
+    Checkbox,
+    Collapsible,
+    Combobox,
+    Tooltip,
+    type Selected,
+  } from 'bits-ui';
+  import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { fade, slide } from 'svelte/transition';
+  import {
     arrayProxy,
     filesProxy,
+    superForm,
     type Infer,
     type SuperValidated,
   } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import { beforeNavigate, goto } from '$app/navigation';
-  import { toBlob } from '$lib/utils';
+  import { toBlob, toFileList } from '$lib/utils';
   import { add } from '$lib/client/toast.service';
   import { decode, isBlueprintIdentifier } from '$lib/blueprint';
   import {
@@ -18,6 +28,7 @@
     BLUEPRINT_IMAGE_MAX_FILE_SIZE,
     BLUEPRINT_IMAGE_TYPES,
     BLUEPRINT_IMAGES_MAX,
+    BLUEPRINT_TAG_NEW_SYMBOL,
     BLUEPRINT_TAG_REGEX,
     BLUEPRINT_TAGS_MAX,
     BLUEPRINT_TITLE_MAX_LENGTH,
@@ -31,20 +42,11 @@
     type BlueprintTag,
   } from '$lib/blueprint.types';
 
-  import * as AlertDialog from '$lib/components/ui/alert-dialog';
-  import { Badge } from '$lib/components/ui/badge';
-  import { Button, buttonVariants } from '$lib/components/ui/button';
-  import { Checkbox } from '$lib/components/ui/checkbox';
-  import * as Collapsible from '$lib/components/ui/collapsible';
-  import * as Command from '$lib/components/ui/command';
-  import * as Form from '$lib/components/ui/form';
-  import { Input } from '$lib/components/ui/input';
-  import { Label } from '$lib/components/ui/label';
-  import { Textarea } from '$lib/components/ui/textarea';
-  import * as Tooltip from '$lib/components/ui/tooltip';
-
-  import { Combobox } from '$lib/components/combobox';
   import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
+  import { button } from '$lib/components/button';
+  import * as dialog from '$lib/components/dialog';
+  import * as input from '$lib/components/input';
+  import { onMount } from 'svelte';
 
   export let data: {
     form: SuperValidated<Infer<BlueprintFormSchema>>;
@@ -57,20 +59,22 @@
   const form = superForm(data.form, {
     validators: zod(BLUEPRINT_FORM_SCHEMA),
   });
-  const { form: formData, enhance, tainted, submit } = form;
+
+  const { form: formData, enhance, submit, tainted } = form;
   let isSubmit = false;
   let leaveUrl: URL | undefined;
-  let { valueErrors: imageErrors } = arrayProxy(form, 'images');
-  let images = filesProxy(form, 'images');
 
   let blueprint: Blueprint | undefined;
-  let blueprintTags: Set<string> = new Set();
   let tags: Array<BlueprintTag> = [];
-  let blueprintTagValue: string = '';
-  let blueprintTagCombobox: Combobox;
   let blueprintImagesFileInput: HTMLInputElement | undefined;
-  let blueprintView: BlueprintView;
+  let blueprintTagInputValue: string = '';
+  let blueprintTagSelected: Array<Selected<string>> | undefined;
   let blueprintPreview: boolean = data.type === 'create';
+  let blueprintView: BlueprintView;
+
+  const images = filesProxy(form, 'images');
+  const { valueErrors: imageErrors } = arrayProxy(form, 'images');
+
   $: {
     try {
       blueprint =
@@ -82,89 +86,24 @@
       add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
     }
 
-    tags = data.tags?.filter(
-      (tag: BlueprintTag) => !blueprintTags.has(tag.name),
-    );
-
     if (blueprintImagesFileInput) {
       blueprintImagesFileInput.files = $images;
     }
+
+    tags = blueprintTagInputValue
+      ? data.tags?.filter((tag: BlueprintTag) =>
+          tag.name.includes(blueprintTagInputValue.toLowerCase()),
+        )
+      : data.tags;
   }
 
-  function addTag(value: string) {
-    blueprintTags.add(value);
-    blueprintTags = blueprintTags;
-    $formData.tags = [...blueprintTags].join(',');
-  }
-  async function onSubmit() {
-    if (!blueprintPreview) {
-      isSubmit = true;
-      return submit();
-    }
+  async function onSubmit(event: Event) {
+    event.preventDefault();
 
-    try {
-      if (!blueprintImagesFileInput) {
-        throw new Error('Blueprint image field unavailable');
-      }
-
-      const canvas = blueprintView?.canvas();
-      if (!canvas) {
-        throw new Error('Preview canvas unavailable');
-      }
-
-      const blob = await toBlob(canvas);
-      const previewImage = new File([blob], 'preview.png', {
-        type: 'image/png',
-      });
-
-      const data = new DataTransfer();
-      const files = [...$images, previewImage];
-      files.forEach((file) => data.items.add(file));
-      blueprintImagesFileInput.files = data.files;
-    } catch (err) {
-      const error = err as Error;
-      add({ message: error.message, type: 'ERROR' });
-    } finally {
-      isSubmit = true;
-      submit();
-    }
+    isSubmit = true;
+    submit();
   }
 
-  onMount(async () => {
-    if (data.record) {
-      const record = data.record;
-      $formData.title = record.title;
-      $formData.data = record.data;
-      $formData.tags = data.tags
-        .filter((tag) => record.tags.includes(tag.id))
-        .map((tag) => tag.name)
-        .join(',');
-      $formData.description = record.description;
-
-      if (data.images) {
-        const promises = data.images?.map<Promise<File>>(
-          (image, index) =>
-            new Promise<File>((resolve, reject) => {
-              fetch(image.src)
-                .then((response) => response.blob())
-                .then((blob) =>
-                  resolve(
-                    new File([blob], `${data.images?.at(index)}`, {
-                      type: blob.type,
-                    }),
-                  ),
-                )
-                .catch(reject);
-            }),
-        );
-        const files = await Promise.all(promises);
-        $formData.images = files;
-      }
-    }
-    if ($formData.tags) {
-      blueprintTags = new Set($formData.tags.split(','));
-    }
-  });
   beforeNavigate((navigation) => {
     if (!$tainted || isSubmit || leaveUrl) {
       isSubmit = false;
@@ -175,67 +114,56 @@
 
     leaveUrl = navigation.to?.url;
   });
+  onMount(async () => {
+    const { record, images, tags } = data;
+    if (!record) {
+      return;
+    }
+
+    $formData.title = record.title;
+    $formData.data = record.data;
+    $formData.description = record.description;
+
+    if (images) {
+      const promises = images.map<Promise<File>>(
+        (image, index) =>
+          new Promise<File>((resolve, reject) => {
+            fetch(image.src)
+              .then((response) => response.blob())
+              .then((blob) =>
+                resolve(
+                  new File([blob], `${data.images?.at(index)}`, {
+                    type: blob.type,
+                  }),
+                ),
+              )
+              .catch(reject);
+          }),
+      );
+      const files = await Promise.all(promises);
+      $formData.images = files;
+    }
+
+    if (tags) {
+      blueprintTagSelected = tags
+        .filter((tag) => record.tags.includes(tag.id))
+        .map<Selected<string>>((tag) => ({ label: tag.name, value: tag.id }));
+    }
+  });
 </script>
 
-<form class="space-y-4" method="post" enctype="multipart/form-data" use:enhance>
-  <Form.Field {form} name="title">
-    <Form.Control let:attrs>
-      <Form.Label>
-        <span>Title</span>
-        <Tooltip.Root>
-          <Tooltip.Trigger>
-            <span
-              class="icon-[tabler--info-circle] align-text-bottom text-lg text-input"
-            />
-          </Tooltip.Trigger>
-          <Tooltip.Content>
-            <p>
-              The title needs to be between {BLUEPRINT_TITLE_MIN_LENGTH}-{BLUEPRINT_TITLE_MAX_LENGTH}
-              characters long.
-            </p>
-            <p>It can only contain spaces and these characters: A-Za-z0-9_-</p>
-          </Tooltip.Content>
-        </Tooltip.Root>
-      </Form.Label>
-      <Input
-        placeholder="My blueprint ..."
-        {...attrs}
-        bind:value={$formData.title}
-      />
-    </Form.Control>
-    <Form.FieldErrors />
-  </Form.Field>
-
-  <Form.Field {form} name="data">
-    <Form.Control let:attrs>
-      <Form.Label>
-        <span>Blueprint Identifier</span>
-        <Tooltip.Root>
-          <Tooltip.Trigger>
-            <span
-              class="icon-[tabler--info-circle] align-text-bottom text-lg text-input"
-            />
-          </Tooltip.Trigger>
-          <Tooltip.Content>
-            <p>
-              The blueprint identifier needs to be <br />in the standard format
-              of the game.
-            </p>
-          </Tooltip.Content>
-        </Tooltip.Root>
-      </Form.Label>
-      <Textarea
-        class="h-64 resize-none"
-        placeholder="SHAPEZ-2 ... $"
-        {...attrs}
-        bind:value={$formData.data}
-      />
-    </Form.Control>
-    <Form.FieldErrors />
-  </Form.Field>
-  <label class="relative mt-4 block" for="blueprint-file">
+<form
+  class="flex flex-col gap-2"
+  method="post"
+  enctype="multipart/form-data"
+  use:enhance
+>
+  <label
+    class="{input.group({ type: 'file' })} relative mb-2 block h-32"
+    for="blueprint-file"
+  >
     <input
-      class="peer h-32 w-full cursor-pointer rounded-md border border-input bg-background outline-2 outline-offset-2 outline-ring transition-colors [text-indent:-9999rem] hover:bg-foreground focus-visible:outline"
+      class="{input.field()} cursor-pointer [text-indent:-9999rem]"
       type="file"
       id="blueprint-file"
       accept={BLUEPRINT_FILE_FORMAT}
@@ -266,18 +194,22 @@
         add({ message: 'Updated blueprint fields', type: 'SUCCESS' });
       }}
     />
-    <div
-      class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-colors peer-hover:text-background"
-    >
-      <span class="icon-[tabler--file-upload] size-8 align-middle" />
-      <span>Blueprint file</span>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div>
+        <span class="icon-[tabler--file-upload] size-8 align-middle" />
+        <span>Blueprint file</span>
+      </div>
       <Tooltip.Root>
-        <Tooltip.Trigger class="pointer-events-auto">
-          <span
-            class="icon-[tabler--info-circle] align-text-bottom text-lg text-input"
-          />
+        <Tooltip.Trigger
+          class="{button({
+            kind: 'ghost',
+            intent: 'muted',
+            size: 'icon-sm',
+          })} absolute right-4 top-3"
+        >
+          <span class="icon-[tabler--info-circle]" />
         </Tooltip.Trigger>
-        <Tooltip.Content>
+        <Tooltip.Content class="max-w-60 rounded-md border bg-layer p-2">
           <p>
             The name and content of the file will be added to the fields above.
           </p>
@@ -287,343 +219,549 @@
     </div>
   </label>
 
-  <Collapsible.Root class="bg-card group rounded-md border">
-    <Collapsible.Trigger asChild let:builder>
-      <Button
-        builders={[builder]}
-        class="w-full justify-between space-x-2 group-data-[state=open]:mb-2"
-        variant="ghost"
-      >
-        <span>Additional information</span>
-        <span
-          class="icon-[tabler--chevron-down] align-text-bottom text-lg transition-transform group-data-[state=open]:-rotate-180"
+  <Field {form} name="title" let:constraints>
+    <Control let:attrs>
+      <Label class={input.group()}>
+        <span class="icon-[tabler--abc]">Title</span>
+        <input
+          class={input.field()}
+          type="text"
+          placeholder="Title"
+          {...attrs}
+          {...constraints}
+          bind:value={$formData.title}
         />
-      </Button>
-    </Collapsible.Trigger>
-
-    <Collapsible.Content class="space-y-4 p-4">
-      <Form.Field {form} name="tags">
-        <Form.Control let:attrs>
-          <Form.Label>
-            <span>Tags <span class="text-input">(optional)</span></span>
-            <Tooltip.Root>
-              <Tooltip.Trigger>
-                <span
-                  class="icon-[tabler--info-circle] align-text-bottom text-lg text-input"
-                />
-              </Tooltip.Trigger>
-              <Tooltip.Content>
-                <p>
-                  A list of tags for the blueprint (max. {BLUEPRINT_TAGS_MAX}).
-                </p>
-              </Tooltip.Content>
-            </Tooltip.Root>
-          </Form.Label>
-          {#if blueprintTags.size > 0}
-            <div>
-              {#each blueprintTags as tag}
-                <Badge class="h-8 space-x-1 pr-1" variant="outline">
-                  <span>#{tag}</span>
-                  <Button
-                    class="size-6 p-0"
-                    variant="ghost"
-                    size="icon"
-                    on:click={() => {
-                      blueprintTags.delete(tag);
-                      blueprintTags = blueprintTags;
-                    }}
-                  >
-                    <span class="sr-only">Remove tag {tag}</span>
-                    <span class="icon-[tabler--x]" />
-                  </Button>
-                </Badge>
-              {/each}
-            </div>
-          {/if}
-          <Input type="hidden" {...attrs} value={$formData.tags} />
-          <Combobox
-            options={tags.map((tag) => ({
-              label: tag.name,
-              value: tag.name,
-            }))}
-            placeholder="Select tags..."
-            on:input={(event) => (blueprintTagValue = event.detail)}
-            on:value={(event) => addTag(event.detail)}
-            bind:this={blueprintTagCombobox}
-          >
-            {#if blueprintTagValue && BLUEPRINT_TAG_REGEX.test(blueprintTagValue) && !blueprintTags.has(blueprintTagValue) && !tags.find((tag) => tag.name === blueprintTagValue)}
-              <Command.Separator />
-              <Command.Group alwaysRender>
-                <Command.Item
-                  class="px-8 italic"
-                  value={blueprintTagValue}
-                  alwaysRender
-                  onSelect={() => {
-                    addTag(blueprintTagValue);
-                    blueprintTagCombobox.close();
-                  }}
-                >
-                  #{blueprintTagValue}
-                </Command.Item>
-              </Command.Group>
-            {/if}
-          </Combobox>
-        </Form.Control>
-        <Form.FieldErrors />
-      </Form.Field>
-
-      <Form.Field {form} name="description">
-        <Form.Control let:attrs>
-          <Form.Label>
-            <span>Description <span class="text-input">(optional)</span></span>
-            <Tooltip.Root>
-              <Tooltip.Trigger>
-                <span
-                  class="icon-[tabler--info-circle] align-text-bottom text-lg text-input"
-                />
-              </Tooltip.Trigger>
-              <Tooltip.Content>
-                <p>
-                  The description has a max. length of {BLUEPRINT_DESCRIPTION_MAX_LENGTH}
-                </p>
-              </Tooltip.Content>
-            </Tooltip.Root>
-          </Form.Label>
-          <Textarea
-            class="h-48"
-            placeholder="Reimagine shape processing ..."
-            {...attrs}
-            bind:value={$formData.description}
-          />
-        </Form.Control>
-        <Form.FieldErrors />
-      </Form.Field>
-    </Collapsible.Content>
-  </Collapsible.Root>
-
-  <Form.Field {form} name="images">
-    <Form.Control let:attrs>
-      <Form.Label>
-        <span>Images <span class="text-input">(optional)</span></span>
         <Tooltip.Root>
-          <Tooltip.Trigger>
-            <span
-              class="icon-[tabler--info-circle] align-text-bottom text-lg text-input"
-            />
+          <Tooltip.Trigger
+            class={button({
+              kind: 'ghost',
+              intent: 'muted',
+              size: 'icon-sm',
+            })}
+          >
+            <span class="icon-[tabler--info-circle]" />
           </Tooltip.Trigger>
-          <Tooltip.Content>
+          <Tooltip.Content class="max-w-60 rounded-md border bg-layer p-2">
             <p>
-              Max. {BLUEPRINT_IMAGES_MAX} images, including preview image.
+              The title needs to be between {BLUEPRINT_TITLE_MIN_LENGTH}-{BLUEPRINT_TITLE_MAX_LENGTH}
+              characters long.
             </p>
+            <p>It can only contain spaces and these characters: A-Za-z0-9_-</p>
+          </Tooltip.Content>
+        </Tooltip.Root>
+      </Label>
+    </Control>
+    <FieldErrors class="text-error" />
+  </Field>
+
+  <Field {form} name="data" let:constraints>
+    <Control let:attrs>
+      <Label class="{input.group()} max-h-none !items-start">
+        <span class="icon-[tabler--braces] my-4">Blueprint Identifier</span>
+        <textarea
+          class="{input.field()} min-h-14 py-4"
+          rows="10"
+          placeholder="Blueprint identifier"
+          {...attrs}
+          {...constraints}
+          bind:value={$formData.data}
+        />
+        <Tooltip.Root>
+          <Tooltip.Trigger
+            class="{button({
+              kind: 'ghost',
+              intent: 'muted',
+              size: 'icon-sm',
+            })} my-3"
+          >
+            <span class="icon-[tabler--info-circle]" />
+          </Tooltip.Trigger>
+          <Tooltip.Content class="max-w-60 rounded-md border bg-layer p-2">
             <p>
-              Max. file size is {BLUEPRINT_IMAGE_MAX_FILE_SIZE / 1024 / 1024}MB.
+              The blueprint identifier needs to be in the standard format of the
+              game: <br />
+              <i>SHAPEZ-2 ... $</i>
             </p>
           </Tooltip.Content>
         </Tooltip.Root>
-      </Form.Label>
-      <div class="relative">
-        <input
-          class="hidden"
-          type="file"
-          accept={BLUEPRINT_IMAGE_TYPES.join(',')}
-          multiple
-          {...attrs}
-          bind:this={blueprintImagesFileInput}
-        />
-        <input
-          class="peer h-32 w-full cursor-pointer rounded-md border border-input bg-background outline-2 outline-offset-2 outline-ring transition-colors [text-indent:-9999rem] hover:bg-foreground focus-visible:outline"
-          type="file"
-          accept={BLUEPRINT_IMAGE_TYPES.join(',')}
-          multiple
-          on:change={(event) => {
-            const input = event.currentTarget;
-            if (!input.files) return;
+      </Label>
+    </Control>
+    <FieldErrors class="text-error" />
+  </Field>
 
-            const data = new DataTransfer();
-            const files = [...input.files, ...$images];
-            const max = BLUEPRINT_IMAGES_MAX - 1;
-            if (files.length > max) {
-              add({
-                message: `Max. ${BLUEPRINT_IMAGES_MAX} images, including preview image.`,
-                type: 'WARNING',
-              });
-            }
-            files.slice(0, max).forEach((file) => {
-              if (!BLUEPRINT_IMAGE_TYPES.find((type) => file.type === type))
-                return;
-              data.items.add(file);
-            });
-
-            $images = data.files;
-            input.files = null;
-          }}
-        />
-        <div
-          class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-colors peer-hover:text-background"
+  <div class="mb-2 space-y-2">
+    <div class="flex items-center gap-2">
+      <Checkbox.Root
+        class="peer inline-flex size-8 items-center justify-center rounded-sm border border-muted bg-foreground transition-all duration-150 ease-in-out data-[state=unchecked]:bg-background"
+        id="is-preview"
+        aria-labelledby="is-preview-label"
+        bind:checked={blueprintPreview}
+      >
+        <Checkbox.Indicator
+          let:isChecked
+          class="inline-flex size-4 items-center justify-center text-background"
         >
-          <span class="icon-[tabler--photo-up] size-8 align-middle" />
-          <span>Select images</span>
-          <Tooltip.Root>
-            <Tooltip.Trigger class="pointer-events-auto">
-              <span
-                class="icon-[tabler--info-circle] align-text-bottom text-lg text-input"
-              />
-            </Tooltip.Trigger>
-            <Tooltip.Content>
-              <p>Selected images will be added to the blueprint.</p>
-            </Tooltip.Content>
-          </Tooltip.Root>
-        </div>
-      </div>
-    </Form.Control>
-    <Form.FieldErrors />
-  </Form.Field>
-  {#if $images.length > 0}
-    <ol class="grid auto-rows-auto grid-cols-3 gap-4">
-      {#each $images as image, index}
-        {@const imageError = $imageErrors[index]}
-        <li class="relative">
-          <picture class="aspect-h-2 aspect-w-3 block">
-            <img
-              class="rounded-md border object-cover"
-              src={URL.createObjectURL(image)}
-              alt={`Image #${index} - ${image.name}`}
-            />
-          </picture>
-
-          {#if imageError}
-            <span class="text-destructive">{imageError}</span>
+          {#if isChecked}
+            <span class="icon-[tabler--check]" />
           {/if}
-
-          <Badge class="absolute left-2 top-2 font-bold" variant="secondary">
-            #{index + 1}
-          </Badge>
-
-          <div class="absolute right-2 top-2">
-            {#if index > 0}
-              <Button
-                variant="outline"
-                size="icon"
-                on:click={() => {
-                  const data = new DataTransfer();
-                  const files = [...$images];
-                  const temp = files[index - 1];
-                  files[index - 1] = files[index];
-                  files[index] = temp;
-                  files.forEach((file) => data.items.add(file));
-                  $images = data.files;
-                }}
-              >
-                <span class="icon-[tabler--chevron-left]" />
-              </Button>
-            {/if}
-            {#if index < $images.length - 1}
-              <Button
-                variant="outline"
-                size="icon"
-                on:click={() => {
-                  const data = new DataTransfer();
-                  const files = [...$images];
-                  const temp = files[index + 1];
-                  files[index + 1] = files[index];
-                  files[index] = temp;
-                  files.forEach((file) => data.items.add(file));
-                  $images = data.files;
-                }}
-              >
-                <span class="icon-[tabler--chevron-right]" />
-              </Button>
-            {/if}
-            <Button
-              variant="destructive"
-              size="icon"
-              on:click={() => {
-                const data = new DataTransfer();
-                const files = [...$images];
-                files
-                  .filter((_, fileIndex) => fileIndex !== index)
-                  .forEach((file) => data.items.add(file));
-                $images = data.files;
-              }}
-            >
-              <span class="sr-only">Remove image #{index}</span>
-              <span class="icon-[tabler--x]" />
-            </Button>
-          </div>
-        </li>
-      {/each}
-    </ol>
-  {/if}
-
-  <div class="space-y-2">
-    <Label class="flex items-center space-x-1 lg:px-0">
-      {#if data.type === 'update'}
-        <Checkbox
-          aria-labelledby="blueprint-preview-label"
-          bind:checked={blueprintPreview}
-        />
-      {/if}
-      <span
-        >{data.type === 'update'
-          ? 'Update blueprint preview'
-          : 'Blueprint preview'}</span
+        </Checkbox.Indicator>
+      </Checkbox.Root>
+      <label
+        class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        id="is-preview-label"
+        for="is-preview">Use blueprint preview</label
       >
       <Tooltip.Root>
-        <Tooltip.Trigger>
-          <span
-            class="icon-[tabler--info-circle] align-text-bottom text-lg text-input"
-          />
+        <Tooltip.Trigger
+          class={button({
+            kind: 'ghost',
+            intent: 'muted',
+            size: 'icon-sm',
+          })}
+        >
+          <span class="icon-[tabler--info-circle]" />
         </Tooltip.Trigger>
-        <Tooltip.Content>
-          <p>
-            This preview will be used to create an image of your blueprint..
-          </p>
+        <Tooltip.Content class="max-w-60 rounded-md border bg-layer p-2">
+          <p>This preview will be used to create an image of your blueprint.</p>
         </Tooltip.Content>
       </Tooltip.Root>
-    </Label>
-    <div class="-mx-4 lg:mx-0" class:hidden={!blueprintPreview}>
+    </div>
+
+    <div class="space-y-2" class:hidden={!blueprintPreview}>
       <BlueprintView
         identifier={$formData.data}
         {blueprint}
         controls={{}}
         bind:this={blueprintView}
       />
+
+      <Button.Root
+        class={button({ kind: 'outline', block: true })}
+        type="button"
+        on:click={async () => {
+          try {
+            if (!blueprintImagesFileInput) {
+              throw new Error('Blueprint image field unavailable');
+            }
+            const canvas = blueprintView?.canvas();
+            if (!canvas) {
+              throw new Error('Preview canvas unavailable');
+            }
+            const blob = await toBlob(canvas);
+            const previewImage = new File([blob], 'preview.png', {
+              type: 'image/webp',
+            });
+            console.log(previewImage);
+
+            $formData.images = [...($formData.images ?? []), previewImage];
+          } catch (err) {
+            if (err instanceof Error) {
+              add({ message: err.message, type: 'ERROR' });
+            }
+          }
+        }}
+      >
+        <span class="icon-[tabler--camera]" />
+        Take screenshot
+      </Button.Root>
     </div>
   </div>
 
-  <Button
-    class="mt-12 w-full"
-    type="button"
+  <Field {form} name="images" let:constraints>
+    <Control let:attrs>
+      <Label class="{input.group({ type: 'file' })} relative h-32">
+        <input
+          class="{input.field()} cursor-pointer [text-indent:-9999rem]"
+          type="file"
+          accept={BLUEPRINT_IMAGE_TYPES.join(',')}
+          multiple
+          {...attrs}
+          {...constraints}
+          bind:this={blueprintImagesFileInput}
+          on:change={(event) => {
+            const target = event.currentTarget;
+            const files = [...(target.files ?? []), ...$images];
+            if (files.length > BLUEPRINT_IMAGES_MAX) {
+              add({
+                message: `Max. amount of images is ${BLUEPRINT_IMAGES_MAX}`,
+                type: 'WARNING',
+              });
+            }
+            $images = toFileList(files.slice(0, BLUEPRINT_IMAGES_MAX));
+          }}
+        />
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div>
+            <span class="icon-[tabler--photo-up] size-8 align-middle" />
+            <span>Images</span>
+            <span class="text-muted">(optional)</span>
+          </div>
+          <Tooltip.Root>
+            <Tooltip.Trigger
+              class="{button({
+                kind: 'ghost',
+                intent: 'muted',
+                size: 'icon-sm',
+              })} absolute right-4 top-3"
+            >
+              <span class="icon-[tabler--info-circle]" />
+            </Tooltip.Trigger>
+            <Tooltip.Content class="max-w-60 rounded-md border bg-layer p-2">
+              <p>
+                The first image will be used as the thumbnail. When using the
+                preview, it will generate a thumbnail from the perspective of
+                the preview.
+              </p>
+              <p>
+                Max. {BLUEPRINT_IMAGES_MAX} images, including preview image.
+              </p>
+              <p>
+                Max. file size is {BLUEPRINT_IMAGE_MAX_FILE_SIZE /
+                  1024 /
+                  1024}MB.
+              </p>
+            </Tooltip.Content>
+          </Tooltip.Root>
+        </div>
+      </Label>
+    </Control>
+
+    {#if $images.length > 0}
+      <ol
+        class="grid auto-rows-auto grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3"
+      >
+        {#each $images as image, index}
+          <li
+            class="relative flex flex-col divide-y overflow-hidden rounded-md border"
+          >
+            <div class="mb-auto p-2">
+              <div class="flex items-center">
+                <i
+                  class="mr-auto inline-flex items-center justify-center gap-2 rounded-xs bg-accent px-2 py-1 text-accent-foreground"
+                >
+                  #{index + 1}
+                </i>
+
+                {#if index > 0}
+                  <Button.Root
+                    class={button({
+                      kind: 'ghost',
+                      intent: 'accent',
+                      size: 'icon-sm',
+                    })}
+                    type="button"
+                    on:click={() => {
+                      const files = [...$images];
+                      const temp = files[index - 1];
+                      files[index - 1] = files[index];
+                      files[index] = temp;
+                      $images = toFileList(files);
+                    }}
+                  >
+                    <span class="icon-[tabler--chevron-left]" />
+                  </Button.Root>
+                {/if}
+                {#if index < $images.length - 1}
+                  <Button.Root
+                    class={button({
+                      kind: 'ghost',
+                      intent: 'accent',
+                      size: 'icon-sm',
+                    })}
+                    type="button"
+                    on:click={() => {
+                      const files = [...$images];
+                      const temp = files[index + 1];
+                      files[index + 1] = files[index];
+                      files[index] = temp;
+                      $images = toFileList(files);
+                    }}
+                  >
+                    <span class="icon-[tabler--chevron-right]" />
+                  </Button.Root>
+                {/if}
+                <Button.Root
+                  class={button({
+                    kind: 'ghost',
+                    intent: 'error',
+                    size: 'icon-sm',
+                  })}
+                  type="button"
+                  on:click={() => {
+                    if (!blueprintImagesFileInput) {
+                      return;
+                    }
+
+                    const files = [...$images];
+                    $images = toFileList(
+                      files.filter((_, fileIndex) => fileIndex !== index),
+                    );
+                  }}
+                >
+                  <span class="sr-only">Remove image #{index}</span>
+                  <span class="icon-[tabler--x]" />
+                </Button.Root>
+              </div>
+
+              {#if $imageErrors && $imageErrors[index]}
+                <ul>
+                  <li class="text-error">
+                    {$imageErrors[index]}
+                  </li>
+                </ul>
+              {/if}
+            </div>
+
+            <picture class="aspect-h-2 aspect-w-3 block">
+              <img
+                class="object-cover"
+                src={URL.createObjectURL(image)}
+                alt={`Image #${index} - ${image.name}`}
+              />
+            </picture>
+          </li>
+        {/each}
+      </ol>
+    {/if}
+
+    <FieldErrors class="text-error" />
+  </Field>
+
+  <Collapsible.Root
+    class="group mb-2 rounded-md border"
+    open={data.type === 'update' &&
+      (!!$formData.tags || !!$formData.description)}
+  >
+    <Collapsible.Trigger asChild let:builder>
+      <Button.Root
+        class="{button({
+          intent: 'accent',
+          kind: 'ghost',
+        })} w-full justify-between gap-2 px-4 group-data-[state=open]:mb-2"
+        builders={[builder]}
+        type="button"
+      >
+        <span>Additional information</span>
+        <span
+          class="icon-[tabler--chevron-down] text-lg transition-transform group-data-[state=open]:-rotate-180"
+        />
+      </Button.Root>
+    </Collapsible.Trigger>
+
+    <Collapsible.Content
+      class="flex flex-col gap-2 p-4"
+      transition={slide}
+      transitionConfig={{ duration: 150 }}
+    >
+      <Field {form} name="tags" let:constraints>
+        <Control let:attrs>
+          <div class="flex flex-col gap-2">
+            {#if blueprintTagSelected}
+              <ul class="flex gap-2">
+                {#each blueprintTagSelected as tagSelected}
+                  <li>
+                    <span
+                      class="inline-flex items-center gap-1 rounded-xs border pl-2"
+                    >
+                      #{tagSelected.label}
+
+                      <Button.Root
+                        class={button({
+                          intent: 'error',
+                          kind: 'ghost',
+                          size: 'icon-sm',
+                        })}
+                        type="button"
+                        on:click={() => {
+                          blueprintTagSelected = blueprintTagSelected?.filter(
+                            (tag) => tag.value !== tagSelected.value,
+                          );
+                        }}
+                      >
+                        <span class="icon-[tabler--x]"
+                          >Remove tag {tagSelected.label}</span
+                        >
+                      </Button.Root>
+                    </span>
+                  </li>
+                {/each}
+              </ul>
+            {/if}
+            <Combobox.Root
+              multiple
+              items={tags.map((tag) => ({ value: tag.id, label: tag.name }))}
+              preventScroll={false}
+              required={constraints?.required}
+              bind:selected={blueprintTagSelected}
+              bind:inputValue={blueprintTagInputValue}
+            >
+              <label class={input.group()} for="blueprint-tag-input">
+                <span class="icon-[tabler--tags]" />
+                <Combobox.Input
+                  class={input.field()}
+                  id="blueprint-tag-input"
+                  placeholder="Select tags"
+                  aria-label="Select tags"
+                />
+                <Tooltip.Root>
+                  <Tooltip.Trigger
+                    class="{button({
+                      kind: 'ghost',
+                      intent: 'muted',
+                      size: 'icon-sm',
+                    })} my-3"
+                  >
+                    <span class="icon-[tabler--info-circle]" />
+                  </Tooltip.Trigger>
+                  <Tooltip.Content
+                    class="max-w-60 rounded-md border bg-layer p-2"
+                  >
+                    <p>
+                      A list of tags for the blueprint (max. {BLUEPRINT_TAGS_MAX}).
+                    </p>
+                  </Tooltip.Content>
+                </Tooltip.Root>
+              </label>
+
+              <Combobox.Content
+                class="max-h-64 overflow-y-auto rounded-md border bg-layer p-2"
+                sideOffset={20}
+                sameWidth
+              >
+                {#each tags as tag}
+                  <Combobox.Item
+                    class="flex cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                    value={tag.id}
+                    label={tag.name}
+                  >
+                    #{tag.name}
+                    <Combobox.ItemIndicator>
+                      <span class="icon-[tabler--check]">selected</span>
+                    </Combobox.ItemIndicator>
+                  </Combobox.Item>
+                {/each}
+
+                {#if !blueprintTagSelected?.find((selected) => selected.value === `${BLUEPRINT_TAG_NEW_SYMBOL}${blueprintTagInputValue}`)}
+                  {#if tags.length <= 0}
+                    {#if BLUEPRINT_TAG_REGEX.test(blueprintTagInputValue)}
+                      <p class="px-4 py-1">No results found.</p>
+                      <Combobox.Separator class="my-1 h-px bg-muted" />
+                      <Combobox.Item
+                        class="flex w-full cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        value="${blueprintTagInputValue}"
+                        label={blueprintTagInputValue}
+                      >
+                        <em>Add #{blueprintTagInputValue}</em>
+                      </Combobox.Item>
+                    {:else}
+                      <span class="px-4 py-1 text-error">Invalid tag.</span>
+                    {/if}
+                  {/if}
+                {:else}
+                  {@const selected = blueprintTagSelected?.find(
+                    (selected) =>
+                      selected.value === `$${blueprintTagInputValue}`,
+                  )}
+                  <Combobox.Item
+                    class="flex cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                    value={selected?.value}
+                    label={selected?.label}
+                  >
+                    #{selected?.label}
+                    <Combobox.ItemIndicator>
+                      <span class="icon-[tabler--check]">selected</span>
+                    </Combobox.ItemIndicator>
+                  </Combobox.Item>
+                {/if}
+              </Combobox.Content>
+              <Combobox.HiddenInput {...attrs} bind:value={$formData.tags} />
+            </Combobox.Root>
+          </div>
+        </Control>
+        <FieldErrors class="text-error" />
+      </Field>
+
+      <Field {form} name="description" let:constraints>
+        <Control let:attrs>
+          <Label class="{input.group()} max-h-none !items-start">
+            <span class="icon-[tabler--align-left] my-4">Description</span>
+            <textarea
+              class="{input.field()} min-h-14 py-4"
+              rows="10"
+              placeholder="Description"
+              {...attrs}
+              {...constraints}
+              bind:value={$formData.description}
+            />
+            <Tooltip.Root>
+              <Tooltip.Trigger
+                class="{button({
+                  kind: 'ghost',
+                  intent: 'muted',
+                  size: 'icon-sm',
+                })} my-3"
+              >
+                <span class="icon-[tabler--info-circle]" />
+              </Tooltip.Trigger>
+              <Tooltip.Content class="max-w-60 rounded-md border bg-layer p-2">
+                <p>
+                  The description has a max. length of {BLUEPRINT_DESCRIPTION_MAX_LENGTH}.
+                </p>
+              </Tooltip.Content>
+            </Tooltip.Root>
+          </Label>
+        </Control>
+        <FieldErrors class="text-error" />
+      </Field>
+    </Collapsible.Content>
+  </Collapsible.Root>
+
+  <Button.Root
+    class={button({ intent: 'primary', block: true })}
     aria-roledescription="submit"
     on:click={onSubmit}
   >
-    {data.type === 'create' ? 'Upload' : 'Update'}
-  </Button>
+    {#if data.type === 'create'}
+      <span class="icon-[tabler--upload]" />
+      Upload
+    {:else if data.type === 'update'}
+      <span class="icon-[tabler--refresh]" />
+      Update
+    {/if}
+  </Button.Root>
 </form>
 
 <AlertDialog.Root open={!!leaveUrl}>
-  <AlertDialog.Content>
-    <AlertDialog.Header>
-      <AlertDialog.Title>Are you sure you want to leave?</AlertDialog.Title>
-      <AlertDialog.Description
-        >Unsaved changes will be lost.</AlertDialog.Description
-      >
-    </AlertDialog.Header>
-    <AlertDialog.Footer>
-      <AlertDialog.Cancel on:click={() => (leaveUrl = undefined)}
-        >Cancel</AlertDialog.Cancel
-      >
-      <AlertDialog.Action
-        class={buttonVariants({ variant: 'destructive' })}
-        on:click={async () => {
-          if (!leaveUrl) return;
+  <AlertDialog.Portal>
+    <AlertDialog.Overlay
+      class={dialog.overlay()}
+      transition={fade}
+      transitionConfig={{ duration: 150 }}
+    />
+    <AlertDialog.Content class={dialog.content({ position: 'center' })}>
+      <div class="relative rounded-lg border bg-layer p-4">
+        <AlertDialog.Title class="heading-4" level="h2"
+          >Unsaved changes will be lost!</AlertDialog.Title
+        >
 
-          await goto(leaveUrl);
-          leaveUrl = undefined;
-        }}
-      >
-        Leave
-      </AlertDialog.Action>
-    </AlertDialog.Footer>
-  </AlertDialog.Content>
+        <div class="flex items-center justify-end gap-2">
+          <AlertDialog.Cancel
+            class={button({ intent: 'accent', kind: 'outline' })}
+            on:click={() => (leaveUrl = undefined)}>Cancel</AlertDialog.Cancel
+          >
+          <AlertDialog.Action
+            class={button({ intent: 'error' })}
+            on:click={async () => {
+              if (!leaveUrl) return;
+
+              await goto(leaveUrl);
+              leaveUrl = undefined;
+            }}
+          >
+            Leave
+          </AlertDialog.Action>
+        </div>
+      </div>
+    </AlertDialog.Content>
+  </AlertDialog.Portal>
 </AlertDialog.Root>

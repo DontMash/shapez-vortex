@@ -34,3 +34,9 @@ export const toBlob = (canvas: HTMLCanvasElement, type: string = 'image/webp') =
       resolve(blob);
     }, type);
   });
+
+export const toFileList = (files: Array<File>) => {
+  const data = new DataTransfer();
+  files.forEach(file => data.items.add(file));
+  return data.files;
+}
