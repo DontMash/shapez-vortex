@@ -27,16 +27,21 @@ export const load = (async ({ depends, locals, params }) => {
     if (locals.user) {
       user = await locals.pb.collection('users').getOne<User>(locals.user?.id);
     }
-    if (
-      locals.user &&
-      locals.user.verified &&
-      locals.user.id !== blueprint.creator
-    ) {
-      const pb = new PocketBase(POCKETBASE_URL);
-      await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
-      await pb
-        .collection('blueprints')
-        .update(blueprint.id, { 'viewCount+': 1 });
+
+    try {
+      if (
+        locals.user &&
+        locals.user.verified &&
+        locals.user.id !== blueprint.creator
+      ) {
+        const pb = new PocketBase(POCKETBASE_URL);
+        await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
+        await pb
+          .collection('blueprints')
+          .update(blueprint.id, { 'viewCount+': 1 });
+      }
+    } catch (err) {
+      console.error(err);
     }
 
     depends('blueprint:update');
