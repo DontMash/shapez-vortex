@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AlertDialog, Select } from 'bits-ui';
+  import { AlertDialog, Button, Select } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { fade, blur } from 'svelte/transition';
   import { superForm, type SuperValidated } from 'sveltekit-superforms';
@@ -140,26 +140,23 @@
 
             <Field form={reportForm} name="message" let:constraints>
               <Control let:attrs>
-                <Label
-                  class="{input.group()} relative inline-grid overflow-y-auto whitespace-pre-wrap break-all after:invisible after:col-start-1 after:row-start-1 after:py-2 after:content-[attr(data-value)]"
-                >
-                  <span class="sr-only">Message</span>
+                <Label class="{input.group()} max-h-none !items-start">
+                  <span class="icon-[tabler--align-left] my-4">Message</span>
                   <textarea
-                    class="{input.field()} col-start-1 row-start-1 min-w-64 resize-none overflow-hidden py-2"
+                    class="{input.field()} min-h-14 max-h-[50vh] py-4"
+                    rows="10"
                     placeholder="Message"
-                    rows={1}
                     {...attrs}
                     {...constraints}
-                    oninput="this.parentNode.dataset.value = this.value"
-                    onfocus="this.parentNode.dataset.value = this.value"
-                  ></textarea>
+                    bind:value={$formData.message}
+                  />
                 </Label>
               </Control>
               <FieldErrors class="text-error" />
             </Field>
 
             <div class="flex items-center gap-2">
-              <button class={button({ intent: 'error' })} type="submit">
+              <Button.Root class={button({ intent: 'error' })} type="submit">
                 <span class="icon-[tabler--flag]" />
                 Report
                 {#if $delayed}
@@ -168,7 +165,7 @@
                     transition:fade={{ duration: 150 }}
                   />
                 {/if}
-              </button>
+              </Button.Root>
               <AlertDialog.Cancel
                 class={button({ kind: 'outline', intent: 'muted' })}
               >
