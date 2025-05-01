@@ -2,24 +2,22 @@
   import type { PageData } from './$types';
 
   import BlueprintForm from '$lib/components/blueprint/BlueprintForm.svelte';
+  import { section } from '$lib/components/section';
+
+  import PageHeader from '$lib/components/PageHeader.svelte';
 
   export let data: PageData;
 </script>
 
-<section class="mx-auto w-full max-w-5xl px-4 lg:px-0">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-input px-4 pb-4"
-  >
-    <hgroup>
-      <h2 class="text-lg font-bold">
-        <span class="icon-[tabler--edit] align-text-bottom text-2xl">Edit</span>
-        {data.seo.title}
-      </h2>
-      <p>
-        {data.seo.description}
-      </p>
-    </hgroup>
-  </header>
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--edit] heading-2" />
+    {data.seo.title}
+
+    <svelte:fragment slot="description">
+      {data.seo.description}
+    </svelte:fragment>
+  </PageHeader>
 
   <BlueprintForm
     data={{
