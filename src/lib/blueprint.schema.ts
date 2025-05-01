@@ -27,6 +27,7 @@ export const BLUEPRINT_IMAGE_TYPES = [
   'image/jpeg',
   'image/png',
   'image/gif',
+  'image/webp',
 ] as const;
 type BlueprintImageType = (typeof BLUEPRINT_IMAGE_TYPES)[number];
 export const BLUEPRINT_IMAGES_MAX = 4;
@@ -66,8 +67,8 @@ const BLUEPRINT_IMAGES_SCHEMA = z
     `Accepted image formats are: ${BLUEPRINT_IMAGE_TYPES.join(', ')}`,
   )
   .array()
-  .refine(
-    (value) => value.length <= BLUEPRINT_IMAGES_MAX,
+  .max(
+    BLUEPRINT_IMAGES_MAX,
     `Max. amount of images is ${BLUEPRINT_IMAGES_MAX}`,
   );
 const BLUEPRINT_TAGS_SCHEMA = z
