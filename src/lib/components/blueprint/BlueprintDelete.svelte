@@ -1,6 +1,7 @@
 <script lang="ts">
   import { AlertDialog } from 'bits-ui';
   import { blur, fade } from 'svelte/transition';
+  import { enhance } from '$app/forms';
   import type { BlueprintRecord } from '$lib/blueprint.types';
 
   import { button } from '$lib/components/button';
@@ -61,7 +62,13 @@
           </AlertDialog.Description>
 
           <div class="flex items-center gap-2">
-            <form method="post" action="/blueprint/{blueprint.id}/?/delete">
+            <form
+              use:enhance={() => {
+                isDeleteDialogOpen = false;
+              }}
+              method="post"
+              action="/blueprint/{blueprint.id}/?/delete"
+            >
               <button class={button({ intent: 'error' })} type="submit">
                 <span class="icon-[tabler--trash]" />
                 Delete

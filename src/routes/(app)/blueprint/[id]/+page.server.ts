@@ -45,7 +45,7 @@ export const actions = {
     const form = await superValidate(zod(REPORT_CREATE_SCHEMA));
     return { form };
   },
-  delete: async ({ locals, params }) => {
+  delete: async ({ locals, params, request }) => {
     if (!locals.user) {
       return error(401);
     }
@@ -55,7 +55,13 @@ export const actions = {
     }
 
     await locals.pb.collection('blueprints').delete(id);
-    return redirect(303, '/blueprint/search');
+
+    const referrer = request.headers.get('referer') ?? '';
+    if (referrer.includes(id)) {
+      return redirect(303, '/blueprint/search');
+    } else {
+      return id
+    }
   },
   report: async ({ locals, request }) => {
     if (!locals.user) {
