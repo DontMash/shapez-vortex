@@ -8,6 +8,7 @@ export const button = cva(
     'focus-visible:outline-2',
     'focus-visible:outline',
     'transition',
+    'cursor-pointer',
   ],
   {
     variants: {
