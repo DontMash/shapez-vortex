@@ -1,7 +1,11 @@
 <script lang="ts">
+  import type { LayoutData } from './$types';
   import { page } from '$app/stores';
   import { capitalize } from '$lib/utils';
-  import type { LayoutData } from './$types';
+
+  import { button } from '$lib/components/button';
+  import { section } from '$lib/components/section';
+  import PageHeader from '$lib/components/PageHeader.svelte';
 
   export let data: LayoutData;
 
@@ -11,16 +15,24 @@
 </script>
 
 <section
-  class="mx-auto grid w-full max-w-5xl grid-cols-1 gap-8 px-4 md:grid-cols-[15rem_1fr] md:gap-4 lg:px-0"
+  class="{section()} grid grid-cols-1 gap-8 md:grid-cols-[15rem_1fr] md:gap-4"
 >
-  <aside>
+  <aside class="space-y-2">
+    <p class="heading-3">
+      @{data.user?.displayname}
+    </p>
+
     <nav>
       {#key $page.url}
-        <ul class="menu space-y-2 py-0 pl-0 pr-4">
+        <ul class="space-y-2">
           {#each data.pages as page}
             <li>
               <a
-                class={isCurrent(page.path) ? 'bg-base-300/20' : ''}
+                class="{button({
+                  kind: 'ghost',
+                  intent: 'muted',
+                  size: 'sm',
+                })} {isCurrent(page.path) ? 'bg-muted text-foreground' : ''}"
                 href={page.path}>{capitalize(page.name)}</a
               >
             </li>
@@ -32,14 +44,12 @@
 
   <div>
     {#if $page.data.seo}
-      <header
-        class="border-base-content/20 mb-12 flex w-full items-end space-x-4 border-b px-4 pb-4"
-      >
-        <h2 class="text-lg font-bold">
-          {$page.data.seo.title}
-        </h2>
-      </header>
+      <PageHeader>
+        <span class="icon-[tabler--settings] heading-2" />
+        {$page.data.seo.title}
+      </PageHeader>
     {/if}
+
     <slot />
   </div>
 </section>
