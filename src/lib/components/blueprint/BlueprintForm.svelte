@@ -78,7 +78,7 @@
   $: {
     try {
       blueprint =
-        $formData.data && isBlueprintIdentifier($formData.data)
+        blueprintPreview && $formData.data && isBlueprintIdentifier($formData.data)
           ? decode($formData.data)
           : undefined;
     } catch {
