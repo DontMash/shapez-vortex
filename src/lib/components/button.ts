@@ -5,17 +5,18 @@ export const button = cva(
     'justify-center',
     'items-center',
     'gap-2',
-    'focus-visible:outline-2',
-    'focus-visible:outline',
     'transition',
     'cursor-pointer',
+    'focus-visible:outline',
+    'focus-visible:outline-2',
+    'disabled:cursor-not-allowed',
   ],
   {
     variants: {
       kind: {
         fill: [],
         outline: [],
-        ghost: ['border-transparent'],
+        ghost: ['border-transparent', 'disabled:text-muted-foreground', 'disabled:bg-transparent'],
         link: [
           'rounded-2xs',
           'hover:underline',
