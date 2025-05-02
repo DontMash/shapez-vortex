@@ -60,7 +60,7 @@ export const actions = {
     if (referrer.includes(id)) {
       return redirect(303, '/blueprint/search');
     } else {
-      return id
+      return id;
     }
   },
   report: async ({ locals, request }) => {

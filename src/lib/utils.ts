@@ -25,7 +25,10 @@ export const debounce = (fn: () => void, wait: number) => {
   return debounced;
 };
 
-export const toBlob = (canvas: HTMLCanvasElement, type: string = 'image/webp') =>
+export const toBlob = (
+  canvas: HTMLCanvasElement,
+  type: string = 'image/webp',
+) =>
   new Promise<Blob>((resolve, reject) => {
     canvas.toBlob((blob) => {
       if (!blob) {
@@ -37,6 +40,6 @@ export const toBlob = (canvas: HTMLCanvasElement, type: string = 'image/webp') =
 
 export const toFileList = (files: Array<File>) => {
   const data = new DataTransfer();
-  files.forEach(file => data.items.add(file));
+  files.forEach((file) => data.items.add(file));
   return data.files;
-}
+};

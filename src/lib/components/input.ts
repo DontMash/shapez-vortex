@@ -19,7 +19,11 @@ export const group = cva(
     variants: {
       type: {
         text: ['cursor-text'],
-        file: ['cursor-pointer', 'hover:bg-foreground', 'hover:text-background'],
+        file: [
+          'cursor-pointer',
+          'hover:bg-foreground',
+          'hover:text-background',
+        ],
       },
       size: {
         sm: ['min-h-8', 'px-2'],

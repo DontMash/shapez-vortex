@@ -143,7 +143,7 @@
                 <Label class="{input.group()} max-h-none !items-start">
                   <span class="icon-[tabler--align-left] my-4">Message</span>
                   <textarea
-                    class="{input.field()} min-h-14 max-h-[50vh] py-4"
+                    class="{input.field()} max-h-[50vh] min-h-14 py-4"
                     rows="10"
                     placeholder="Message"
                     {...attrs}

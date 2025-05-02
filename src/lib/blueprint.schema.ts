@@ -73,15 +73,23 @@ const BLUEPRINT_TAGS_SCHEMA = z
   .string()
   .transform((value, ctx): Array<string> => {
     try {
-      return JSON.parse(value)
+      return JSON.parse(value);
     } catch (e) {
-      ctx.addIssue({ code: 'custom', message: 'Invalid JSON' })
-      return z.NEVER
+      ctx.addIssue({ code: 'custom', message: 'Invalid JSON' });
+      return z.NEVER;
     }
   })
-  .refine((value) => value.reduce((result, value) => result && (!value.startsWith(BLUEPRINT_TAG_NEW_SYMBOL) || BLUEPRINT_TAG_REGEX.test(value.slice(1))), true),
+  .refine(
+    (value) =>
+      value.reduce(
+        (result, value) =>
+          result &&
+          (!value.startsWith(BLUEPRINT_TAG_NEW_SYMBOL) ||
+            BLUEPRINT_TAG_REGEX.test(value.slice(1))),
+        true,
+      ),
     'String must only contain these characters: "A-Za-z0-9_-"',
-  )
+  );
 export const BLUEPRINT_FORM_SCHEMA = z.object({
   title: BLUEPRINT_TITLE_SCHEMA,
   description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
