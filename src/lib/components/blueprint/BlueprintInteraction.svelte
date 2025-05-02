@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { enhance } from '$app/forms';
   import { Button } from 'bits-ui';
   import type { SuperValidated } from 'sveltekit-superforms';
   import { z } from 'zod';
@@ -40,6 +41,7 @@
       class="contents"
       action="/blueprint/{blueprint.id}/?/bookmark"
       method="post"
+      use:enhance
     >
       <button
         class={button({
