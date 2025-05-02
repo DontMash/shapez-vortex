@@ -74,7 +74,7 @@ const BLUEPRINT_TAGS_SCHEMA = z
   .transform((value, ctx): Array<string> => {
     try {
       return JSON.parse(value);
-    } catch (e) {
+    } catch {
       ctx.addIssue({ code: 'custom', message: 'Invalid JSON' });
       return z.NEVER;
     }
