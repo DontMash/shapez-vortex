@@ -16,7 +16,11 @@ export const button = cva(
       kind: {
         fill: [],
         outline: [],
-        ghost: ['border-transparent', 'disabled:text-muted-foreground', 'disabled:bg-transparent'],
+        ghost: [
+          'border-transparent',
+          'disabled:text-muted-foreground',
+          'disabled:bg-transparent',
+        ],
         link: [
           'rounded-2xs',
           'hover:underline',

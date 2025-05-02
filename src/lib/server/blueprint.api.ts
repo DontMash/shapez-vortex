@@ -15,7 +15,10 @@ import {
 } from '$lib/blueprint.schema';
 import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
 import type { User } from '$lib/user.types';
-import { PAGINATION_PAGE_DEFAULT, PAGINATION_PER_PAGE_DEFAULT } from '$lib/search';
+import {
+  PAGINATION_PAGE_DEFAULT,
+  PAGINATION_PER_PAGE_DEFAULT,
+} from '$lib/search';
 
 type BlueprintGetOptions = {
   query: string;
@@ -206,7 +209,9 @@ export const getBlueprintOptions = (url: URL): BlueprintGetOptions => {
     query: url.searchParams.get('query') ?? '',
     filter,
     page: Number(url.searchParams.get('page') ?? DEFAULT_GET_OPTIONS.page),
-    perPage: Number(url.searchParams.get('perPage') ?? DEFAULT_GET_OPTIONS.perPage),
+    perPage: Number(
+      url.searchParams.get('perPage') ?? DEFAULT_GET_OPTIONS.perPage,
+    ),
   };
   const sort = url.searchParams.get('sort');
   if (sort) {
