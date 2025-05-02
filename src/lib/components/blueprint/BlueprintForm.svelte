@@ -718,7 +718,6 @@
 
   <Button.Root
     class={button({ intent: 'primary', block: true })}
-    aria-roledescription="submit"
     on:click={onSubmit}
   >
     {#if data.type === 'create'}
