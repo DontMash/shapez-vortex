@@ -7,7 +7,7 @@ import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
 const USER_UPDATE_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({ email: true });
 
 export const load = (async () => {
-  const form = await superValidate(zod(USER_UPDATE_SCHEMA))
+  const form = await superValidate(zod(USER_UPDATE_SCHEMA));
 
   return {
     seo: {
@@ -39,9 +39,7 @@ export const actions = {
       return fail(400, { form });
     }
 
-    await locals.pb
-      .collection('users')
-      .requestEmailChange(form.data.email);
+    await locals.pb.collection('users').requestEmailChange(form.data.email);
     return redirect(303, '/login');
   },
 } satisfies Actions;

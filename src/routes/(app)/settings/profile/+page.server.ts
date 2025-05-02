@@ -4,10 +4,12 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
 
-const USER_UPDATE_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({ displayname: true });
+const USER_UPDATE_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({
+  displayname: true,
+});
 
 export const load = (async () => {
-  const form = await superValidate(zod(USER_UPDATE_SCHEMA))
+  const form = await superValidate(zod(USER_UPDATE_SCHEMA));
 
   return {
     seo: {
@@ -21,7 +23,7 @@ export const load = (async () => {
 
 export const actions = {
   default: async ({ locals, request }) => {
-    const form = await superValidate(request, zod(USER_UPDATE_SCHEMA))
+    const form = await superValidate(request, zod(USER_UPDATE_SCHEMA));
 
     if (!locals.user) {
       return fail(401, { form });
