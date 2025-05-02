@@ -15,6 +15,7 @@ import {
 } from '$lib/blueprint.schema';
 import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
 import type { User } from '$lib/user.types';
+import { PAGINATION_PAGE_DEFAULT, PAGINATION_PER_PAGE_DEFAULT } from '$lib/search';
 
 type BlueprintGetOptions = {
   query: string;
@@ -36,14 +37,12 @@ const GET_FIELDS = [
   'expand.tags.name',
   'expand.creator.displayname',
 ];
-const DEFAULT_GET_PAGE = 1;
-const DEFAULT_GET_PAGE_ENTRIES = 10;
 const DEFAULT_GET_OPTIONS: BlueprintGetOptions = {
   query: '',
   sort: 'created',
   order: 'desc',
-  page: DEFAULT_GET_PAGE,
-  perPage: DEFAULT_GET_PAGE_ENTRIES,
+  page: PAGINATION_PAGE_DEFAULT,
+  perPage: PAGINATION_PER_PAGE_DEFAULT,
 };
 
 export const get = async (pb: PocketBase, options?: BlueprintGetOptions) => {
@@ -191,7 +190,7 @@ const getBlueprintFormData = (
   return formData;
 };
 
-export const getBlueprintOptions = (url: URL) => {
+export const getBlueprintOptions = (url: URL): BlueprintGetOptions => {
   const filterParams = String(url.searchParams.get('filter'));
   const filterEntries = filterParams.split(';');
   const filter = filterEntries.reduce<Record<string, Array<string>>>(
@@ -206,8 +205,8 @@ export const getBlueprintOptions = (url: URL) => {
   const options: BlueprintGetOptions = {
     query: url.searchParams.get('query') ?? '',
     filter,
-    page: Number(url.searchParams.get('page')),
-    perPage: Number(url.searchParams.get('perPage')),
+    page: Number(url.searchParams.get('page') ?? DEFAULT_GET_OPTIONS.page),
+    perPage: Number(url.searchParams.get('perPage') ?? DEFAULT_GET_OPTIONS.perPage),
   };
   const sort = url.searchParams.get('sort');
   if (sort) {
