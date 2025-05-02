@@ -2,7 +2,6 @@ import { fontFamily } from 'tailwindcss/defaultTheme';
 import plugin from 'tailwindcss/plugin';
 import aspectRatio from '@tailwindcss/aspect-ratio';
 import typography from '@tailwindcss/typography';
-import scrollbarHide from 'tailwind-scrollbar-hide';
 import { addDynamicIconSelectors } from '@iconify/tailwind';
 
 /** @type {import('tailwindcss').Config} */
@@ -169,7 +168,6 @@ const config = {
   plugins: [
     aspectRatio,
     typography,
-    scrollbarHide,
     addDynamicIconSelectors(),
     plugin(({ addComponents, theme }) => {
       addComponents({
