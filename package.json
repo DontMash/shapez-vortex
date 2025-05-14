@@ -18,7 +18,7 @@
     "format": "prettier --write src"
   },
   "dependencies": {
-    "@fontsource-variable/outfit": "^5.1.1",
+    "@fontsource-variable/outfit": "^5.2.5",
     "@threlte/core": "^8.0.2",
     "@threlte/extras": "^9.1.4",
     "bits-ui": "^1.4.3",
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.2.9",
     "@eslint/js": "^9.26.0",
-    "@iconify-json/simple-icons": "^1.2.33",
+    "@iconify-json/simple-icons": "^1.2.34",
     "@iconify-json/tabler": "^1.2.17",
     "@iconify/tailwind": "^1.1.2",
     "@sveltejs/adapter-auto": "^6.0.0",
