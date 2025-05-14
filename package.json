@@ -21,7 +21,7 @@
     "@fontsource-variable/outfit": "^5.2.5",
     "@threlte/core": "^8.0.4",
     "@threlte/extras": "^9.2.1",
-    "bits-ui": "^1.4.3",
+    "bits-ui": "^1.4.8",
     "class-variance-authority": "^0.7.1",
     "formsnap": "^2.0.1",
     "pako": "^2.1.0",
@@ -31,8 +31,8 @@
     "swiper": "^11.2.1",
     "three": "^0.176.0",
     "three-custom-shader-material": "^5.4.0",
-    "ua-parser-js": "^1.0.37",
-    "zod": "^3.24.3"
+    "ua-parser-js": "1.0.40",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.9",
@@ -46,7 +46,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.16",
     "@threlte/gltf": "^3.0.1",
-    "@types/pako": "^2.0.0",
+    "@types/pako": "^2.0.3",
     "@types/three": "^0.176.0",
     "@types/ua-parser-js": "^0.7.39",
     "@vitest/coverage-v8": "^3.1.3",
