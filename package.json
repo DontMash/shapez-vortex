@@ -23,7 +23,6 @@
     "@threlte/extras": "^9.1.4",
     "bits-ui": "^1.4.3",
     "class-variance-authority": "^0.7.1",
-    "cmdk-sv": "^0.0.18",
     "formsnap": "^2.0.1",
     "pako": "^2.1.0",
     "pocketbase": "^0.21.0",
