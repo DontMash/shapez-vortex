@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { LayoutData } from './$types';
+  import type { LayoutProps } from './$types';
   import { page } from '$app/stores';
   import { capitalize } from '$lib/utils';
 
@@ -7,7 +7,7 @@
   import { section } from '$lib/components/section';
   import PageHeader from '$lib/components/PageHeader.svelte';
 
-  export let data: LayoutData;
+  let { data, children }: LayoutProps = $props();
 
   function isCurrent(path: string): boolean {
     return $page.url.pathname.includes(path);
@@ -25,7 +25,7 @@
     <nav>
       {#key $page.url}
         <ul class="space-y-2">
-          {#each data.pages as page}
+          {#each data.pages as page (page.path)}
             <li>
               <a
                 class="{button({
@@ -45,11 +45,11 @@
   <div>
     {#if $page.data.seo}
       <PageHeader>
-        <span class="icon-[tabler--settings] heading-2" />
+        <span class="icon-[tabler--settings] heading-2"></span>
         {$page.data.seo.title}
       </PageHeader>
     {/if}
 
-    <slot />
+    {@render children?.()}
   </div>
 </section>

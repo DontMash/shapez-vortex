@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from 'bits-ui';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import type { BlueprintRecord } from '$lib/blueprint.types';
 
   import BlueprintInteraction from './BlueprintInteraction.svelte';
@@ -8,8 +8,12 @@
   import { button } from '$lib/components/button';
   import UserTag from '$lib/components/UserTag.svelte';
 
-  export let data: Pick<BlueprintRecord, 'id' | 'title' | 'creator' | 'expand'>;
-  export let image: string;
+  interface Props {
+    data: Pick<BlueprintRecord, 'id' | 'title' | 'creator' | 'expand'>;
+    image: string;
+  }
+
+  let { data, image }: Props = $props();
 </script>
 
 <article
@@ -36,7 +40,7 @@
       {/if}
 
       <div class="ml-auto flex items-center gap-4">
-        <BlueprintInteraction user={$page.data.user} blueprint={data} />
+        <BlueprintInteraction user={page.data.user} blueprint={data} />
       </div>
     </div>
 
@@ -48,7 +52,7 @@
 
     {#if data.expand && data.expand['tags']}
       <ul class="flex items-center gap-2">
-        {#each data.expand['tags'] as tag}
+        {#each data.expand['tags'] as tag (tag.id)}
           <li class="shrink-0">
             <BlueprintTag data={tag} />
           </li>

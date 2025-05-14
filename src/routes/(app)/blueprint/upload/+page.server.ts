@@ -34,6 +34,7 @@ export const actions = {
     }
 
     const form = await superValidate(request, zod(BLUEPRINT_FORM_SCHEMA));
+
     if (!form.valid) {
       return fail(400, withFiles({ form }));
     }

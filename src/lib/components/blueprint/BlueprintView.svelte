@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { Canvas, T, type ThrelteContext } from '@threlte/core';
+  import { Canvas, T } from '@threlte/core';
   import { OrbitControls } from '@threlte/extras';
   import { DropdownMenu } from 'bits-ui';
   import screenfull from 'screenfull';
+  import { tick } from 'svelte';
   import { blur } from 'svelte/transition';
-  import { MOUSE } from 'three';
+  import { MOUSE, NoToneMapping, WebGLRenderer } from 'three';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
   import {
     BLUEPRINT_FILE_FORMAT,
@@ -20,9 +21,9 @@
   import { fullscreen } from '$lib/client/actions/fullscreen';
   import { add } from '$lib/client/toast.service';
 
-  import BlueprintBuilding from './BlueprintBuilding.svelte';
-
   import { button } from '$lib/components/button';
+
+  import BlueprintBuilding from './BlueprintBuilding.svelte';
 
   type ControlOptions = {
     download?: boolean;
@@ -31,32 +32,46 @@
     utils?: boolean;
   };
 
-  export let identifier: BlueprintIdentifier;
-  export let blueprint: Blueprint | undefined;
-  export let title: string = 'Untitled blueprint';
-  export let controls: ControlOptions = {
-    download: false,
-    upload: false,
-    zoom: true,
-    utils: true,
-  };
+  interface Props {
+    identifier: BlueprintIdentifier;
+    blueprint: Blueprint | undefined;
+    title?: string;
+    controls?: ControlOptions;
+  }
 
-  let ctx: ThrelteContext | undefined;
-  let viewer: HTMLElement | undefined;
-  let orbitControls: OrbitControls | undefined;
+  let {
+    identifier,
+    blueprint,
+    title = 'Untitled blueprint',
+    controls = {
+      download: false,
+      upload: false,
+      zoom: true,
+      utils: true,
+    },
+  }: Props = $props();
+
+  let canvasElement: HTMLCanvasElement | undefined = $state();
+  let viewer: HTMLElement | undefined = $state();
+  let orbitControls: OrbitControlsType | undefined = $state();
   let isFullscreen = false;
+  let uploadIdentifier: string | undefined = $state();
 
   function reset() {
     if (!orbitControls) return;
 
-    const ref = orbitControls.ref as OrbitControlsType;
+    const ref = orbitControls;
     ref.enableDamping = false;
     ref.reset();
     ref.enableDamping = true;
   }
-  function onFileChange(event: Event) {
+  async function onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    input.form?.submit();
+    if (!input.files) {
+      return;
+    }
+    uploadIdentifier = await input.files[0].text();
+    tick().then(() => input.form?.requestSubmit());
   }
   function onPaste(event: Event) {
     const customEvent = event as CustomEvent<string>;
@@ -86,9 +101,9 @@
     ];
   }
 
-  export function canvas() {
-    return ctx?.renderer.domElement;
-  }
+  export const canvas = () => {
+    return canvasElement;
+  };
 </script>
 
 <figure
@@ -104,7 +119,7 @@
           <form
             class="contents"
             method="post"
-            action="/blueprint/?/upload"
+            action="/blueprint/?/view"
             enctype="multipart/form-data"
           >
             <label
@@ -117,12 +132,12 @@
               <input
                 class="sr-only"
                 id="blueprint-file"
-                name="file"
                 type="file"
                 accept={BLUEPRINT_FILE_FORMAT}
                 required
-                on:change={(event) => onFileChange(event)}
+                onchange={(event) => onFileChange(event)}
               />
+              <input type="hidden" name="identifier" value={uploadIdentifier} />
               <span class="icon-[tabler--file-upload]">Load blueprint</span>
             </label>
           </form>
@@ -135,6 +150,9 @@
               value={identifier}
               required
             />
+            {#if title}
+              <input name="title" type="hidden" value={title} required />
+            {/if}
             <button
               class={button({ intent: 'accent', size: 'icon' })}
               title="Download blueprint"
@@ -151,8 +169,8 @@
               title="Paste blueprint"
               type="button"
               use:paste
-              on:paste={(event) => onPaste(event)}
-              on:error={(event) =>
+              onpaste={(event) => onPaste(event)}
+              onerror={(event) =>
                 add({
                   message: event.detail.message,
                   type: 'ERROR',
@@ -167,8 +185,8 @@
             class={button({ intent: 'accent', size: 'icon' })}
             title="Copy blueprint"
             use:copy={{ value: identifier }}
-            on:copy={() => add({ message: 'Content copied' })}
-            on:error={(event) =>
+            oncopy={() => add({ message: 'Content copied' })}
+            onerror={(event) =>
               add({
                 message: event.detail.message,
                 type: 'ERROR',
@@ -180,7 +198,7 @@
       {/if}
 
       {#if controls.utils}
-        <DropdownMenu.Root preventScroll={false} portal={viewer}>
+        <DropdownMenu.Root>
           <DropdownMenu.Trigger
             class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
           >
@@ -188,58 +206,75 @@
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content
-            class="z-20 h-fit w-fit space-y-1 rounded-md border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
-            transition={blur}
-            transitionConfig={{ duration: 150 }}
+            class="z-20 h-fit w-fit space-y-1 rounded-md border bg-layer p-2 shadow-lg outline-none backdrop-blur-lg"
             sideOffset={16}
             align="end"
-            alignOffset={8}
+            alignOffset={-8}
+            forceMount
           >
-            <DropdownMenu.Item asChild let:builder>
-              <button
-                class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-                title="Capture blueprint"
-                use:capture={{
-                  captureElement:
-                    ctx?.renderer.domElement ??
-                    document.createElement('canvas'),
-                  filename: title,
-                }}
-                {...builder}
-              >
-                <span class="icon-[tabler--camera] text-lg" />
-                Take picture
-              </button>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild let:builder>
-              <button
-                class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-                type="button"
-                title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
-                use:fullscreen={{ fullscreenElement: viewer }}
-                on:error={(event) =>
-                  add({ message: event.detail.message, type: 'ERROR' })}
-                {...builder}
-              >
-                {#if screenfull.isFullscreen}
-                  <span class="icon-[tabler--maximize-off] text-lg" />
-                {:else}
-                  <span class="icon-[tabler--maximize] text-lg" />
-                {/if}
-                Fullscreen
-              </button>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild let:builder>
-              <button
-                class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-                title="Reset controls"
-                on:click={() => reset()}
-                {...builder}
-              >
-                <span class="icon-[tabler--reload] text-lg" />
-                Reset
-              </button>
-            </DropdownMenu.Item>
+            {#snippet child({ wrapperProps, props, open })}
+              {#if open}
+                <div {...wrapperProps}>
+                  <div {...props} transition:blur={{ duration: 150 }}>
+                    <DropdownMenu.Item>
+                      {#snippet child({ props })}
+                        <button
+                          class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                          title="Capture blueprint"
+                          use:capture={{
+                            captureElement: canvasElement!,
+                            filename: title,
+                          }}
+                          {...props}
+                        >
+                          <span class="icon-[tabler--camera] text-lg"></span>
+                          Take picture
+                        </button>
+                      {/snippet}
+                    </DropdownMenu.Item>
+                    {#if viewer}
+                      <DropdownMenu.Item>
+                        {#snippet child({ props })}
+                          <button
+                            class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                            type="button"
+                            title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
+                            use:fullscreen={{ fullscreenElement: viewer! }}
+                            onerror={(event) =>
+                              add({
+                                message: event.detail.message,
+                                type: 'ERROR',
+                              })}
+                            {...props}
+                          >
+                            {#if screenfull.isFullscreen}
+                              <span class="icon-[tabler--maximize-off] text-lg"
+                              ></span>
+                            {:else}
+                              <span class="icon-[tabler--maximize] text-lg"
+                              ></span>
+                            {/if}
+                            Fullscreen
+                          </button>
+                        {/snippet}
+                      </DropdownMenu.Item>
+                    {/if}
+                    <DropdownMenu.Item onSelect={() => reset()}>
+                      {#snippet child({ props })}
+                        <button
+                          class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                          title="Reset controls"
+                          {...props}
+                        >
+                          <span class="icon-[tabler--reload] text-lg"></span>
+                          Reset
+                        </button>
+                      {/snippet}
+                    </DropdownMenu.Item>
+                  </div>
+                </div>
+              {/if}
+            {/snippet}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       {/if}
@@ -249,7 +284,17 @@
   <div
     class="h-full overflow-hidden rounded-lg border bg-background shadow-lg outline-none transition"
   >
-    <Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
+    <Canvas
+      toneMapping={NoToneMapping}
+      createRenderer={(canvas) => {
+        canvasElement = canvas;
+        return new WebGLRenderer({
+          canvas,
+          alpha: true,
+          preserveDrawingBuffer: true,
+        });
+      }}
+    >
       <T.PerspectiveCamera makeDefault position={[0, 15, 15]} fov={55}>
         <OrbitControls
           enableDamping
@@ -262,7 +307,7 @@
             LEFT: MOUSE.PAN,
             RIGHT: MOUSE.ROTATE,
           }}
-          bind:this={orbitControls}
+          bind:ref={orbitControls}
         />
       </T.PerspectiveCamera>
 
@@ -285,16 +330,16 @@
 
       {#if blueprint}
         {#if blueprint.BP.$type === 'Building'}
-          {#each blueprint.BP.Entries as buildingEntry}
+          {#each blueprint.BP.Entries as buildingEntry (buildingEntry)}
             <BlueprintBuilding entry={buildingEntry} />
           {/each}
         {/if}
         {#if blueprint.BP.$type === 'Island'}
-          {#each blueprint.BP.Entries as islandEntry}
+          {#each blueprint.BP.Entries as islandEntry (islandEntry)}
             <T.Group position={getBlueprintIslandPosition(islandEntry)}>
               {@const islandBlueprint = islandEntry.B}
               {#if islandBlueprint}
-                {#each islandBlueprint.Entries as buildingEntry}
+                {#each islandBlueprint.Entries as buildingEntry (buildingEntry)}
                   <BlueprintBuilding entry={buildingEntry} />
                 {/each}
               {/if}

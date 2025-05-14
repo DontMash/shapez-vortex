@@ -1,121 +1,155 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
-  import { Control, Field, FieldErrors, Label } from 'formsnap';
-  import { superForm } from 'sveltekit-superforms';
+  import { decode, encode } from '$lib/blueprint';
+  import {
+    BLUEPRINT_FILE_FORMAT,
+    type Blueprint,
+    type BlueprintIdentifier,
+  } from '$lib/blueprint.types';
+  import { add } from '$lib/client/toast.service';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
-  import PageHeader from '$lib/components/PageHeader.svelte';
   import { section } from '$lib/components/section';
 
-  export let data: PageData;
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import { copy, paste } from '$lib/client/actions/clipboard';
 
-  const decodeForm = superForm(data.decodeForm, {
-    resetForm: true,
+  let { data }: PageProps = $props();
+
+  let blueprintImportIdentifier: BlueprintIdentifier | undefined = $state();
+  const blueprintImportData: Blueprint | undefined = $derived(
+    blueprintImportIdentifier ? decode(blueprintImportIdentifier) : undefined,
+  );
+
+  let blueprintField: string | undefined = $state();
+
+  const blueprintExportData: Blueprint | undefined = $derived(
+    blueprintField ? JSON.parse(blueprintField) : undefined,
+  );
+  const blueprintExportIdentifier: BlueprintIdentifier | undefined = $derived(
+    blueprintExportData ? encode(blueprintExportData) : undefined,
+  );
+
+  $effect(() => {
+    try {
+      blueprintField = JSON.stringify(blueprintImportData, null, 4);
+    } catch (err) {
+      const error = err as Error;
+      add({ type: 'ERROR', message: error.message });
+    }
   });
-  const {
-    form: decodeFormData,
-    enhance: decodeEnhance,
-    message: decodeMessage,
-  } = decodeForm;
-
-  const encodeForm = superForm(data.encodeForm, {
-    resetForm: true,
-  });
-  const {
-    form: encodeFormData,
-    enhance: encodeEnhance,
-    message: encodeMessage,
-  } = encodeForm;
-
-  $: {
-    $encodeFormData.data = JSON.stringify($decodeMessage, null, 4);
-    $decodeFormData.identifier = $encodeMessage;
-  }
 </script>
 
-<section class={section()}>
+<section class="{section()} space-y-4">
   <PageHeader>
-    <span class="icon-[tabler--braces] heading-2" />
+    <span class="icon-[tabler--braces] heading-2"></span>
     {data.seo.title}
 
-    <svelte:fragment slot="description">
+    {#snippet description()}
       This tool decodes any blueprint to a human-readable
       <Button.Root
         class={button({ kind: 'link' })}
         href="https://developer.mozilla.org/en-US/docs/Glossary/JSON"
         target="_blank"
-        rel="noreferrer">JSON-Object</Button.Root
-      >. <br />
-      It is also able to encode said object to a blueprint identifier which can be
-      used in the game.
-    </svelte:fragment>
+        rel="noreferrer"
+        >JSON-Object
+      </Button.Root>. <br />
+      It is also able to encode said object to a blueprint identifier, which can
+      be used in the game.
+    {/snippet}
   </PageHeader>
 
-  <form
-    class="flex flex-col gap-2"
-    method="post"
-    action="?/decode"
-    use:decodeEnhance
-  >
-    <Field form={decodeForm} name="identifier" let:constraints>
-      <Control let:attrs>
-        <Label
-          class="{input.group()} relative inline-grid overflow-y-auto whitespace-pre-wrap break-all after:invisible after:col-start-1 after:row-start-1 after:py-2 after:content-[attr(data-value)]"
-        >
-          <span class="sr-only">Blueprint identifier</span>
-          <textarea
-            class="{input.field()} col-start-1 row-start-1 min-w-64 resize-none overflow-hidden py-2"
-            placeholder="Blueprint identifier"
-            rows={5}
-            {...attrs}
-            {...constraints}
-            oninput="this.parentNode.dataset.value = this.value"
-            onfocus="this.parentNode.dataset.value = this.value"
-            bind:value={$decodeFormData.identifier}
-          ></textarea>
-        </Label>
-      </Control>
-      <FieldErrors class="text-error" />
-    </Field>
-
-    <Button.Root class={button()}>
-      <span class="icon-[tabler--code-dots]" />
-      Decode
-    </Button.Root>
-  </form>
-
-  <form
-    class="mt-4 flex flex-col gap-2"
-    method="post"
-    action="?/encode"
-    use:encodeEnhance
-  >
-    <Button.Root class={button({ intent: 'accent' })}>
-      <span class="icon-[tabler--code-minus]" />
-      Encode</Button.Root
+  <div class="flex max-w-fit gap-2 rounded-md border bg-layer p-2">
+    <label
+      class={button({ intent: 'accent', size: 'icon' })}
+      for="blueprint-file"
     >
+      <input
+        class="hidden"
+        type="file"
+        id="blueprint-file"
+        accept={BLUEPRINT_FILE_FORMAT}
+        onchange={async (event) => {
+          const target = event.currentTarget;
+          if (!target.files) {
+            return;
+          }
 
-    <Field form={encodeForm} name="data" let:constraints>
-      <Control let:attrs>
-        <Label
-          class="{input.group()} relative inline-grid overflow-y-auto whitespace-pre-wrap break-all after:invisible after:col-start-1 after:row-start-1 after:py-2 after:content-[attr(data-value)]"
+          const file = [...target.files].at(0);
+          if (!file) {
+            return;
+          }
+
+          try {
+            blueprintImportIdentifier =
+              (await file.text()) as BlueprintIdentifier;
+          } catch (err) {
+            const error = err as Error;
+            add({ type: 'ERROR', message: error.message });
+          }
+        }}
+      />
+      <span class="icon-[tabler--file-upload]">Import</span>
+    </label>
+
+    <button
+      class={button({ intent: 'accent', size: 'icon' })}
+      title="Paste blueprint"
+      use:paste
+      onpaste={(event) => {
+        const customEvent = event as CustomEvent<string>;
+        blueprintImportIdentifier =
+          customEvent.detail.trim() as BlueprintIdentifier;
+      }}
+      onerror={(event) =>
+        add({
+          message: event.detail.message,
+          type: 'ERROR',
+        })}
+    >
+      <span class="icon-[tabler--clipboard-text]">Paste</span>
+    </button>
+
+    {#if blueprintExportIdentifier}
+      <form class="contents" action="/api/v1/blueprint/download">
+        <input
+          name="identifier"
+          type="hidden"
+          value={blueprintExportIdentifier}
+          required
+        />
+        <button
+          class={button({ kind: 'outline', intent: 'accent', size: 'icon' })}
+          title="Download blueprint"
         >
-          <span class="sr-only">Blueprint data</span>
-          <textarea
-            class="{input.field()} col-start-1 row-start-1 min-w-64 resize-none overflow-hidden py-2"
-            placeholder="Blueprint data"
-            rows={5}
-            {...attrs}
-            {...constraints}
-            oninput="this.parentNode.dataset.value = this.value"
-            onfocus="this.parentNode.dataset.value = this.value"
-            bind:value={$encodeFormData.data}
-          ></textarea>
-        </Label>
-      </Control>
-      <FieldErrors class="text-error" />
-    </Field>
-  </form>
+          <span class="icon-[tabler--file-download]">Export</span>
+        </button>
+      </form>
+
+      <button
+        class={button({ kind: 'outline', intent: 'accent', size: 'icon' })}
+        title="Copy blueprint"
+        use:copy={{ value: blueprintExportIdentifier }}
+        oncopy={() => add({ message: 'Content copied' })}
+        onerror={(event) =>
+          add({
+            message: event.detail.message,
+            type: 'ERROR',
+          })}
+      >
+        <span class="icon-[tabler--copy]">Copy</span>
+      </button>
+    {/if}
+  </div>
+
+  <label class={input.group()} for="blueprint-content">
+    <textarea
+      class="{input.field()} min-h-14"
+      id="blueprint-content"
+      rows={16}
+      bind:value={blueprintField}
+    ></textarea>
+  </label>
 </section>

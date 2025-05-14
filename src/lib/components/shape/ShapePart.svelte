@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ComponentType, SvelteComponent } from 'svelte';
+  import type { Component } from 'svelte';
   import { Mesh, Object3D } from 'three';
   import { Suspense } from '@threlte/extras';
   import {
@@ -21,15 +21,17 @@
 
   const SHAPE_PART_BASE_OFFSET = 0.025;
 
-  export let data: ShapePartData;
-  export let isHex: boolean = false;
-  export let offset: number = 0;
+  interface Props {
+    data: ShapePartData;
+    isHex?: boolean;
+    offset?: number;
+  }
 
-  let componentModel: SvelteComponent | undefined;
+  let { data, isHex = false, offset = 0 }: Props = $props();
 
-  const getShapePart = (
-    type: ShapeTypeIdentifier,
-  ): ComponentType | undefined => {
+  let ref: Object3D | undefined = $state();
+
+  const getShapePart = (type: ShapeTypeIdentifier): Component | undefined => {
     switch (type) {
       case 'C':
         return ShapeDefaultC;
@@ -69,23 +71,22 @@
     return object.children.forEach((child) => setMaterial(child));
   };
 
-  const onModelLoad = () => {
-    if (!componentModel) {
-      throw new Error('[SHAPEPART] model not loaded');
+  const onload = () => {
+    if (!ref) {
+      throw new Error('[SHAPEPART] model not initialized');
     }
-    const object = componentModel.ref as Object3D;
-    setMaterial(object);
+    setMaterial(ref);
   };
 </script>
 
-<Suspense on:load={onModelLoad}>
-  <svelte:component
-    this={getShapePart(data.type)}
+<Suspense {onload}>
+  {@const Shape = getShapePart(data.type)}
+  <Shape
     position={[
       -SHAPE_PART_BASE_OFFSET - offset,
       0,
       SHAPE_PART_BASE_OFFSET + offset,
     ]}
-    bind:this={componentModel}
+    bind:ref
   />
 </Suspense>

@@ -1,12 +1,11 @@
 <script lang="ts">
   import { DropdownMenu } from 'bits-ui';
   import screenfull from 'screenfull';
-  import type { SvelteComponent } from 'svelte';
   import { blur } from 'svelte/transition';
-  import { page } from '$app/stores';
-  import { type Mesh, type Object3D } from 'three';
+  import { page } from '$app/state';
+  import { Group, NoToneMapping, WebGLRenderer, type Mesh } from 'three';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
-  import { Canvas, T, type ThrelteContext } from '@threlte/core';
+  import { Canvas, T } from '@threlte/core';
   import { OrbitControls, Suspense } from '@threlte/extras';
   import { copy } from '$lib/client/actions/clipboard';
   import { fullscreen } from '$lib/client/actions/fullscreen';
@@ -32,19 +31,23 @@
   const SHAPE_CAMERA_START_POSITION: ThrelteVector3 = [0, 0, 1.5];
   const SHAPE_CAMERA_TOP_POSITION: ThrelteVector3 = [0, 1.5, 0];
 
-  export let data: ShapeData;
-  export let isExtended = false;
-  export let isExpanded = false;
+  interface Props {
+    data: ShapeData;
+    isExtended?: boolean;
+    isExpanded?: boolean;
+  }
 
-  $: isHex = !isDefaultShapeIdentifier(data.identifier);
+  let { data, isExtended = false, isExpanded = false }: Props = $props();
 
-  let ctx: ThrelteContext | undefined;
-  let viewer: HTMLElement | undefined;
-  let orbitControls: OrbitControls | undefined;
-  let baseComponentModel: SvelteComponent | undefined;
+  let isHex = $derived(!isDefaultShapeIdentifier(data.identifier));
+
+  let canvasElement: HTMLCanvasElement | undefined = $state();
+  let viewer: HTMLElement | undefined = $state();
+  let orbitControls: OrbitControlsType | undefined = $state();
+  let baseComponentModel: Group | undefined = $state();
 
   function onCapture() {
-    ctx?.renderer.domElement.toBlob(
+    canvasElement?.toBlob(
       (blob) => {
         if (!blob) return;
 
@@ -73,22 +76,22 @@
   function setCameraPosition(value?: ThrelteVector3) {
     if (!orbitControls) return;
 
-    const ref = orbitControls.ref as OrbitControlsType;
-    ref.enableDamping = false;
-    ref.update();
+    orbitControls.enableDamping = false;
+    orbitControls.update();
     if (value) {
-      orbitControls.ref.object.position.set(...value);
+      orbitControls.object.position.set(...value);
     } else {
-      orbitControls.ref.reset();
+      orbitControls.reset();
     }
-    ref.enableDamping = true;
+    orbitControls.enableDamping = true;
   }
 
   const onBaseModelLoad = () => {
     if (!baseComponentModel) {
-      throw new Error('[SHAPEVIEW] model not loaded');
+      throw new Error('[SHAPEVIEW] model not initialized');
     }
-    const object = baseComponentModel.ref as Object3D;
+
+    const object = baseComponentModel;
     const mesh = object.children[0] as Mesh;
     mesh.material = SHAPE_COLOR_BASE_MATERIAL;
   };
@@ -111,7 +114,7 @@
           id="shape-identifier"
           name="identifier"
           placeholder="Shape code..."
-          value={$page.data.shape?.identifier ?? null}
+          value={page.data.shape?.identifier ?? null}
           required
           minlength="2"
         />
@@ -121,7 +124,8 @@
           type="reset"
           title="Clear shape input"
         >
-          <span class="icon-[tabler--x] text-lg" />
+          <span class="icon-[tabler--x] text-lg"></span>
+          <span class="sr-only">Clear shape input</span>
         </button>
       </label>
 
@@ -170,7 +174,7 @@
         </button>
       </form>
 
-      <DropdownMenu.Root preventScroll={false} portal={viewer}>
+      <DropdownMenu.Root>
         <DropdownMenu.Trigger
           class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
         >
@@ -179,81 +183,101 @@
 
         <DropdownMenu.Content
           class="z-20 space-y-1 rounded-md border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
-          transition={blur}
-          transitionConfig={{ duration: 150 }}
           sideOffset={16}
           align="end"
-          alignOffset={8}
+          alignOffset={-8}
+          forceMount
         >
-          <DropdownMenu.Item asChild let:builder>
-            <button
-              class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-              title="Copy shape"
-              use:copy={{ value: data.identifier }}
-              on:copy={() => add({ message: 'Shape identifier copied' })}
-              on:error={(event) =>
-                add({ message: event.detail.message, type: 'ERROR' })}
-              {...builder}
-            >
-              <span class="icon-[tabler--copy] text-lg" />
-              Copy shape
-            </button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild let:builder>
-            <button
-              class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-              title="Capture shape"
-              on:click={onCapture}
-              {...builder}
-            >
-              <span class="icon-[tabler--camera] text-lg" />
-              Take picture
-            </button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild let:builder>
-            <button
-              class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-              type="button"
-              title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
-              use:fullscreen={{ fullscreenElement: viewer }}
-              on:error={(event) =>
-                add({ message: event.detail.message, type: 'ERROR' })}
-              {...builder}
-            >
-              {#if screenfull.isFullscreen}
-                <span class="icon-[tabler--maximize-off] text-lg" />
-              {:else}
-                <span class="icon-[tabler--maximize] text-lg" />
-              {/if}
-              Fullscreen
-            </button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild let:builder>
-            <button
-              class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-              type="button"
-              title="View top down"
-              on:click={onTop}
-              {...builder}
-            >
-              <span class="icon-[tabler--circle] text-lg" />
-              View top
-            </button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild let:builder>
-            <form class="contents" action="/shape">
-              <input name="identifier" type="hidden" value={data.identifier} />
-              <button
-                class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-                title="Reset controls"
-                on:click={onReset}
-                {...builder}
-              >
-                <span class="icon-[tabler--reload] text-lg" />
-                Reset
-              </button>
-            </form>
-          </DropdownMenu.Item>
+          {#snippet child({ wrapperProps, props, open })}
+            {#if open}
+              <div {...wrapperProps}>
+                <div {...props} transition:blur={{ duration: 150 }}>
+                  <DropdownMenu.Item>
+                    {#snippet child({ props })}
+                      <button
+                        class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        title="Copy shape"
+                        use:copy={{ value: data.identifier }}
+                        oncopy={() =>
+                          add({ message: 'Shape identifier copied' })}
+                        onerror={(event) =>
+                          add({ message: event.detail.message, type: 'ERROR' })}
+                        {...props}
+                      >
+                        <span class="icon-[tabler--copy] text-lg"></span>
+                        Copy shape
+                      </button>
+                    {/snippet}
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item onSelect={onCapture}>
+                    {#snippet child({ props })}
+                      <button
+                        class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        title="Capture shape"
+                        {...props}
+                      >
+                        <span class="icon-[tabler--camera] text-lg"></span>
+                        Take picture
+                      </button>
+                    {/snippet}
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item>
+                    {#snippet child({ props })}
+                      <button
+                        class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        type="button"
+                        title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
+                        use:fullscreen={{ fullscreenElement: viewer! }}
+                        onerror={(event) =>
+                          add({ message: event.detail.message, type: 'ERROR' })}
+                        {...props}
+                      >
+                        {#if screenfull.isFullscreen}
+                          <span class="icon-[tabler--maximize-off] text-lg"
+                          ></span>
+                        {:else}
+                          <span class="icon-[tabler--maximize] text-lg"></span>
+                        {/if}
+                        Fullscreen
+                      </button>
+                    {/snippet}
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item onSelect={() => onTop()}>
+                    {#snippet child({ props })}
+                      <button
+                        class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        type="button"
+                        title="View top down"
+                        {...props}
+                      >
+                        <span class="icon-[tabler--circle] text-lg"></span>
+                        View top
+                      </button>
+                    {/snippet}
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item onSelect={() => onReset()}>
+                    {#snippet child({ props })}
+                      <form class="contents" action="/shape">
+                        <input
+                          name="identifier"
+                          type="hidden"
+                          value={data.identifier}
+                        />
+                        <button
+                          class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                          title="Reset controls"
+                          {...props}
+                        >
+                          <span class="icon-[tabler--reload] text-lg"></span>
+                          Reset
+                        </button>
+                      </form>
+                    {/snippet}
+                  </DropdownMenu.Item>
+                </div>
+              </div>
+            {/if}
+          {/snippet}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>
@@ -265,7 +289,17 @@
   >
     <div class="aspect-h-1 aspect-w-1">
       <div>
-        <Canvas rendererParameters={{ preserveDrawingBuffer: true }} bind:ctx>
+        <Canvas
+          toneMapping={NoToneMapping}
+          createRenderer={(canvas) => {
+            canvasElement = canvas;
+            return new WebGLRenderer({
+              canvas,
+              alpha: true,
+              preserveDrawingBuffer: true,
+            });
+          }}
+        >
           <T.PerspectiveCamera
             makeDefault
             position={SHAPE_CAMERA_START_POSITION}
@@ -276,7 +310,7 @@
               enableZoom={false}
               enableDamping
               maxPolarAngle={Math.PI * 0.35}
-              bind:this={orbitControls}
+              bind:ref={orbitControls}
             />
           </T.PerspectiveCamera>
 
@@ -289,14 +323,14 @@
           />
 
           <T.Group position.y={-0.25}>
-            <Suspense on:load={onBaseModelLoad}>
+            <Suspense onload={onBaseModelLoad}>
               <ShapeDefaultSupport
                 position.y={-0.025}
-                bind:this={baseComponentModel}
+                bind:ref={baseComponentModel}
               />
             </Suspense>
             {#key data}
-              {#each data.data.slice(0, SHAPE_MAX_LAYERS) as layer, layerIndex}
+              {#each data.data.slice(0, SHAPE_MAX_LAYERS) as layer, layerIndex (layerIndex)}
                 {@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
                 {@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
                 {@const extendOffset = isExtended
@@ -309,7 +343,7 @@
                   position.y={layerPositionY + extendOffset}
                   scale={[layerScale, 0.5, layerScale]}
                 >
-                  {#each layer as part, partIndex}
+                  {#each layer as part, partIndex (partIndex)}
                     <T.Group
                       rotation.y={partIndex *
                         (isHex ? -1 / 3 : -0.5) *

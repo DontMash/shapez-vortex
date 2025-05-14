@@ -13,11 +13,15 @@
   import BlueprintReport from '$lib/components/blueprint/BlueprintReport.svelte';
   import { button } from '$lib/components/button';
 
-  export let user: User | undefined;
-  export let blueprint: Pick<BlueprintRecord, 'id' | 'title' | 'creator'>;
-  export let reportForm:
-    | SuperValidated<z.infer<typeof REPORT_CREATE_SCHEMA>>
-    | undefined = undefined;
+  interface Props {
+    user: User | undefined;
+    blueprint: Pick<BlueprintRecord, 'id' | 'title' | 'creator'>;
+    reportForm?:
+      | SuperValidated<z.infer<typeof REPORT_CREATE_SCHEMA>>
+      | undefined;
+  }
+
+  let { user, blueprint, reportForm = undefined }: Props = $props();
 </script>
 
 {#if user}
@@ -67,9 +71,9 @@
 
 <button
   class={button({ kind: 'ghost', intent: 'muted', size: 'icon-sm' })}
-  title="Share blueprint"
   use:copy={{ value: window.location.href }}
-  on:copy={() => add({ message: 'Blueprint url copied.' })}
+  oncopy={() => add({ message: 'Blueprint url copied.' })}
 >
-  <span class="icon-[tabler--share]">Share</span>
+  <span class="icon-[tabler--share]"></span>
+  <span class="sr-only">Share blueprint</span>
 </button>

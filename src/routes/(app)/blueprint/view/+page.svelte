@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
 
   import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
   import { section } from '$lib/components/section';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 </script>
 
 <section class={section()}>

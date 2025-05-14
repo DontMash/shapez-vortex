@@ -39,7 +39,11 @@ export const actions = {
       return fail(400, { form });
     }
 
-    await locals.pb.collection('users').requestEmailChange(form.data.email);
-    return redirect(303, '/login');
+    try {
+      await locals.pb.collection('users').requestEmailChange(form.data.email);
+      return redirect(303, '/login');
+    } catch {
+      return fail(500, { form });
+    }
   },
 } satisfies Actions;

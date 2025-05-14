@@ -4,7 +4,11 @@
 
   import { button } from '$lib/components/button';
 
-  export let data: BlueprintTag;
+  interface Props {
+    data: BlueprintTag;
+  }
+
+  let { data }: Props = $props();
 </script>
 
 <Button.Root

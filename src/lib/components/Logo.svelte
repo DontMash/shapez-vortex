@@ -33,7 +33,11 @@
     },
   );
 
-  export let type: LogoVariant['type'] = 'logo';
+  interface Props {
+    type?: LogoVariant['type'];
+  }
+
+  let { type = 'logo' }: Props = $props();
 </script>
 
 <Button.Root class={logo({ type })} href="/" title="To the frontpage">

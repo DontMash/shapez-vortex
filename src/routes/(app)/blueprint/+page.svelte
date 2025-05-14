@@ -1,8 +1,7 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
   import { Button, Tooltip } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
-  import { blur } from 'svelte/transition';
   import { superForm } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import { isBlueprintIdentifier } from '$lib/blueprint';
@@ -15,7 +14,7 @@
   import PageHeader from '$lib/components/PageHeader.svelte';
   import { section } from '$lib/components/section';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 
   const form = superForm(data.form, {
     validators: zod(BLUEPRINT_VIEW_SCHEMA),
@@ -50,12 +49,12 @@
 
 <section class={section()}>
   <PageHeader>
-    <span class="icon-[tabler--schema] heading-2" />
+    <span class="icon-[tabler--schema] heading-2"></span>
     {data.seo.title}
 
-    <svelte:fragment slot="description">
+    {#snippet description()}
       {data.seo.description}
-    </svelte:fragment>
+    {/snippet}
   </PageHeader>
 
   <form class="flex flex-col gap-2" action="?/view" method="post" use:enhance>
@@ -69,7 +68,7 @@
         id="blueprint-file"
         accept={BLUEPRINT_FILE_FORMAT}
         multiple
-        on:change={async (event) => {
+        onchange={async (event) => {
           const input = event.currentTarget;
           const files = input.files;
           if (!files || files.length <= 0) return;
@@ -98,64 +97,73 @@
       />
       <div class="absolute inset-0 flex items-center justify-center">
         <div>
-          <span class="icon-[tabler--file-upload] size-8 align-middle" />
+          <span class="icon-[tabler--file-upload] size-8 align-middle"></span>
           <span>Blueprint file</span>
         </div>
-        <Tooltip.Root>
-          <Tooltip.Trigger
-            class="{button({
-              kind: 'ghost',
-              intent: 'muted',
-              size: 'icon-sm',
-            })} absolute right-4 top-3"
-          >
-            <span class="icon-[tabler--info-circle]" />
-          </Tooltip.Trigger>
-          <Tooltip.Content class="rounded-md border bg-layer p-2">
-            <p>The content of the file will be pasted into the field below.</p>
-          </Tooltip.Content>
-        </Tooltip.Root>
-      </div>
-    </label>
-
-    <Field {form} name="identifier" let:constraints>
-      <Control let:attrs>
-        <Label class="{input.group()} max-h-none !items-start">
-          <span class="icon-[tabler--braces] my-4">Blueprint Identifier</span>
-          <textarea
-            class="{input.field()} min-h-14 py-4"
-            rows={10}
-            placeholder="Blueprint identifier"
-            {...attrs}
-            {...constraints}
-            bind:value={$formData.identifier}
-          ></textarea>
+        <Tooltip.Provider>
           <Tooltip.Root>
             <Tooltip.Trigger
               class="{button({
                 kind: 'ghost',
                 intent: 'muted',
                 size: 'icon-sm',
-              })} my-3"
+              })} absolute right-4 top-3"
             >
-              <span class="icon-[tabler--info-circle]" />
+              <span class="icon-[tabler--info-circle]"></span>
             </Tooltip.Trigger>
             <Tooltip.Content
-              class="rounded-sm border bg-layer/70 p-2 shadow-lg backdrop-blur-lg"
-              transition={blur}
-              transitionConfig={{ duration: 150 }}
-              sideOffset={8}
+              class="rounded-md border bg-layer p-2 text-layer-foreground"
             >
               <p>
-                The blueprint identifier needs to be <br />
-                in the standard format of the game: <br />
-                <i>SHAPEZ-2 ... $</i>
+                The content of the file will be pasted into the field below.
               </p>
             </Tooltip.Content>
           </Tooltip.Root>
-        </Label>
-      </Control>
-      <FieldErrors class="text-error" />
+        </Tooltip.Provider>
+      </div>
+    </label>
+
+    <Field {form} name="identifier">
+      {#snippet children({ constraints })}
+        <Control>
+          {#snippet children({ props })}
+            <Label class="{input.group()} max-h-none !items-start">
+              <span class="icon-[tabler--braces] my-4"
+                >Blueprint Identifier</span
+              >
+              <textarea
+                class="{input.field()} min-h-14 py-4"
+                rows={10}
+                placeholder="Blueprint identifier"
+                {...props}
+                {...constraints}
+                bind:value={$formData.identifier}
+              ></textarea>
+              <Tooltip.Provider>
+                <Tooltip.Root>
+                  <Tooltip.Trigger
+                    class="{button({
+                      kind: 'ghost',
+                      intent: 'muted',
+                      size: 'icon-sm',
+                    })} my-3"
+                  >
+                    <span class="icon-[tabler--info-circle]"></span>
+                  </Tooltip.Trigger>
+                  <Tooltip.Content class="rounded-md border bg-layer p-2">
+                    <p>
+                      The blueprint identifier needs to be <br />
+                      in the standard format of the game: <br />
+                      <i>SHAPEZ-2 ... $</i>
+                    </p>
+                  </Tooltip.Content>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+            </Label>
+          {/snippet}
+        </Control>
+        <FieldErrors class="text-error" />
+      {/snippet}
     </Field>
 
     <Button.Root class={button({ block: true })}>View</Button.Root>
@@ -166,7 +174,7 @@
   <h2 class="heading-2 mb-2">Tools</h2>
 
   <div class="mx-auto grid grid-cols-1 gap-4 lg:grid-cols-2">
-    {#each tools as tool}
+    {#each tools as tool (tool.url)}
       <div class="overflow-hidden rounded-md border bg-layer shadow-md">
         <Button.Root
           class="aspect-h-2 aspect-w-3 block"
@@ -174,7 +182,7 @@
           title={tool.tooltip}
         >
           <div class="flex items-center justify-center">
-            <span class="{tool.icon} text-[8rem]" />
+            <span class="{tool.icon} text-[8rem]"></span>
           </div>
         </Button.Root>
 

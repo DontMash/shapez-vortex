@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
 
   import PageHeader from '$lib/components/PageHeader.svelte';
@@ -8,7 +8,7 @@
   import blueprintImage from '$lib/assets/images/blueprint-library.png';
   import bookmarkImage from '$lib/assets/images/folder.png';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 
   type ProfileFeature = {
     image: {
@@ -57,7 +57,7 @@
   </PageHeader>
 
   <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {#each features as feature}
+    {#each features as feature (feature.url)}
       <li>
         <Button.Root
           class="inline-block h-full w-full overflow-hidden rounded-md border bg-layer shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"

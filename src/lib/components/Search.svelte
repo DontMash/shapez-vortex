@@ -1,31 +1,48 @@
 <script lang="ts">
-  import { Dialog } from 'bits-ui';
-  import { Command } from 'cmdk-sv';
-  import { blur, fade } from 'svelte/transition';
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { Command, Dialog } from 'bits-ui';
+  import { cva } from 'class-variance-authority';
+  import { fade } from 'svelte/transition';
+  import { page } from '$app/state';
   import { isShapeIdentifier } from '$lib/shape.types';
+
   import { button } from '$lib/components/button';
   import * as dialog from '$lib/components/dialog';
 
   const OPERATING_SYSTEMS = ['Mac OS', 'Windows', 'Linux'] as const;
-  $: os = $page.data.agent?.os;
+  let os = $derived(page.data.agent?.os);
 
-  let isSearchDialogOpen = false;
-  let searchValue = '';
-  $: {
-    searchValue = isSearchDialogOpen ? '' : '';
-  }
+  const kbd = cva([
+    'inline-flex',
+    'size-6',
+    'items-center',
+    'justify-center',
+    'rounded-xs',
+    'border',
+    'bg-background',
+  ]);
+  const command = {
+    group: cva(['flex', 'flex-col', 'gap-1']),
+    heading: cva(['small', 'px-3', 'text-muted']),
+    item: cva([
+      'flex',
+      'items-center',
+      'gap-2',
+      'rounded-xs',
+      'px-3',
+      'py-2',
+      'transition',
+      'data-[selected]:bg-border',
+    ]),
+  };
 
-  function searchBlueprints(search: string) {
-    const url = new URL('/blueprint/search', $page.url.origin);
-    url.searchParams.append('query', search);
-    goto(url.href);
-  }
-  function command(callback: () => void) {
-    isSearchDialogOpen = false;
-    callback();
-  }
+  let isSearchDialogOpen = $state(false);
+  let searchValue = $state('');
+
+  $effect(() => {
+    if (!isSearchDialogOpen) {
+      searchValue = '';
+    }
+  });
 
   function onKeyDown(event: KeyboardEvent) {
     if (!os || !os.name) return;
@@ -46,215 +63,212 @@
   }
 </script>
 
-<svelte:window on:keydown={onKeyDown} />
+<svelte:window onkeydown={onKeyDown} />
 
 <Dialog.Root bind:open={isSearchDialogOpen}>
   <Dialog.Trigger
     class={button({ kind: 'outline', intent: 'muted' })}
     title="Search the Shapez Vortex"
   >
-    <span class="icon-[tabler--search]" />
+    <span class="icon-[tabler--search]"></span>
     Search
     {#if os && os.name && OPERATING_SYSTEMS.find((value) => value === os?.name)}
       <span class=" hidden sm:block">
         {#if os.name === OPERATING_SYSTEMS[0]}
-          <kbd
-            class="inline-flex size-6 items-center justify-center rounded-xs border bg-background"
-            >⌘</kbd
-          >
+          <kbd class={kbd()}>⌘</kbd>
         {/if}
         {#if os.name === OPERATING_SYSTEMS[1] || os.name === OPERATING_SYSTEMS[2]}
-          <kbd
-            class="inline-flex size-6 items-center justify-center rounded-xs border bg-background"
-            >Ctrl</kbd
-          >
+          <kbd class={kbd()}>Ctrl</kbd>
         {/if}
-        <kbd
-          class="inline-flex size-6 items-center justify-center rounded-xs border bg-background"
-          >K</kbd
-        >
+        <kbd class={kbd()}>K</kbd>
       </span>
     {/if}
   </Dialog.Trigger>
 
   <Dialog.Portal>
-    <Dialog.Overlay
-      class={dialog.overlay()}
-      transition={blur}
-      transitionConfig={{ duration: 150 }}
-    />
-
-    <Dialog.Content
-      class={dialog.content()}
-      transition={fade}
-      transitionConfig={{ duration: 150 }}
-    >
-      <Dialog.Title class="sr-only" level="h2"
-        >Search the Shapez Vortex</Dialog.Title
-      >
-      <Dialog.Description class="sr-only"
-        >This dialog allows you to search all the content of the Shapez Vortex
-        community-platform.</Dialog.Description
-      >
-
-      <div class="">
-        <Command.Root
-          class="relative rounded-lg border bg-layer"
-          label="Search"
-          loop
-        >
-          <Dialog.Close
-            class="{button({
-              kind: 'outline',
-              intent: 'muted',
-              size: 'icon-sm',
-            })} absolute right-4 top-4"
+    <Dialog.Overlay class={dialog.overlay()} />
+    <Dialog.Content forceMount>
+      {#snippet child({ props, open })}
+        {#if open}
+          <div
+            {...props}
+            class={dialog.content()}
+            transition:fade={{ duration: 150 }}
           >
-            <span class="icon-[tabler--x] text-lg">Close search dialog</span>
-          </Dialog.Close>
-
-          <div class="flex items-center gap-2 border-b py-4 pl-4 pr-16">
-            <span class="icon-[tabler--search]" />
-            <Command.Input
-              class="h-8 w-full bg-transparent outline-none placeholder:text-muted"
-              placeholder="Search the vortex..."
-              bind:value={searchValue}
-              autofocus
-            />
-          </div>
-
-          <Command.List
-            class="max-h-96 overflow-y-auto px-1 py-4 [&_[data-cmdk-group]+[data-cmdk-group]]:mt-4"
-          >
-            <Command.Empty class="text-center">No results found.</Command.Empty>
-
-            {#if searchValue}
-              {@const blueprints = $page.data.searchBlueprints}
-              {#if blueprints.length > 0}
-                <Command.Group
-                  class="[&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
-                  heading="Blueprints"
-                  alwaysRender
-                >
-                  {#each blueprints as blueprint}
-                    <Command.Item
-                      class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                      id={blueprint.id}
-                      value={blueprint.title}
-                      onSelect={() =>
-                        command(() => goto(`/blueprint/${blueprint.id}`))}
-                    >
-                      <span class="icon-[tabler--schema]" />
-                      <span class="truncate">
-                        {blueprint.title}
-                      </span>
-                      {#if blueprint.expand && blueprint.expand['creator']}
-                        <span
-                          class="{button({
-                            intent: 'accent',
-                            size: 'xs',
-                          })} ml-auto"
-                        >
-                          @{blueprint.expand['creator'].displayname}
-                        </span>
-                      {/if}
-                    </Command.Item>
-                  {/each}
-                  <Command.Item
-                    class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                    alwaysRender
-                    onSelect={() =>
-                      command(() => searchBlueprints(searchValue))}
-                  >
-                    <span class="icon-[tabler--search]" />
-                    Show more...
-                  </Command.Item>
-                </Command.Group>
-              {/if}
-
-              {@const users = $page.data.searchUsers}
-              {#if users.length > 0}
-                <Command.Group
-                  class="[&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
-                  heading="Users"
-                >
-                  {#each users as user}
-                    <Command.Item
-                      class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                      onSelect={() =>
-                        command(() => goto(`/user/@${user.displayname}`))}
-                    >
-                      <span class="icon-[tabler--user]" />
-                      <span class="truncate">
-                        {user.displayname}
-                      </span>
-                    </Command.Item>
-                  {/each}
-                </Command.Group>
-              {/if}
-            {/if}
-
-            <Command.Group
-              class="[&>[data-cmdk-group-heading]]:small [&>[data-cmdk-group-heading]]:px-3 [&>[data-cmdk-group-heading]]:text-muted [&>[data-cmdk-item]+[data-cmdk-item]]:mt-1"
-              heading="Features"
+            <Dialog.Title class="sr-only" level={2}
+              >Search the Shapez Vortex</Dialog.Title
             >
-              {#if isShapeIdentifier(searchValue)}
-                <Command.Item
-                  class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                  onSelect={() =>
-                    command(() => goto(`/shape?identifier=${searchValue}`))}
-                >
-                  <span class="icon-[tabler--stack]" />
-                  <span class="truncate">
-                    View Shape - {searchValue}
-                  </span>
-                </Command.Item>
-              {:else}
-                <Command.Item
-                  class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                  onSelect={() => command(() => goto('/shape'))}
-                >
-                  <span class="icon-[tabler--stack]" />
-                  Shape Viewer
-                </Command.Item>
-              {/if}
-              <Command.Item
-                class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                onSelect={() => command(() => goto('/blueprint'))}
-              >
-                <span class="icon-[tabler--schema]" />
-                Blueprint Viewer
-              </Command.Item>
+            <Dialog.Description class="sr-only"
+              >This dialog allows you to search all the content of the Shapez
+              Vortex community-platform.</Dialog.Description
+            >
 
-              {#if $page.data.user}
-                {#if $page.data.user.verified}
-                  <Command.Item
-                    class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                    onSelect={() => command(() => goto('/blueprint/upload'))}
-                  >
-                    <span class="icon-[tabler--upload]" />
-                    Upload
-                  </Command.Item>
-                {/if}
-                <Command.Item
-                  class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                  onSelect={() => command(() => goto('/user'))}
+            <Command.Root
+              class="relative rounded-lg border bg-layer"
+              label="Search"
+              loop
+            >
+              <Dialog.Close
+                class="{button({
+                  kind: 'outline',
+                  intent: 'muted',
+                  size: 'icon-sm',
+                })} absolute right-4 top-4"
+              >
+                <span class="icon-[tabler--x] text-lg">Close search dialog</span
                 >
-                  <span class="icon-[tabler--user]" />
-                  Profile
-                </Command.Item>
-                <Command.Item
-                  class="flex cursor-pointer items-center gap-2 rounded-xs px-3 py-2 transition aria-selected:bg-border"
-                  onSelect={() => command(() => goto('/settings'))}
+              </Dialog.Close>
+
+              <div class="flex items-center gap-2 border-b py-4 pl-4 pr-16">
+                <span class="icon-[tabler--search]"></span>
+                <Command.Input
+                  class="h-8 w-full bg-transparent outline-none placeholder:text-muted"
+                  placeholder="Search the vortex..."
+                  autofocus
+                  bind:value={searchValue}
+                />
+              </div>
+
+              <Command.List>
+                <Command.Viewport
+                  class="flex max-h-96 flex-col gap-2 overflow-y-auto px-1 py-4"
                 >
-                  <span class="icon-[tabler--settings]" />
-                  Settings
-                </Command.Item>
-              {/if}
-            </Command.Group>
-          </Command.List>
-        </Command.Root>
-      </div>
+                  <Command.Empty class="text-center">
+                    No results found.
+                  </Command.Empty>
+
+                  {#if searchValue}
+                    <Command.Group class={command.group()} value="$1">
+                      <Command.GroupHeading class={command.heading()}>
+                        Blueprints
+                      </Command.GroupHeading>
+                      <Command.GroupItems>
+                        {#each page.data.searchBlueprints as blueprint (blueprint.id)}
+                          <Command.LinkItem
+                            class={command.item()}
+                            href="/blueprint/{blueprint.id}"
+                            value="{blueprint.title}_{blueprint.id}"
+                            onSelect={() => (isSearchDialogOpen = false)}
+                          >
+                            <span class="icon-[tabler--schema]"></span>
+                            <span class="truncate">
+                              {blueprint.title}
+                            </span>
+                            {#if blueprint.expand && blueprint.expand['creator']}
+                              <span
+                                class="{button({
+                                  intent: 'accent',
+                                  size: 'xs',
+                                })} ml-auto"
+                              >
+                                @{blueprint.expand['creator'].displayname}
+                              </span>
+                            {/if}
+                          </Command.LinkItem>
+                        {/each}
+                        <Command.LinkItem
+                          class={command.item()}
+                          href="/blueprint/search?query={searchValue}"
+                          value="$"
+                          forceMount={!isShapeIdentifier(searchValue)}
+                          onSelect={() => (isSearchDialogOpen = false)}
+                        >
+                          <span class="icon-[tabler--search]"></span>
+                          Show more...
+                        </Command.LinkItem>
+                      </Command.GroupItems>
+                    </Command.Group>
+
+                    <Command.Group class={command.group()} value="$2">
+                      <Command.GroupHeading class={command.heading()}>
+                        Users
+                      </Command.GroupHeading>
+                      <Command.GroupItems>
+                        {#each page.data.searchUsers as user (user.displayname)}
+                          <Command.LinkItem
+                            class={command.item()}
+                            href="/user/@{user.displayname}"
+                            onSelect={() => (isSearchDialogOpen = false)}
+                          >
+                            <span class="icon-[tabler--user]"></span>
+                            <span class="truncate">
+                              {user.displayname}
+                            </span>
+                          </Command.LinkItem>
+                        {/each}
+                      </Command.GroupItems>
+                    </Command.Group>
+                  {/if}
+
+                  <Command.Group class={command.group()} value="$3">
+                    <Command.GroupHeading class={command.heading()}>
+                      Features
+                    </Command.GroupHeading>
+                    <Command.GroupItems>
+                      {#if searchValue}
+                        <Command.LinkItem
+                          class={command.item()}
+                          href="/shape?identifier={searchValue}"
+                          value={isShapeIdentifier(searchValue)
+                            ? searchValue
+                            : '$'}
+                          forceMount={isShapeIdentifier(searchValue)}
+                          onSelect={() => (isSearchDialogOpen = false)}
+                        >
+                          <span class="icon-[tabler--stack]"></span>
+                          <span class="truncate">
+                            View Shape - {searchValue}
+                          </span>
+                        </Command.LinkItem>
+                      {/if}
+                      <Command.LinkItem
+                        class={command.item()}
+                        href="/shape"
+                        onSelect={() => (isSearchDialogOpen = false)}
+                      >
+                        <span class="icon-[tabler--stack]"></span>
+                        Shape Viewer
+                      </Command.LinkItem>
+                      <Command.LinkItem
+                        class={command.item()}
+                        href="/blueprint"
+                        onSelect={() => (isSearchDialogOpen = false)}
+                      >
+                        <span class="icon-[tabler--schema]"></span>
+                        Blueprint Viewer
+                      </Command.LinkItem>
+                      <Command.LinkItem
+                        class={command.item()}
+                        href="/blueprint/upload"
+                        onSelect={() => (isSearchDialogOpen = false)}
+                      >
+                        <span class="icon-[tabler--upload]"></span>
+                        Upload
+                      </Command.LinkItem>
+                      <Command.LinkItem
+                        class={command.item()}
+                        href="/user"
+                        onSelect={() => (isSearchDialogOpen = false)}
+                      >
+                        <span class="icon-[tabler--user]"></span>
+                        Profile
+                      </Command.LinkItem>
+                      <Command.LinkItem
+                        class={command.item()}
+                        href="/settings"
+                        onSelect={() => (isSearchDialogOpen = false)}
+                      >
+                        <span class="icon-[tabler--settings]"></span>
+                        Settings
+                      </Command.LinkItem>
+                    </Command.GroupItems>
+                  </Command.Group>
+                </Command.Viewport>
+              </Command.List>
+            </Command.Root>
+          </div>
+        {/if}
+      {/snippet}
     </Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>

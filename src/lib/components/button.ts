@@ -2,7 +2,6 @@ import { cva } from 'class-variance-authority';
 
 export const button = cva(
   [
-    'justify-center',
     'items-center',
     'gap-2',
     'transition',
@@ -47,7 +46,7 @@ export const button = cva(
       },
       block: {
         false: ['inline-flex'],
-        true: ['flex', 'w-full'],
+        true: ['flex', 'w-full', 'justify-center'],
       },
     },
     compoundVariants: [
@@ -205,6 +204,10 @@ export const button = cva(
         kind: ['fill', 'ghost', 'outline'],
         size: 'lg',
         class: ['px-5', 'py-3', 'rounded-md'],
+      },
+      {
+        size: ['icon-sm', 'icon', 'icon-lg'],
+        class: ['justify-center'],
       },
     ],
     defaultVariants: {

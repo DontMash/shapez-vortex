@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
   import Swiper from 'swiper';
   import { Autoplay, Navigation } from 'swiper/modules';
@@ -12,7 +12,7 @@
   import { section } from '$lib/components/section';
   import UserTag from '$lib/components/UserTag.svelte';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 
   const dateFormatter = new Intl.DateTimeFormat('en-US', {
     dateStyle: 'medium',
@@ -80,8 +80,9 @@
     root?: HTMLElement | undefined;
     prevButton?: HTMLElement | undefined;
     nextButton?: HTMLElement | undefined;
-  } = {};
-  $: {
+  } = $state({});
+
+  $effect(() => {
     if (slider.root) {
       new Swiper(slider.root, {
         modules: [Autoplay, Navigation],
@@ -92,7 +93,7 @@
         },
       });
     }
-  }
+  });
 </script>
 
 <section class={section()}>
@@ -137,7 +138,7 @@
 
       <div class="relative overflow-hidden" bind:this={slider.root}>
         <div class="swiper-wrapper flex">
-          {#each data.blueprint.images as image, index}
+          {#each data.blueprint.images as image, index (index)}
             <div class="swiper-slide relative shrink-0">
               <div class="aspect-h-2 aspect-w-3">
                 <img
@@ -194,7 +195,7 @@
       {#if data.blueprint.entry.expand && data.blueprint.entry.expand['tags']}
         {@const tags = data.blueprint.entry.expand['tags']}
         <ul>
-          {#each tags as tag}
+          {#each tags as tag (tag.id)}
             <li class="inline">
               <BlueprintTag data={tag} />
             </li>
@@ -211,7 +212,7 @@
             title="View blueprint"
             href={`/blueprint/${data.blueprint.entry.id}/view`}
           >
-            <span class="icon-[tabler--eye]" />
+            <span class="icon-[tabler--eye]"></span>
             View
           </Button.Root>
         </li>
@@ -222,7 +223,7 @@
             href="/api/v1/blueprint/{data.blueprint.entry.id}/download"
             download
           >
-            <span class="icon-[tabler--download]" />
+            <span class="icon-[tabler--download]"></span>
             Download
           </Button.Root>
         </li>
@@ -231,11 +232,11 @@
             class="{button({ intent: 'accent' })} w-full sm:w-auto"
             title="Copy blueprint"
             use:copy={{ value: data.blueprint.entry.data }}
-            on:copy={() => add({ message: 'Content copied' })}
-            on:error={(event) =>
+            oncopy={() => add({ message: 'Content copied' })}
+            onerror={(event) =>
               add({ message: event.detail.message, type: 'ERROR' })}
           >
-            <span class="icon-[tabler--copy]" />
+            <span class="icon-[tabler--copy]"></span>
             Copy
           </button>
         </li>
@@ -246,9 +247,9 @@
       <h2 class="sr-only">Properties</h2>
 
       <div class="flex flex-wrap justify-between gap-4 p-4">
-        {#each properties as category}
+        {#each properties as category, categoryIndex (categoryIndex)}
           <ul class="space-y-2">
-            {#each category as property}
+            {#each category as property (property.title)}
               <li class="flex items-center gap-2">
                 <span class={property.iconClass}>{property.title}</span>
                 <p>

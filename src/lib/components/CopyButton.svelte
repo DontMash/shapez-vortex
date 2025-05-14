@@ -4,9 +4,13 @@
 
   import { button } from '$lib/components/button';
 
-  export let value: string;
+  interface Props {
+    value: string;
+  }
 
-  let isLoading = false;
+  let { value }: Props = $props();
+
+  let isLoading = $state(false);
 </script>
 
 <button
@@ -18,13 +22,13 @@
   data-loading={isLoading}
   type="button"
   title="Copy"
-  on:click={() => (isLoading = true)}
+  onclick={() => (isLoading = true)}
   use:copy={{ value }}
-  on:copy={() => {
+  oncopy={() => {
     isLoading = false;
     add({ message: 'Content copied' });
   }}
-  on:error={(event) => {
+  onerror={(event) => {
     isLoading = false;
     add({ message: event.detail.message, type: 'ERROR' });
   }}

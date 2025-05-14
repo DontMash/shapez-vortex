@@ -1,13 +1,12 @@
 <script lang="ts">
-  import type { PageData } from './$types';
-  import { page } from '$app/stores';
+  import type { PageProps } from './$types';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 
   const form = superForm(data.form);
   const { form: formData, enhance } = form;
@@ -18,14 +17,14 @@
     <form action="/password-reset/?/reset" method="post">
       <input type="hidden" name="email" value={data.user.email} />
       <button class={button({ kind: 'outline', block: true })}>
-        <span class="icon-[tabler--lock-question]" />
+        <span class="icon-[tabler--lock-question]"></span>
         Request password reset
       </button>
     </form>
   {:else}
     <form action="?/verification" method="post">
       <button class={button({ kind: 'outline', block: true })}>
-        <span class="icon-[tabler--user-question]" />
+        <span class="icon-[tabler--user-question]"></span>
         Request verification
       </button>
     </form>
@@ -37,38 +36,32 @@
     method="post"
     use:enhance
   >
-    <Field {form} name="email" let:constraints>
-      <div class="flex flex-1 flex-col gap-2">
-        <Control let:attrs>
-          <Label class={input.group()}>
-            <span class="icon-[tabler--mail]">Email</span>
-            <input
-              class={input.field()}
-              type="text"
-              placeholder="Email"
-              {...attrs}
-              {...constraints}
-              bind:value={$formData.email}
-            />
-          </Label>
-        </Control>
-        <FieldErrors class="text-error" />
-      </div>
+    <Field {form} name="email">
+      {#snippet children({ constraints })}
+        <div class="flex flex-1 flex-col gap-2">
+          <Control>
+            {#snippet children({ props })}
+              <Label class={input.group()}>
+                <span class="icon-[tabler--mail]">Email</span>
+                <input
+                  class={input.field()}
+                  type="text"
+                  placeholder="Email"
+                  {...props}
+                  {...constraints}
+                  bind:value={$formData.email}
+                />
+              </Label>
+            {/snippet}
+          </Control>
+          <FieldErrors class="text-error" />
+        </div>
+      {/snippet}
     </Field>
 
     <button class={button()}>
-      <span class="icon-[tabler--refresh]" />
+      <span class="icon-[tabler--refresh]"></span>
       Update
     </button>
   </form>
-
-  {#if $page.form && !$page.form.success && $page.form.issues}
-    <ul class="inline-block font-medium italic text-error">
-      {#each $page.form.issues as issue}
-        <li>
-          {issue.message}
-        </li>
-      {/each}
-    </ul>
-  {/if}
 </section>

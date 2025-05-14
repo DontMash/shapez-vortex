@@ -4,7 +4,6 @@ export const group = cva(
   [
     'group/input',
     'flex',
-    'max-h-64',
     'items-center',
     'gap-2',
     'rounded-sm',

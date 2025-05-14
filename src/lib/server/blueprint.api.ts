@@ -68,13 +68,12 @@ export const get = async (pb: PocketBase, options?: BlueprintGetOptions) => {
             .getFullList({ filter: tagCollectionFilter });
           if (tags.length <= 0) break;
 
-          const tagFilter = tags.map((tag) => `${key}?~"${tag.id}"`).join('||');
+          const tagFilter = tags.map((tag) => `${key}?~"${tag.id}"`).join('&&');
           filterParams.push(tagFilter);
         }
       }
     }
   }
-
   const blueprints = await pb
     .collection<BlueprintRecord>('blueprints')
     .getList(page, perPage, {

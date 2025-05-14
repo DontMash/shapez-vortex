@@ -52,7 +52,7 @@
             href="/shape"
             title="Checkout the shape viewer"
           >
-            <span class="icon-[tabler--stack] text-lg" />
+            <span class="icon-[tabler--stack] text-lg"></span>
             Shape Viewer
           </Button.Root>
         </li>
@@ -62,7 +62,7 @@
             href="/blueprint"
             title="Checkout the blueprint viewer"
           >
-            <span class="icon-[tabler--schema] text-lg" />
+            <span class="icon-[tabler--schema] text-lg"></span>
             Blueprint Viewer
           </Button.Root>
         </li>
@@ -217,23 +217,6 @@
             >
               <span class="icon-[simple-icons--youtube] text-lg"
                 >tobspr Games YouTube</span
-              >
-            </Button.Root>
-          </li>
-          <li>
-            <Button.Root
-              class={button({
-                kind: 'ghost',
-                intent: 'muted',
-                size: 'icon-sm',
-              })}
-              href="https://www.patreon.com/tobsprgamess"
-              title="tobspr Games Patreon"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span class="icon-[simple-icons--patreon] text-lg"
-                >tobspr Games Patreon</span
               >
             </Button.Root>
           </li>

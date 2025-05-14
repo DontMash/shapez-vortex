@@ -1,6 +1,6 @@
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms';
+import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
 
@@ -26,10 +26,10 @@ export const actions = {
     const form = await superValidate(request, zod(USER_UPDATE_SCHEMA));
 
     if (!locals.user) {
-      return fail(401, { form });
+      return message(form, 'Unauthorized', { status: 401 });
     }
     if (!locals.user.verified) {
-      return fail(403, { form });
+      return message(form, 'Not verified', { status: 403 });
     }
 
     if (!form.valid) {

@@ -3,12 +3,16 @@
 
   import BlueprintItem from './BlueprintItem.svelte';
 
-  export let items: Array<BlueprintRecord>;
-  export let images: Record<string, string>;
+  interface Props {
+    items: Array<BlueprintRecord>;
+    images: Record<string, string>;
+  }
+
+  let { items, images }: Props = $props();
 </script>
 
 <ul class="space-y-4">
-  {#each items as blueprint}
+  {#each items as blueprint (blueprint.id)}
     {@const preview = images && images[blueprint.id]}
     <li>
       <BlueprintItem data={blueprint} image={preview} />

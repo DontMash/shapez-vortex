@@ -1,22 +1,22 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
 
-  import BlueprintForm from '$lib/components/blueprint/BlueprintForm.svelte';
   import { section } from '$lib/components/section';
 
+  import BlueprintForm from '$lib/components/blueprint/BlueprintForm.svelte';
   import PageHeader from '$lib/components/PageHeader.svelte';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 </script>
 
 <section class={section()}>
   <PageHeader>
-    <span class="icon-[tabler--edit] heading-2" />
+    <span class="icon-[tabler--edit] heading-2"></span>
     {data.seo.title}
 
-    <svelte:fragment slot="description">
+    {#snippet description()}
       {data.seo.description}
-    </svelte:fragment>
+    {/snippet}
   </PageHeader>
 
   <BlueprintForm

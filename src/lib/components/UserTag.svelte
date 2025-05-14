@@ -2,7 +2,11 @@
   import { Button } from 'bits-ui';
   import { button } from '$lib/components/button';
 
-  export let name: string;
+  interface Props {
+    name: string;
+  }
+
+  let { name }: Props = $props();
 </script>
 
 <Button.Root

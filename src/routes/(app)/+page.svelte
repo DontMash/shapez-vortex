@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
   import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
   import { section } from '$lib/components/section';
@@ -54,7 +54,7 @@
     },
   ];
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 </script>
 
 <section class={section()} id="hero">
@@ -93,7 +93,7 @@
   <h2 class="heading-2 mb-2">Features</h2>
 
   <div class="mx-auto grid grid-cols-1 gap-4 lg:grid-cols-3">
-    {#each features as feature}
+    {#each features as feature (feature.url)}
       <div class="overflow-hidden rounded-md border bg-layer shadow-md">
         <Button.Root
           class="aspect-h-2 aspect-w-3 inline-block w-full"
