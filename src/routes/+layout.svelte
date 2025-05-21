@@ -30,6 +30,15 @@
     pageKeywords.forEach((keyword) => keywords.add(keyword));
     return Array.from(keywords);
   }
+
+  // search: clear page param on form submit
+  // search: break/wrap tag list
+  // search: Ascending/Descending as toggle
+  // search: clear filter option
+  // combobox horizontal overflow
+  // use embla instead of swiper
+  // svelte client actions
+  // update tailwind
 </script>
 
 <svelte:head>
