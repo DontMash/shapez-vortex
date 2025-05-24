@@ -681,7 +681,7 @@
                         </label>
 
                         <Combobox.Content
-                          class="relative z-10 max-h-64 overflow-y-auto rounded-md border bg-layer p-2"
+                          class="relative z-10 max-h-64 overflow-y-auto overflow-x-hidden rounded-md border bg-layer p-2"
                           sideOffset={20}
                         >
                           {#each tags as tag (tag.id)}

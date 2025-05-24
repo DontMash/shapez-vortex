@@ -217,35 +217,54 @@
             <div {...props} transition:slide={{ duration: 150 }}>
               {#if filterTags}
                 <div class="flex flex-col gap-2">
-                  <ul class="flex flex-wrap gap-2">
-                    {#each filterTags as tag (tag.id)}
-                      <li>
-                        <span
-                          class="inline-flex items-center gap-1 rounded-xs border pl-2"
-                        >
-                          #{tag.name}
-
-                          <Button.Root
-                            class={button({
-                              intent: 'error',
-                              kind: 'ghost',
-                              size: 'icon-sm',
-                            })}
-                            type="button"
-                            onclick={() => {
-                              filterTagOptions = filterTagOptions?.filter(
-                                (tagOption) => tagOption !== tag.id,
-                              );
-                            }}
+                  <div class="flex items-start">
+                    <ul class="flex flex-wrap gap-2">
+                      {#each filterTags as tag (tag.id)}
+                        <li>
+                          <span
+                            class="inline-flex items-center gap-1 rounded-xs border pl-2"
                           >
-                            <span class="icon-[tabler--x]"
-                              >Remove tag {tag}</span
+                            #{tag.name}
+
+                            <Button.Root
+                              class={button({
+                                intent: 'error',
+                                kind: 'ghost',
+                                size: 'icon-sm',
+                              })}
+                              type="button"
+                              onclick={() => {
+                                filterTagOptions = filterTagOptions?.filter(
+                                  (tagOption) => tagOption !== tag.id,
+                                );
+                              }}
                             >
-                          </Button.Root>
-                        </span>
-                      </li>
-                    {/each}
-                  </ul>
+                              <span class="icon-[tabler--x]">
+                                Remove tag {tag}
+                              </span>
+                            </Button.Root>
+                          </span>
+                        </li>
+                      {/each}
+                    </ul>
+                    {#if filterTags.length}
+                      <Button.Root
+                        class="{button({
+                          intent: 'error',
+                          kind: 'outline',
+                          size: 'sm',
+                        })} ml-auto shrink-0"
+                        type="button"
+                        onclick={() => {
+                          filterTagOptions = [];
+                        }}
+                      >
+                        <span class="icon-[tabler--x]"></span>
+                        Clear tags
+                      </Button.Root>
+                    {/if}
+                  </div>
+
                   <Combobox.Root
                     type="multiple"
                     items={data.tags.map((tag) => ({
@@ -265,7 +284,7 @@
                     </label>
 
                     <Combobox.Content
-                      class="relative z-10 max-h-64 overflow-y-auto rounded-md border bg-layer p-2"
+                      class="relative z-10 max-h-64 overflow-y-auto overflow-x-hidden rounded-md border bg-layer p-2"
                       sideOffset={20}
                     >
                       {#each data.tags as tag (tag.id)}
