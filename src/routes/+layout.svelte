@@ -27,7 +27,6 @@
     return Array.from(keywords);
   }
 
-  // search: break/wrap tag list
   // search: Ascending/Descending as toggle
   // search: clear filter option
   // combobox horizontal overflow
@@ -67,7 +66,7 @@
 <Header />
 
 <main class="flex min-h-screen flex-col overflow-x-hidden">
-  {@render children?.()}
+  {@render children()}
 </main>
 
 <Toaster />

@@ -599,7 +599,7 @@
                   {#snippet children({ props })}
                     <div class="flex flex-col gap-2">
                       {#if $formData.tags}
-                        <ul class="flex gap-2">
+                        <ul class="flex flex-wrap gap-2">
                           {#each $formData.tags as tag (tag)}
                             {@const blueprintTag = tags.find(
                               (blueprintTag) => tag === blueprintTag.id,

@@ -209,7 +209,7 @@
             <div {...props} transition:slide={{ duration: 150 }}>
               {#if filterTags}
                 <div class="flex flex-col gap-2">
-                  <ul class="flex gap-2">
+                  <ul class="flex flex-wrap gap-2">
                     {#each filterTags as tag (tag.id)}
                       <li>
                         <span
