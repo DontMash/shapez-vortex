@@ -27,7 +27,6 @@
     return Array.from(keywords);
   }
 
-  // search: clear page param on form submit
   // search: break/wrap tag list
   // search: Ascending/Descending as toggle
   // search: clear filter option

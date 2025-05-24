@@ -2,9 +2,9 @@
   import type { PageProps } from './$types';
   import { Button, Collapsible, Combobox, Pagination, Select } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
-  import { onMount, tick, untrack } from 'svelte';
+  import { tick, untrack } from 'svelte';
   import { slide } from 'svelte/transition';
-  import SuperDebug, { superForm } from 'sveltekit-superforms';
+  import { superForm } from 'sveltekit-superforms';
   import {
     PAGINATION_PAGE_DEFAULT,
     PAGINATION_PER_PAGE_DEFAULT,
@@ -133,7 +133,21 @@
     {/snippet}
   </PageHeader>
 
-  <form class="flex flex-col gap-2" method="get" bind:this={formElement}>
+  <form
+    class="flex flex-col gap-2"
+    method="get"
+    onsubmit={(event) => {
+      event.preventDefault();
+
+      if ($formData.page === data.form.data.page) {
+        $formData.page = 1;
+      }
+
+      const form = event.currentTarget;
+      tick().then(() => form.submit());
+    }}
+    bind:this={formElement}
+  >
     <div class="flex items-start gap-2">
       <Field {form} name="query">
         {#snippet children({ constraints })}
