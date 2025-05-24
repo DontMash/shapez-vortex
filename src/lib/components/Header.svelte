@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Menubar } from 'bits-ui';
+  import { Button, Menubar, NavigationMenu, Separator } from 'bits-ui';
   import { cva } from 'class-variance-authority';
   import { blur } from 'svelte/transition';
   import { page } from '$app/state';
@@ -34,118 +34,90 @@
     y: false,
   })} sticky inset-x-0 top-0 z-50 w-full py-4"
 >
-  <nav
-    class="flex items-center rounded-lg border bg-layer/70 p-4 shadow-lg backdrop-blur-lg"
-    aria-label="Main"
+  <NavigationMenu.Root
+    class="relative rounded-lg border bg-layer/70 p-4 shadow-lg backdrop-blur-lg"
   >
-    <Logo />
+    <NavigationMenu.List class="flex items-center gap-4">
+      <NavigationMenu.Item>
+        <NavigationMenu.Link>
+          {#snippet child()}
+            <Logo />
+          {/snippet}
+        </NavigationMenu.Link>
+      </NavigationMenu.Item>
 
-    <div class="ml-auto flex items-center gap-4">
-      <Search />
+      <NavigationMenu.Item class="ml-auto">
+        <Search />
+      </NavigationMenu.Item>
 
-      <Button.Root
-        class="{button({ size: 'icon' })} hidden sm:inline-flex"
-        href="/blueprint/upload"
-        title="Upload a blueprint to Shapez Vortex"
-      >
-        <span class="icon-[tabler--upload]">Upload</span>
-      </Button.Root>
+      <NavigationMenu.Item class="hidden sm:list-item">
+        <NavigationMenu.Link
+          class={button({ size: 'icon' })}
+          href="/blueprint/upload"
+          title="Upload a blueprint to Shapez Vortex"
+        >
+          <span class="icon-[tabler--upload]">Upload</span>
+        </NavigationMenu.Link>
+      </NavigationMenu.Item>
 
       {#if !page.data.user}
-        <Button.Root
-          class={button({ size: 'icon' })}
-          title="Login into Shapez Vortex"
-          href="/login"
-        >
-          <span class="icon-[tabler--login-2]">Login</span>
-        </Button.Root>
+        <NavigationMenu.Item>
+          <NavigationMenu.Link
+            class={button({ size: 'icon' })}
+            title="Login into Shapez Vortex"
+            href="/login"
+          >
+            <span class="icon-[tabler--login-2]">Login</span>
+          </NavigationMenu.Link>
+        </NavigationMenu.Item>
       {/if}
 
       {#if page.data.user}
-        <Menubar.Root>
-          <Menubar.Menu>
-            <Menubar.Trigger
-              class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
+        <NavigationMenu.Item>
+          <NavigationMenu.Trigger
+            class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
+          >
+            <span class="icon-[tabler--dots-vertical]">Show more options</span>
+          </NavigationMenu.Trigger>
+          <NavigationMenu.Content class="flex flex-col gap-1">
+            <NavigationMenu.Link
+              class="{menu.item()} sm:hidden"
+              href="/blueprint/upload"
             >
-              <span class="icon-[tabler--dots-vertical]">Show more options</span
-              >
-            </Menubar.Trigger>
+              <span class="icon-[tabler--upload] text-lg"></span>
+              Upload
+            </NavigationMenu.Link>
 
-            <Menubar.Content
-              side="bottom"
-              sideOffset={24}
-              align="end"
-              alignOffset={-16}
-              strategy="fixed"
-              forceMount
+            <Separator.Root class="my-1 h-px bg-border sm:hidden" />
+
+            <NavigationMenu.Link class={menu.item()} href="/user">
+              <span class="icon-[tabler--user] text-lg"></span>
+              Profile
+            </NavigationMenu.Link>
+
+            <NavigationMenu.Link class={menu.item()} href="/settings">
+              <span class="icon-[tabler--settings] text-lg"></span>
+              Settings
+            </NavigationMenu.Link>
+
+            <form
+              class="contents"
+              action="/logout"
+              method="post"
+              bind:this={logoutFormElement}
             >
-              {#snippet child({ wrapperProps, props, open })}
-                {#if open}
-                  <div {...wrapperProps}>
-                    <div
-                      class="z-20 flex flex-col gap-1 rounded-lg border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
-                      {...props}
-                      transition:blur={{ duration: 150 }}
-                    >
-                      <Menubar.Item>
-                        {#snippet child({ props })}
-                          <a
-                            class="{menu.item()} sm:hidden"
-                            href="/blueprint/upload"
-                            title="Upload a blueprint to Shapez Vortex"
-                            {...props}
-                          >
-                            <span class="icon-[tabler--upload] text-lg"></span>
-                            Upload
-                          </a>
-                        {/snippet}
-                      </Menubar.Item>
-
-                      <Menubar.Separator
-                        class="my-1 h-px bg-border sm:hidden"
-                      />
-
-                      <Menubar.Item>
-                        {#snippet child({ props })}
-                          <a class={menu.item()} href="/user" {...props}>
-                            <span class="icon-[tabler--user] text-lg"></span>
-                            Profile
-                          </a>
-                        {/snippet}
-                      </Menubar.Item>
-                      <Menubar.Item>
-                        {#snippet child({ props })}
-                          <a class={menu.item()} href="/settings" {...props}>
-                            <span class="icon-[tabler--settings] text-lg"
-                            ></span>
-                            Settings
-                          </a>
-                        {/snippet}
-                      </Menubar.Item>
-                      <Menubar.Item>
-                        {#snippet child({ props })}
-                          <form
-                            class="contents"
-                            action="/logout"
-                            method="post"
-                            bind:this={logoutFormElement}
-                          >
-                            <button class={menu.item()} {...props}>
-                              <span class="icon-[tabler--logout-2] text-lg"
-                              ></span>
-                              Logout
-                            </button>
-                          </form>
-                        {/snippet}
-                      </Menubar.Item>
-                    </div>
-                  </div>
-                {/if}
-              {/snippet}
-            </Menubar.Content>
-          </Menubar.Menu>
-        </Menubar.Root>
+              <button class={menu.item()}>
+                <span class="icon-[tabler--logout-2] text-lg"></span>
+                Logout
+              </button>
+            </form>
+          </NavigationMenu.Content>
+        </NavigationMenu.Item>
       {/if}
-    </div>
-  </nav>
+    </NavigationMenu.List>
+
+    <NavigationMenu.Viewport
+      class="absolute right-0 top-[calc(100%+8px)] z-50 w-fit rounded-lg border bg-layer p-2 shadow-lg backdrop-blur-lg before:absolute before:inset-x-0 before:-top-6 before:h-6"
+    />
+  </NavigationMenu.Root>
 </header>

@@ -21,7 +21,7 @@
     "@fontsource-variable/outfit": "^5.2.5",
     "@threlte/core": "^8.0.4",
     "@threlte/extras": "^9.2.1",
-    "bits-ui": "^1.4.8",
+    "bits-ui": "^1.7.0",
     "class-variance-authority": "^0.7.1",
     "formsnap": "^2.0.1",
     "pako": "^2.1.0",
@@ -32,7 +32,7 @@
     "three": "^0.176.0",
     "three-custom-shader-material": "^5.4.0",
     "ua-parser-js": "1.0.40",
-    "zod": "^3.24.4"
+    "zod": "^3.25.20"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.9",
@@ -41,7 +41,7 @@
     "@iconify-json/tabler": "^1.2.17",
     "@iconify/tailwind": "^1.1.2",
     "@sveltejs/adapter-auto": "^6.0.0",
-    "@sveltejs/kit": "^2.5.27",
+    "@sveltejs/kit": "^2.21.1",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.16",
@@ -59,10 +59,10 @@
     "prettier": "^3.5.3",
     "prettier-plugin-svelte": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
-    "svelte": "^5.0.0",
+    "svelte": "^5.32.1",
     "svelte-check": "^4.0.0",
     "tailwindcss": "^3.3.2",
-    "typescript": "^5.5.0",
+    "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.0",
     "vite": "^6.3.4",
     "vitest": "^3.1.3"

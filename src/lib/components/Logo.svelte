@@ -7,7 +7,7 @@
   type LogoVariant = VariantProps<typeof logo>;
   const logo = cva(
     [
-      'inline-flex',
+      'flex',
       'items-center',
       'gap-2',
       'border',

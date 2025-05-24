@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { LayoutProps } from './$types';
+  import { NavigationMenu } from 'bits-ui';
   import { page } from '$app/stores';
   import { capitalize } from '$lib/utils';
 
@@ -22,24 +23,29 @@
       @{data.user?.displayname}
     </p>
 
-    <nav>
+    <NavigationMenu.Root>
       {#key $page.url}
-        <ul class="space-y-2">
+        <NavigationMenu.List class="flex flex-col gap-2">
           {#each data.pages as page (page.path)}
-            <li>
-              <a
+            <NavigationMenu.Item>
+              <NavigationMenu.Link
                 class="{button({
                   kind: 'ghost',
                   intent: 'muted',
                   size: 'sm',
-                })} {isCurrent(page.path) ? 'bg-muted text-foreground' : ''}"
-                href={page.path}>{capitalize(page.name)}</a
-              >
-            </li>
+                })} {isCurrent(page.path) ? 'border-border text-foreground' : ''}"
+                href={page.path}
+                >{capitalize(page.name)}
+              </NavigationMenu.Link>
+            </NavigationMenu.Item>
           {/each}
-        </ul>
+
+          <NavigationMenu.Indicator>
+            <div class="bg-primary"></div>
+          </NavigationMenu.Indicator>
+        </NavigationMenu.List>
       {/key}
-    </nav>
+    </NavigationMenu.Root>
   </aside>
 
   <div>

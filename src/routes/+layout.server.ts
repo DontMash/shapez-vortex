@@ -5,7 +5,7 @@ import type { BlueprintRecord } from '$lib/blueprint.types';
 import type { User } from '$lib/user.types';
 import { get } from '$lib/server/blueprint.api';
 
-export const load = (async ({ locals, request, url }) => {
+export const load = (async ({ fetch, locals, request, url }) => {
   let agent;
   const userAgent = request.headers.get('user-agent');
   if (userAgent) {
@@ -36,7 +36,6 @@ export const load = (async ({ locals, request, url }) => {
   } catch {
     searchUsers = [];
   }
-
   return {
     seo: {
       title: 'Shapez Vortex',

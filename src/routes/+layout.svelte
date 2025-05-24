@@ -9,11 +9,7 @@
   import Header from '$lib/components/Header.svelte';
   import Toaster from '$lib/components/toast/Toaster.svelte';
 
-  interface Props {
-    children?: import('svelte').Snippet;
-  }
-
-  let { children }: Props = $props();
+  let { children } = $props();
 
   function onError(event: Event) {
     const errorEvent = event as ErrorEvent;
@@ -70,8 +66,11 @@
 <svelte:window onerror={(event) => onError(event)} />
 
 <Header />
+
 <main class="flex min-h-screen flex-col overflow-x-hidden">
   {@render children?.()}
 </main>
+
 <Toaster />
+
 <Footer />
