@@ -703,24 +703,25 @@
                           {/each}
 
                           {#if !$formData.tags?.find((tag) => tag === `${BLUEPRINT_TAG_NEW_SYMBOL}${blueprintTagInputValue}`)}
-                            {#if tags.length <= 0}
-                              {#if BLUEPRINT_TAG_REGEX.test(blueprintTagInputValue)}
-                                <p class="px-4 py-1">No results found.</p>
-                                <Combobox.Separator
-                                  class="my-1 h-px bg-muted"
-                                />
-                                <Combobox.Item
-                                  class="flex w-full cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
-                                  value="${blueprintTagInputValue}"
-                                  label={blueprintTagInputValue}
-                                >
-                                  <em>Add #{blueprintTagInputValue}</em>
-                                </Combobox.Item>
-                              {:else}
+                            {#if !BLUEPRINT_TAG_REGEX.test(blueprintTagInputValue)}
+                              {#if tags.length <= 0}
                                 <span class="px-4 py-1 text-error"
                                   >Invalid tag.</span
                                 >
                               {/if}
+                            {:else}
+                              {#if tags.length <= 0}
+                                <p class="px-4 py-1">No results found.</p>
+                              {/if}
+                              <Combobox.Separator class="my-1 h-px bg-muted" />
+
+                              <Combobox.Item
+                                class="flex w-full cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                                value="${blueprintTagInputValue}"
+                                label={blueprintTagInputValue}
+                              >
+                                <em>Add #{blueprintTagInputValue}</em>
+                              </Combobox.Item>
                             {/if}
                           {/if}
                         </Combobox.Content>
