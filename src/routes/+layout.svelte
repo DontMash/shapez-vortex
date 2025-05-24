@@ -27,7 +27,6 @@
     return Array.from(keywords);
   }
 
-  // use embla instead of swiper
   // svelte client actions
   // update tailwind
 </script>

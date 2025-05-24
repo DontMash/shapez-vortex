@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
-  import Swiper from 'swiper';
-  import { Autoplay, Navigation } from 'swiper/modules';
+  import EmblaCarousel, { type EmblaCarouselType } from 'embla-carousel';
   import { copy } from '$lib/client/actions/clipboard';
   import { add } from '$lib/client/toast.service';
 
@@ -78,21 +77,15 @@
 
   let slider: {
     root?: HTMLElement | undefined;
-    prevButton?: HTMLElement | undefined;
-    nextButton?: HTMLElement | undefined;
+    api?: EmblaCarouselType | undefined;
   } = $state({});
 
   $effect(() => {
-    if (slider.root) {
-      new Swiper(slider.root, {
-        modules: [Autoplay, Navigation],
-        loop: data.blueprint.images.length > 1,
-        navigation: {
-          prevEl: slider.prevButton,
-          nextEl: slider.nextButton,
-        },
-      });
+    if (!slider.root || slider.api) {
+      return;
     }
+
+    slider.api = EmblaCarousel(slider.root, { loop: true });
   });
 </script>
 
@@ -136,34 +129,36 @@
     <section>
       <h2 class="sr-only">Images</h2>
 
-      <div class="relative overflow-hidden" bind:this={slider.root}>
-        <div class="swiper-wrapper flex">
-          {#each data.blueprint.images as image, index (index)}
-            <div class="swiper-slide relative shrink-0">
-              <div class="aspect-h-2 aspect-w-3">
-                <img
-                  class="object-cover"
-                  src={image.src}
-                  alt="Image #{index} of {data.blueprint.entry.title}"
-                />
-              </div>
+      <div class="relative">
+        <div class="embla__viewport overflow-hidden" bind:this={slider.root}>
+          <div class="embla__container flex">
+            {#each data.blueprint.images as image, index (index)}
+              <div class="embla__slide relative min-w-full">
+                <div class="aspect-h-2 aspect-w-3">
+                  <img
+                    class="object-cover"
+                    src={image.src}
+                    alt="Image #{index} of {data.blueprint.entry.title}"
+                  />
+                </div>
 
-              <Button.Root
-                class="{button({
-                  intent: 'accent',
-                  size: 'icon-sm',
-                })} absolute right-4 top-4"
-                title="Zoom image"
-                href={image.src}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span class="icon-[tabler--window-maximize]">
-                  Open in new Tab
-                </span>
-              </Button.Root>
-            </div>
-          {/each}
+                <Button.Root
+                  class="{button({
+                    intent: 'accent',
+                    size: 'icon-sm',
+                  })} absolute right-4 top-4"
+                  title="Zoom image"
+                  href={image.src}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span class="icon-[tabler--window-maximize]">
+                    Open in new Tab
+                  </span>
+                </Button.Root>
+              </div>
+            {/each}
+          </div>
         </div>
 
         {#if data.blueprint.images.length > 1}
@@ -172,7 +167,9 @@
               intent: 'accent',
               size: 'icon-sm',
             })} absolute left-4 top-1/2 -translate-y-1/2 shadow-lg"
-            bind:this={slider.prevButton}
+            onclick={() => {
+              slider.api?.scrollPrev();
+            }}
           >
             <span class="icon-[tabler--chevron-left]"> Prev </span>
           </button>
@@ -181,7 +178,7 @@
               intent: 'accent',
               size: 'icon-sm',
             })} absolute right-4 top-1/2 -translate-y-1/2 shadow-lg"
-            bind:this={slider.nextButton}
+            onclick={() => slider.api?.scrollNext()}
           >
             <span class="icon-[tabler--chevron-right]"> Next </span>
           </button>
