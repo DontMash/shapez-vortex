@@ -601,7 +601,7 @@
                       {#if $formData.tags}
                         <ul class="flex flex-wrap gap-2">
                           {#each $formData.tags as tag (tag)}
-                            {@const blueprintTag = tags.find(
+                            {@const blueprintTag = data.tags.find(
                               (blueprintTag) => tag === blueprintTag.id,
                             )}
                             <li>
@@ -636,6 +636,7 @@
                           {/each}
                         </ul>
                       {/if}
+
                       <Combobox.Root
                         type="multiple"
                         items={tags.map((tag) => ({
