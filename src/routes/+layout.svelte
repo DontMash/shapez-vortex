@@ -27,7 +27,6 @@
     return Array.from(keywords);
   }
 
-  // search: Ascending/Descending as toggle
   // search: clear filter option
   // combobox horizontal overflow
   // use embla instead of swiper

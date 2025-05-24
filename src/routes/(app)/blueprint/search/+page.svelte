@@ -1,6 +1,13 @@
 <script lang="ts">
   import type { PageProps } from './$types';
-  import { Button, Collapsible, Combobox, Pagination, Select } from 'bits-ui';
+  import {
+    Button,
+    Collapsible,
+    Combobox,
+    Pagination,
+    Select,
+    Toggle,
+  } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { tick, untrack } from 'svelte';
   import { slide } from 'svelte/transition';
@@ -8,6 +15,7 @@
   import {
     PAGINATION_PAGE_DEFAULT,
     PAGINATION_PER_PAGE_DEFAULT,
+    SEARCH_ORDER_OPTION_DEFAULT,
     SEARCH_ORDER_OPTIONS,
     SEARCH_SORT_OPTIONS,
   } from '$lib/search';
@@ -285,7 +293,7 @@
       </Collapsible.Content>
     </Collapsible.Root>
 
-    <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+    <div class="flex gap-2">
       <Field {form} name="sort">
         {#snippet children({ constraints })}
           <div class="flex flex-1 flex-col gap-2">
@@ -353,62 +361,38 @@
 
       <Field {form} name="order">
         {#snippet children({ constraints })}
-          <div class="flex flex-1 flex-col gap-2">
+          <div class="flex flex-col gap-2">
             <Control>
               {#snippet children({ props })}
-                <Label>
-                  <Select.Root
-                    type="single"
-                    name={props.name}
-                    items={orderOptions}
-                    loop
-                    bind:value={$formData.order}
-                    onValueChange={() =>
-                      tick().then(() => formElement?.requestSubmit())}
-                    {...constraints}
-                  >
-                    <Select.Trigger
-                      class="{button({
-                        kind: 'outline',
-                        intent: 'accent',
-                      })} w-full min-w-64 bg-background"
-                      {...props}
-                      {...constraints}
+                <Toggle.Root
+                  class={button({
+                    kind: 'outline',
+                    intent: 'muted',
+                    size: 'icon',
+                  })}
+                  title="Order by {$formData.order ===
+                  SEARCH_ORDER_OPTION_DEFAULT
+                    ? 'descending'
+                    : 'ascending'}"
+                  {...props}
+                  {...constraints}
+                  name="order-toggle"
+                  bind:pressed={
+                    () => $formData.order === SEARCH_ORDER_OPTION_DEFAULT,
+                    (state) => ($formData.order = state ? 'desc' : 'asc')
+                  }
+                  onPressedChange={() =>
+                    tick().then(() => formElement?.requestSubmit())}
+                >
+                  {#if $formData.order === SEARCH_ORDER_OPTION_DEFAULT}
+                    <span class="icon-[tabler--arrow-narrow-down]"
+                      >Descending</span
                     >
-                      <span class="icon-[tabler--menu-order]"></span>
-                      {SEARCH_ORDER_OPTIONS[$formData.order] ?? 'Order by'}
-                      <span class="icon-[tabler--caret-up-down] ml-auto"></span>
-                    </Select.Trigger>
-
-                    <Select.Content
-                      class="z-10 flex flex-col rounded-sm border bg-background p-2 shadow-lg"
+                  {:else}
+                    <span class="icon-[tabler--arrow-narrow-up]">Ascending</span
                     >
-                      {#each orderOptions as { label, value } (value)}
-                        <Select.Item
-                          class="{button({
-                            kind: 'ghost',
-                            intent: 'muted',
-                            size: 'sm',
-                          })} data-[highlighted]:bg-muted"
-                          {label}
-                          {value}
-                        >
-                          {#snippet children({ selected })}
-                            {label}
-
-                            {#if selected}
-                              <div class="ml-auto flex items-center">
-                                <span class="icon-[tabler--check]"
-                                  >selected</span
-                                >
-                              </div>
-                            {/if}
-                          {/snippet}
-                        </Select.Item>
-                      {/each}
-                    </Select.Content>
-                  </Select.Root>
-                </Label>
+                  {/if}
+                </Toggle.Root>
               {/snippet}
             </Control>
             <FieldErrors class="text-error" />
@@ -433,6 +417,9 @@
       {/snippet}
     </Field>
 
+    {#if $formData.order !== SEARCH_ORDER_OPTION_DEFAULT}
+      <input type="hidden" name="order" bind:value={$formData.order} />
+    {/if}
     {#if $formData.page !== PAGINATION_PAGE_DEFAULT}
       <input type="hidden" name="page" bind:value={$formData.page} />
     {/if}
