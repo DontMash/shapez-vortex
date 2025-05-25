@@ -27,7 +27,6 @@
     return Array.from(keywords);
   }
 
-  // svelte client actions
   // update tailwind
 </script>
 

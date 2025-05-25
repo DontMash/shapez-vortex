@@ -10,15 +10,13 @@ export const capture = (
 ): Attachment<HTMLButtonElement> => {
   return (element) => {
     const { canvas, filename } = params;
-    const event = new CustomEvent('capture');
     const onclick = () => {
       onCapture(canvas, filename);
-      element.dispatchEvent(event);
     };
-    element.addEventListener('click', () => onclick(), { passive: true });
+    element.addEventListener('click', onclick, { passive: true });
 
     return () => {
-      element.removeEventListener('click', () => onclick());
+      element.removeEventListener('click', onclick);
     };
   };
 };

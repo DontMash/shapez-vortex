@@ -10,9 +10,9 @@ export const copy = (params: CopyParameters): Attachment<HTMLButtonElement> => {
   const hasCopyClipboard = hasClipboard && !!navigator.clipboard.writeText;
 
   return (element) => {
-    element.addEventListener('click', () => copy(params), { passive: true });
+    element.addEventListener('click', copy, { passive: true });
 
-    function copy(params: CopyParameters) {
+    function copy() {
       const { value, oncopy, onerror } = params;
       const onsuccess = (value: string) => oncopy && oncopy(value);
       const onfailure = (error: Error) => onerror && onerror(error);
@@ -43,7 +43,7 @@ export const copy = (params: CopyParameters): Attachment<HTMLButtonElement> => {
       }
     }
 
-    return () => element.removeEventListener('click', () => copy(params));
+    return () => element.removeEventListener('click', copy);
   };
 };
 
@@ -58,9 +58,9 @@ export const paste = (
   const hasPasteClipboard = hasClipboard && !!navigator.clipboard.readText;
 
   return (element) => {
-    element.addEventListener('click', () => paste(params), { passive: true });
+    element.addEventListener('click', paste, { passive: true });
 
-    function paste(params: PasteParameters) {
+    function paste() {
       const { onpaste, onerror } = params;
       const onsuccess = (value: string) => onpaste && onpaste(value);
       const onfailure = (error: Error) => onerror && onerror(error);
@@ -76,6 +76,6 @@ export const paste = (
       }
     }
 
-    return () => element.removeEventListener('click', () => paste(params));
+    return () => element.removeEventListener('click', paste);
   };
 };
