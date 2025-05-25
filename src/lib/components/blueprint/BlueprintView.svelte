@@ -16,7 +16,7 @@
     type BlueprintIdentifier,
     type BlueprintIslandEntry,
   } from '$lib/blueprint.types';
-  import { capture } from '$lib/client/actions/capture';
+  import { capture } from '$lib/client/actions/capture.svelte';
   import { copy, paste } from '$lib/client/actions/clipboard';
   import { fullscreen } from '$lib/client/actions/fullscreen';
   import { add } from '$lib/client/toast.service';
@@ -221,11 +221,11 @@
                         <button
                           class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
                           title="Capture blueprint"
-                          use:capture={{
-                            captureElement: canvasElement!,
-                            filename: title,
-                          }}
                           {...props}
+                          {@attach capture({
+                            canvas: canvasElement!,
+                            filename: title,
+                          })}
                         >
                           <span class="icon-[tabler--camera] text-lg"></span>
                           Take picture
