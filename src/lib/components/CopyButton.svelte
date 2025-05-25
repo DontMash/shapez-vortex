@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { copy } from '$lib/client/actions/clipboard';
+  import { copy } from '$lib/client/actions/clipboard.svelte';
   import { add } from '$lib/client/toast.service';
 
   import { button } from '$lib/components/button';
@@ -23,15 +23,17 @@
   type="button"
   title="Copy"
   onclick={() => (isLoading = true)}
-  use:copy={{ value }}
-  oncopy={() => {
-    isLoading = false;
-    add({ message: 'Content copied' });
-  }}
-  onerror={(event) => {
-    isLoading = false;
-    add({ message: event.detail.message, type: 'ERROR' });
-  }}
+  {@attach copy({
+    value,
+    oncopy: () => {
+      isLoading = false;
+      add({ message: 'Content copied' });
+    },
+    onerror: (error) => {
+      isLoading = false;
+      add({ message: error.message, type: 'ERROR' });
+    },
+  })}
 >
   <span class="icon-[tabler--copy] text-2xl">Copy</span>
 </button>

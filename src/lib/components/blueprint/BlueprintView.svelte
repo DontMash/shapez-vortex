@@ -17,7 +17,7 @@
     type BlueprintIslandEntry,
   } from '$lib/blueprint.types';
   import { capture } from '$lib/client/actions/capture.svelte';
-  import { copy, paste } from '$lib/client/actions/clipboard';
+  import { copy, paste } from '$lib/client/actions/clipboard.svelte';
   import { fullscreen } from '$lib/client/actions/fullscreen';
   import { add } from '$lib/client/toast.service';
 
@@ -51,8 +51,9 @@
     },
   }: Props = $props();
 
-  let canvasElement: HTMLCanvasElement | undefined = $state();
   let viewer: HTMLElement | undefined = $state();
+  let viewForm: HTMLFormElement | undefined = $state();
+  let canvasElement: HTMLCanvasElement | undefined = $state();
   let orbitControls: OrbitControlsType | undefined = $state();
   let isFullscreen = false;
   let uploadIdentifier: string | undefined = $state();
@@ -73,18 +74,16 @@
     uploadIdentifier = await input.files[0].text();
     tick().then(() => input.form?.requestSubmit());
   }
-  function onPaste(event: Event) {
-    const customEvent = event as CustomEvent<string>;
-    const button = customEvent.target as HTMLButtonElement;
-    const input = button.form?.querySelector(
+  function onPaste(value: string) {
+    const input = viewForm?.querySelector(
       'input[name=identifier]',
     ) as HTMLInputElement | null;
     if (!input) {
       throw new Error('No input element "identifier"');
     }
-    input.value = customEvent.detail.trim();
-    button.form?.submit();
-    button.form?.reset();
+    input.value = value.trim();
+    viewForm?.requestSubmit();
+    viewForm?.reset();
   }
 
   function getBlueprintIslandPosition(
@@ -162,19 +161,25 @@
           </form>
         {/if}
         {#if controls.upload}
-          <form class="contents">
+          <form class="contents" bind:this={viewForm}>
             <input name="identifier" type="hidden" required />
             <button
               class={button({ intent: 'accent', size: 'icon' })}
               title="Paste blueprint"
               type="button"
-              use:paste
-              onpaste={(event) => onPaste(event)}
-              onerror={(event) =>
-                add({
-                  message: event.detail.message,
-                  type: 'ERROR',
-                })}
+              {@attach paste({
+                onpaste: (value) => {
+                  onPaste(value);
+                  add({
+                    message: 'Blueprint pasted.',
+                  });
+                },
+                onerror: (error) =>
+                  add({
+                    message: error.message,
+                    type: 'ERROR',
+                  }),
+              })}
             >
               <span class="icon-[tabler--clipboard-text]">Paste</span>
             </button>
@@ -184,13 +189,15 @@
           <button
             class={button({ intent: 'accent', size: 'icon' })}
             title="Copy blueprint"
-            use:copy={{ value: identifier }}
-            oncopy={() => add({ message: 'Content copied' })}
-            onerror={(event) =>
-              add({
-                message: event.detail.message,
-                type: 'ERROR',
-              })}
+            {@attach copy({
+              value: identifier,
+              oncopy: () => add({ message: 'Content copied' }),
+              onerror: (error) =>
+                add({
+                  message: error.message,
+                  type: 'ERROR',
+                }),
+            })}
           >
             <span class="icon-[tabler--copy]">Copy</span>
           </button>

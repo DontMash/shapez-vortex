@@ -4,7 +4,7 @@
   import type { SuperValidated } from 'sveltekit-superforms';
   import { z } from 'zod';
   import type { BlueprintRecord } from '$lib/blueprint.types';
-  import { copy } from '$lib/client/actions/clipboard';
+  import { copy } from '$lib/client/actions/clipboard.svelte';
   import { add } from '$lib/client/toast.service';
   import { REPORT_CREATE_SCHEMA } from '$lib/report.types';
   import type { User } from '$lib/user.types';
@@ -71,8 +71,10 @@
 
 <button
   class={button({ kind: 'ghost', intent: 'muted', size: 'icon-sm' })}
-  use:copy={{ value: window.location.href }}
-  oncopy={() => add({ message: 'Blueprint url copied.' })}
+  {@attach copy({
+    value: window.location.href,
+    oncopy: () => add({ message: 'Blueprint url copied.' }),
+  })}
 >
   <span class="icon-[tabler--share]"></span>
   <span class="sr-only">Share blueprint</span>

@@ -7,7 +7,7 @@
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
   import { Canvas, T } from '@threlte/core';
   import { OrbitControls, Suspense } from '@threlte/extras';
-  import { copy } from '$lib/client/actions/clipboard';
+  import { copy } from '$lib/client/actions/clipboard.svelte';
   import { fullscreen } from '$lib/client/actions/fullscreen';
   import { add } from '$lib/client/toast.service';
   import {
@@ -197,12 +197,14 @@
                       <button
                         class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
                         title="Copy shape"
-                        use:copy={{ value: data.identifier }}
-                        oncopy={() =>
-                          add({ message: 'Shape identifier copied' })}
-                        onerror={(event) =>
-                          add({ message: event.detail.message, type: 'ERROR' })}
                         {...props}
+                        {@attach copy({
+                          value: data.identifier,
+                          oncopy: () =>
+                            add({ message: 'Shape identifier copied' }),
+                          onerror: (error) =>
+                            add({ message: error.message, type: 'ERROR' }),
+                        })}
                       >
                         <span class="icon-[tabler--copy] text-lg"></span>
                         Copy shape

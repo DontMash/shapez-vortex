@@ -2,7 +2,7 @@
   import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
   import EmblaCarousel, { type EmblaCarouselType } from 'embla-carousel';
-  import { copy } from '$lib/client/actions/clipboard';
+  import { copy } from '$lib/client/actions/clipboard.svelte';
   import { add } from '$lib/client/toast.service';
 
   import BlueprintInteraction from '$lib/components/blueprint/BlueprintInteraction.svelte';
@@ -228,10 +228,12 @@
           <button
             class="{button({ intent: 'accent' })} w-full sm:w-auto"
             title="Copy blueprint"
-            use:copy={{ value: data.blueprint.entry.data }}
-            oncopy={() => add({ message: 'Content copied' })}
-            onerror={(event) =>
-              add({ message: event.detail.message, type: 'ERROR' })}
+            {@attach copy({
+              value: data.blueprint.entry.data,
+              oncopy: () => add({ message: 'Content copied' }),
+              onerror: (error) =>
+                add({ message: error.message, type: 'ERROR' }),
+            })}
           >
             <span class="icon-[tabler--copy]"></span>
             Copy

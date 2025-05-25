@@ -14,7 +14,7 @@
   import { section } from '$lib/components/section';
 
   import PageHeader from '$lib/components/PageHeader.svelte';
-  import { copy, paste } from '$lib/client/actions/clipboard';
+  import { copy, paste } from '$lib/client/actions/clipboard.svelte';
 
   let { data }: PageProps = $props();
 
@@ -97,17 +97,17 @@
     <button
       class={button({ intent: 'accent', size: 'icon' })}
       title="Paste blueprint"
-      use:paste
-      onpaste={(event) => {
-        const customEvent = event as CustomEvent<string>;
-        blueprintImportIdentifier =
-          customEvent.detail.trim() as BlueprintIdentifier;
-      }}
-      onerror={(event) =>
-        add({
-          message: event.detail.message,
-          type: 'ERROR',
-        })}
+      {@attach paste({
+        onpaste: (value) => {
+          blueprintImportIdentifier = value.trim() as BlueprintIdentifier;
+          add({ message: 'Blueprint pasted.' });
+        },
+        onerror: (error) =>
+          add({
+            message: error.message,
+            type: 'ERROR',
+          }),
+      })}
     >
       <span class="icon-[tabler--clipboard-text]">Paste</span>
     </button>
@@ -131,13 +131,15 @@
       <button
         class={button({ kind: 'outline', intent: 'accent', size: 'icon' })}
         title="Copy blueprint"
-        use:copy={{ value: blueprintExportIdentifier }}
-        oncopy={() => add({ message: 'Content copied' })}
-        onerror={(event) =>
-          add({
-            message: event.detail.message,
-            type: 'ERROR',
-          })}
+        {@attach copy({
+          value: blueprintExportIdentifier,
+          oncopy: () => add({ message: 'Content copied' }),
+          onerror: (error) =>
+            add({
+              message: error.message,
+              type: 'ERROR',
+            }),
+        })}
       >
         <span class="icon-[tabler--copy]">Copy</span>
       </button>
