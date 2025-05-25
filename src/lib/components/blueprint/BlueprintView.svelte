@@ -18,7 +18,7 @@
   } from '$lib/blueprint.types';
   import { capture } from '$lib/client/actions/capture.svelte';
   import { copy, paste } from '$lib/client/actions/clipboard.svelte';
-  import { fullscreen } from '$lib/client/actions/fullscreen';
+  import { fullscreen } from '$lib/client/actions/fullscreen.svelte';
   import { add } from '$lib/client/toast.service';
 
   import { button } from '$lib/components/button';
@@ -246,13 +246,15 @@
                             class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
                             type="button"
                             title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
-                            use:fullscreen={{ fullscreenElement: viewer! }}
-                            onerror={(event) =>
-                              add({
-                                message: event.detail.message,
-                                type: 'ERROR',
-                              })}
                             {...props}
+                            {@attach fullscreen({
+                              fullscreenElement: viewer!,
+                              onerror: (error) =>
+                                add({
+                                  message: error.message,
+                                  type: 'ERROR',
+                                }),
+                            })}
                           >
                             {#if screenfull.isFullscreen}
                               <span class="icon-[tabler--maximize-off] text-lg"
