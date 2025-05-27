@@ -136,7 +136,7 @@
               {#each data.blueprint.images as image, index (index)}
                 <div class="embla__slide relative min-w-full">
                   <img
-                    class="aspect-[3/2] object-cover"
+                    class="aspect-[3/2] w-full object-cover"
                     src={image.src}
                     alt="Image #{index} of {data.blueprint.entry.title}"
                   />
