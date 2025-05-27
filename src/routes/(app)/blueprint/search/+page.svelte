@@ -16,7 +16,6 @@
     PAGINATION_PAGE_DEFAULT,
     PAGINATION_PER_PAGE_DEFAULT,
     SEARCH_ORDER_OPTION_DEFAULT,
-    SEARCH_ORDER_OPTIONS,
     SEARCH_SORT_OPTIONS,
   } from '$lib/search';
 
@@ -36,6 +35,7 @@
 
   let isFilterOpen: boolean = $state(false);
   let filterTagNames: Array<string> | undefined = $state();
+  // eslint-disable-next-line svelte/prefer-writable-derived
   let filterTagOptions: Array<string> | undefined = $state();
   let filterTags: Array<BlueprintTag> | undefined = $derived(
     filterTagOptions
@@ -44,9 +44,6 @@
   );
   const sortOptions: Array<{ label: string; value: string }> = Object.entries(
     SEARCH_SORT_OPTIONS,
-  ).map(([key, value]) => ({ label: value, value: key }));
-  const orderOptions: Array<{ label: string; value: string }> = Object.entries(
-    SEARCH_ORDER_OPTIONS,
   ).map(([key, value]) => ({ label: value, value: key }));
 
   $effect(() => {
