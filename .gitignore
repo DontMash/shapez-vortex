@@ -2,6 +2,7 @@
 node_modules
 /build
 /.svelte-kit
+/.vercel
 /package
 .env
 .env.*
@@ -11,3 +12,4 @@ vite.config.ts.timestamp-*
 
 coverage
 *.blend1
+.vercel
