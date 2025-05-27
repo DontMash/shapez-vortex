@@ -9,7 +9,7 @@
 </script>
 
 <footer
-  class="relative bg-layer px-4 before:absolute before:inset-x-0 before:-top-8 before:h-8 before:bg-layer after:absolute after:inset-x-0 after:-top-8 after:h-8 after:rounded-b-lg after:border-b after:border-border after:bg-background"
+  class="bg-layer before:bg-layer after:border-border after:bg-background relative px-4 before:absolute before:inset-x-0 before:-top-8 before:h-8 after:absolute after:inset-x-0 after:-top-8 after:h-8 after:rounded-b-lg after:border-b"
   id="footer"
 >
   <div
@@ -43,7 +43,7 @@
     </aside>
 
     <nav class="mt-5" aria-label="Features">
-      <p class="heading-6 mb-6 text-muted">Features</p>
+      <p class="heading-6 text-muted mb-6">Features</p>
 
       <ul class="space-y-3">
         <li>
@@ -90,7 +90,7 @@
     </nav>
 
     <div class="mt-5">
-      <p class="heading-6 mb-6 text-muted">Game</p>
+      <p class="heading-6 text-muted mb-6">Game</p>
 
       <nav>
         <span> Follow Shapez 2 </span>
@@ -234,7 +234,7 @@
     </div>
 
     <nav class="mt-5 flex flex-col justify-stretch" aria-label="Support & more">
-      <p class="heading-6 mb-6 text-muted">More</p>
+      <p class="heading-6 text-muted mb-6">More</p>
 
       <ul class="space-y-3">
         <li>

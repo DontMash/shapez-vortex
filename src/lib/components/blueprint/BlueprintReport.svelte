@@ -60,18 +60,18 @@
         class={dialog.content({ position: 'center' })}
         transition:fade={{ duration: 150 }}
       >
-        <div class="relative rounded-lg border bg-layer">
+        <div class="bg-layer relative rounded-lg border">
           <AlertDialog.Cancel
             class="{button({
               kind: 'outline',
               intent: 'muted',
               size: 'icon-sm',
-            })} absolute right-4 top-4"
+            })} absolute top-4 right-4"
           >
             <span class="icon-[tabler--x] text-lg">Close report dialog</span>
           </AlertDialog.Cancel>
 
-          <div class="min-h-16 border-b py-4 pl-4 pr-16">
+          <div class="min-h-16 border-b py-4 pr-16 pl-4">
             <AlertDialog.Title class="heading-4" level={2}>
               Report <em>{blueprint.title}</em>
             </AlertDialog.Title>
@@ -109,7 +109,7 @@
                           class="{button({
                             kind: 'outline',
                             intent: 'muted',
-                          })} w-full min-w-64 bg-background"
+                          })} bg-background w-full min-w-64"
                           aria-label="Select a reason"
                           {...props}
                           {...constraints}
@@ -121,7 +121,7 @@
                         </Select.Trigger>
 
                         <Select.Content
-                          class="z-10 flex flex-col rounded-sm border bg-background p-2 shadow-lg"
+                          class="bg-background z-10 flex flex-col rounded-sm border p-2 shadow-lg"
                           sideOffset={8}
                         >
                           {#each reasons as [value, label] (value)}
@@ -130,7 +130,7 @@
                                 kind: 'ghost',
                                 intent: 'muted',
                                 size: 'sm',
-                              })} data-[highlighted]:bg-muted"
+                              })} data-highlighted:bg-muted"
                               {label}
                               {value}
                             >
@@ -159,7 +159,7 @@
                 {#snippet children({ constraints })}
                   <Control>
                     {#snippet children({ props })}
-                      <Label class="{input.group()} max-h-none !items-start">
+                      <Label class="{input.group()} max-h-none items-start!">
                         <span class="icon-[tabler--align-left] my-4"
                           >Message</span
                         >

@@ -106,12 +106,12 @@
 </script>
 
 <figure
-  class="{isFullscreen ? '' : 'aspect-h-3 aspect-w-4'} relative"
+  class="{isFullscreen ? '' : 'aspect-[4/3]'} relative"
   bind:this={viewer}
 >
   {#if Object.values(controls).filter((value) => value === true).length}
     <div
-      class="absolute left-1/2 top-4 z-10 flex h-fit w-fit max-w-5xl -translate-x-1/2 justify-center gap-2 rounded-md border bg-layer/70 p-2 backdrop-blur-lg"
+      class="bg-layer/70 absolute top-4 left-1/2 z-10 flex h-fit w-fit max-w-5xl -translate-x-1/2 justify-center gap-2 rounded-md border p-2 backdrop-blur-lg"
     >
       {#if controls.upload || controls.download}
         {#if controls.upload}
@@ -125,7 +125,7 @@
               class="{button({
                 intent: 'accent',
                 size: 'icon',
-              })} cursor-pointer focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent focus-within:hover:outline-accent-hover focus-within:active:outline-accent-active"
+              })} focus-within:outline-accent focus-within:hover:outline-accent-hover focus-within:active:outline-accent-active cursor-pointer focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-solid"
               for="blueprint-file"
             >
               <input
@@ -213,7 +213,7 @@
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content
-            class="z-20 h-fit w-fit space-y-1 rounded-md border bg-layer p-2 shadow-lg outline-none backdrop-blur-lg"
+            class="bg-layer z-20 h-fit w-fit space-y-1 rounded-md border p-2 shadow-lg outline-hidden backdrop-blur-lg"
             sideOffset={16}
             align="end"
             alignOffset={-8}
@@ -226,7 +226,7 @@
                     <DropdownMenu.Item>
                       {#snippet child({ props })}
                         <button
-                          class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                          class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                           title="Capture blueprint"
                           {...props}
                           {@attach capture({
@@ -243,7 +243,7 @@
                       <DropdownMenu.Item>
                         {#snippet child({ props })}
                           <button
-                            class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                            class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                             type="button"
                             title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
                             {...props}
@@ -271,7 +271,7 @@
                     <DropdownMenu.Item onSelect={() => reset()}>
                       {#snippet child({ props })}
                         <button
-                          class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                          class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                           title="Reset controls"
                           {...props}
                         >
@@ -291,7 +291,7 @@
   {/if}
 
   <div
-    class="h-full overflow-hidden rounded-lg border bg-background shadow-lg outline-none transition"
+    class="bg-background h-full overflow-hidden rounded-lg border shadow-lg outline-hidden transition"
   >
     <Canvas
       toneMapping={NoToneMapping}

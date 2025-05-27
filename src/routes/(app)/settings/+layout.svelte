@@ -33,7 +33,9 @@
                   kind: 'ghost',
                   intent: 'muted',
                   size: 'sm',
-                })} {isCurrent(page.path) ? 'border-border text-foreground' : ''}"
+                })} {isCurrent(page.path)
+                  ? 'border-border text-foreground'
+                  : ''}"
                 href={page.path}
                 >{capitalize(page.name)}
               </NavigationMenu.Link>

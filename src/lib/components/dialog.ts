@@ -8,7 +8,14 @@ export const overlay = cva([
   'backdrop-blur-lg',
 ]);
 export const content = cva(
-  ['fixed', 'z-50', 'w-full', 'max-w-screen-sm', 'p-4', 'outline-none'],
+  [
+    'fixed',
+    'z-50',
+    'w-full',
+    'max-w-(--breakpoint-sm)',
+    'p-4',
+    'outline-hidden',
+  ],
   {
     variants: {
       position: {

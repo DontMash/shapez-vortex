@@ -49,7 +49,7 @@
                       <span class="icon-[tabler--info-circle]"></span>
                     </Tooltip.Trigger>
                     <Tooltip.Content
-                      class="max-w-60 rounded-md border bg-layer p-2"
+                      class="bg-layer max-w-60 rounded-md border p-2"
                     >
                       <p>
                         The name you want others to see when viewing you

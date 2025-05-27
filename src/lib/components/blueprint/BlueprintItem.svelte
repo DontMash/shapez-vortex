@@ -17,21 +17,23 @@
 </script>
 
 <article
-  class="grid grid-cols-1 divide-x divide-border overflow-hidden rounded-md border bg-layer shadow-lg md:grid-cols-3"
+  class="divide-border bg-layer grid grid-cols-1 divide-x overflow-hidden rounded-md border shadow-lg md:grid-cols-3"
 >
-  <a href="/blueprint/{data.id}">
-    <figure class="aspect-h-2 aspect-w-3">
-      {#if image}
-        <img class="object-cover" src={image} alt="Preview of {data.title}" />
-      {:else}
-        <img
-          class="object-contain p-8"
-          src="/favicon.png"
-          alt="Preview placeholder for {data.title}"
-        />
-      {/if}
-    </figure>
-  </a>
+  <Button.Root href="/blueprint/{data.id}">
+    {#if image}
+      <img
+        class="aspect-[3/2] w-full object-cover"
+        src={image}
+        alt="Preview of {data.title}"
+      />
+    {:else}
+      <img
+        class="aspect-[3/2] w-full object-contain p-8"
+        src="/favicon.png"
+        alt="Preview placeholder for {data.title}"
+      />
+    {/if}
+  </Button.Root>
 
   <div class="col-span-2 space-y-2 p-4">
     <div class="flex items-center">

@@ -165,7 +165,7 @@
     for="blueprint-file"
   >
     <input
-      class="{input.field()} cursor-pointer [text-indent:-9999rem]"
+      class="{input.field()} cursor-pointer indent-[-9999rem]"
       type="file"
       id="blueprint-file"
       accept={BLUEPRINT_FILE_FORMAT}
@@ -208,12 +208,12 @@
               kind: 'ghost',
               intent: 'muted',
               size: 'icon-sm',
-            })} absolute right-4 top-3"
+            })} absolute top-3 right-4"
           >
             <span class="icon-[tabler--info-circle]"></span>
           </Tooltip.Trigger>
           <Tooltip.Content
-            class="max-w-60 rounded-md border bg-layer p-2 text-layer-foreground"
+            class="bg-layer text-layer-foreground max-w-60 rounded-md border p-2"
           >
             <p>
               The name and content of the file will be added to the fields
@@ -252,7 +252,7 @@
                   <span class="icon-[tabler--info-circle]"></span>
                 </Tooltip.Trigger>
                 <Tooltip.Content
-                  class="max-w-60 rounded-md border bg-layer p-2"
+                  class="bg-layer max-w-60 rounded-md border p-2"
                 >
                   <p>
                     The title needs to be between {BLUEPRINT_TITLE_MIN_LENGTH}-{BLUEPRINT_TITLE_MAX_LENGTH}
@@ -275,7 +275,7 @@
     {#snippet children({ constraints })}
       <Control>
         {#snippet children({ props })}
-          <Label class="{input.group()} max-h-none !items-start">
+          <Label class="{input.group()} max-h-none items-start!">
             <span class="icon-[tabler--braces] my-4">Blueprint Identifier</span>
             <textarea
               class="{input.field()} min-h-14 py-4"
@@ -297,7 +297,7 @@
                   <span class="icon-[tabler--info-circle]"></span>
                 </Tooltip.Trigger>
                 <Tooltip.Content
-                  class="max-w-60 rounded-md border bg-layer p-2"
+                  class="bg-layer max-w-60 rounded-md border p-2"
                 >
                   <p>
                     The blueprint identifier needs to be in the standard format
@@ -317,14 +317,14 @@
   <div class="mb-2 space-y-2">
     <div class="flex items-center gap-2">
       <Checkbox.Root
-        class="peer inline-flex size-8 items-center justify-center rounded-sm border border-muted bg-foreground transition-all duration-150 ease-in-out data-[state=unchecked]:bg-background"
+        class="peer border-muted bg-foreground data-[state=unchecked]:bg-background inline-flex size-8 items-center justify-center rounded-sm border transition-all duration-150 ease-in-out"
         id="is-preview"
         aria-labelledby="is-preview-label"
         bind:checked={blueprintPreview}
       >
         {#snippet children({ checked })}
           <div
-            class="inline-flex size-4 items-center justify-center text-background"
+            class="text-background inline-flex size-4 items-center justify-center"
           >
             {#if checked}
               <span class="icon-[tabler--check]"></span>
@@ -348,7 +348,7 @@
           >
             <span class="icon-[tabler--info-circle]"></span>
           </Tooltip.Trigger>
-          <Tooltip.Content class="max-w-60 rounded-md border bg-layer p-2">
+          <Tooltip.Content class="bg-layer max-w-60 rounded-md border p-2">
             <p>
               This preview will be used to create an image of your blueprint.
             </p>
@@ -403,7 +403,7 @@
         {#snippet children({ props })}
           <Label class="{input.group({ type: 'file' })} relative h-32">
             <input
-              class="{input.field()} cursor-pointer [text-indent:-9999rem]"
+              class="{input.field()} cursor-pointer indent-[-9999rem]"
               type="file"
               accept={BLUEPRINT_IMAGE_TYPES.join(',')}
               multiple
@@ -436,12 +436,12 @@
                       kind: 'ghost',
                       intent: 'muted',
                       size: 'icon-sm',
-                    })} absolute right-4 top-3"
+                    })} absolute top-3 right-4"
                   >
                     <span class="icon-[tabler--info-circle]"></span>
                   </Tooltip.Trigger>
                   <Tooltip.Content
-                    class="max-w-60 rounded-md border bg-layer p-2"
+                    class="bg-layer max-w-60 rounded-md border p-2"
                   >
                     <p>
                       The first image will be used as the thumbnail. When using
@@ -475,7 +475,7 @@
               <div class="mb-auto p-2">
                 <div class="flex items-center">
                   <i
-                    class="mr-auto inline-flex items-center justify-center gap-2 rounded-xs bg-accent px-2 py-1 text-accent-foreground"
+                    class="bg-accent text-accent-foreground mr-auto inline-flex items-center justify-center gap-2 rounded-xs px-2 py-1"
                   >
                     #{index + 1}
                   </i>
@@ -550,13 +550,11 @@
                 {/if}
               </div>
 
-              <picture class="aspect-h-2 aspect-w-3 block">
-                <img
-                  class="object-cover"
-                  src={URL.createObjectURL(image)}
-                  alt={`Image #${index} - ${image.name}`}
-                />
-              </picture>
+              <img
+                class="aspect-[3/2] object-cover"
+                src={URL.createObjectURL(image)}
+                alt={`Image #${index} - ${image.name}`}
+              />
             </li>
           {/each}
         </ol>
@@ -670,7 +668,7 @@
                                 <span class="icon-[tabler--info-circle]"></span>
                               </Tooltip.Trigger>
                               <Tooltip.Content
-                                class="max-w-60 rounded-md border bg-layer p-2"
+                                class="bg-layer max-w-60 rounded-md border p-2"
                               >
                                 <p>
                                   A list of tags for the blueprint (max. {BLUEPRINT_TAGS_MAX}).
@@ -681,12 +679,12 @@
                         </label>
 
                         <Combobox.Content
-                          class="relative z-10 max-h-64 overflow-y-auto overflow-x-hidden rounded-md border bg-layer p-2"
+                          class="bg-layer relative z-10 max-h-64 overflow-x-hidden overflow-y-auto rounded-md border p-2"
                           sideOffset={20}
                         >
                           {#each tags as tag (tag.id)}
                             <Combobox.Item
-                              class="flex cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                              class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                               value={tag.id}
                               label={tag.name}
                             >
@@ -705,7 +703,7 @@
                           {#if !$formData.tags?.find((tag) => tag === `${BLUEPRINT_TAG_NEW_SYMBOL}${blueprintTagInputValue}`)}
                             {#if !BLUEPRINT_TAG_REGEX.test(blueprintTagInputValue)}
                               {#if tags.length <= 0}
-                                <span class="px-4 py-1 text-error"
+                                <span class="text-error px-4 py-1"
                                   >Invalid tag.</span
                                 >
                               {/if}
@@ -713,10 +711,10 @@
                               {#if tags.length <= 0}
                                 <p class="px-4 py-1">No results found.</p>
                               {/if}
-                              <Combobox.Separator class="my-1 h-px bg-muted" />
+                              <Combobox.Separator class="bg-muted my-1 h-px" />
 
                               <Combobox.Item
-                                class="flex w-full cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                                class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                                 value="${blueprintTagInputValue}"
                                 label={blueprintTagInputValue}
                               >
@@ -737,7 +735,7 @@
               {#snippet children({ constraints })}
                 <Control>
                   {#snippet children({ props })}
-                    <Label class="{input.group()} max-h-none !items-start">
+                    <Label class="{input.group()} max-h-none items-start!">
                       <span class="icon-[tabler--align-left] my-4"
                         >Description</span
                       >
@@ -761,7 +759,7 @@
                             <span class="icon-[tabler--info-circle]"></span>
                           </Tooltip.Trigger>
                           <Tooltip.Content
-                            class="max-w-60 rounded-md border bg-layer p-2"
+                            class="bg-layer max-w-60 rounded-md border p-2"
                           >
                             <p>
                               The description has a max. length of {BLUEPRINT_DESCRIPTION_MAX_LENGTH}.
@@ -806,14 +804,14 @@
             class={dialog.content({ position: 'center' })}
             transition:fade={{ duration: 150 }}
           >
-            <div class="relative rounded-lg border bg-layer p-4">
+            <div class="bg-layer relative rounded-lg border p-4">
               <AlertDialog.Title class="heading-4" level={2}
                 >Unsaved changes will be lost!</AlertDialog.Title
               >
 
               <div class="flex items-center justify-end gap-2">
                 <AlertDialog.Cancel
-                  class={button({ intent: 'accent', kind: 'outline' })}
+                  class={button({ kind: 'outline', intent: 'accent' })}
                   onclick={() => (leaveUrl = undefined)}
                   >Cancel</AlertDialog.Cancel
                 >

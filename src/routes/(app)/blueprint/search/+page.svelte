@@ -111,7 +111,7 @@
               kind: 'ghost',
               intent: 'accent',
               size: 'icon',
-            })} data-[selected]:bg-accent data-[selected]:text-accent-foreground"
+            })} data-selected:bg-accent data-selected:text-accent-foreground"
           >
             {page.value}
           </Pagination.Page>
@@ -284,12 +284,12 @@
                     </label>
 
                     <Combobox.Content
-                      class="relative z-10 max-h-64 overflow-y-auto overflow-x-hidden rounded-md border bg-layer p-2"
+                      class="bg-layer relative z-10 max-h-64 overflow-x-hidden overflow-y-auto rounded-md border p-2"
                       sideOffset={20}
                     >
                       {#each data.tags as tag (tag.id)}
                         <Combobox.Item
-                          class="flex cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                          class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                           value={tag.id}
                           label={tag.name}
                         >
@@ -333,7 +333,7 @@
                       class="{button({
                         kind: 'outline',
                         intent: 'accent',
-                      })} w-full min-w-64 bg-background"
+                      })} bg-background w-full min-w-64"
                       {...props}
                       {...constraints}
                     >
@@ -343,7 +343,7 @@
                     </Select.Trigger>
 
                     <Select.Content
-                      class="z-10 flex flex-col rounded-sm border bg-background p-2 shadow-lg"
+                      class="bg-background z-10 flex flex-col rounded-sm border p-2 shadow-lg"
                     >
                       {#each sortOptions as { label, value } (value)}
                         <Select.Item
@@ -351,7 +351,7 @@
                             kind: 'ghost',
                             intent: 'muted',
                             size: 'sm',
-                          })} data-[highlighted]:bg-muted"
+                          })} data-highlighted:bg-muted"
                           {label}
                           {value}
                         >

@@ -89,7 +89,7 @@
 {#if $message}
   <section class={section()}>
     <h2 class="heading-3 mb-2">Updated blueprint:</h2>
-    <p class="h-80 overflow-y-auto break-words rounded-md border p-4 px-4">
+    <p class="h-80 overflow-y-auto rounded-md border p-4 px-4 break-words">
       <span class="float-right">
         <CopyButton value={$message} />
       </span>

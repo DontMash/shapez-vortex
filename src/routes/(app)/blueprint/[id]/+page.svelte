@@ -98,7 +98,7 @@
         {/if}
 
         <span
-          class="small inline-flex items-center gap-1 rounded-xs bg-muted px-1 py-0.5"
+          class="small bg-muted inline-flex items-center gap-1 rounded-xs px-1 py-0.5"
         >
           <span class="icon-[tabler--info-circle] text-lg"
             >Blueprint version</span
@@ -106,7 +106,7 @@
           v{data.blueprint.entry.version}
         </span>
         <span
-          class="small inline-flex items-center gap-1 rounded-xs bg-muted px-1 py-0.5"
+          class="small bg-muted inline-flex items-center gap-1 rounded-xs px-1 py-0.5"
         >
           <span class="icon-[tabler--clock-edit] text-lg">Created on</span>
           {dateFormatter.format(new Date(data.blueprint.entry.created))}
@@ -126,65 +126,65 @@
       </h1>
     </header>
 
-    <section>
-      <h2 class="sr-only">Images</h2>
+    {#if data.blueprint.images.length}
+      <section>
+        <h2 class="sr-only">Images</h2>
 
-      <div class="relative">
-        <div class="embla__viewport overflow-hidden" bind:this={slider.root}>
-          <div class="embla__container flex">
-            {#each data.blueprint.images as image, index (index)}
-              <div class="embla__slide relative min-w-full">
-                <div class="aspect-h-2 aspect-w-3">
+        <div class="relative">
+          <div class="embla__viewport overflow-hidden" bind:this={slider.root}>
+            <div class="embla__container flex">
+              {#each data.blueprint.images as image, index (index)}
+                <div class="embla__slide relative min-w-full">
                   <img
-                    class="object-cover"
+                    class="aspect-[3/2] object-cover"
                     src={image.src}
                     alt="Image #{index} of {data.blueprint.entry.title}"
                   />
+
+                  <Button.Root
+                    class="{button({
+                      intent: 'accent',
+                      size: 'icon-sm',
+                    })} absolute top-4 right-4"
+                    title="Zoom image"
+                    href={image.src}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span class="icon-[tabler--window-maximize]">
+                      Open in new Tab
+                    </span>
+                  </Button.Root>
                 </div>
-
-                <Button.Root
-                  class="{button({
-                    intent: 'accent',
-                    size: 'icon-sm',
-                  })} absolute right-4 top-4"
-                  title="Zoom image"
-                  href={image.src}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span class="icon-[tabler--window-maximize]">
-                    Open in new Tab
-                  </span>
-                </Button.Root>
-              </div>
-            {/each}
+              {/each}
+            </div>
           </div>
-        </div>
 
-        {#if data.blueprint.images.length > 1}
-          <button
-            class="{button({
-              intent: 'accent',
-              size: 'icon-sm',
-            })} absolute left-4 top-1/2 -translate-y-1/2 shadow-lg"
-            onclick={() => {
-              slider.api?.scrollPrev();
-            }}
-          >
-            <span class="icon-[tabler--chevron-left]"> Prev </span>
-          </button>
-          <button
-            class="{button({
-              intent: 'accent',
-              size: 'icon-sm',
-            })} absolute right-4 top-1/2 -translate-y-1/2 shadow-lg"
-            onclick={() => slider.api?.scrollNext()}
-          >
-            <span class="icon-[tabler--chevron-right]"> Next </span>
-          </button>
-        {/if}
-      </div>
-    </section>
+          {#if data.blueprint.images.length > 1}
+            <button
+              class="{button({
+                intent: 'accent',
+                size: 'icon-sm',
+              })} absolute top-1/2 left-4 -translate-y-1/2 shadow-lg"
+              onclick={() => {
+                slider.api?.scrollPrev();
+              }}
+            >
+              <span class="icon-[tabler--chevron-left]"> Prev </span>
+            </button>
+            <button
+              class="{button({
+                intent: 'accent',
+                size: 'icon-sm',
+              })} absolute top-1/2 right-4 -translate-y-1/2 shadow-lg"
+              onclick={() => slider.api?.scrollNext()}
+            >
+              <span class="icon-[tabler--chevron-right]"> Next </span>
+            </button>
+          {/if}
+        </div>
+      </section>
+    {/if}
 
     <section class="flex flex-col gap-4 p-4">
       <h2 class="sr-only">Description</h2>

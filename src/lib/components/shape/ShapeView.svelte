@@ -98,11 +98,11 @@
 </script>
 
 <figure
-  class="relative rounded-lg border bg-background pt-4"
+  class="bg-background relative rounded-lg border pt-4"
   bind:this={viewer}
 >
   <div class="mx-auto flex max-w-5xl flex-wrap justify-center gap-4 px-4">
-    <form class="flex grow items-center gap-2 rounded-md border bg-layer p-2">
+    <form class="bg-layer flex grow items-center gap-2 rounded-md border p-2">
       <label
         class="{input.group()} w-full"
         for="shape-identifier"
@@ -134,7 +134,7 @@
       </button>
     </form>
 
-    <div class="flex gap-2 rounded-md border bg-layer p-2">
+    <div class="bg-layer flex gap-2 rounded-md border p-2">
       <form class="contents" action="/shape">
         <input name="identifier" type="hidden" value={data.identifier} />
         <input name="extend" type="hidden" value={!isExtended} />
@@ -182,7 +182,7 @@
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Content
-          class="z-20 space-y-1 rounded-md border bg-layer/70 p-2 shadow-lg outline-none backdrop-blur-lg"
+          class="bg-layer/70 z-20 space-y-1 rounded-md border p-2 shadow-lg outline-hidden backdrop-blur-lg"
           sideOffset={16}
           align="end"
           alignOffset={-8}
@@ -195,7 +195,7 @@
                   <DropdownMenu.Item>
                     {#snippet child({ props })}
                       <button
-                        class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                         title="Copy shape"
                         {...props}
                         {@attach copy({
@@ -214,7 +214,7 @@
                   <DropdownMenu.Item onSelect={onCapture}>
                     {#snippet child({ props })}
                       <button
-                        class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                         title="Capture shape"
                         {...props}
                       >
@@ -226,7 +226,7 @@
                   <DropdownMenu.Item>
                     {#snippet child({ props })}
                       <button
-                        class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                         type="button"
                         title={`Turn fullscreen ${screenfull.isFullscreen ? 'off' : 'on'}`}
                         {...props}
@@ -249,7 +249,7 @@
                   <DropdownMenu.Item onSelect={() => onTop()}>
                     {#snippet child({ props })}
                       <button
-                        class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                        class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                         type="button"
                         title="View top down"
                         {...props}
@@ -268,7 +268,7 @@
                           value={data.identifier}
                         />
                         <button
-                          class="flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-none transition hover:bg-border focus-visible:bg-border data-[highlighted]:bg-border"
+                          class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex w-full items-center gap-2 rounded-xs px-4 py-1 outline-hidden transition"
                           title="Reset controls"
                           {...props}
                         >
@@ -291,84 +291,78 @@
     class="mx-auto max-w-[60vh] data-[is-fullscreen=true]:max-w-[100vh]"
     data-is-fullscreen={screenfull.isFullscreen}
   >
-    <div class="aspect-h-1 aspect-w-1">
-      <div>
-        <Canvas
-          toneMapping={NoToneMapping}
-          createRenderer={(canvas) => {
-            canvasElement = canvas;
-            return new WebGLRenderer({
-              canvas,
-              alpha: true,
-              preserveDrawingBuffer: true,
-            });
-          }}
+    <div class="aspect-square">
+      <Canvas
+        toneMapping={NoToneMapping}
+        createRenderer={(canvas) => {
+          canvasElement = canvas;
+          return new WebGLRenderer({
+            canvas,
+            alpha: true,
+            preserveDrawingBuffer: true,
+          });
+        }}
+      >
+        <T.PerspectiveCamera
+          makeDefault
+          position={SHAPE_CAMERA_START_POSITION}
+          fov={55}
         >
-          <T.PerspectiveCamera
-            makeDefault
-            position={SHAPE_CAMERA_START_POSITION}
-            fov={55}
-          >
-            <OrbitControls
-              enablePan={false}
-              enableZoom={false}
-              enableDamping
-              maxPolarAngle={Math.PI * 0.35}
-              bind:ref={orbitControls}
-            />
-          </T.PerspectiveCamera>
-
-          <T.AmbientLight intensity={1} />
-          <T.DirectionalLight
-            position={[1, 3, 1]}
-            intensity={2}
-            castShadow
-            shadow.mapSize={[2048, 2048]}
+          <OrbitControls
+            enablePan={false}
+            enableZoom={false}
+            enableDamping
+            maxPolarAngle={Math.PI * 0.35}
+            bind:ref={orbitControls}
           />
+        </T.PerspectiveCamera>
 
-          <T.Group position.y={-0.25}>
-            <Suspense onload={onBaseModelLoad}>
-              <ShapeDefaultSupport
-                position.y={-0.025}
-                bind:ref={baseComponentModel}
-              />
-            </Suspense>
-            {#key data}
-              {#each data.data.slice(0, SHAPE_MAX_LAYERS) as layer, layerIndex (layerIndex)}
-                {@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
-                {@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
-                {@const extendOffset = isExtended
-                  ? layerIndex * SHAPE_LAYER_EXTEND_OFFSET
-                  : 0}
-                {@const expandOffset = isExpanded
-                  ? SHAPE_PART_EXPAND_OFFSET
-                  : 0}
-                <T.Group
-                  position.y={layerPositionY + extendOffset}
-                  scale={[layerScale, 0.5, layerScale]}
-                >
-                  {#each layer as part, partIndex (partIndex)}
-                    <T.Group
-                      rotation.y={partIndex *
-                        (isHex ? -1 / 3 : -0.5) *
-                        Math.PI +
-                        Math.PI}
-                    >
-                      <ShapePart
-                        data={part}
-                        {isHex}
-                        offset={expandOffset *
-                          SHAPE_LAYER_SCALE *
-                          (layerIndex + 1)}
-                      />
-                    </T.Group>
-                  {/each}
-                </T.Group>
-              {/each}
-            {/key}
-          </T.Group>
-        </Canvas>
-      </div>
+        <T.AmbientLight intensity={1} />
+        <T.DirectionalLight
+          position={[1, 3, 1]}
+          intensity={2}
+          castShadow
+          shadow.mapSize={[2048, 2048]}
+        />
+
+        <T.Group position.y={-0.25}>
+          <Suspense onload={onBaseModelLoad}>
+            <ShapeDefaultSupport
+              position.y={-0.025}
+              bind:ref={baseComponentModel}
+            />
+          </Suspense>
+          {#key data}
+            {#each data.data.slice(0, SHAPE_MAX_LAYERS) as layer, layerIndex (layerIndex)}
+              {@const layerPositionY = layerIndex * SHAPE_LAYER_HEIGHT}
+              {@const layerScale = 1 - layerIndex * SHAPE_LAYER_SCALE}
+              {@const extendOffset = isExtended
+                ? layerIndex * SHAPE_LAYER_EXTEND_OFFSET
+                : 0}
+              {@const expandOffset = isExpanded ? SHAPE_PART_EXPAND_OFFSET : 0}
+              <T.Group
+                position.y={layerPositionY + extendOffset}
+                scale={[layerScale, 0.5, layerScale]}
+              >
+                {#each layer as part, partIndex (partIndex)}
+                  <T.Group
+                    rotation.y={partIndex * (isHex ? -1 / 3 : -0.5) * Math.PI +
+                      Math.PI}
+                  >
+                    <ShapePart
+                      data={part}
+                      {isHex}
+                      offset={expandOffset *
+                        SHAPE_LAYER_SCALE *
+                        (layerIndex + 1)}
+                    />
+                  </T.Group>
+                {/each}
+              </T.Group>
+            {/each}
+          {/key}
+        </T.Group>
+      </Canvas>
     </div>
   </div>
 

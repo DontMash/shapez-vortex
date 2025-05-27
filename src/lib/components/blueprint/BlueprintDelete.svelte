@@ -38,19 +38,19 @@
             class={dialog.content({ position: 'center' })}
             transition:fade={{ duration: 150 }}
           >
-            <div class="relative rounded-lg border bg-layer">
+            <div class="bg-layer relative rounded-lg border">
               <AlertDialog.Cancel
                 class="{button({
                   kind: 'outline',
                   intent: 'muted',
                   size: 'icon-sm',
-                })} absolute right-4 top-4"
+                })} absolute top-4 right-4"
               >
                 <span class="icon-[tabler--x] text-lg">Close delete dialog</span
                 >
               </AlertDialog.Cancel>
 
-              <div class="min-h-16 border-b py-4 pl-4 pr-16">
+              <div class="min-h-16 border-b py-4 pr-16 pl-4">
                 <AlertDialog.Title class="heading-4" level={2}>
                   Delete <em>{blueprint.title}</em>
                 </AlertDialog.Title>

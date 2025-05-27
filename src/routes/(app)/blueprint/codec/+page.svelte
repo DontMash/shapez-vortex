@@ -61,7 +61,7 @@
     {/snippet}
   </PageHeader>
 
-  <div class="flex max-w-fit gap-2 rounded-md border bg-layer p-2">
+  <div class="bg-layer flex max-w-fit gap-2 rounded-md border p-2">
     <label
       class={button({ intent: 'accent', size: 'icon' })}
       for="blueprint-file"

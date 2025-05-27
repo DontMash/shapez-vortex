@@ -26,7 +26,9 @@
     {data.seo.title}
   </PageHeader>
 
-  <div class="mx-auto max-w-screen-sm space-y-4 rounded-md border bg-layer p-4">
+  <div
+    class="bg-layer mx-auto max-w-(--breakpoint-sm) space-y-4 rounded-md border p-4"
+  >
     <form
       class="flex flex-col gap-2"
       method="post"

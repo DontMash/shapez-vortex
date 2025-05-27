@@ -6,7 +6,7 @@ export const button = cva(
     'gap-2',
     'transition',
     'cursor-pointer',
-    'focus-visible:outline',
+    'focus-visible:outline-solid',
     'focus-visible:outline-2',
     'disabled:cursor-not-allowed',
   ],

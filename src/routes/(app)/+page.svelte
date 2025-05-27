@@ -58,8 +58,8 @@
 </script>
 
 <section class={section()} id="hero">
-  <div class="rounded-lg border bg-layer px-4 py-12 shadow-lg sm:px-12">
-    <hgroup class="mx-auto max-w-screen-sm text-center">
+  <div class="bg-layer rounded-lg border px-4 py-12 shadow-lg sm:px-12">
+    <hgroup class="mx-auto max-w-(--breakpoint-sm) text-center">
       <h1 class="heading-1">Shapez Vortex</h1>
       <p class="heading-3 mt-2">
         Discover, interact and share content with the community!
@@ -94,14 +94,14 @@
 
   <div class="mx-auto grid grid-cols-1 gap-4 lg:grid-cols-3">
     {#each features as feature (feature.url)}
-      <div class="overflow-hidden rounded-md border bg-layer shadow-md">
+      <div class="bg-layer overflow-hidden rounded-md border shadow-md">
         <Button.Root
-          class="aspect-h-2 aspect-w-3 inline-block w-full"
+          class="inline-block w-full"
           href={feature.url}
           title={feature.tooltip}
         >
           <img
-            class="object-contain lg:object-cover"
+            class="aspect-[3/2] object-contain lg:object-cover"
             src={feature.image.src}
             alt={feature.image.alt}
           />

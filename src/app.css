@@ -1,52 +1,83 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+@plugin "@iconify/tailwind4";
+@config '../tailwind.config.js';
+
+@theme {
+  --color-*: initial;
+  --color-primary: oklch(0.7023 0.1029 228.91);
+  --color-primary-hover: oklch(0.6484 0.1129 230.93);
+  --color-primary-active: oklch(0.5696 0.098 230.76);
+  --color-primary-foreground: oklch(0.9542 0 0);
+
+  --color-secondary: oklch(0.8055 0.1611 74.45);
+  --color-secondary-hover: oklch(0.7686 0.1664 69.55);
+  --color-secondary-active: oklch(0.6735 0.1452 70.01);
+  --color-secondary-foreground: oklch(0.2044 0 0);
+
+  --color-accent: oklch(0.9542 0 0);
+  --color-accent-hover: oklch(0.8923 0 0);
+  --color-accent-active: oklch(0.8294 0 0);
+  --color-accent-foreground: oklch(0.2044 0 0);
+
+  --color-muted: oklch(0.3705 0 0);
+  --color-muted-hover: oklch(0.2905 0 0);
+  --color-muted-active: oklch(0.2044 0 0);
+  --color-muted-foreground: oklch(0.7244 0 0);
+
+  --color-layer: oklch(0.2484 0 0);
+  --color-layer-foreground: oklch(0.9542 0 0);
+
+  --color-success: oklch(0.7949 0.2519 140.94);
+  --color-success-foreground: oklch(0.9542 0 0);
+
+  --color-warning: oklch(0.7798 0.1531 87.65);
+  --color-warning-foreground: oklch(0.2044 0 0);
+
+  --color-error: oklch(0.5884 0.2191 27.3);
+  --color-error-hover: oklch(0.5283 0.2023 27.81);
+  --color-error-active: oklch(0.4565 0.173 27.62);
+  --color-error-foreground: oklch(0.9542 0 0);
+
+  --color-background: oklch(0.2044 0 0);
+  --color-foreground: oklch(0.9542 0 0);
+  --color-border: oklch(0.3705 0 0);
+  --color-input: oklch(0.3705 0 0);
+  --color-ring: oklch(0.3705 0 0);
+
+  --radius-*: initial;
+  --radius-2xs: calc(var(--radius) - 16px);
+  --radius-xs: calc(var(--radius) - 12px);
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+
+  --font-*: initial;
+  --font-sans: 'Outfit Variable', sans-serif;
+
+  --text-*: initial;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 3rem;
+  --text-hero: 4rem;
+
+  --leading-*: initial;
+  --leading-sm: 1.125;
+  --leading-md: 1.25;
+  --leading-lg: 1.333;
+  --leading-xl: 1.5;
+}
 
 @layer base {
   :root {
-    --primary: 198 59% 57%;
-    --primary-hover: 198 59% 49%;
-    --primary-active: 198 59% 41%;
-    --primary-foreground: 0 0% 94%;
-
-    --secondary: 38 97% 57%;
-    --secondary-hover: 38 97% 49%;
-    --secondary-active: 38 97% 41%;
-    --secondary-foreground: 0 0% 9%;
-
-    --accent: 0 0% 94%;
-    --accent-hover: 0 0% 86%;
-    --accent-active: 0 0% 78%;
-    --accent-foreground: 0 0% 9%;
-
-    --muted: 0 0% 25%;
-    --muted-hover: 0 0% 17%;
-    --muted-active: 0 0% 9%;
-    --muted-foreground: 0 0% 65%;
-
-    --layer: 0 0% 13%;
-    --layer-foreground: 0 0% 94%;
-
-    --success: 109 76% 50%;
-    --success-foreground: 0 0% 94%;
-
-    --warning: 45 76% 50%;
-    --warning-foreground: 0 0% 9%;
-
-    --error: 0 76% 52%;
-    --error-hover: 0 76% 44%;
-    --error-active: 0 76% 36%;
-    --error-foreground: 0 0% 94%;
-
-    --background: 0 0% 9%;
-    --foreground: 0 0% 94%;
-
-    --border: 0 0% 25%;
-    --input: 0 0% 25%;
-    --ring: 0 0% 25%;
     --radius: 1.25rem;
 
-    @apply scroll-pt-64 scroll-smooth bg-background text-foreground;
+    @apply bg-background text-foreground scroll-pt-64 scroll-smooth;
   }
 
   * {
@@ -55,5 +86,33 @@
 
   *[class*='icon-'] {
     @apply shrink-0 align-bottom text-2xl;
+  }
+
+  .small {
+    @apply leading-xl text-sm;
+  }
+  .paragraph {
+    @apply leading-xl text-base;
+  }
+  .heading-6 {
+    @apply leading-lg text-base font-medium lg:text-lg;
+  }
+  .heading-5 {
+    @apply leading-xl text-base font-medium sm:text-lg lg:text-xl;
+  }
+  .heading-4 {
+    @apply leading-md text-lg font-medium sm:text-xl lg:text-2xl;
+  }
+  .heading-3 {
+    @apply leading-lg text-xl font-medium sm:text-2xl lg:text-3xl;
+  }
+  .heading-2 {
+    @apply leading-xl text-2xl font-semibold sm:text-3xl lg:text-4xl;
+  }
+  .heading-1 {
+    @apply lg:text-hero leading-md text-3xl font-bold sm:text-4xl;
+  }
+  .hero {
+    @apply lg:text-hero text-4xl leading-none font-black;
   }
 }

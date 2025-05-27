@@ -31,7 +31,7 @@
       'px-3',
       'py-2',
       'transition',
-      'data-[selected]:bg-border',
+      'data-selected:bg-border',
     ]),
   };
 
@@ -104,7 +104,7 @@
             >
 
             <Command.Root
-              class="relative rounded-lg border bg-layer"
+              class="bg-layer relative rounded-lg border"
               label="Search"
               loop
             >
@@ -113,16 +113,16 @@
                   kind: 'outline',
                   intent: 'muted',
                   size: 'icon-sm',
-                })} absolute right-4 top-4"
+                })} absolute top-4 right-4"
               >
                 <span class="icon-[tabler--x] text-lg">Close search dialog</span
                 >
               </Dialog.Close>
 
-              <div class="flex items-center gap-2 border-b py-4 pl-4 pr-16">
+              <div class="flex items-center gap-2 border-b py-4 pr-16 pl-4">
                 <span class="icon-[tabler--search]"></span>
                 <Command.Input
-                  class="h-8 w-full bg-transparent outline-none placeholder:text-muted"
+                  class="placeholder:text-muted h-8 w-full bg-transparent outline-hidden"
                   placeholder="Search the vortex..."
                   autofocus
                   bind:value={searchValue}

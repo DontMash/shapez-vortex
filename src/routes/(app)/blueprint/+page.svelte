@@ -63,7 +63,7 @@
       for="blueprint-file"
     >
       <input
-        class="{input.field()} cursor-pointer [text-indent:-9999rem]"
+        class="{input.field()} cursor-pointer indent-[-9999rem]"
         type="file"
         id="blueprint-file"
         accept={BLUEPRINT_FILE_FORMAT}
@@ -107,12 +107,12 @@
                 kind: 'ghost',
                 intent: 'muted',
                 size: 'icon-sm',
-              })} absolute right-4 top-3"
+              })} absolute top-3 right-4"
             >
               <span class="icon-[tabler--info-circle]"></span>
             </Tooltip.Trigger>
             <Tooltip.Content
-              class="rounded-md border bg-layer p-2 text-layer-foreground"
+              class="bg-layer text-layer-foreground rounded-md border p-2"
             >
               <p>
                 The content of the file will be pasted into the field below.
@@ -127,7 +127,7 @@
       {#snippet children({ constraints })}
         <Control>
           {#snippet children({ props })}
-            <Label class="{input.group()} max-h-none !items-start">
+            <Label class="{input.group()} max-h-none items-start!">
               <span class="icon-[tabler--braces] my-4"
                 >Blueprint Identifier</span
               >
@@ -150,7 +150,7 @@
                   >
                     <span class="icon-[tabler--info-circle]"></span>
                   </Tooltip.Trigger>
-                  <Tooltip.Content class="rounded-md border bg-layer p-2">
+                  <Tooltip.Content class="bg-layer rounded-md border p-2">
                     <p>
                       The blueprint identifier needs to be <br />
                       in the standard format of the game: <br />
@@ -175,13 +175,9 @@
 
   <div class="mx-auto grid grid-cols-1 gap-4 lg:grid-cols-2">
     {#each tools as tool (tool.url)}
-      <div class="overflow-hidden rounded-md border bg-layer shadow-md">
-        <Button.Root
-          class="aspect-h-2 aspect-w-3 block"
-          href={tool.url}
-          title={tool.tooltip}
-        >
-          <div class="flex items-center justify-center">
+      <div class="bg-layer overflow-hidden rounded-md border shadow-md">
+        <Button.Root href={tool.url} title={tool.tooltip}>
+          <div class="flex aspect-[3/2] items-center justify-center">
             <span class="{tool.icon} text-[8rem]"></span>
           </div>
         </Button.Root>

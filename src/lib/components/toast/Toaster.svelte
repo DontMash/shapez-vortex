@@ -16,7 +16,7 @@
     <div
       class="{ALERT_TYPES[
         $toastStore.type
-      ]} flex w-fit max-w-screen-sm items-center gap-2 rounded-sm border p-4 backdrop-blur-lg"
+      ]} flex w-fit max-w-(--breakpoint-sm) items-center gap-2 rounded-sm border p-4 backdrop-blur-lg"
       role="alert"
       transition:blur={{ duration: 150 }}
     >

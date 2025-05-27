@@ -26,8 +26,6 @@
     pageKeywords.forEach((keyword) => keywords.add(keyword));
     return Array.from(keywords);
   }
-
-  // update tailwind
 </script>
 
 <svelte:head>

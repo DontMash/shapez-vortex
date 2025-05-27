@@ -60,17 +60,15 @@
     {#each features as feature (feature.url)}
       <li>
         <Button.Root
-          class="inline-block h-full w-full overflow-hidden rounded-md border bg-layer shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+          class="bg-layer focus-visible:outline-accent inline-block h-full w-full overflow-hidden rounded-md border shadow-lg focus-visible:outline-2 focus-visible:outline-solid"
           href={feature.url}
           title={feature.tooltip}
         >
-          <div class="aspect-h-2 aspect-w-3 border-b">
-            <img
-              class="object-contain lg:object-cover"
-              src={feature.image.src}
-              alt={feature.image.alt}
-            />
-          </div>
+          <img
+            class="aspect-[3/2] border-b object-contain lg:object-cover"
+            src={feature.image.src}
+            alt={feature.image.alt}
+          />
 
           <div class="p-4">
             <h2 class="heading-3">{feature.title}</h2>

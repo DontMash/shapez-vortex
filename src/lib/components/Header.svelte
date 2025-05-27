@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { Button, Menubar, NavigationMenu, Separator } from 'bits-ui';
+  import { NavigationMenu, Separator } from 'bits-ui';
   import { cva } from 'class-variance-authority';
-  import { blur } from 'svelte/transition';
   import { page } from '$app/state';
 
   import { button } from '$lib/components/button';
@@ -18,11 +17,11 @@
       'rounded-xs',
       'px-4',
       'py-1',
-      'outline-none',
+      'outline-hidden',
       'transition',
       'hover:bg-border',
       'focus-visible:bg-border',
-      'data-[highlighted]:bg-border',
+      'data-highlighted:bg-border',
     ]),
   };
 
@@ -35,7 +34,7 @@
   })} sticky inset-x-0 top-0 z-50 w-full py-4"
 >
   <NavigationMenu.Root
-    class="relative rounded-lg border bg-layer/70 p-4 shadow-lg backdrop-blur-lg"
+    class="bg-layer/70 relative rounded-lg border p-4 shadow-lg backdrop-blur-lg"
   >
     <NavigationMenu.List class="flex items-center gap-4">
       <NavigationMenu.Item>
@@ -88,7 +87,7 @@
               Upload
             </NavigationMenu.Link>
 
-            <Separator.Root class="my-1 h-px bg-border sm:hidden" />
+            <Separator.Root class="bg-border my-1 h-px sm:hidden" />
 
             <NavigationMenu.Link class={menu.item()} href="/user">
               <span class="icon-[tabler--user] text-lg"></span>
@@ -117,7 +116,7 @@
     </NavigationMenu.List>
 
     <NavigationMenu.Viewport
-      class="absolute right-0 top-[calc(100%+8px)] z-50 w-fit rounded-lg border bg-layer p-2 shadow-lg backdrop-blur-lg before:absolute before:inset-x-0 before:-top-6 before:h-6"
+      class="bg-layer absolute top-[calc(100%+8px)] right-0 z-50 w-fit rounded-lg border p-2 shadow-lg backdrop-blur-lg before:absolute before:inset-x-0 before:-top-6 before:h-6"
     />
   </NavigationMenu.Root>
 </header>
