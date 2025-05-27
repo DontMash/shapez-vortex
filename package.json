@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.5",
+    "@sveltejs/adapter-vercel": "^5.7.2",
     "@tailwindcss/vite": "^4.1.7",
     "@threlte/core": "^8.0.4",
     "@threlte/extras": "^9.2.1",
