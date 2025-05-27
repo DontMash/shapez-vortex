@@ -101,7 +101,7 @@
           title={feature.tooltip}
         >
           <img
-            class="aspect-[3/2] object-contain lg:object-cover"
+            class="aspect-[3/2] w-full object-contain lg:object-cover"
             src={feature.image.src}
             alt={feature.image.alt}
           />

@@ -551,7 +551,7 @@
               </div>
 
               <img
-                class="aspect-[3/2] object-cover"
+                class="aspect-[3/2] w-full object-cover"
                 src={URL.createObjectURL(image)}
                 alt={`Image #${index} - ${image.name}`}
               />
