@@ -1,145 +1,148 @@
 <script lang="ts">
-  import type { PageData } from './$types';
-
-  import { Button } from '$lib/components/ui/button';
+  import type { PageProps } from './$types';
+  import { Button } from 'bits-ui';
   import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
+  import { section } from '$lib/components/section';
+  import { button } from '$lib/components/button';
 
-  export let data: PageData;
+  import shapeViewerImage from '$lib/assets/images/shape-viewer-example.png';
+  import blueprintViewerImage from '$lib/assets/images/blueprint-viewer-example.png';
+  import searchImage from '$lib/assets/images/search-example.jpg';
+
+  type Feature = {
+    image: {
+      src: string;
+      alt: string;
+    };
+    title: string;
+    description: string;
+    url: string;
+    tooltip: string;
+  };
+  const features: Array<Feature> = [
+    {
+      image: {
+        src: shapeViewerImage,
+        alt: 'Example of a 3D shape view',
+      },
+      title: 'Shape Viewer',
+      description:
+        'Explore multiple layers and parts of a 3D visualization of a shape.',
+      url: '/shape',
+      tooltip: 'Start Shape Viewer',
+    },
+    {
+      image: {
+        src: blueprintViewerImage,
+        alt: 'Example of a 3D blueprint',
+      },
+      title: 'Blueprint Viewer',
+      description: 'View your blueprints in 3D and share them with others.',
+      url: '/blueprint',
+      tooltip: 'Start Blueprint Viewer',
+    },
+    {
+      image: {
+        src: searchImage,
+        alt: 'Void of the Shapez universe',
+      },
+      title: 'Browse blueprints',
+      description:
+        'Search a near infinite collection of community made blueprints.',
+      url: '/blueprint/search',
+      tooltip: 'Start browsing blueprints',
+    },
+  ];
+
+  let { data }: PageProps = $props();
 </script>
 
-<section class="mx-auto w-full max-w-5xl px-4 md:mt-8 lg:px-0" id="hero">
-  <div class="hero rounded-4xl bg-base-200 p-8 md:p-12">
-    <div class="hero-content text-center">
-      <div class="max-w-lg">
-        <h2 class="text-4xl font-bold md:text-5xl">Shapez Vortex</h2>
-        <p class="py-6 text-2xl md:text-3xl">
-          Discover, interact and share Shapez 2 content with the community!
-        </p>
-        <ul class="flex justify-center space-x-4">
-          <li>
-            <a
-              class="btn btn-primary"
-              title={data.user ? 'Upload blueprint' : 'Create an account'}
-              href={data.user ? '/blueprint/upload' : '/register'}
-              >Get Started</a
-            >
-          </li>
-          <li>
-            <a class="btn btn-secondary" href="#features">Features</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+<section class={section()} id="hero">
+  <div class="bg-layer rounded-lg border px-4 py-12 shadow-lg sm:px-12">
+    <hgroup class="mx-auto max-w-(--breakpoint-sm) text-center">
+      <h1 class="heading-1">Shapez Vortex</h1>
+      <p class="heading-3 mt-2">
+        Discover, interact and share content with the community!
+      </p>
+    </hgroup>
+
+    <ul class="mt-8 flex justify-center gap-4">
+      <li>
+        <Button.Root
+          class={button()}
+          href={data.user ? '/blueprint/upload' : '/register'}
+          title={data.user ? 'Upload a blueprint' : 'Create an account'}
+        >
+          Get Started
+        </Button.Root>
+      </li>
+      <li>
+        <Button.Root
+          class={button({ kind: 'outline', intent: 'secondary' })}
+          href="#features"
+          title="Checkout Shapez Vortex features"
+        >
+          Features
+        </Button.Root>
+      </li>
+    </ul>
   </div>
 </section>
 
-<section
-  class="mx-auto mt-16 w-full max-w-5xl px-4 md:mt-24 lg:px-0"
-  id="features"
->
-  <div
-    class="mx-auto grid max-w-screen-sm grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3 lg:gap-4"
-  >
-    <h2 class="sr-only">Features</h2>
+<section class={section()} id="features">
+  <h2 class="heading-2 mb-2">Features</h2>
 
-    <div class="card card-bordered bg-base-200 shadow-xl">
-      <figure>
-        <a class="w-full" href="/shape" title="Shape Viewer">
-          <img
-            class="h-64 w-full object-cover"
-            src="/shape-viewer-example.png"
-            alt="Example of a 3D shape"
-          />
-        </a>
-      </figure>
-
-      <div class="card-body">
-        <h3 class="card-title">Shape Viewer</h3>
-        <p>
-          Explore multiple layers and parts of a 3D visualization of a shape.
-        </p>
-      </div>
-
-      <a
-        class="btn btn-primary no-animation btn-block rounded-t-none"
-        href="/shape"
-        title="Shape Viewer"
-      >
-        Start
-        <span class="sr-only">Shape Viewer</span>
-      </a>
-    </div>
-
-    <div class="card card-bordered bg-base-200 shadow-xl">
-      <figure>
-        <a class="w-full" href="/blueprint" title="Blueprint Viewer">
-          <img
-            class="h-64 w-full object-cover"
-            src="/blueprint-viewer-example.png"
-            alt="Example of a 3D blueprint"
-          />
-        </a>
-      </figure>
-
-      <div class="card-body">
-        <h3 class="card-title">Blueprint Viewer</h3>
-        <p>View your blueprints in 3D and share them with others.</p>
-      </div>
-
-      <a
-        class="btn btn-primary no-animation btn-block rounded-t-none"
-        href="/blueprint"
-        title="Blueprint Viewer"
-      >
-        Start
-        <span class="sr-only"> Blueprint Viewer</span>
-      </a>
-    </div>
-
-    <div class="card card-bordered bg-base-200 shadow-xl">
-      <figure class="bg-base-100">
-        <a
-          class="flex h-64 w-full flex-col items-center justify-center"
-          href="/blueprint/search"
-          title="Browse blueprints"
+  <div class="mx-auto grid grid-cols-1 gap-4 lg:grid-cols-3">
+    {#each features as feature (feature.url)}
+      <div class="bg-layer overflow-hidden rounded-md border shadow-md">
+        <Button.Root
+          class="inline-block w-full"
+          href={feature.url}
+          title={feature.tooltip}
         >
-          <img class="size-32" src="/favicon.png" alt="Blueprint Icon" />
-        </a>
-      </figure>
+          <img
+            class="aspect-[3/2] object-contain lg:object-cover"
+            src={feature.image.src}
+            alt={feature.image.alt}
+          />
+        </Button.Root>
 
-      <div class="card-body">
-        <h3 class="card-title">Browse blueprints</h3>
-        <p>Search an infinite collection of community made blueprints.</p>
+        <div class="flex flex-col p-4 lg:h-56">
+          <h3 class="heading-3">{feature.title}</h3>
+          <p class="mt-2">
+            {feature.description}
+          </p>
+
+          <Button.Root
+            class="{button({ block: true })} mt-8 lg:mt-auto"
+            href={feature.url}
+            title={feature.tooltip}
+          >
+            Start
+            <span class="sr-only">{feature.title}</span>
+          </Button.Root>
+        </div>
       </div>
-
-      <a
-        class="btn btn-primary no-animation btn-block rounded-t-none"
-        href="/blueprint/search"
-        title="Browse blueprints"
-      >
-        Start
-        <span class="sr-only"> blueprint search </span>
-      </a>
-    </div>
+    {/each}
   </div>
 </section>
 
 {#if data.searchBlueprints && data.searchBlueprints.length && data.blueprintImages}
-  <section
-    class="mx-auto mt-16 w-full max-w-5xl space-y-4 px-4 md:mb-8 md:mt-24 lg:px-0"
-    id="latest"
-  >
-    <h2 class="text-3xl font-bold md:text-4xl">Latest blueprints</h2>
+  <section class={section()} id="latest-blueprints">
+    <h2 class="heading-2 mb-2">Latest blueprints</h2>
 
     <BlueprintItemList
       items={data.searchBlueprints.slice(0, 3)}
       images={data.blueprintImages}
     />
 
-    <div class="flex justify-center">
-      <Button href="/blueprint/search" size="lg" variant="outline"
-        >View more</Button
+    <div class="mt-4 flex justify-center">
+      <Button.Root
+        class={button({ kind: 'outline', intent: 'accent' })}
+        href="/blueprint/search"
       >
+        Show more
+      </Button.Root>
     </div>
   </section>
 {/if}

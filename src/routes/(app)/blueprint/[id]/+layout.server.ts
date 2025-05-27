@@ -23,26 +23,28 @@ export const load = (async ({ depends, locals, params }) => {
     }));
     const data = decode(blueprint.data);
 
-    let isBookmarked = false;
+    let user = undefined;
     if (locals.user) {
-      const user = await locals.pb
-        .collection('users')
-        .getOne<User>(locals.user?.id);
-      isBookmarked = user.bookmarks.includes(blueprint.id);
-    }
-    if (
-      locals.user &&
-      locals.user.verified &&
-      locals.user.id !== blueprint.creator
-    ) {
-      const pb = new PocketBase(POCKETBASE_URL);
-      await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
-      await pb
-        .collection('blueprints')
-        .update(blueprint.id, { 'viewCount+': 1 });
+      user = await locals.pb.collection('users').getOne<User>(locals.user?.id);
     }
 
-    depends('update:blueprint');
+    try {
+      if (
+        locals.user &&
+        locals.user.verified &&
+        locals.user.id !== blueprint.creator
+      ) {
+        const pb = new PocketBase(POCKETBASE_URL);
+        await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
+        await pb
+          .collection('blueprints')
+          .update(blueprint.id, { 'viewCount+': 1 });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    depends('blueprint:update');
     const title = `Blueprint - ${blueprint.title}`;
     return {
       seo: {
@@ -57,7 +59,7 @@ export const load = (async ({ depends, locals, params }) => {
         entry: blueprint,
         images,
         data,
-        isBookmarked,
+        user,
       },
     };
   } catch {

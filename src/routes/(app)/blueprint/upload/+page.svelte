@@ -1,25 +1,23 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
+
+  import { section } from '$lib/components/section';
 
   import BlueprintForm from '$lib/components/blueprint/BlueprintForm.svelte';
+  import PageHeader from '$lib/components/PageHeader.svelte';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 </script>
 
-<section class="mx-auto w-full max-w-5xl px-4 lg:px-0">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-input px-4 pb-4"
-  >
-    <hgroup>
-      <h2 class="text-lg font-bold">
-        <span class="icon-[tabler--upload] align-text-bottom text-2xl" />
-        {data.seo.title}
-      </h2>
-      <p>
-        {data.seo.description}
-      </p>
-    </hgroup>
-  </header>
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--upload] heading-2"></span>
+    {data.seo.title}
+
+    {#snippet description()}
+      {data.seo.description}
+    {/snippet}
+  </PageHeader>
 
   <BlueprintForm data={{ form: data.form, type: 'create', tags: data.tags }} />
 </section>

@@ -189,5 +189,6 @@ jobs:
           context-use: true
       - name: Deploy
         working-directory: ./resources/deployment
+        # todo use docker stack deploy
         run: |
           docker compose -f compose.production.yml up -d --force-recreate --pull always

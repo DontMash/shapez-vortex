@@ -1,27 +1,39 @@
 <script lang="ts">
-  import { copy } from '$lib/client/actions/clipboard';
+  import { copy } from '$lib/client/actions/clipboard.svelte';
   import { add } from '$lib/client/toast.service';
 
-  export let value: string;
+  import { button } from '$lib/components/button';
 
-  let isLoading = false;
+  interface Props {
+    value: string;
+  }
+
+  let { value }: Props = $props();
+
+  let isLoading = $state(false);
 </script>
 
 <button
-  class="btn btn-square btn-accent fill-accent-content data-[loading=true]:animate-spin"
+  class="{button({
+    kind: 'ghost',
+    intent: 'muted',
+    size: 'icon-sm',
+  })} data-[loading=true]:animate-spin"
   data-loading={isLoading}
   type="button"
   title="Copy"
-  on:click={() => (isLoading = true)}
-  use:copy={{ value }}
-  on:copy={() => {
-    isLoading = false;
-    add({ message: 'Content copied' });
-  }}
-  on:error={(event) => {
-    isLoading = false;
-    add({ message: event.detail.message, type: 'ERROR' });
-  }}
+  onclick={() => (isLoading = true)}
+  {@attach copy({
+    value,
+    oncopy: () => {
+      isLoading = false;
+      add({ message: 'Content copied' });
+    },
+    onerror: (error) => {
+      isLoading = false;
+      add({ message: error.message, type: 'ERROR' });
+    },
+  })}
 >
   <span class="icon-[tabler--copy] text-2xl">Copy</span>
 </button>

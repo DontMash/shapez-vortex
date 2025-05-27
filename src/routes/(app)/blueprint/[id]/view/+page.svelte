@@ -1,17 +1,20 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
+
+  import { section } from '$lib/components/section';
 
   import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 </script>
 
-<section class="relative mx-auto w-full max-w-5xl">
+<section class={section()}>
   <BlueprintView
+    title={data.blueprint.entry.title}
     identifier={data.blueprint.entry.data}
     blueprint={data.blueprint.data}
     controls={{
-      download: data.user && data.user.verified,
+      download: true,
       zoom: true,
       utils: true,
     }}

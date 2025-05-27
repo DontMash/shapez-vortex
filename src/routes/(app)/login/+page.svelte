@@ -1,114 +1,135 @@
 <script lang="ts">
-  import type { Page } from '@sveltejs/kit';
+  import type { PageProps } from './$types';
+  import { Button, Toggle } from 'bits-ui';
+  import { Field, Control, Label, FieldErrors } from 'formsnap';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
   import { page } from '$app/stores';
-  import { PASSWORD_MIN_LENGTH, USERNAME_REGEX } from '$lib/user.types';
-  import type { PageData } from './$types';
+  import { add } from '$lib/client/toast.service';
+  import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';
 
-  export let data: PageData;
+  import { button } from '$lib/components/button';
+  import * as input from '$lib/components/input';
+  import { section } from '$lib/components/section';
 
-  let isPasswordHidden = true;
-  function getRedirectParam(page: Page) {
-    return page.url.searchParams.get('redirect');
-  }
+  import PageHeader from '$lib/components/PageHeader.svelte';
+
+  let { data }: PageProps = $props();
+
+  const form = superForm(data.form, {
+    validators: zodClient(USER_LOGIN_FORM_SCHEMA),
+    onError({ result }) {
+      add({ message: result.error.message, type: 'ERROR' });
+    },
+  });
+  const { form: formData, enhance } = form;
+  let isPasswordHidden = $state(true);
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-  >
-    <hgroup>
-      <h2 class="text-lg font-bold">
-        <span class="icon-[tabler--login-2] align-text-bottom text-2xl" />
-        {data.seo.title}
-      </h2>
-    </hgroup>
-  </header>
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--login-2] heading-2"></span>
+    {data.seo.title}
+  </PageHeader>
 
   <div
-    class="card card-bordered mx-auto max-w-screen-sm rounded-none border-x-0 border-base-content/20 bg-base-200 shadow-lg transition-[border-radius] sm:rounded-box sm:border-x"
+    class="bg-layer mx-auto max-w-(--breakpoint-sm) space-y-4 rounded-md border p-4"
   >
-    <form class="card-body" action="?/login" method="post">
-      {#if getRedirectParam($page)}
-        <input type="hidden" name="redirect" value={getRedirectParam($page)} />
+    <form
+      class="flex flex-col gap-2"
+      method="post"
+      action="?/login"
+      use:enhance
+    >
+      {#if $page}
+        {@const redirect = $page.url.searchParams.get('redirect')}
+        {#if redirect}
+          <input type="hidden" name="redirect" value={redirect} />
+        {/if}
       {/if}
 
-      <label class="form-control" for="username">
-        <div class="label">
-          <span class="label-text">Username</span>
-        </div>
-        <div class="input input-bordered flex items-center space-x-2">
-          <span class="icon-[tabler--user] text-2xl" />
-          <input
-            class="w-full"
-            type="text"
-            name="username"
-            id="username"
-            required
-            value={$page.form && !$page.form.success
-              ? $page.form.data.username
-              : null}
-            pattern={USERNAME_REGEX.source}
-          />
-        </div>
-      </label>
+      <Field {form} name="username">
+        {#snippet children({ constraints })}
+          <Control>
+            {#snippet children({ props })}
+              <Label class={input.group()}>
+                <span class="icon-[tabler--user]">Username</span>
+                <input
+                  class={input.field()}
+                  type="text"
+                  placeholder="Username"
+                  autocomplete="username"
+                  {...props}
+                  {...constraints}
+                  bind:value={$formData.username}
+                />
+              </Label>
+            {/snippet}
+          </Control>
+          <FieldErrors class="text-error" />
+        {/snippet}
+      </Field>
 
-      <label class="form-control" for="password">
-        <div class="label">
-          <span class="label-text">Password</span>
-        </div>
-        <div class="input input-bordered flex items-center space-x-2">
-          <span class="icon-[tabler--password] text-2xl" />
-          <input
-            class="w-full"
-            type={isPasswordHidden ? 'password' : 'text'}
-            name="password"
-            id="password"
-            value={$page.form && !$page.form.success
-              ? $page.form.data.password
-              : null}
-            placeholder=""
-            required
-            minlength={PASSWORD_MIN_LENGTH}
-          />
-          <button
-            class="btn btn-square btn-ghost btn-sm"
-            type="button"
-            title={isPasswordHidden ? 'Show password' : 'Hide password'}
-            on:click={() => (isPasswordHidden = !isPasswordHidden)}
-          >
-            <span class="sr-only">{isPasswordHidden ? 'Show' : 'Hide'}</span>
-            {#if isPasswordHidden}
-              <span class="icon-[tabler--eye-off] text-lg"
-                >Password is shown</span
-              >
-            {:else}
-              <span class="icon-[tabler--eye] text-lg">Password is hidden</span>
-            {/if}
-          </button>
-        </div>
-      </label>
+      <Field {form} name="password">
+        {#snippet children({ constraints })}
+          <Control>
+            {#snippet children({ props })}
+              <Label class={input.group()}>
+                <span class="icon-[tabler--lock-password]">Password</span>
+                <input
+                  class={input.field()}
+                  type={isPasswordHidden ? 'password' : 'text'}
+                  placeholder="Password"
+                  autocomplete="current-password"
+                  {...props}
+                  {...constraints}
+                  bind:value={$formData.password}
+                />
+                <Toggle.Root
+                  class={button({
+                    kind: 'ghost',
+                    intent: 'muted',
+                    size: 'icon-sm',
+                  })}
+                  title={isPasswordHidden ? 'Show password' : 'Hide password'}
+                  bind:pressed={isPasswordHidden}
+                >
+                  {#if isPasswordHidden}
+                    <span class="icon-[tabler--eye-off] text-lg"
+                      >Password is shown</span
+                    >
+                  {:else}
+                    <span class="icon-[tabler--eye] text-lg"
+                      >Password is hidden</span
+                    >
+                  {/if}
+                </Toggle.Root>
+              </Label>
+            {/snippet}
+          </Control>
+          <FieldErrors class="text-error" />
+        {/snippet}
+      </Field>
 
-      {#if $page.form && !$page.form.success && $page.form.issues}
-        <ul class="inline-block font-medium italic text-error">
-          {#each $page.form.issues as issue}
-            <li>
-              {issue.message}
-            </li>
-          {/each}
-        </ul>
-      {/if}
-
-      <button class="btn btn-primary my-4" title="Login to your account">
-        <span class="icon-[tabler--login-2] text-2xl" />
+      <Button.Root
+        class={button({ block: true })}
+        title="Login to your account"
+      >
+        <span class="icon-[tabler--login-2]"></span>
         Login
-      </button>
-
-      <div class="flex justify-between">
-        <a class="link link-accent" href="/register"> Create an account? </a>
-        <a class="link link-accent text-right" href="/password-reset">
-          Forgot your password?
-        </a>
-      </div>
+      </Button.Root>
     </form>
+
+    <div class="flex justify-between gap-4">
+      <Button.Root class={button({ kind: 'link' })} href="/register">
+        Create an account?
+      </Button.Root>
+      <Button.Root
+        class="{button({ kind: 'link' })} text-right"
+        href="/password-reset"
+      >
+        Forgot your password?
+      </Button.Root>
+    </div>
   </div>
 </section>

@@ -1,189 +1,457 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import type { PageProps } from './$types';
+  import {
+    Button,
+    Collapsible,
+    Combobox,
+    Pagination,
+    Select,
+    Toggle,
+  } from 'bits-ui';
+  import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { tick, untrack } from 'svelte';
+  import { slide } from 'svelte/transition';
+  import { superForm } from 'sveltekit-superforms';
+  import {
+    PAGINATION_PAGE_DEFAULT,
+    PAGINATION_PER_PAGE_DEFAULT,
+    SEARCH_ORDER_OPTION_DEFAULT,
+    SEARCH_SORT_OPTIONS,
+  } from '$lib/search';
+
+  import { button } from '$lib/components/button';
+  import * as input from '$lib/components/input';
+  import { section } from '$lib/components/section';
+
   import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
-  import type { PageData } from './$types';
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import type { BlueprintTag } from '$lib/blueprint.types';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 
-  function getPageUrl(pageIndex: number) {
-    const url = new URL($page.url);
-    url.searchParams.set('page', String(pageIndex));
-    return url.href;
-  }
+  let formElement: HTMLFormElement | undefined = $state();
+  const form = superForm(data.form);
+  const { form: formData } = form;
+
+  let isFilterOpen: boolean = $state(false);
+  let filterTagNames: Array<string> | undefined = $state();
+  // eslint-disable-next-line svelte/prefer-writable-derived
+  let filterTagOptions: Array<string> | undefined = $state();
+  let filterTags: Array<BlueprintTag> | undefined = $derived(
+    filterTagOptions
+      ?.map((value) => data.tags.find((tag) => tag.id === value))
+      .filter((value) => !!value),
+  );
+  const sortOptions: Array<{ label: string; value: string }> = Object.entries(
+    SEARCH_SORT_OPTIONS,
+  ).map(([key, value]) => ({ label: value, value: key }));
+
+  $effect(() => {
+    if (!data.tags) {
+      return;
+    }
+    untrack(() => {
+      filterTagNames = getFilterTagNames($formData.filter);
+    });
+  });
+
+  $effect(() => {
+    filterTagOptions = data.tags
+      .filter((tag) => filterTagNames?.includes(tag.name))
+      .map((tag) => tag.id);
+  });
+
+  $effect(() => {
+    if (!filterTagOptions) {
+      return;
+    }
+    $formData.filter = `tags=${filterTagOptions.map((tagOption) => data.tags.find((tag) => tag.id === tagOption)?.name).join(',')}`;
+  });
+
+  const getFilterTagNames = (
+    filterParam?: string,
+  ): Array<string> | undefined => {
+    return filterParam
+      ?.split(';')
+      .find((value) => value.startsWith('tags'))
+      ?.split('=')[1]
+      .split(',');
+  };
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-  <header
-    class="mb-4 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
+{#snippet pagination()}
+  <Pagination.Root
+    class="flex items-center justify-center gap-2 py-4"
+    count={data.result.totalItems}
+    perPage={data.result.perPage}
+    onPageChange={() => tick().then(() => formElement?.requestSubmit())}
+    bind:page={$formData.page}
   >
-    <h2 class="text-lg font-bold">
-      <span class="icon-[tabler--search] align-text-bottom text-2xl" />
-      {data.seo.title}
-    </h2>
-  </header>
-
-  <form class="mb-8 flex flex-wrap items-end gap-2 px-4 lg:px-0">
-    <label
-      class="input input-sm input-bordered flex grow items-center space-x-2"
-      for="query"
-    >
-      <span class="icon-[tabler--search] align-text-bottom text-lg" />
-      <input
-        class="grow bg-transparent"
-        type="text"
-        name="query"
-        id="query"
-        value={data.query}
-        placeholder="Search"
-      />
-    </label>
-
-    <label class="form-control w-full max-w-36" for="sort">
-      <div class="label">
-        <span class="label-text text-xs">Filter by tag:</span>
-      </div>
-      <select
-        class="select select-bordered select-sm"
-        id="filter"
-        name="filter"
+    {#snippet children({ pages })}
+      <Pagination.PrevButton
+        class={button({
+          kind: 'ghost',
+          intent: 'accent',
+          size: 'icon',
+        })}
       >
-        <option value="" selected={!data.filter}>-</option>
-        {#each data.tags as tag}
-          <option
-            value={`tags=${tag.name}`}
-            selected={data.filter?.includes(tag.name)}
+        <span class="icon-[tabler--chevron-left]"></span>
+      </Pagination.PrevButton>
+
+      {#each pages as page (page.key)}
+        {#if page.type === 'ellipsis'}
+          <div class="font-medium">...</div>
+        {:else}
+          <Pagination.Page
+            {page}
+            class="{button({
+              kind: 'ghost',
+              intent: 'accent',
+              size: 'icon',
+            })} data-selected:bg-accent data-selected:text-accent-foreground"
           >
-            #{tag.name}
-          </option>
-        {/each}
-      </select>
-    </label>
+            {page.value}
+          </Pagination.Page>
+        {/if}
+      {/each}
 
-    <label class="form-control w-full max-w-36" for="sort">
-      <div class="label">
-        <span class="label-text text-xs">Sort by:</span>
-      </div>
-      <select class="select select-bordered select-sm" id="sort" name="sort">
-        <option value="created" selected={!data.sort || data.sort === 'created'}
-          >Created</option
-        >
-        <option value="updated" selected={data.sort === 'updated'}
-          >Updated</option
-        >
-        <option value="title" selected={data.sort === 'title'}>Title</option>
-        <option value="version" selected={data.sort === 'version'}
-          >Version</option
-        >
-        <option value="cost" selected={data.sort === 'cost'}>Cost</option>
-        <option value="buildingCount" selected={data.sort === 'buildingCount'}
-          >Buildings</option
-        >
-        <option value="islandCount" selected={data.sort === 'islandCount'}
-          >Islands</option
-        >
-        <option value="viewCount" selected={data.sort === 'viewCount'}
-          >Views</option
-        >
-        <option value="downloadCount" selected={data.sort === 'downloadCount'}
-          >Downloads</option
-        >
-        <option value="bookmarkCount" selected={data.sort === 'bookmarkCount'}
-          >Bookmarks</option
-        >
-      </select>
-    </label>
+      <Pagination.NextButton
+        class={button({
+          kind: 'ghost',
+          intent: 'accent',
+          size: 'icon',
+        })}
+      >
+        <span class="icon-[tabler--chevron-right]"></span>
+      </Pagination.NextButton>
+    {/snippet}
+  </Pagination.Root>
+{/snippet}
 
-    <label class="form-control w-full max-w-36" for="order">
-      <div class="label">
-        <span class="label-text text-xs">Order in:</span>
-      </div>
-      <select class="select select-bordered select-sm" id="order" name="order">
-        <option value="asc" selected={data.order === 'asc'}>↑ Ascending</option>
-        <option value="desc" selected={!data.order || data.order === 'desc'}>
-          ↓ Descending</option
-        >
-      </select>
-    </label>
+<section class={section()}>
+  <PageHeader>
+    <span class="icon-[tabler--search] heading-2"></span>
+    {data.seo.title}
 
-    <button
-      class="btn btn-square btn-sm"
-      title="Clear search parameters"
-      type="reset"
+    {#snippet description()}
+      {data.seo.description}
+    {/snippet}
+  </PageHeader>
+
+  <form
+    class="flex flex-col gap-2"
+    method="get"
+    onsubmit={(event) => {
+      event.preventDefault();
+
+      if ($formData.page === data.form.data.page) {
+        $formData.page = 1;
+      }
+
+      const form = event.currentTarget;
+      tick().then(() => form.submit());
+    }}
+    bind:this={formElement}
+  >
+    <div class="flex items-start gap-2">
+      <Field {form} name="query">
+        {#snippet children({ constraints })}
+          <div class="flex flex-1 flex-col gap-2">
+            <Control>
+              {#snippet children({ props })}
+                <Label class={input.group()}>
+                  <span class="icon-[tabler--search]">Search</span>
+                  <input
+                    class={input.field()}
+                    type="text"
+                    placeholder="Search"
+                    {...props}
+                    {...constraints}
+                    bind:value={$formData.query}
+                  />
+                </Label>
+              {/snippet}
+            </Control>
+            <FieldErrors class="text-error" />
+          </div>
+        {/snippet}
+      </Field>
+
+      <Button.Root class={button({ intent: 'primary' })}>
+        <span class="icon-[tabler--list-search]"></span>
+        Apply
+      </Button.Root>
+    </div>
+
+    <Collapsible.Root
+      class="group mb-2 rounded-md border"
+      bind:open={isFilterOpen}
     >
-      <span class="icon-[tabler--x]">Clear</span>
-    </button>
-    <button class="btn btn-primary btn-sm" title="Apply search parameters">
-      <span class="icon-[tabler--list-search]" />
-      Apply
-    </button>
+      <Collapsible.Trigger>
+        {#snippet child({ props })}
+          <Button.Root
+            class="{button({
+              intent: 'accent',
+              kind: 'ghost',
+            })} w-full justify-between gap-2 px-4 group-data-[state=open]:mb-2"
+            type="button"
+            {...props}
+          >
+            <div class="flex gap-2">
+              <span class="icon-[tabler--filter]"></span>
+              Filter
+            </div>
+            <span
+              class="icon-[tabler--chevron-down] text-lg transition-transform group-data-[state=open]:-rotate-180"
+            ></span>
+          </Button.Root>
+        {/snippet}
+      </Collapsible.Trigger>
+
+      <Collapsible.Content class="flex flex-col gap-2 p-4" forceMount>
+        {#snippet child({ props, open })}
+          {#if open}
+            <div {...props} transition:slide={{ duration: 150 }}>
+              {#if filterTags}
+                <div class="flex flex-col gap-2">
+                  <div class="flex items-start">
+                    <ul class="flex flex-wrap gap-2">
+                      {#each filterTags as tag (tag.id)}
+                        <li>
+                          <span
+                            class="inline-flex items-center gap-1 rounded-xs border pl-2"
+                          >
+                            #{tag.name}
+
+                            <Button.Root
+                              class={button({
+                                intent: 'error',
+                                kind: 'ghost',
+                                size: 'icon-sm',
+                              })}
+                              type="button"
+                              onclick={() => {
+                                filterTagOptions = filterTagOptions?.filter(
+                                  (tagOption) => tagOption !== tag.id,
+                                );
+                              }}
+                            >
+                              <span class="icon-[tabler--x]">
+                                Remove tag {tag}
+                              </span>
+                            </Button.Root>
+                          </span>
+                        </li>
+                      {/each}
+                    </ul>
+                    {#if filterTags.length}
+                      <Button.Root
+                        class="{button({
+                          intent: 'error',
+                          kind: 'outline',
+                          size: 'sm',
+                        })} ml-auto shrink-0"
+                        type="button"
+                        onclick={() => {
+                          filterTagOptions = [];
+                        }}
+                      >
+                        <span class="icon-[tabler--x]"></span>
+                        Clear tags
+                      </Button.Root>
+                    {/if}
+                  </div>
+
+                  <Combobox.Root
+                    type="multiple"
+                    items={data.tags.map((tag) => ({
+                      value: tag.id,
+                      label: tag.name,
+                    }))}
+                    bind:value={filterTagOptions}
+                  >
+                    <label class={input.group()} for="blueprint-tag-input">
+                      <span class="icon-[tabler--tags]"></span>
+                      <Combobox.Input
+                        class={input.field()}
+                        id="blueprint-tag-input"
+                        placeholder="Select tags"
+                        aria-label="Select tags"
+                      />
+                    </label>
+
+                    <Combobox.Content
+                      class="bg-layer relative z-10 max-h-64 overflow-x-hidden overflow-y-auto rounded-md border p-2"
+                      sideOffset={20}
+                    >
+                      {#each data.tags as tag (tag.id)}
+                        <Combobox.Item
+                          class="hover:bg-border focus-visible:bg-border data-highlighted:bg-border flex cursor-pointer justify-between gap-2 rounded-xs px-4 py-1 outline-hidden transition"
+                          value={tag.id}
+                          label={tag.name}
+                        >
+                          {#snippet children({ selected })}
+                            #{tag.name}
+
+                            {#if selected}
+                              <span class="icon-[tabler--check]">selected</span>
+                            {/if}
+                          {/snippet}
+                        </Combobox.Item>
+                      {/each}
+                    </Combobox.Content>
+                  </Combobox.Root>
+                </div>
+              {/if}
+            </div>
+          {/if}
+        {/snippet}
+      </Collapsible.Content>
+    </Collapsible.Root>
+
+    <div class="flex gap-2">
+      <Field {form} name="sort">
+        {#snippet children({ constraints })}
+          <div class="flex flex-1 flex-col gap-2">
+            <Control>
+              {#snippet children({ props })}
+                <Label>
+                  <Select.Root
+                    type="single"
+                    name={props.name}
+                    items={sortOptions}
+                    loop
+                    bind:value={$formData.sort}
+                    onValueChange={() =>
+                      tick().then(() => formElement?.requestSubmit())}
+                    {...constraints}
+                  >
+                    <Select.Trigger
+                      class="{button({
+                        kind: 'outline',
+                        intent: 'accent',
+                      })} bg-background w-full min-w-64"
+                      {...props}
+                      {...constraints}
+                    >
+                      <span class="icon-[tabler--arrows-sort]"></span>
+                      {SEARCH_SORT_OPTIONS[$formData.sort] ?? 'Sort by'}
+                      <span class="icon-[tabler--caret-up-down] ml-auto"></span>
+                    </Select.Trigger>
+
+                    <Select.Content
+                      class="bg-background z-10 flex flex-col rounded-sm border p-2 shadow-lg"
+                    >
+                      {#each sortOptions as { label, value } (value)}
+                        <Select.Item
+                          class="{button({
+                            kind: 'ghost',
+                            intent: 'muted',
+                            size: 'sm',
+                          })} data-highlighted:bg-muted"
+                          {label}
+                          {value}
+                        >
+                          {#snippet children({ selected })}
+                            {label}
+
+                            {#if selected}
+                              <div class="ml-auto flex items-center">
+                                <span class="icon-[tabler--check]"
+                                  >selected</span
+                                >
+                              </div>
+                            {/if}
+                          {/snippet}
+                        </Select.Item>
+                      {/each}
+                    </Select.Content>
+                  </Select.Root>
+                </Label>
+              {/snippet}
+            </Control>
+            <FieldErrors class="text-error" />
+          </div>
+        {/snippet}
+      </Field>
+
+      <Field {form} name="order">
+        {#snippet children({ constraints })}
+          <div class="flex flex-col gap-2">
+            <Control>
+              {#snippet children({ props })}
+                <Toggle.Root
+                  class={button({
+                    kind: 'outline',
+                    intent: 'muted',
+                    size: 'icon',
+                  })}
+                  title="Order by {$formData.order ===
+                  SEARCH_ORDER_OPTION_DEFAULT
+                    ? 'descending'
+                    : 'ascending'}"
+                  {...props}
+                  {...constraints}
+                  name="order-toggle"
+                  bind:pressed={
+                    () => $formData.order === SEARCH_ORDER_OPTION_DEFAULT,
+                    (state) => ($formData.order = state ? 'desc' : 'asc')
+                  }
+                  onPressedChange={() =>
+                    tick().then(() => formElement?.requestSubmit())}
+                >
+                  {#if $formData.order === SEARCH_ORDER_OPTION_DEFAULT}
+                    <span class="icon-[tabler--arrow-narrow-down]"
+                      >Descending</span
+                    >
+                  {:else}
+                    <span class="icon-[tabler--arrow-narrow-up]">Ascending</span
+                    >
+                  {/if}
+                </Toggle.Root>
+              {/snippet}
+            </Control>
+            <FieldErrors class="text-error" />
+          </div>
+        {/snippet}
+      </Field>
+    </div>
+
+    <Field {form} name="filter">
+      {#snippet children({ constraints })}
+        <Control>
+          {#snippet children({ props })}
+            <input
+              type="hidden"
+              {...props}
+              {...constraints}
+              bind:value={$formData.filter}
+            />
+          {/snippet}
+        </Control>
+        <FieldErrors class="text-error" />
+      {/snippet}
+    </Field>
+
+    {#if $formData.order !== SEARCH_ORDER_OPTION_DEFAULT}
+      <input type="hidden" name="order" bind:value={$formData.order} />
+    {/if}
+    {#if $formData.page !== PAGINATION_PAGE_DEFAULT}
+      <input type="hidden" name="page" bind:value={$formData.page} />
+    {/if}
+    {#if $formData.perPage !== PAGINATION_PER_PAGE_DEFAULT}
+      <input type="hidden" name="perPage" bind:value={$formData.perPage} />
+    {/if}
   </form>
 
   {#if data.result.items && data.result.items.length > 0}
-    <div class="px-4 lg:px-0">
-      <BlueprintItemList items={data.result.items} images={data.images} />
-    </div>
+    {@render pagination()}
 
-    {#key $page}
-      <div class="mt-8 flex justify-center">
-        <div class="join">
-          {#if data.result.totalPages > 3}
-            <a
-              class="btn btn-square join-item"
-              title="Go to the first page of results"
-              href={getPageUrl(1)}
-            >
-              <span class="icon-[tabler--chevrons-left] text-2xl">First</span>
-            </a>
-          {/if}
-          {#if data.result.totalPages > 1}
-            <a
-              class="btn btn-square join-item"
-              title="Go to the previous page of results"
-              href={getPageUrl(Math.max(data.result.page - 1, 1))}
-            >
-              <span class="icon-[tabler--chevron-left] text-2xl">Previous</span>
-            </a>
-          {/if}
-          {#each [...Array(data.result.totalPages).keys()] as index}
-            {@const page = index + 1}
-            {@const diff = data.result.page - page}
-            {#if diff < 3 && diff > -3}
-              <a
-                class={`btn btn-square ${data.result.totalPages > 1 ? 'join-item' : ''} ${
-                  page === data.result.page ? 'btn-active' : ''
-                }`}
-                title="Go to page {page}}"
-                href={getPageUrl(page)}
-              >
-                {page}
-              </a>
-            {/if}
-          {/each}
-          {#if data.result.totalPages > 1}
-            <a
-              class="btn btn-square join-item"
-              title="Go to the next page of results"
-              href={getPageUrl(
-                Math.min(data.result.page + 1, data.result.totalPages),
-              )}
-            >
-              <span class="icon-[tabler--chevron-right] text-2xl">Next</span>
-            </a>
-          {/if}
-          {#if data.result.totalPages > 3}
-            <a
-              class="btn btn-square join-item"
-              title="Go to the last page of results"
-              href={getPageUrl(data.result.totalPages)}
-            >
-              <span class="icon-[tabler--chevrons-right] text-2xl">Last</span>
-            </a>
-          {/if}
-        </div>
-      </div>
-    {/key}
+    <BlueprintItemList items={data.result.items} images={data.images} />
+
+    {@render pagination()}
   {:else}
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center py-4">
       <span>No blueprints found</span>
     </div>
   {/if}

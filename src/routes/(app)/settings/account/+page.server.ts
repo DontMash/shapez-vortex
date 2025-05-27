@@ -1,43 +1,49 @@
-import { z } from 'zod';
-import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { fail, redirect } from '@sveltejs/kit';
+import { superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
 
-export const load = (() => {
+const USER_UPDATE_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({ email: true });
+
+export const load = (async () => {
+  const form = await superValidate(zod(USER_UPDATE_SCHEMA));
+
   return {
     seo: {
       title: 'Settings - Account',
       description: 'Manage your account settings',
       keywords: ['Settings', 'Account'],
     },
+    form,
   };
 }) satisfies PageServerLoad;
 
 export const actions = {
-  requestVerification: async ({ locals }) => {
+  verification: async ({ locals }) => {
     if (!locals.user) {
       return fail(401);
     }
+
     await locals.pb.collection('users').requestVerification(locals.user.email);
     return { success: true };
   },
-  requestEmail: async ({ locals, request }) => {
+  email: async ({ locals, request }) => {
+    const form = await superValidate(request, zod(USER_UPDATE_SCHEMA));
+
     if (!locals.user) {
-      return fail(401);
+      return fail(401, { form });
     }
-    const formData = await request.formData();
-    const entries = Object.fromEntries(formData);
-    const schema = z.object({ newEmail: z.string().email() });
-    const result = schema.safeParse(entries);
-    if (!result.success) {
-      return fail(400, {
-        data: entries,
-        issues: result.error.issues,
-        invalid: true,
-      });
+
+    if (!form.valid) {
+      return fail(400, { form });
     }
-    await locals.pb
-      .collection('users')
-      .requestEmailChange(result.data.newEmail);
-    return { success: true };
+
+    try {
+      await locals.pb.collection('users').requestEmailChange(form.data.email);
+      return redirect(303, '/login');
+    } catch {
+      return fail(500, { form });
+    }
   },
 } satisfies Actions;

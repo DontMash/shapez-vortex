@@ -3,6 +3,7 @@ import { decode } from '$lib/blueprint';
 import {
   BLUEPRINT_IDENTIFIER_REGEX,
   BLUEPRINT_TYPES,
+  GAME_VERSION,
   type BlueprintIdentifier,
 } from '$lib/blueprint.types';
 
@@ -15,17 +16,16 @@ export const BLUEPRINT_DESCRIPTION_MAX_LENGTH = 2048;
 export const BLUEPRINT_TAG_MIN_LENGTH = 3;
 export const BLUEPRINT_TAG_MAX_LENGTH = 24;
 export const BLUEPRINT_TAG_REGEX = new RegExp(
-  `[\\w-]{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}}`,
+  `^[\\w-]{${BLUEPRINT_TAG_MIN_LENGTH},${BLUEPRINT_TAG_MAX_LENGTH}}$`,
 );
 export const BLUEPRINT_TAGS_MAX = 8;
-export const BLUEPRINT_TAGS_REGEX = new RegExp(
-  `^\\s*(${BLUEPRINT_TAG_REGEX.source}(\\s*,+\\s*${BLUEPRINT_TAG_REGEX.source})*)?\\s*$`,
-);
+export const BLUEPRINT_TAG_NEW_SYMBOL = '$';
 export const BLUEPRINT_IMAGE_MAX_FILE_SIZE = 1_048_576;
 export const BLUEPRINT_IMAGE_TYPES = [
   'image/jpeg',
   'image/png',
   'image/gif',
+  'image/webp',
 ] as const;
 type BlueprintImageType = (typeof BLUEPRINT_IMAGE_TYPES)[number];
 export const BLUEPRINT_IMAGES_MAX = 4;
@@ -65,20 +65,22 @@ const BLUEPRINT_IMAGES_SCHEMA = z
     `Accepted image formats are: ${BLUEPRINT_IMAGE_TYPES.join(', ')}`,
   )
   .array()
-  .refine(
-    (value) => value.length <= BLUEPRINT_IMAGES_MAX,
+  .max(
+    BLUEPRINT_IMAGES_MAX,
     `Max. amount of images is ${BLUEPRINT_IMAGES_MAX}`,
   );
 const BLUEPRINT_TAGS_SCHEMA = z
   .string()
-  .regex(
-    BLUEPRINT_TAGS_REGEX,
-    'String must only contain these characters: "A-Za-z0-9_-"',
-  )
-  .refine(
-    (value) => value.split(',').length <= BLUEPRINT_TAGS_MAX,
-    `Max. amount of tags is ${BLUEPRINT_TAGS_MAX}`,
-  );
+  .array()
+  .refine((value) => {
+    return value.reduce(
+      (result, value) =>
+        result &&
+        (!value.startsWith(BLUEPRINT_TAG_NEW_SYMBOL) ||
+          BLUEPRINT_TAG_REGEX.test(value.slice(1))),
+      true,
+    );
+  }, 'String must only contain these characters: "A-Za-z0-9_-"');
 export const BLUEPRINT_FORM_SCHEMA = z.object({
   title: BLUEPRINT_TITLE_SCHEMA,
   description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
@@ -140,5 +142,10 @@ export const BLUEPRINT_DECODE_SCHEMA = z.object({
   identifier: z.string().max(12500).pipe(BLUEPRINT_DATA_SCHEMA),
 });
 export const BLUEPRINT_ENCODE_SCHEMA = z.object({
-  data: BLUEPRINT_SCHEMA,
+  data: z.string(),
+});
+
+export const BLUEPRINT_CONVERT_SCHEMA = z.object({
+  version: z.number().min(1000).max(GAME_VERSION).default(GAME_VERSION),
+  identifier: z.string().max(12500).pipe(BLUEPRINT_DATA_SCHEMA),
 });

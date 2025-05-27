@@ -10,8 +10,16 @@ export const load = (async ({ locals, parent }) => {
     .collection('users')
     .getOne<Pick<User, 'expand'>>(profile.id, {
       expand: 'bookmarks.tags,bookmarks.creator',
-      fields:
-        'expand.bookmarks.collectionId,expand.bookmarks.id,expand.bookmarks.title,expand.bookmarks.images,expand.bookmarks.creator,expand.bookmarks.expand.tags.name,expand.bookmarks.expand.creator.displayname',
+      fields: [
+        'expand.bookmarks.collectionId',
+        'expand.bookmarks.id',
+        'expand.bookmarks.title',
+        'expand.bookmarks.images',
+        'expand.bookmarks.creator',
+        'expand.bookmarks.expand.tags.id',
+        'expand.bookmarks.expand.tags.name',
+        'expand.bookmarks.expand.creator.displayname',
+      ].join(','),
     });
   const bookmarks = (user.expand?.bookmarks as Array<BlueprintRecord>) ?? [];
   const images = bookmarks.reduce<Record<string, string>>((result, current) => {

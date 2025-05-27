@@ -1,128 +1,80 @@
-import { fontFamily } from 'tailwindcss/defaultTheme';
-import { addDynamicIconSelectors } from '@iconify/tailwind';
-
 /** @type {import('tailwindcss').Config} */
 const config = {
-	darkMode: ['class'],
-	content: ['./src/**/*.{html,js,svelte,ts}'],
-	safelist: ['dark'],
-	theme: {
-		container: {
-			center: true,
-			padding: '2rem',
-			screens: {
-				'2xl': '1400px'
-			}
-		},
-		colors: {},
-		extend: {
-			colors: {
-				border: 'hsl(var(--border) / <alpha-value>)',
-				input: 'hsl(var(--input) / <alpha-value>)',
-				ring: 'hsl(var(--ring) / <alpha-value>)',
-				background: 'hsl(var(--background) / <alpha-value>)',
-				foreground: 'hsl(var(--foreground) / <alpha-value>)',
-				primary: {
-					DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
-					foreground: 'hsl(var(--primary-foreground) / <alpha-value>)'
-				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
-					foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)'
-				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive) / <alpha-value>)',
-					foreground: 'hsl(var(--destructive-foreground) / <alpha-value>)'
-				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
-					foreground: 'hsl(var(--muted-foreground) / <alpha-value>)'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
-					foreground: 'hsl(var(--accent-foreground) / <alpha-value>)'
-				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover) / <alpha-value>)',
-					foreground: 'hsl(var(--popover-foreground) / <alpha-value>)'
-				},
-				card: {
-					DEFAULT: 'hsl(var(--card) / <alpha-value>)',
-					foreground: 'hsl(var(--card-foreground) / <alpha-value>)'
-				}
-			},
-			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)',
-				'4xl': '2rem',
-			},
-			fontFamily: {
-				sans: [...fontFamily.sans]
-			},
-			width: {
-				'15': '3.75rem',
-			},
-			animation: {
-				'fade-in': 'fade-in .2s ease-out forwards',
-			},
-			keyframes: {
-				'fade-in': {
-					'from': { opacity: 0 },
-					'to': { opacity: 1 },
-				},
-			},
-		},
-	},
-	plugins: [
-		require('@tailwindcss/aspect-ratio'),
-		require('@tailwindcss/typography'),
-		require('tailwind-scrollbar-hide'),
-		require('daisyui'),
-		addDynamicIconSelectors(),
-	],
-	daisyui: {
-		logs: false,
-		themes: [
-			{
-				light: {
-					// eslint-disable-next-line @typescript-eslint/no-var-requires
-					...require('daisyui/src/theming/themes')['[data-theme=light]'],
-					'primary': '#52abd2',
-					'primary-focus': '#4191b4',
-					'primary-content': '#efefef',
+  theme: {
+    extend: {
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            maxWidth: theme('maxWidth.none'),
+            fontSize: theme('fontSize.base'),
+            lineHeight: theme('lineHeight.xl'),
 
-					'secondary': '#fcae26',
-					'secondary-focus': '#e8a126',
-					'secondary-content': '#171717',
+            h1: {
+              '@apply heading-1': '',
+            },
+            h2: {
+              '@apply heading-2': '',
+            },
+            h3: {
+              '@apply heading-3': '',
+            },
+            h4: {
+              '@apply heading-4': '',
+            },
+            h5: {
+              '@apply heading-5': '',
+            },
+            h6: {
+              '@apply heading-6': '',
+            },
 
-					'accent': '#efefef',
-					'accent-focus': '#dbdbdb',
-					'accent-content': '#171717',
+            p: {
+              '@apply paragraph': '',
+            },
+            small: {
+              '@apply small': '',
+            },
 
-					'neutral': '#212121',
-					'neutral-focus': '#404040',
-					'neutral-content': '#efefef',
+            '--tw-prose-body': theme('colors.foreground'),
+            '--tw-prose-headings': theme('colors.foreground'),
+            '--tw-prose-lead': theme('colors.foreground'),
+            '--tw-prose-links': theme('colors.foreground'),
+            '--tw-prose-bold': theme('colors.foreground'),
+            '--tw-prose-counters': theme('colors.foreground'),
+            '--tw-prose-bullets': theme('colors.foreground'),
+            '--tw-prose-hr': theme('colors.foreground'),
+            '--tw-prose-quotes': theme('colors.foreground'),
+            '--tw-prose-quote-borders': theme('colors.foreground'),
+            '--tw-prose-captions': theme('colors.foreground'),
+            '--tw-prose-code': theme('colors.foreground'),
+            '--tw-prose-kbd-shadows': theme('colors.foreground'),
+            '--tw-prose-pre-code': theme('colors.background'),
+            '--tw-prose-pre-bg': theme('colors.foreground'),
+            '--tw-prose-th-borders': theme('colors.foreground'),
+            '--tw-prose-td-borders': theme('colors.foreground'),
 
-					'base-100': '#171717',
-					'base-200': '#212121',
-					'base-300': '#404040',
-					'base-content': '#efefef',
-
-					'info': '#4191b4',
-					'success': '#11ac20',
-					'warning': '#e8a126',
-					'error': '#e22828',
-
-					'--rounded-box': '2rem',
-					'--rounded-btn': '1rem',
-					'--rounded-badge': '2rem',
-
-					'--border-btn': '2px',
-				},
-			},
-		],
-	},
+            '--tw-prose-invert-body': theme('colors.background'),
+            '--tw-prose-invert-headings': theme('colors.background'),
+            '--tw-prose-invert-lead': theme('colors.background'),
+            '--tw-prose-invert-links': theme('colors.background'),
+            '--tw-prose-invert-bold': theme('colors.background'),
+            '--tw-prose-invert-counters': theme('colors.background'),
+            '--tw-prose-invert-bullets': theme('colors.background'),
+            '--tw-prose-invert-hr': theme('colors.background'),
+            '--tw-prose-invert-quotes': theme('colors.background'),
+            '--tw-prose-invert-quote-borders': theme('colors.background'),
+            '--tw-prose-invert-captions': theme('colors.background'),
+            '--tw-prose-invert-code': theme('colors.background'),
+            '--tw-prose-invert-kbd-shadows': theme('colors.background'),
+            '--tw-prose-invert-pre-code': theme('colors.background'),
+            '--tw-prose-invert-pre-bg': theme('colors.background'),
+            '--tw-prose-invert-th-borders': theme('colors.background'),
+            '--tw-prose-invert-td-borders': theme('colors.background'),
+          },
+        },
+      }),
+    },
+  },
 };
 
 export default config;

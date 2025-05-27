@@ -1,11 +1,15 @@
 <script lang="ts">
   import '../app.css';
-  import { page } from '$app/stores';
+  import '@fontsource-variable/outfit';
+
+  import { page } from '$app/state';
   import { add } from '$lib/client/toast.service';
 
   import Footer from '$lib/components/Footer.svelte';
   import Header from '$lib/components/Header.svelte';
   import Toaster from '$lib/components/toast/Toaster.svelte';
+
+  let { children } = $props();
 
   function onError(event: Event) {
     const errorEvent = event as ErrorEvent;
@@ -25,44 +29,39 @@
 </script>
 
 <svelte:head>
-  {#key $page.data}
-    {#if $page.data.seo}
-      <title>{$page.data.seo.title}</title>
-      <meta name="description" content={$page.data.seo.description} />
-      {#if $page.data.seo.keywords}
+  {#key page.data}
+    {#if page.data.seo}
+      <title>{page.data.seo.title}</title>
+      <meta name="description" content={page.data.seo.description} />
+      {#if page.data.seo.keywords}
         <meta
           name="keywords"
-          content={getKeywords($page.data.seo.keywords).join(', ')}
+          content={getKeywords(page.data.seo.keywords).join(', ')}
         />
       {/if}
 
       <meta
         property="og:title"
-        content={$page.data.seo.og?.title ??
-          `${$page.data.seo.title} - ${$page.data.seo.description}`}
+        content={page.data.seo.og?.title ??
+          `${page.data.seo.title} - ${page.data.seo.description}`}
       />
       <meta property="og:type" content="website" />
       <meta
         property="og:image"
-        content={$page.data.seo.og?.image ?? `${$page.url.origin}/favicon.png`}
+        content={page.data.seo.og?.image ?? `${page.url.origin}/favicon.png`}
       />
-      <meta property="og:url" content={$page.url.href} />
+      <meta property="og:url" content={page.url.href} />
     {/if}
   {/key}
 </svelte:head>
-<svelte:window on:error={(event) => onError(event)} />
+<svelte:window onerror={(event) => onError(event)} />
 
 <Header />
-<main
-  class="flex min-h-screen flex-col overflow-y-auto overflow-x-hidden pb-16 pt-12"
->
-  {#key $page.data}
-    {#if $page.data.seo?.title}
-      <h1 class="sr-only">{$page.data.seo.title}</h1>
-    {/if}
-  {/key}
 
-  <slot />
+<main class="flex min-h-screen flex-col overflow-x-hidden">
+  {@render children()}
 </main>
+
 <Toaster />
+
 <Footer />

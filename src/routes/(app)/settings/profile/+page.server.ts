@@ -1,47 +1,44 @@
-import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { z } from 'zod';
-import { USERNAME_REGEX } from '$lib/user.types';
+import { fail } from '@sveltejs/kit';
+import { message, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
+
+const USER_UPDATE_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({
+  displayname: true,
+});
 
 export const load = (async () => {
+  const form = await superValidate(zod(USER_UPDATE_SCHEMA));
+
   return {
     seo: {
       title: 'Settings - Profile',
       description: 'Manage your profile settings',
       keywords: ['Settings', 'Profile'],
     },
+    form,
   };
 }) satisfies PageServerLoad;
 
 export const actions = {
-  updateDisplayname: async ({ locals, request }) => {
+  default: async ({ locals, request }) => {
+    const form = await superValidate(request, zod(USER_UPDATE_SCHEMA));
+
     if (!locals.user) {
-      return fail(401);
+      return message(form, 'Unauthorized', { status: 401 });
     }
     if (!locals.user.verified) {
-      return fail(400, {
-        invalid: true,
-        issues: [{ message: 'User not verified' }],
-      });
+      return message(form, 'Not verified', { status: 403 });
     }
 
-    const formData = await request.formData();
-    const entries = Object.fromEntries(formData);
-    const schema = z.object({
-      newDisplayname: z.string().regex(USERNAME_REGEX),
-    });
-    const result = schema.safeParse(entries);
-    if (!result.success) {
-      return fail(400, {
-        data: entries,
-        issues: result.error.issues,
-        invalid: true,
-      });
+    if (!form.valid) {
+      return fail(400, { form });
     }
 
     await locals.pb.collection('users').update(locals.user.id, {
-      displayname: result.data.newDisplayname,
+      displayname: form.data.displayname,
     });
-    return { success: true };
+    return { form };
   },
 } satisfies Actions;

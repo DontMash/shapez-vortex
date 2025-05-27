@@ -1,12 +1,13 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
 
   import BlueprintView from '$lib/components/blueprint/BlueprintView.svelte';
+  import { section } from '$lib/components/section';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 </script>
 
-<section class="relative mx-auto w-full max-w-5xl">
+<section class={section()}>
   <BlueprintView
     identifier={data.blueprint.identifier}
     blueprint={data.blueprint.data}

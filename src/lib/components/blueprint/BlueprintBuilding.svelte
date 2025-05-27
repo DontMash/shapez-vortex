@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { SvelteComponent } from 'svelte';
   import {
     Color,
     MeshBasicMaterial,
@@ -12,7 +11,7 @@
     type Mesh,
   } from 'three';
   import { Suspense } from '@threlte/extras';
-  import CustomShaderMaterial from 'three-custom-shader-material/vanilla/dist/three-custom-shader-material-vanilla.cjs';
+  import CustomShaderMaterial from 'three-custom-shader-material/vanilla';
   import type {
     BlueprintBuildingEntry,
     BlueprintBuildingIdentifier,
@@ -54,11 +53,14 @@
   });
   const BUILDING_MATERIAL_ERROR = new MeshBasicMaterial({ color: 0xff0000 });
 
-  export let entry: BlueprintBuildingEntry;
+  interface Props {
+    entry: BlueprintBuildingEntry;
+  }
 
-  $: buildingModel = getBlueprintBuildingModel(entry.T);
+  let { entry }: Props = $props();
 
-  let componentModel: SvelteComponent | undefined = undefined;
+  let ref: Object3D | undefined = $state();
+  let buildingModel = $derived(getBlueprintBuildingModel(entry.T));
 
   export const MIRRORED_BUILDINGS = [
     'BeltDefaultRightInternalVariant',
@@ -100,26 +102,33 @@
     return object.children.forEach((child) => setMaterial(entry, child));
   };
 
-  const onModelLoad = () => {
-    if (!componentModel) {
-      throw new Error('[BLUEPRINTBUILDING] model not loaded');
+  const onload = () => {
+    if (!ref) {
+      throw new Error('[BLUEPRINT_BUILDING] model not initialized');
     }
-    const object = componentModel.ref as Object3D;
-    setMaterial(entry, object);
+
+    setMaterial(entry, ref);
 
     switch (entry.T) {
       case 'LabelDefaultInternalVariant': {
-        object.children.forEach(
-          (child, index) => (child.visible = index === 0),
-        );
+        ref.children.forEach((child, index) => (child.visible = index === 0));
         const text = atob(String(entry.C))
           .trim()
           .replace(/[\W_]/g, '')
           .toUpperCase();
         const LETTER_SPACING = 0.525;
         [...text].forEach((char, index, array) => {
+          if (!ref) {
+            throw new Error('[BLUEPRINT_BUILDING] letters not initialized');
+          }
           const letterIndex = char.charCodeAt(0) - 65;
-          const letter = object.children[letterIndex + 1].clone();
+          const letterModel = ref.children.at(letterIndex + 1);
+          if (!letterModel) {
+            throw new Error(
+              `[BLUEPRINT_BUILDING] letter not available: ${letterIndex}`,
+            );
+          }
+          const letter = letterModel.clone();
           if (array.length > 8) {
             const scale = (1 / array.length) * 8;
             letter.translateX(index * scale * LETTER_SPACING * -1);
@@ -128,21 +137,21 @@
             letter.translateX(index * LETTER_SPACING * -1);
           }
           letter.visible = true;
-          object.add(letter);
+          ref.add(letter);
         });
       }
     }
   };
 </script>
 
-<Suspense on:load={onModelLoad}>
-  <svelte:component
-    this={buildingModel.layers
-      ? buildingModel.layers[entry.L ?? 0]
-      : buildingModel.base}
+<Suspense {onload}>
+  {@const Building = buildingModel.layers
+    ? buildingModel.layers[entry.L ?? 0]
+    : buildingModel.base}
+  <Building
     position={[entry.X ?? 0, entry.L ?? 0, entry.Y ?? 0]}
     rotation.y={(entry.R ?? 0) * -0.5 * Math.PI + Math.PI}
     scale.z={isMirrored(entry.T) ? -1 : 1}
-    bind:this={componentModel}
+    bind:ref
   />
 </Suspense>

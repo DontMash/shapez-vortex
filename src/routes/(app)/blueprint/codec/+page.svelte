@@ -1,113 +1,157 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
+  import { Button } from 'bits-ui';
+  import { decode, encode } from '$lib/blueprint';
+  import {
+    BLUEPRINT_FILE_FORMAT,
+    type Blueprint,
+    type BlueprintIdentifier,
+  } from '$lib/blueprint.types';
+  import { add } from '$lib/client/toast.service';
 
-  export let data: PageData;
+  import { button } from '$lib/components/button';
+  import * as input from '$lib/components/input';
+  import { section } from '$lib/components/section';
+
+  import PageHeader from '$lib/components/PageHeader.svelte';
+  import { copy, paste } from '$lib/client/actions/clipboard.svelte';
+
+  let { data }: PageProps = $props();
+
+  let blueprintImportIdentifier: BlueprintIdentifier | undefined = $state();
+  const blueprintImportData: Blueprint | undefined = $derived(
+    blueprintImportIdentifier ? decode(blueprintImportIdentifier) : undefined,
+  );
+
+  let blueprintField: string | undefined = $state();
+
+  const blueprintExportData: Blueprint | undefined = $derived(
+    blueprintField ? JSON.parse(blueprintField) : undefined,
+  );
+  const blueprintExportIdentifier: BlueprintIdentifier | undefined = $derived(
+    blueprintExportData ? encode(blueprintExportData) : undefined,
+  );
+
+  $effect(() => {
+    try {
+      blueprintField = JSON.stringify(blueprintImportData, null, 4);
+    } catch (err) {
+      const error = err as Error;
+      add({ type: 'ERROR', message: error.message });
+    }
+  });
 </script>
 
-<section class="mx-auto w-full max-w-5xl">
-  <header
-    class="mb-12 flex w-full items-end space-x-4 border-b border-base-content/20 px-4 pb-4"
-  >
-    <hgroup>
-      <h2 class="text-lg font-bold">
-        <span class="icon-[tabler--braces] align-text-bottom text-2xl" />
-        {data.seo.title}
-      </h2>
-      <p>
-        This tool decodes any blueprint to a human-readable
-        <a
-          class="underline"
-          href="https://developer.mozilla.org/en-US/docs/Glossary/JSON"
-          target="_blank">JSON-Object</a
-        >.
-      </p>
-      <p>
-        It is also able to encode said object to a blueprint identifier which
-        can be used in the game.
-      </p>
-    </hgroup>
-  </header>
+<section class="{section()} space-y-4">
+  <PageHeader>
+    <span class="icon-[tabler--braces] heading-2"></span>
+    {data.seo.title}
 
-  <div class="join join-vertical w-full px-4 lg:px-0">
-    <form class="join-item" method="post" action="?/decode">
-      <label class="form-control h-80" for="blueprint-identifier-decode">
-        <div class="label">
-          {#if $page.form && $page.form.invalid && $page.form.blueprintIdentifier}
-            <span class="label-text-text font-medium italic text-error">
-              Blueprint identifier is invalid
-            </span>
-          {/if}
-          <span class="label-text-alt sr-only">Blueprint identifier</span>
-        </div>
-        {#if $page.form && $page.form.blueprintIdentifier}
-          <textarea
-            class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-b-none"
-            name="blueprint-identifier"
-            id="blueprint-identifier-decode"
-            placeholder="Blueprint identifier..."
-            value={$page.form.blueprintIdentifier}
-            required
-          />
-        {:else}
-          <textarea
-            class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-b-none"
-            name="blueprint-identifier"
-            id="blueprint-identifier-decode"
-            placeholder="Blueprint identifier..."
-            required
-          />
-        {/if}
-      </label>
-      <button
-        class="btn btn-primary btn-block rounded-none"
-        title="Decode blueprint identifier"
-        type="submit"
-      >
-        <span class="icon-[tabler--code-dots] text-2xl" />
-        Decode
-      </button>
-    </form>
+    {#snippet description()}
+      This tool decodes any blueprint to a human-readable
+      <Button.Root
+        class={button({ kind: 'link' })}
+        href="https://developer.mozilla.org/en-US/docs/Glossary/JSON"
+        target="_blank"
+        rel="noreferrer"
+        >JSON-Object
+      </Button.Root>. <br />
+      It is also able to encode said object to a blueprint identifier, which can
+      be used in the game.
+    {/snippet}
+  </PageHeader>
 
-    <form class="join-item" method="post" action="?/encode">
+  <div class="bg-layer flex max-w-fit gap-2 rounded-md border p-2">
+    <label
+      class={button({ intent: 'accent', size: 'icon' })}
+      for="blueprint-file"
+    >
+      <input
+        class="hidden"
+        type="file"
+        id="blueprint-file"
+        accept={BLUEPRINT_FILE_FORMAT}
+        onchange={async (event) => {
+          const target = event.currentTarget;
+          if (!target.files) {
+            return;
+          }
+
+          const file = [...target.files].at(0);
+          if (!file) {
+            return;
+          }
+
+          try {
+            blueprintImportIdentifier =
+              (await file.text()) as BlueprintIdentifier;
+          } catch (err) {
+            const error = err as Error;
+            add({ type: 'ERROR', message: error.message });
+          }
+        }}
+      />
+      <span class="icon-[tabler--file-upload]">Import</span>
+    </label>
+
+    <button
+      class={button({ intent: 'accent', size: 'icon' })}
+      title="Paste blueprint"
+      {@attach paste({
+        onpaste: (value) => {
+          blueprintImportIdentifier = value.trim() as BlueprintIdentifier;
+          add({ message: 'Blueprint pasted.' });
+        },
+        onerror: (error) =>
+          add({
+            message: error.message,
+            type: 'ERROR',
+          }),
+      })}
+    >
+      <span class="icon-[tabler--clipboard-text]">Paste</span>
+    </button>
+
+    {#if blueprintExportIdentifier}
+      <form class="contents" action="/api/v1/blueprint/download">
+        <input
+          name="identifier"
+          type="hidden"
+          value={blueprintExportIdentifier}
+          required
+        />
+        <button
+          class={button({ kind: 'outline', intent: 'accent', size: 'icon' })}
+          title="Download blueprint"
+        >
+          <span class="icon-[tabler--file-download]">Export</span>
+        </button>
+      </form>
+
       <button
-        class="btn btn-accent btn-block rounded-none text-primary"
-        title="Encode blueprint data"
-        type="submit"
+        class={button({ kind: 'outline', intent: 'accent', size: 'icon' })}
+        title="Copy blueprint"
+        {@attach copy({
+          value: blueprintExportIdentifier,
+          oncopy: () => add({ message: 'Content copied' }),
+          onerror: (error) =>
+            add({
+              message: error.message,
+              type: 'ERROR',
+            }),
+        })}
       >
-        <span class="icon-[tabler--code-minus] text-2xl" />
-        Encode
+        <span class="icon-[tabler--copy]">Copy</span>
       </button>
-      <label class="form-control h-80" for="blueprint-data-encode">
-        {#if $page.form && ($page.form.blueprint || $page.form.blueprintData)}
-          <textarea
-            class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-t-none"
-            name="blueprint-data"
-            id="blueprint-data-encode"
-            placeholder="Blueprint data..."
-            value={$page.form.invalid
-              ? $page.form.blueprintData
-              : JSON.stringify($page.form.blueprint, null, 4)}
-            required
-          />
-        {:else}
-          <textarea
-            class="textarea textarea-bordered textarea-lg h-full w-full resize-none rounded-t-none"
-            name="blueprint-data"
-            id="blueprint-data-encode"
-            placeholder="Blueprint data..."
-            required
-          />
-        {/if}
-        <div class="label">
-          {#if $page.form && $page.form.invalid && $page.form.blueprintData}
-            <span class="label-text-text font-medium italic text-error">
-              Blueprint data is invalid
-            </span>
-          {/if}
-          <span class="label-text-alt sr-only">Blueprint data</span>
-        </div>
-      </label>
-    </form>
+    {/if}
   </div>
+
+  <label class={input.group()} for="blueprint-content">
+    <textarea
+      class="{input.field()} min-h-14"
+      id="blueprint-content"
+      rows={16}
+      bind:value={blueprintField}
+    ></textarea>
+  </label>
 </section>

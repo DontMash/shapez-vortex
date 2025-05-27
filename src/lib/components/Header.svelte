@@ -1,272 +1,122 @@
 <script lang="ts">
-  import { Command } from 'cmdk-sv';
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-  import { isShapeIdentifier } from '$lib/shape.types';
+  import { NavigationMenu, Separator } from 'bits-ui';
+  import { cva } from 'class-variance-authority';
+  import { page } from '$app/state';
 
-  import Dialog from '$lib/components/Dialog.svelte';
+  import { button } from '$lib/components/button';
+  import { section } from '$lib/components/section';
 
-  const OPERATING_SYSTEMS = ['Mac OS', 'Windows', 'Linux'] as const;
-  $: os = $page.data.agent?.os;
+  import Logo from '$lib/components/Logo.svelte';
+  import Search from '$lib/components/Search.svelte';
 
-  let searchModal: Dialog;
-  let searchValue = '';
+  const menu = {
+    item: cva([
+      'flex',
+      'items-center',
+      'gap-2',
+      'rounded-xs',
+      'px-4',
+      'py-1',
+      'outline-hidden',
+      'transition',
+      'hover:bg-border',
+      'focus-visible:bg-border',
+      'data-highlighted:bg-border',
+    ]),
+  };
 
-  function searchBlueprints(search: string) {
-    const url = new URL('/blueprint/search', $page.url.origin);
-    url.searchParams.append('query', search);
-    goto(url.href);
-  }
-  function command(callback: () => void) {
-    searchModal.close();
-    callback();
-  }
-
-  function onKeyDown(event: KeyboardEvent) {
-    if (!os || !os.name) return;
-
-    switch (event.key) {
-      case 'k':
-        if (
-          (os.name === OPERATING_SYSTEMS[0] && event.metaKey) ||
-          ((os.name === OPERATING_SYSTEMS[1] ||
-            os.name === OPERATING_SYSTEMS[2]) &&
-            event.ctrlKey)
-        ) {
-          event.preventDefault();
-          searchModal.show();
-        }
-        break;
-    }
-  }
+  let logoutFormElement: HTMLFormElement | undefined = $state();
 </script>
 
-<svelte:window on:keydown={onKeyDown} />
-
-<header class="pointer-events-none sticky left-0 top-0 z-40 w-full p-4">
-  <nav
-    class="navbar pointer-events-auto relative mx-auto max-w-5xl rounded-4xl border border-base-content/20 bg-base-200/50 shadow-lg backdrop-blur-lg"
+<header
+  class="{section({
+    y: false,
+  })} sticky inset-x-0 top-0 z-50 w-full py-4"
+>
+  <NavigationMenu.Root
+    class="bg-layer/70 relative rounded-lg border p-4 shadow-lg backdrop-blur-lg"
   >
-    <div class="flex-1">
-      <a
-        class="btn btn-square btn-ghost btn-lg rounded-3xl"
-        title="Home"
-        href="/"
-      >
-        <img class="inline-block" src="/favicon.png" alt="Logo" />
-      </a>
-    </div>
+    <NavigationMenu.List class="flex items-center gap-4">
+      <NavigationMenu.Item>
+        <NavigationMenu.Link>
+          {#snippet child()}
+            <Logo />
+          {/snippet}
+        </NavigationMenu.Link>
+      </NavigationMenu.Item>
 
-    <div class="mr-2 flex-none space-x-4">
-      <button
-        class="btn btn-ghost border border-base-content/20"
-        title="Search Shapez Vortex"
-        type="button"
-        on:click={() => searchModal.show()}
-      >
-        <span class="icon-[tabler--search] text-2xl" />
-        Search
-        {#if os && os.name && OPERATING_SYSTEMS.find((value) => value === os?.name)}
-          <span class=" hidden sm:block">
-            {#if os.name === OPERATING_SYSTEMS[0]}
-              <kbd class="kbd kbd-sm rounded-md">⌘</kbd>
-            {/if}
-            {#if os.name === OPERATING_SYSTEMS[1] || os.name === OPERATING_SYSTEMS[2]}
-              <kbd class="kbd kbd-sm rounded-md">Ctrl</kbd>
-            {/if}
-            <kbd class="kbd kbd-sm rounded-md">K</kbd>
-          </span>
-        {/if}
-      </button>
+      <NavigationMenu.Item class="ml-auto">
+        <Search />
+      </NavigationMenu.Item>
 
-      <a
-        class="btn btn-square btn-primary btn-md fill-primary-content"
-        title="Upload a blueprint"
-        href="/blueprint/upload"
-      >
-        <span class="icon-[tabler--upload] text-2xl">Upload</span>
-      </a>
-      {#if !$page.data.user}
-        <a
-          class="btn btn-square btn-primary btn-md fill-primary-content"
-          title="Login"
-          href="/login"
+      <NavigationMenu.Item class="hidden sm:list-item">
+        <NavigationMenu.Link
+          class={button({ size: 'icon' })}
+          href="/blueprint/upload"
+          title="Upload a blueprint to Shapez Vortex"
         >
-          <span class="icon-[tabler--login-2] text-2xl">Login</span>
-        </a>
+          <span class="icon-[tabler--upload]">Upload</span>
+        </NavigationMenu.Link>
+      </NavigationMenu.Item>
+
+      {#if !page.data.user}
+        <NavigationMenu.Item>
+          <NavigationMenu.Link
+            class={button({ size: 'icon' })}
+            title="Login into Shapez Vortex"
+            href="/login"
+          >
+            <span class="icon-[tabler--login-2]">Login</span>
+          </NavigationMenu.Link>
+        </NavigationMenu.Item>
       {/if}
-      {#if $page.data.user}
-        <div class="dropdown dropdown-end">
-          <div
-            tabindex="0"
-            title="Open user menu"
-            role="button"
-            class="btn btn-square btn-ghost border border-base-content/20"
-          >
-            <span class="icon-[tabler--user] text-2xl">User</span>
-          </div>
-          <ul
-            class="menu dropdown-content menu-sm relative !-right-4 z-10 mt-8 w-56 space-y-1 rounded-btn border border-base-content/30 bg-base-200/20 p-2 shadow before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:backdrop-blur-lg"
-          >
-            <li>
-              <a title="Go to your user profile" href="/user">
-                <span class="icon-[tabler--user] text-lg" />
-                Profile
-              </a>
-            </li>
-            <li>
-              <a title="Go to your user settings" href="/settings">
-                <span class="icon-[tabler--settings] text-lg" />
-                Settings
-              </a>
-            </li>
-            <li>
-              <form
-                class="focus-within:bg-base-content/10"
-                action="/logout"
-                method="post"
-              >
-                <span class="icon-[tabler--logout-2] text-lg" />
-                <button
-                  class="text-left outline-none"
-                  title="Logout"
-                  type="submit">Logout</button
-                >
-              </form>
-            </li>
-          </ul>
-        </div>
-      {/if}
-    </div>
-  </nav>
-</header>
 
-<Dialog align="top" on:close={() => (searchValue = '')} bind:this={searchModal}>
-  <Command.Root class="min-h-64" label="Search" loop>
-    <div class="flex items-center border-b border-base-200 pb-4 pl-8 pt-6">
-      <span class="icon-[tabler--search] text-lg" />
-      <Command.Input
-        class="w-full bg-transparent pl-2 pr-16 outline-none"
-        placeholder="Search the vortex ..."
-        bind:value={searchValue}
-      />
-    </div>
-
-    <Command.List class="p-4 [&_[data-cmdk-group]+[data-cmdk-group]]:mt-4">
-      <Command.Empty class="text-center">No results found.</Command.Empty>
-
-      {#if searchValue}
-        {@const blueprints = $page.data.searchBlueprints}
-        {#if blueprints.length > 0}
-          <Command.Group
-            class="[&>[data-cmdk-group-heading]]:text-xs"
-            heading="Blueprints"
-            alwaysRender
+      {#if page.data.user}
+        <NavigationMenu.Item>
+          <NavigationMenu.Trigger
+            class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
           >
-            {#each blueprints as blueprint}
-              <Command.Item
-                class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-                id={blueprint.id}
-                value={blueprint.title}
-                onSelect={() =>
-                  command(() => goto(`/blueprint/${blueprint.id}`))}
-              >
-                <span class="icon-[tabler--schema] text-lg" />
-                {blueprint.title}
-                {#if blueprint.expand && blueprint.expand['creator']}
-                  <span class="badge badge-accent badge-outline badge-sm">
-                    @{blueprint.expand['creator'].displayname}
-                  </span>
-                {/if}
-              </Command.Item>
-            {/each}
-            <Command.Item
-              class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-              alwaysRender
-              onSelect={() => command(() => searchBlueprints(searchValue))}
+            <span class="icon-[tabler--dots-vertical]">Show more options</span>
+          </NavigationMenu.Trigger>
+          <NavigationMenu.Content class="flex flex-col gap-1">
+            <NavigationMenu.Link
+              class="{menu.item()} sm:hidden"
+              href="/blueprint/upload"
             >
-              <span class="icon-[tabler--search] text-lg" />
-              Browse more...
-            </Command.Item>
-          </Command.Group>
-        {/if}
-
-        {@const users = $page.data.searchUsers}
-        {#if users.length > 0}
-          <Command.Group
-            class="[&>[data-cmdk-group-heading]]:text-xs"
-            heading="Users"
-          >
-            {#each users as user}
-              <Command.Item
-                class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-                onSelect={() =>
-                  command(() => goto(`/user/@${user.displayname}`))}
-              >
-                <span class="icon-[tabler--user] text-lg" />
-                {user.displayname}
-              </Command.Item>
-            {/each}
-          </Command.Group>
-        {/if}
-      {/if}
-
-      <Command.Group
-        class="[&>[data-cmdk-group-heading]]:text-xs"
-        heading="Features"
-      >
-        {#if isShapeIdentifier(searchValue)}
-          <Command.Item
-            class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-            onSelect={() =>
-              command(() => goto(`/shape?identifier=${searchValue}`))}
-          >
-            <span class="icon-[tabler--stack] text-lg" />
-            View Shape - {searchValue}
-          </Command.Item>
-        {:else}
-          <Command.Item
-            class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-            onSelect={() => command(() => goto('/shape'))}
-          >
-            <span class="icon-[tabler--stack] text-lg" />
-            Shape Viewer
-          </Command.Item>
-        {/if}
-        <Command.Item
-          class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-          onSelect={() => command(() => goto('/blueprint'))}
-        >
-          <span class="icon-[tabler--schema] text-lg" />
-          Blueprint Viewer
-        </Command.Item>
-
-        {#if $page.data.user}
-          {#if $page.data.user.verified}
-            <Command.Item
-              class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-              onSelect={() => command(() => goto('/blueprint/upload'))}
-            >
-              <span class="icon-[tabler--upload] text-lg" />
+              <span class="icon-[tabler--upload] text-lg"></span>
               Upload
-            </Command.Item>
-          {/if}
-          <Command.Item
-            class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-            onSelect={() => command(() => goto('/user'))}
-          >
-            <span class="icon-[tabler--user] text-lg" />
-            Profile
-          </Command.Item>
-          <Command.Item
-            class="btn btn-ghost btn-block mt-1 justify-start aria-selected:bg-neutral"
-            onSelect={() => command(() => goto('/settings'))}
-          >
-            <span class="icon-[tabler--settings] text-lg" />
-            Settings
-          </Command.Item>
-        {/if}
-      </Command.Group>
-    </Command.List>
-  </Command.Root>
-</Dialog>
+            </NavigationMenu.Link>
+
+            <Separator.Root class="bg-border my-1 h-px sm:hidden" />
+
+            <NavigationMenu.Link class={menu.item()} href="/user">
+              <span class="icon-[tabler--user] text-lg"></span>
+              Profile
+            </NavigationMenu.Link>
+
+            <NavigationMenu.Link class={menu.item()} href="/settings">
+              <span class="icon-[tabler--settings] text-lg"></span>
+              Settings
+            </NavigationMenu.Link>
+
+            <form
+              class="contents"
+              action="/logout"
+              method="post"
+              bind:this={logoutFormElement}
+            >
+              <button class={menu.item()}>
+                <span class="icon-[tabler--logout-2] text-lg"></span>
+                Logout
+              </button>
+            </form>
+          </NavigationMenu.Content>
+        </NavigationMenu.Item>
+      {/if}
+    </NavigationMenu.List>
+
+    <NavigationMenu.Viewport
+      class="bg-layer absolute top-[calc(100%+8px)] right-0 z-50 w-fit rounded-lg border p-2 shadow-lg backdrop-blur-lg before:absolute before:inset-x-0 before:-top-6 before:h-6"
+    />
+  </NavigationMenu.Root>
+</header>

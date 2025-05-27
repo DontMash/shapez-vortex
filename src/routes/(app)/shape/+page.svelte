@@ -1,12 +1,13 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
 
+  import { section } from '$lib/components/section';
   import ShapeView from '$lib/components/shape/ShapeView.svelte';
 
-  export let data: PageData;
+  let { data }: PageProps = $props();
 </script>
 
-<section class="mx-auto w-full max-w-3xl">
+<section class={section()}>
   <ShapeView
     data={data.shape}
     isExtended={data.extend}
