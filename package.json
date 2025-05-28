@@ -32,7 +32,7 @@
     "screenfull": "^6.0.2",
     "sveltekit-superforms": "^2.25.0",
     "three": "^0.176.0",
-    "three-custom-shader-material": "^5.4.0",
+    "three-custom-shader-material": "^6.3.7",
     "ua-parser-js": "1.0.40",
     "zod": "^3.25.20"
   },
