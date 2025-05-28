@@ -44,7 +44,7 @@ void main() {
             color = vec4(0.2, 0.2, 0.2, 1.0);
         }
         if(yIndex == 13) {
-            color = vec4(0.1,0.6,0.3,1.0);
+            color = vec4(0.1, 0.6, 0.3, 1.0);
         }
 
         csm_Roughness = 0.7;
@@ -52,9 +52,7 @@ void main() {
     }
     // Plastic
     if(xIndex == 6) {
-        if(yIndex == 12) {
-            color = layerColor;
-        }
+        color = layerColor;
 
         csm_Roughness = 0.3;
         csm_Metalness = 0.2;
