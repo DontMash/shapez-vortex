@@ -37,14 +37,11 @@
     baseMaterial: MeshStandardMaterial,
     vertexShader: BUILDING_VERTEXSHADER,
     fragmentShader: BUILDING_FRAGMENTSHADER,
-    uniforms: UniformsUtils.merge([
-      {
-        accentColor: { value: new Color(0xff9421) },
-        emissive1Color: { value: new Color(0xf3b026) },
-        emissive2Color: { value: new Color(0x576fd4) },
-      },
-    ]),
-    silent: true,
+    uniforms: {
+      accentColor: { value: new Color(0xff9421) },
+      emissive1Color: { value: new Color(0xf3b026) },
+      emissive2Color: { value: new Color(0x576fd4) },
+    },
   });
   const BUILDING_MATERIAL_GLASS = new MeshStandardMaterial({
     color: 0xdddddd,
@@ -132,7 +129,7 @@
           if (array.length > 8) {
             const scale = (1 / array.length) * 8;
             letter.translateX(index * scale * LETTER_SPACING * -1);
-            letter.scale.set(scale, scale, 1);
+            letter.scale.set(scale, 1, scale);
           } else {
             letter.translateX(index * LETTER_SPACING * -1);
           }
