@@ -6,7 +6,13 @@ import { post } from '$lib/server/blueprint.api';
 import { BLUEPRINT_FORM_SCHEMA } from '$lib/blueprint.schema';
 import type { BlueprintTag } from '$lib/blueprint.types';
 
-export const load = (async ({ locals }) => {
+export const load = (async ({ locals, url }) => {
+  if (!locals.user) {
+    const loginUrl = new URL('login', url.origin);
+    loginUrl.searchParams.set('redirect', url.pathname);
+    redirect(303, loginUrl);
+  }
+
   if (locals.user && !locals.user.verified) {
     redirect(303, '/settings/account');
   }
