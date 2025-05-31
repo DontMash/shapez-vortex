@@ -28,7 +28,7 @@
     "embla-carousel": "^8.6.0",
     "formsnap": "^2.0.1",
     "pako": "^2.1.0",
-    "pocketbase": "^0.21.0",
+    "pocketbase": "^0.22.0",
     "screenfull": "^6.0.2",
     "sveltekit-superforms": "^2.25.0",
     "three": "^0.176.0",

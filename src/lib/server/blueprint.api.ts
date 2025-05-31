@@ -101,8 +101,11 @@ export const post = async (
   const record = await pb
     .collection<BlueprintRecord>('blueprints')
     .create(formData);
-  const user = pb.authStore.model;
-  await pb.collection('users').update<User>(user?.id, {
+  const user = pb.authStore.record;
+  if (!user) {
+    throw new Error('Unauthorized');
+  }
+  await pb.collection('users').update<User>(user.id, {
     'blueprints+': record.id,
   });
   return record;
