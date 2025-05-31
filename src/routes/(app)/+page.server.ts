@@ -7,7 +7,7 @@ export const load = (async ({ locals, parent }) => {
       .slice(0, 3)
       .reduce<Record<string, string>>((result, current) => {
         if (current.images.length <= 0) return result;
-        result[current.id] = locals.pb.files.getUrl(
+        result[current.id] = locals.pb.files.getURL(
           current,
           current.images[0],
           {

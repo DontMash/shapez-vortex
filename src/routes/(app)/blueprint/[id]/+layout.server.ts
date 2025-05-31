@@ -16,10 +16,10 @@ export const load = (async ({ depends, locals, params }) => {
       .collection('blueprints')
       .getOne<BlueprintRecord>(params.id, { expand: 'tags,creator' });
     const images = blueprint.images.map((image) => ({
-      thumbnail: locals.pb.files.getUrl(blueprint, image, {
+      thumbnail: locals.pb.files.getURL(blueprint, image, {
         thumb: '600x400',
       }),
-      src: locals.pb.files.getUrl(blueprint, image),
+      src: locals.pb.files.getURL(blueprint, image),
     }));
     const data = decode(blueprint.data);
 
@@ -35,7 +35,9 @@ export const load = (async ({ depends, locals, params }) => {
         locals.user.id !== blueprint.creator
       ) {
         const pb = new PocketBase(POCKETBASE_URL);
-        await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
+        await pb
+          .collection('_superusers')
+          .authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
         await pb
           .collection('blueprints')
           .update(blueprint.id, { 'viewCount+': 1 });

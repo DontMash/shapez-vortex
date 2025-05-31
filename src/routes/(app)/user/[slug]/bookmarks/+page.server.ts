@@ -24,7 +24,7 @@ export const load = (async ({ locals, parent }) => {
   const bookmarks = (user.expand?.bookmarks as Array<BlueprintRecord>) ?? [];
   const images = bookmarks.reduce<Record<string, string>>((result, current) => {
     if (current.images.length <= 0) return result;
-    result[current.id] = locals.pb.files.getUrl(current, current.images[0], {
+    result[current.id] = locals.pb.files.getURL(current, current.images[0], {
       thumb: '600x400',
     });
     return result;
