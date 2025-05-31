@@ -36,6 +36,7 @@
   import {
     BLUEPRINT_FILE_FORMAT,
     type Blueprint,
+    type BlueprintIdentifier,
     type BlueprintRecordData,
     type BlueprintTag,
   } from '$lib/blueprint.types';
@@ -72,6 +73,7 @@
   let blueprintView: BlueprintView | undefined = $state();
 
   let blueprint: Blueprint | undefined = $state();
+  let blueprintIdentifier: BlueprintIdentifier | undefined = $state();
   let blueprintPreview: boolean = $state(data.type === 'create');
   const tags: Array<BlueprintTag> = $derived(
     blueprintTagInputValue
@@ -82,21 +84,38 @@
   );
 
   $effect(() => {
+    if (!$formData.data) {
+      return;
+    }
+
+    if (!isBlueprintIdentifier($formData.data)) {
+      blueprint = undefined;
+      add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
+      return;
+    }
+
+    if ($formData.data === blueprintIdentifier) {
+      return;
+    }
+    blueprintIdentifier = $formData.data;
+
+    if (!blueprintPreview) {
+      return;
+    }
+
     try {
-      blueprint =
-        blueprintPreview &&
-        $formData.data &&
-        isBlueprintIdentifier($formData.data)
-          ? decode($formData.data)
-          : undefined;
+      blueprint = decode($formData.data);
     } catch {
       blueprint = undefined;
       add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
     }
+  });
 
-    if (blueprintImagesFileInput) {
-      blueprintImagesFileInput.files = $images;
+  $effect(() => {
+    if (!blueprintImagesFileInput) {
+      return;
     }
+    blueprintImagesFileInput.files = $images;
   });
 
   async function onSubmit(event: Event) {
