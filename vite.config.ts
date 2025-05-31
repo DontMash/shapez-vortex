@@ -34,5 +34,6 @@ export default defineConfig({
       include: ['src/**'],
       exclude: ['src/**/*.d.ts', 'src/lib/components/models/**'],
     },
+    clearMocks: true,
   },
 });
