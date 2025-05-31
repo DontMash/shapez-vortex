@@ -94,7 +94,9 @@
 
   <div class="mx-auto grid grid-cols-1 gap-4 lg:grid-cols-3">
     {#each features as feature (feature.url)}
-      <div class="bg-layer overflow-hidden rounded-md border shadow-md">
+      <div
+        class="bg-layer divide-y overflow-hidden rounded-md border shadow-md"
+      >
         <Button.Root
           class="inline-block w-full"
           href={feature.url}
