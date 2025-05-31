@@ -21,7 +21,8 @@ export function update(
 ): BlueprintIdentifier {
   const blueprint = decode(value);
   blueprint.V = version;
-  const identifier = encode(blueprint);
+  const fixed = fix(blueprint);
+  const identifier = encode(fixed);
   return identifier;
 }
 export function decode(value: BlueprintIdentifier): Blueprint {
@@ -48,8 +49,7 @@ export function isBlueprintIdentifier(
 export function encode(value: Blueprint): BlueprintIdentifier {
   if (!isBlueprint(value)) throw new Error('Invalid blueprint');
 
-  const blueprint = fix(value);
-  const content = JSON.stringify(blueprint);
+  const content = JSON.stringify(value);
   const zipedDataArray = gzip(content);
   const zipedData = btoa(String.fromCharCode(...zipedDataArray));
   return stringify(zipedData) as BlueprintIdentifier;

@@ -84,7 +84,10 @@ const BLUEPRINT_TAGS_SCHEMA = z
 export const BLUEPRINT_FORM_SCHEMA = z.object({
   title: BLUEPRINT_TITLE_SCHEMA,
   description: BLUEPRINT_DESCRIPTION_SCHEMA.optional(),
-  data: BLUEPRINT_DATA_SCHEMA,
+  data: BLUEPRINT_DATA_SCHEMA.refine((value) => {
+    const blueprint = decode(value);
+    return blueprint.V >= GAME_VERSION;
+  }, `Must be of the current referenced/newest version of the game: ${GAME_VERSION}`),
   images: BLUEPRINT_IMAGES_SCHEMA.optional(),
   tags: BLUEPRINT_TAGS_SCHEMA.optional(),
 });
