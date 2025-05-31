@@ -9,7 +9,7 @@
 </script>
 
 <footer
-  class="bg-layer before:bg-layer after:border-border after:bg-background relative px-4 before:absolute before:inset-x-0 before:-top-8 before:h-8 after:absolute after:inset-x-0 after:-top-8 after:h-8 after:rounded-b-lg after:border-b"
+  class="bg-layer before:bg-layer after:border-border after:bg-background relative mt-8 px-4 before:absolute before:inset-x-0 before:-top-8 before:h-8 after:absolute after:inset-x-0 after:-top-8 after:h-8 after:rounded-b-lg after:border-b"
   id="footer"
 >
   <div
