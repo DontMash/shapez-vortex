@@ -3,9 +3,9 @@ import { decode } from '$lib/blueprint';
 import {
   BLUEPRINT_IDENTIFIER_REGEX,
   BLUEPRINT_TYPES,
-  GAME_VERSION,
   type BlueprintIdentifier,
 } from '$lib/blueprint.types';
+import { GAME_VERSION } from '$lib/game';
 
 export const BLUEPRINT_TITLE_MIN_LENGTH = 3;
 export const BLUEPRINT_TITLE_MAX_LENGTH = 64;

@@ -1,7 +1,6 @@
 import { ungzip, gzip } from 'pako';
 import { BLUEPRINT_SCHEMA } from '$lib/blueprint.schema';
 import {
-  GAME_VERSION,
   type Blueprint,
   type BlueprintIdentifier,
   type BlueprintBuilding,
@@ -14,6 +13,7 @@ import {
   BLUEPRINT_IDENTIFIER_REGEX,
   type BlueprintBuildingIdentifier,
 } from '$lib/blueprint.types';
+import { GAME_VERSION } from './game';
 
 export function update(
   value: BlueprintIdentifier,

@@ -107,11 +107,19 @@
           "required": true,
           "type": "integer"
         },
+        "BaseBlueprintRewardMultiplier": {
+          "required": true,
+          "type": "integer"
+        },
         "MaxShapeLayers": {
           "required": true,
           "type": "integer"
         },
         "InitialResearchPoints": {
+          "required": true,
+          "type": "integer"
+        },
+        "EstimatedUpcomingUpgradesFromFollowup": {
           "required": true,
           "type": "integer"
         },
@@ -217,6 +225,13 @@
             "null"
           ]
         },
+        "ShapeQuantityUpgradeId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "SpeedsToLinearUpgradeMappings": {
           "required": true,
           "type": [
@@ -302,6 +317,10 @@
                     ]
                   },
                   "Randomized": {
+                    "required": true,
+                    "type": "boolean"
+                  },
+                  "RandomizedUseCrystals": {
                     "required": true,
                     "type": "boolean"
                   },

@@ -9,13 +9,15 @@
   "FollowupScenarioIds": ["default-scenario", "hard-scenario"],
   "ExampleShapes": ["CuCuCuCu", "RuCuRuCu", "CuCuCuRu:CuCuCuCu"],
   "Config": {
-    "BaseChunkLimitMultiplier": 150,
+    "BaseChunkLimitMultiplier": 200,
+    "BaseBlueprintRewardMultiplier": 500,
     "LayerMechanicIds": ["RULayer2", "RULayer3"],
     "BlueprintsMechanicId": "RUBlueprints",
     "RailsMechanicId": "RURailManagement",
     "PlayerLevelMechanicId": "RUPlayerLevel",
     "IslandManagementMechanicId": "RUIslandPlacement",
     "TrainHubDeliveryMechanicId": "RUTrainHubDelivery",
+    "EstimatedUpcomingUpgradesFromFollowup": 145,
     "BlueprintCurrencyShapes": [
       {
         "Shape": "CuRuCuCu",
@@ -29,6 +31,7 @@
       }
     ],
     "HubInputSizeUpgradeId": "LRUHubInputSize",
+    "ShapeQuantityUpgradeId": "LRUShapeQuantity",
     "ShapesConfigurationId": "DefaultShapesQuadConfiguration",
     "ColorSchemeConfigurationId": "DefaultColorSchemeRGBFlex",
     "SpeedsToLinearUpgradeMappings": {
@@ -286,25 +289,25 @@
             "LayoutId": "Layout_Normal_2"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_SpaceBeltNode"
+            "$type": "IslandGroupReward",
+            "GroupId": "SpaceBeltsGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_SpaceBeltTunnel_Entrance"
+            "$type": "IslandGroupReward",
+            "GroupId": "SpaceBeltTunnelEntrancesGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_SpaceBeltTunnel_Exit"
+            "$type": "IslandGroupReward",
+            "GroupId": "SpaceBeltTunnelExitsGroup"
           },
 
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_ShapeMinerExtension"
+            "$type": "IslandGroupReward",
+            "GroupId": "ShapeMinerChainsGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_ShapeMiner"
+            "$type": "IslandGroupReward",
+            "GroupId": "ShapeMinerExtractorsGroup"
           },
 
           {
@@ -1255,6 +1258,51 @@
           }
         ],
         "RequiredUpgradeId": "RNTrains"
+      },
+      {
+        "Id": "LRUShapeQuantity",
+        "Title": "@research.LRUShapeQuantity.title",
+        "Levels": [
+          {
+            "Value": 1
+          },
+          {
+            "Value": 2,
+            "Cost": {
+              "$type": "ResearchPointsCost",
+              "Amount": 350
+            }
+          },
+          {
+            "Value": 3,
+            "Cost": {
+              "$type": "ResearchPointsCost",
+              "Amount": 750
+            }
+          },
+          {
+            "Value": 4,
+            "Cost": {
+              "$type": "ResearchPointsCost",
+              "Amount": 1250
+            }
+          },
+          {
+            "Value": 5,
+            "Cost": {
+              "$type": "ResearchPointsCost",
+              "Amount": 1750
+            }
+          },
+          {
+            "Value": 6,
+            "Cost": {
+              "$type": "ResearchPointsCost",
+              "Amount": 3500
+            }
+          }
+        ],
+        "RequiredUpgradeId": "RNEndOfGame"
       }
     ],
     "Mechanics": [

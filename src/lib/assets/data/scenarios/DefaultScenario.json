@@ -16,7 +16,8 @@
     "RyP-RyP-:SwRuSwRu"
   ],
   "Config": {
-    "BaseChunkLimitMultiplier": 150,
+    "BaseChunkLimitMultiplier": 200,
+    "BaseBlueprintRewardMultiplier": 500,
     "InitialResearchPoints": 0,
     "LayerMechanicIds": ["RULayer2", "RULayer3"],
     "BlueprintsMechanicId": "RUBlueprints",
@@ -52,6 +53,7 @@
       }
     ],
     "HubInputSizeUpgradeId": "LRUHubInputSize",
+    "ShapeQuantityUpgradeId": "LRUShapeQuantity",
     "ShapesConfigurationId": "DefaultShapesQuadConfiguration",
     "ColorSchemeConfigurationId": "DefaultColorSchemeRGBFlex",
     "SpeedsToLinearUpgradeMappings": {
@@ -294,7 +296,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 100000
+              "Amount": 20000
             },
             {
               "$type": "ResearchPointsReward",
@@ -311,7 +313,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 50000
+              "Amount": 10000
             },
             {
               "$type": "ResearchPointsReward",
@@ -328,7 +330,7 @@
             },
             {
               "$type": "BlueprintCurrencyReward",
-              "Amount": 25000
+              "Amount": 5000
             },
             {
               "$type": "ResearchPointsReward",
@@ -386,6 +388,14 @@
           "StartingAmount": 1000,
           "ExponentialGrowthPercentPerLevel": 5,
           "RequiredUpgrade": "RNEndOfGame"
+        },
+        {
+          "Id": "Random2",
+          "Randomized": true,
+          "RandomizedUseCrystals": true,
+          "StartingAmount": 1000,
+          "ExponentialGrowthPercentPerLevel": 4,
+          "RequiredUpgrade": "RNEndOfGame"
         }
       ]
     }
@@ -412,20 +422,24 @@
             "MechanicId": "RUPlayerLevel"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_FluidMiner"
+            "$type": "IslandGroupReward",
+            "GroupId": "FluidMinerExtractorsGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_SpacePipeNode"
+            "$type": "IslandGroupReward",
+            "GroupId": "FluidMinerChainsGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_SpacePipeTunnel_Entrance"
+            "$type": "IslandGroupReward",
+            "GroupId": "SpacePipesGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_SpacePipeTunnel_Exit"
+            "$type": "IslandGroupReward",
+            "GroupId": "SpacePipeTunnelEntrancesGroup"
+          },
+          {
+            "$type": "IslandGroupReward",
+            "GroupId": "SpacePipeTunnelExitsGroup"
           },
           {
             "$type": "BuildingReward",
@@ -508,51 +522,35 @@
           },
           {
             "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_RailNode"
-          },
-          {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_RailPath_Universal"
-          },
-          {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_RailPath_Red"
-          },
-          {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainStation"
-          },
-          {
-            "$type": "IslandLayoutReward",
             "LayoutId": "Layout_TrainProducer_Red"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainShapeWagonExtension"
+            "$type": "IslandGroupReward",
+            "GroupId": "RailsGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainLoader_Shapes"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainLaunchersGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainLoader_Shapes_Flipped"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainCatchersGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainUnloader_Shapes"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainStationsGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainUnloader_Shapes_Flipped"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainShapeLoadersGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainLauncher"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainShapeUnloadersGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainCatcher"
+            "$type": "IslandGroupReward",
+            "GroupId": "ShapeCargoFactoriesGroup"
           },
           {
             "$type": "MechanicReward",
@@ -611,7 +609,7 @@
           },
           {
             "$type": "BlueprintCurrencyReward",
-            "Amount": 750
+            "Amount": 5000
           },
           {
             "$type": "WikiEntryReward",
@@ -670,7 +668,7 @@
           },
           {
             "$type": "BlueprintCurrencyReward",
-            "Amount": 2500
+            "Amount": 15000
           },
           {
             "$type": "BuildingReward",
@@ -728,6 +726,10 @@
             "Amount": 500
           },
           {
+            "$type": "BlueprintCurrencyReward",
+            "Amount": 25000
+          },
+          {
             "$type": "BuildingReward",
             "BuildingVariantId": "CrystalGeneratorDefaultVariant"
           },
@@ -754,7 +756,7 @@
               },
               {
                 "Shape": "RyP-RyP-:SwRuSwRu",
-                "Amount": 40000
+                "Amount": 60000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -808,7 +810,7 @@
               },
               {
                 "Shape": "RucrRucr:cbcbcbcb:CwCwCwCw",
-                "Amount": 55000
+                "Amount": 150000
               }
             ],
             "ReusedForPlayerLevel": true
@@ -3397,6 +3399,10 @@
           {
             "$type": "IslandLayoutReward",
             "LayoutId": "Layout_Normal_3_L"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_Normal_3x1"
           }
         ],
         "Costs": [
@@ -3416,6 +3422,10 @@
           {
             "$type": "IslandLayoutReward",
             "LayoutId": "Layout_Normal_4_T"
+          },
+          {
+            "$type": "IslandLayoutReward",
+            "LayoutId": "Layout_Normal_4_2x2"
           }
         ],
         "Costs": [
@@ -3434,11 +3444,11 @@
         "Rewards": [
           {
             "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_Normal_4_2x2"
+            "LayoutId": "Layout_Normal_5_Cross"
           },
           {
             "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_Normal_5_Cross"
+            "LayoutId": "Layout_Normal_3x2"
           }
         ],
         "Costs": [
@@ -3492,6 +3502,10 @@
           },
           {
             "$type": "BuildingReward",
+            "BuildingVariantId": "PipeGateDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
             "BuildingVariantId": "DisplayDefaultVariant"
           },
           {
@@ -3513,6 +3527,10 @@
           {
             "$type": "MechanicReward",
             "MechanicId": "RUWires"
+          },
+          {
+            "$type": "WikiEntryReward",
+            "EntryId": "WKWires"
           }
         ],
         "Costs": [
@@ -3594,6 +3612,10 @@
           },
           {
             "$type": "BuildingReward",
+            "BuildingVariantId": "VirtualPinPusherDefaultVariant"
+          },
+          {
+            "$type": "BuildingReward",
             "BuildingVariantId": "VirtualCrystalGeneratorDefaultVariant"
           },
           {
@@ -3648,25 +3670,6 @@
           {
             "$type": "ResearchPointsCost",
             "Amount": 10
-          }
-        ]
-      },
-      {
-        "Id": "RNFluidMinerExtension",
-        "PreviewImageId": "Shop_FluidMinerExtension",
-        "Title": "@research.RNFluidMinerExtension.title",
-        "Description": "@research.RNFluidMinerExtension.description",
-        "RequiredUpgradeIds": ["RNFluids"],
-        "Rewards": [
-          {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_FluidMinerExtension"
-          }
-        ],
-        "Costs": [
-          {
-            "$type": "ResearchPointsCost",
-            "Amount": 25
           }
         ]
       },
@@ -3754,7 +3757,7 @@
         "Costs": [
           {
             "$type": "ResearchPointsCost",
-            "Amount": 60
+            "Amount": 200
           }
         ]
       },
@@ -3766,8 +3769,8 @@
         "RequiredUpgradeIds": ["RNTrains"],
         "Rewards": [
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainFillerWagonExtension"
+            "$type": "IslandGroupReward",
+            "GroupId": "FillerCargoFactoriesGroup"
           }
         ],
         "Costs": [
@@ -3785,24 +3788,16 @@
         "RequiredUpgradeIds": ["RNTrains"],
         "Rewards": [
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainFluidWagonExtension"
+            "$type": "IslandGroupReward",
+            "GroupId": "FluidCargoFactoriesGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainLoader_Fluids"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainFluidLoadersGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainLoader_Fluids_Flipped"
-          },
-          {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainUnloader_Fluids"
-          },
-          {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainUnloader_Fluids_Flipped"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainFluidUnloadersGroup"
           }
         ],
         "Costs": [
@@ -3820,12 +3815,12 @@
         "RequiredUpgradeIds": ["RNTrains"],
         "Rewards": [
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainTwister"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainTwistersGroup"
           },
           {
-            "$type": "IslandLayoutReward",
-            "LayoutId": "Layout_TrainRollerCoasterLoop"
+            "$type": "IslandGroupReward",
+            "GroupId": "TrainLoopsGroup"
           }
         ],
         "Costs": [

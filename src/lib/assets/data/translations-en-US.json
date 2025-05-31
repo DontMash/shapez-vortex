@@ -9,6 +9,7 @@
     "global.unknown-translation": "???",
 
     "global.btn-save": "Save",
+    "global.btn-save-as": "Save As",
     "global.btn-confirm": "Confirm",
     "global.btn-configure": "Configure",
     "global.btn-cancel": "Cancel",
@@ -31,6 +32,7 @@
     "global.btn-close": "Close",
     "global.btn-ok": "Okay",
     "global.btn-respawn": "Respawn",
+    "global.btn-play": "Play",
 
     "global.on": "On",
     "global.off": "Off",
@@ -93,6 +95,10 @@
     "menu.benchmarks.change-settings-confirm-dialog.title": "Proceed with benchmark setting changes?",
     "menu.benchmarks.change-settings-confirm-dialog.description": "To run this benchmark, the game settings will be changed:\n",
 
+    "menu.early-access-welcome-dialog.title": "Early Access Note",
+    "menu.early-access-welcome-dialog.description": "Hi there!\n\nThank you for supporting us with our Early Access release! We put a lot of effort into the game, and did our best to make it ideally feel like a finished game already.\n\nIf something doesn't work, frustrates you or could be improved, please let us know using the <gl>Feedback Button</gl> at the bottom right!\n\nHave fun with Shapez 2!\n\n~Tobias and the whole tobspr Games team.",
+
+
     "menu.about.title": "About",
 
     "menu.social.discord": "Discord",
@@ -143,6 +149,8 @@
 
     "menu.settings.title": "Settings",
     "menu.settings.general-settings": "General",
+    "menu.settings.saving-settings": "Saving",
+    "menu.settings.simulation-settings": "Simulation",
     "menu.settings.interface-settings": "Interface",
     "menu.settings.camera-settings": "Camera",
     "menu.settings.sound-settings": "Audio",
@@ -186,6 +194,10 @@
     "menu.newgame.start-mode": "Select",
     "menu.newgame.unavailable-mode": "Unavailable",
 
+    "menu.scenario-select.title": "Select Scenario",
+    "menu.scenario-select.requires-certification": "Requires Operator Certification",
+
+
     "menu.modeconfig.title": "Customize Mode",
     "menu.modeconfig.startgame": "Play",
     "menu.modeconfig.dialog-customize-difficulty.title": "Customize Difficulty",
@@ -204,7 +216,6 @@
     "menu.modeconfig.map-generation": "Map Generation",
     "menu.modeconfig.research": "Research",
     "menu.modeconfig.game-rules": "Game Rules",
-    "menu.modeconfig.scenarios": "Scenarios",
     "menu.modeconfig.scenario-example-shapes": "Example Shapes",
     "menu.modeconfig.difficulty-preset": "Difficulty",
     "menu.modeconfig.difficulty-preset.description": "Controls the amount of shapes required, costs of copy/paste and how many platforms you can build.",
@@ -212,17 +223,17 @@
     "menu.modeconfig.difficulty-preset.copy-paste-free": "Free",
     "menu.modeconfig.difficulty-preset.platform-limit-none": "Unlimited",
 
-    "menu.modeconfig.difficulty-preset.hint-reselect": "<b>Tip:</b> You can change the difficulty at any time.",
+    "menu.modeconfig.difficulty-preset.hint-reselect": "<b>Tip:</b> You can change the difficulty at any time by clicking the <gl>Gear Icon</gl> on an existing savegame.",
     "menu.modeconfig.difficulty-preset.hint-progression-warning": "Starting without an <gl>Operator Certification</gl> is not recommended.",
 
     "menu.modeconfig.scenario-preset": "Scenario",
     "menu.modeconfig.scenario-preset.description": "Determines the progression of the game, which shapes are required & generated on the map and much more.",
     "menu.modeconfig.scenario-preset.locked": "Scenario can't be changed.",
 
-    "menu.modeconfig.mapgen.preset" : "Load Preset / Export",
-    "menu.modeconfig.mapgen.preset.todo" : "Planned feature!",
     "menu.modeconfig.mapgen.preview.toggle-visibility.title" : "Toggle preview",
     "menu.modeconfig.mapgen.preview.toggle-visibility.description" : "You can disable the preview to avoid spoiling yourself.",
+
+    "menu.modeconfig.mapgen.can-not-modify-existing" : "You can not alter the map generation parameters of an existing savegame.",
 
     "menu.modeconfig.mapgen.fluids" : "Fluid Asteroids",
     "menu.modeconfig.mapgen.fluids.spawn-primary" : "Spawn primary colors",
@@ -302,6 +313,19 @@
     "camera.viewport-snap.degrees": "<degrees/>°",
 
     "blueprints-research-locked-hint": "<b>Unlock blueprints first.</b>",
+
+    "statistics.title": "Statistics",
+    "statistics.tab-delivery": "Delivery",
+    "statistics.tab-structures": "Structures",
+    "statistics.summary-total-count": "Total Count: <b><count/></b>",
+    "statistics.structures-platforms": "Platforms",
+    "statistics.structures-buildings": "Buildings",
+    "statistics.header-delivery-count": "Vortex Delivery Statistics",
+    "statistics.time-scale-label": "Interval",
+    "statistics.time-scale-1-second": "1 Second",
+    "statistics.time-scale-5-seconds": "5 Seconds",
+    "statistics.time-scale-1-minute": "1 Minute",
+    "statistics.time-scale-5-minutes": "5 Minutes",
 
     "research-info.tooltip-research.title": "Research Points",
     "research-info.tooltip-research.description": "<b>Side Tasks</b> grant Research Points.\n\nUse them to unlock upgrades and additional content.",
@@ -419,7 +443,7 @@
     "feedback-dialog.section-feedback.button": "Feedback Form",
     "feedback-dialog.section-suggestions.title": "Suggestions",
     "feedback-dialog.section-suggestions.description": "Have a great idea for the game? Want to suggest a new feature?\n\nLet us know on our <b>suggestions portal</b>, so we can consider it!",
-    "feedback-dialog.section-suggestions.button": "Suggestions Portal",
+    "feedback-dialog.section-suggestions.button": "Suggestions & Roadmap",
     "feedback-dialog.section-discord.title": "Join our Discord!",
     "feedback-dialog.section-discord.description": "No matter what, the discord is a great place to talk about the game and chat with us! We are very active and involved there, run regular surveys and value your opinion a lot!",
     "feedback-dialog.section-discord.button": "Join Discord",
@@ -468,7 +492,7 @@
     "island-toolbar.ColoredRailsCategory.title": "Rail Routing",
 
     "island-placement.chunk-currency-info.title": "Platform Units",
-    "island-placement.chunk-currency-info.description": "Placing platforms costs units, and deleting platforms refunds them. You can increase the limit via research.\n\nUsage: <b><used/></b> / <limit/>",
+    "island-placement.chunk-currency-info.description": "Placing platforms costs units, and deleting platforms refunds them. Complete milestones & optional tasks to increase the limit.\n\nUsage: <b><used/></b> / <limit/>",
 
     "island-placement.adjust-launcher-range": "Adjust Range",
 
@@ -487,6 +511,8 @@
     "side-panel-stat.processing-speed.tooltip": "<b><baseSpeed/></b> base speed\n\n+<b><increase/></b> from <gl><speedName/></gl>",
     "side-panel-stat.buildings-per-full-belt": "Buildings per Full Belt",
     "side-panel-stat.buildings-per-full-belt.base-ratio": "Required buildings for a fully saturated belt of items.\n\nWith equal upgrades: <b><amount/></b>.",
+    "side-panel-stat.buildings-per-fluid-launcher": "Buildings per Fluid Launcher",
+    "side-panel-stat.buildings-per-fluid-launcher.description": "How many buildings of this type one <gl>Fluid Launcher</gl> can supply or consume.",
     "side-panel-stat.fluid-capacity": "Fluid Capacity",
     "side-panel-stat.fluid-throughput": "Fluid Throughput",
     "side-panel-stat.item-capacity": "Item Capacity",
@@ -557,6 +583,10 @@
     "waypoints.create-new.title": "Create Map Marker",
     "waypoints.edit.title": "Edit Marker",
     "waypoints.delete-marker": "Delete",
+    "waypoints.btn-replace.title": "Move",
+    "waypoints.btn-replace.description": "Updates the marker with your current position and orientation.",
+    "waypoints.edit-existing.label-contents-will-be-replaced": "Marker moved.",
+    "waypoints.edit-existing.tip-edit-replace": "<gl>Tip:</gl> Move existing markers by using the 'Move' button during editing.",
     "waypoints.label-name": "Marker Name",
     "waypoints.label-shape-key": "Shape Code",
     "waypoints.default-marker-name": "Unnamed Marker",
@@ -567,6 +597,7 @@
     "waypoints.jump-hub.description": "Click to jump back to the <gl>Vortex Platform</gl>.",
     "waypoints.add-new.description": "Marks your current location so you can jump to it later.",
     "waypoints.tooltip-edit-text": "<hotkey:waypoints.edit-below-cursor/> to edit",
+    "waypoints.empty-name": "(no label)",
 
     "crash-overlay.title": "Fatal Error",
     "crash-overlay.description": "Please report this issue in the Shapez 2 Discord. We will try to assist you!",
@@ -576,11 +607,13 @@
     "visualizations.shape-resources.title": "Shape Asteroids",
     "visualizations.fluid-resources.title": "Fluid Deposits",
     "visualizations.explored-area.title": "Platforms",
-    "visualizations.train-items.title": "Train Items",
+    "visualizations.wagon-cargo.title": "Train Contents",
+    "visualizations.train-cargo.title": "Train Contents",
     "visualizations.train-lines.title": "Train Lines",
     "visualizations.train-stations.title": "Train Stations",
     "visualizations.island-shape-transfer.title": "Shape Transfer",
     "visualizations.tunnels.title": "Tunnels",
+    "visualizations.waypoints.title": "Map Markers",
     "visualizations.island-grid.title": "Grid",
     "visualizations.super-chunk-coordinates.title": "Coordinates",
     "visualizations.building-conflict-indicators.title": "Conflicts",
@@ -593,6 +626,8 @@
     "blueprint-library.btn-refresh.description": "Reload the blueprint library from your hard drive",
     "blueprint-library.btn-open-bp-folder.title": "Open Folder",
     "blueprint-library.btn-open-bp-folder.description": "Open the blueprint library folder on your hard drive.",
+    "blueprint-library.btn-replace-from-clipboard.title": "Replace",
+    "blueprint-library.btn-replace-from-clipboard.description": "Replaces the contents (but not title/icon) of this blueprint with the contents of your clipboard, which usually is the last blueprint you copied.",
     "blueprint-library.add-new.default-name": "Untitled Blueprint",
     "blueprint-library.add-new.title": "Save Blueprint",
     "blueprint-library.add-new-folder.title": "Add Folder",
@@ -600,9 +635,11 @@
     "blueprint-library.edit-existing.title": "Edit Blueprint",
     "blueprint-library.edit-existing-folder.title": "Edit Folder",
     "blueprint-library.edit-existing.label-name": "Name",
-    "blueprint-library.edit-existing.label-name.description": "Enter a name for the blueprint. This will also be used as the file name in the blueprint library folder, so it has to be unique. Invalid characters will be replaced.",
+    "blueprint-library.edit-existing.label-name.description": "Enter a name, which will also be used as the file name in the blueprint library folder, so it has to be unique. Invalid characters will be replaced.",
     "blueprint-library.edit-existing.label-folder": "Folder",
     "blueprint-library.edit-existing.label-folder.description": "The parent folder, which allows you to organize your blueprints. The folder hierarchy in the blueprint library is identical to the folder hierarchy on your hard drive.",
+    "blueprint-library.edit-existing.label-contents-will-be-replaced": "Contents replaced.",
+    "blueprint-library.edit-existing.tip-edit-replace": "<gl>Tip:</gl> Replace existing blueprints by using the 'Replace' button during editing.",
     "blueprint-library.empty-folder": "This folder is empty.",
     "blueprint-library.dialog-confirm-override.title": "Confirm Override",
     "blueprint-library.dialog-confirm-override.description": "A blueprint with the name '<name/>' already exists. Are you sure you want to override it?",
@@ -618,12 +655,19 @@
     "blueprint-library.dialog-remove-failed.description": "Failed to remove the blueprint for unknown reasons.",
     "blueprint-library.dialog-folder-create-failed.title": "Failed to create folder",
     "blueprint-library.dialog-folder-create-failed.description": "Failed to create the folder for unknown reasons. Make sure the name is not already taken.",
+    "blueprint-library.dialog-replace-from-clipboard-failed.title": "Invalid Blueprint",
+    "blueprint-library.dialog-replace-from-clipboard-failed.description": "It seems your clipboard does not contain a valid blueprint.",
+    "blueprint-library.dialog-save-as.title": "Save As",
+    "blueprint-library.dialog-save-as.description": "Choose a blueprint to replace. The existing icon and name will be kept.",
+    "blueprint-library.dialog-save-as-no-entries.title": "No Blueprints",
+    "blueprint-library.dialog-save-as-no-entries.description": "Your blueprint library is empty. Save a blueprint first to use this option.",
     "blueprint-library.trash.title": "Delete Entry",
     "blueprint-library.trash.description": "Drag an entry here to remove it. This can not be reversed.",
     "blueprint-library.notification-entry-saved.text": "Blueprint '<name/>' saved.",
     "blueprint-library.refresh": "Reload from Disk",
     "blueprint-library.open-folder": "Open Folder",
     "blueprint-library.edit-name": "Edit Name",
+    "blueprint-library.hint-toolbar": "Drag a blueprint or folder on a slot to bind it to the toolbar. Right click to remove it again.",
     "blueprint-library.dialog-choose-icon.title": "Choose Icon",
     "blueprint-library.dialog-choose-icon.label-shapes": "Shapes",
     "blueprint-library.dialog-choose-icon.label-icons": "Icons",
@@ -670,15 +714,15 @@
     "difficulty-preset.custom.title": "Custom",
 
     "scenario.onboarding.title": "Operator Certification",
-    "scenario.onboarding.description": "Acquire your <gl>Operator Certification</gl> by demonstrating your factory building skills. Required for all other scenarios.",
-    "scenario.default.title": "Factory - Normal",
-    "scenario.default.description": "Reasonable environment. Safe for everyone and recommended for first-time operators, once certified.",
-    "scenario.hard.title": "Factory - Hard",
-    "scenario.hard.description": "Very hard shapes. Only for tough, second-time operators.",
-    "scenario.insane.title": "Factory - Insane",
-    "scenario.insane.description": "Insanely hard. Even experienced operators will struggle.",
-    "scenario.hexagonal.title": "Factory - Hexagonal",
-    "scenario.hexagonal.description": "Hexagonal shapes - Work in progress.",
+    "scenario.onboarding.description": "Acquire your <gl>Operator Certification</gl> by demonstrating your factory building skills.\n\nSeamlessly transfers into <gl>Normal</gl> or <gl>Hard</gl> upon completion.",
+    "scenario.default.title": "Normal",
+    "scenario.default.description": "The standard scenario, safe for everyone and recommended for first-time operators, once certified.",
+    "scenario.hard.title": "Hard",
+    "scenario.hard.description": "Harder shape goals for tough, second-time operators.",
+    "scenario.insane.title": "Insane",
+    "scenario.insane.description": "Insanely hard shape goals which also constantly require re-thinking your factories. Even experienced operators will struggle.\n\nWe've warned you!",
+    "scenario.hexagonal.title": "Hexagonal",
+    "scenario.hexagonal.description": "In case you ever get bored with quarters, hexagonal shapes will be a fresh challenge.",
 
     "scenario-preset.default.title": "<copy-from:scenario.default.title/>",
     "scenario-preset.default.description": "<copy-from:scenario.default.description/>",
@@ -749,8 +793,8 @@
 
 
 
-    "building.HubBuilding.title": "",
-    "building-variant.HubDefaultVariant.title": "",
+    "building.HubBuilding.title": "Vortex",
+    "building-variant.HubDefaultVariant.title": "Vortex",
     "building-variant.HubDefaultVariant.description": "",
 
     "building.BeltBuilding.title": "Conveyor Belt",
@@ -801,7 +845,7 @@
 
     "building.StackerBuilding.title": "Stacker",
     "building-variant.StackerDefaultVariant.title": "Stacker (Bent)",
-    "building-variant.StackerDefaultVariant.description": "<gl>Stacks</gl> the top shape on the bottom shape and outputs to the <gl>Side</gl>.",
+    "building-variant.StackerDefaultVariant.description": "A faster version of the <gl>Stacker</gl> that outputs to the <gl>Side</gl>.",
     "building-variant.StackerStraightVariant.title": "Stacker",
     "building-variant.StackerStraightVariant.description": "<gl>Stacks</gl> the top shape on the bottom shape.",
 
@@ -811,7 +855,7 @@
 
     "building.TrashBuilding.title": "Trash",
     "building-variant.TrashDefaultVariant.title": "Trash",
-    "building-variant.TrashDefaultVariant.description": "<gl>Destroys</gl> shapes.",
+    "building-variant.TrashDefaultVariant.description": "<gl>Destroys</gl> shapes. Can also be used for decorational purposes.",
 
     "building.PipeBuilding.title": "Pipe",
     "building-variant.PipeDefaultVariant.title": "Pipe",
@@ -841,11 +885,11 @@
 
     "building.CrystalGeneratorBuilding.title": "Crystal Generator",
     "building-variant.CrystalGeneratorDefaultVariant.title": "Crystal Generator",
-    "building-variant.CrystalGeneratorDefaultVariant.description": "Fills <gl>Gaps</gl> and <gl>Pins</gl> of a shape with fluid & and hardens it into <gl>Crystal</gl>.",
+    "building-variant.CrystalGeneratorDefaultVariant.description": "Fills <gl>Gaps</gl> and <gl>Pins</gl> of a shape with fluid, hardening it into <gl>Crystal</gl>.",
 
     "building.FluidStorageBuilding.title": "Fluid Tank",
     "building-variant.FluidStorageDefaultVariant.title": "Fluid Tank",
-    "building-variant.FluidStorageDefaultVariant.description": "<gl>Stores</gl> excessive fluids.",
+    "building-variant.FluidStorageDefaultVariant.description": "<gl>Stores</gl> unused fluid.",
 
     "building-variant.SandboxItemProducerDefaultVariant.title": "Item Producer",
     "building-variant.SandboxItemProducerDefaultVariant.description": "Produces an <gl>Infinite Amount</gl> of a given shape.",
@@ -872,17 +916,19 @@
 
     "building.WireDisplayBuilding.title": "Display",
     "building-variant.DisplayDefaultVariant.title": "Display",
-    "building-variant.DisplayDefaultVariant.description": "<gl>Displays</gl> any logical value.",
+    "building-variant.DisplayDefaultVariant.description": "<gl>Displays</gl> any logical signal.",
 
     "building.WireConstantSignalBuilding.title": "Signal Producer",
     "building-variant.ConstantSignalDefaultVariant.title": "Signal Producer",
     "building-variant.ConstantSignalDefaultVariant.description": "<gl>Produces</gl> a predefined logical signal.",
 
-    "building.WireBeltInteractionBuilding.title": "Belt Control",
+    "building.WireBeltInteractionBuilding.title": "Flow Control",
     "building-variant.BeltReaderDefaultVariant.title": "Belt Reader",
     "building-variant.BeltReaderDefaultVariant.description": "Detects and displays the <gl>Speed</gl> and <gl>Contents</gl> of a belt.",
     "building-variant.BeltFilterDefaultVariant.title": "Belt Filter",
     "building-variant.BeltFilterDefaultVariant.description": "<gl>Filters</gl> shapes based on logical signals.",
+    "building-variant.PipeGateDefaultVariant.title": "Pipe Gate",
+    "building-variant.PipeGateDefaultVariant.description": "<gl>Gates</gl> fluid based on logical signals.",
 
     "building.WireButtonBuilding.title": "Button",
     "building-variant.ButtonDefaultVariant.title": "Button",
@@ -905,7 +951,7 @@
     "building.VirtualProcessorBuilding.title": "Simulated Buildings",
     "building-variant.VirtualRotatorDefaultVariant.title": "Simulated Rotator",
     "building-variant.VirtualRotatorDefaultVariant.description": "Simulates <gl>Rotating</gl> a shape clockwise.",
-    "building-variant.VirtualHalfCutterDefaultVariant.title": "Simulated Halves Destroyer",
+    "building-variant.VirtualHalfCutterDefaultVariant.title": "Simulated Half Destroyer",
     "building-variant.VirtualHalfCutterDefaultVariant.description": "Simulates <gl>Destroying</gl> the <gl>West Half</gl> of a shape.",
     "building-variant.VirtualUnstackerDefaultVariant.title": "Simulated Unstacker",
     "building-variant.VirtualUnstackerDefaultVariant.description": "Simulates <gl>Separating</gl> the <gl>Top Layer</gl> of a shape.\n\nDoes not break crystals.",
@@ -915,8 +961,10 @@
     "building-variant.VirtualPainterDefaultVariant.description": "Simulates <gl>Painting</gl> the <gl>Top Layer</gl> of a shape.",
     "building-variant.VirtualCrystalGeneratorDefaultVariant.title": "Simulated Crystal Generator",
     "building-variant.VirtualCrystalGeneratorDefaultVariant.description": "Simulates <gl>Crystallizing</gl> a shape.",
-    "building-variant.VirtualHalvesSwapperDefaultVariant.title": "Simulated Halves Swapper",
+    "building-variant.VirtualHalvesSwapperDefaultVariant.title": "Simulated Swapper",
     "building-variant.VirtualHalvesSwapperDefaultVariant.description": "Simulates swapping the <gl>West Halves</gl> of two shapes.",
+    "building-variant.VirtualPinPusherDefaultVariant.title": "Simulated Pin Pusher",
+    "building-variant.VirtualPinPusherDefaultVariant.description": "Simulates <gl>Pushing</gl> a shape up and creating a <gl>Support Pin</gl> below every non-empty quarter on the first layer.",
     "building-variant.VirtualAnalyzerDefaultVariant.title": "Shape Analyzer",
     "building-variant.VirtualAnalyzerDefaultVariant.description": "Outputs the <gl>Shape Type</gl> and <gl>Color</gl> of the <gl>North-East</gl> first layer quarter.",
 
@@ -950,9 +998,9 @@
     "research.RNColorMixing.title": "Color Mixing",
     "research.RNColorMixing.description": "Let's have some more fun with colors! With the <gl>Color Mixer</gl> you can mix any two colors to create <gl>Secondary</gl> and <gl>Tertiary</gl> colors.",
     "research.RNCrystals.title": "Crystals",
-    "research.RNCrystals.description": "Alright, let's spice things up a bit with <gl>Crystals</gl>! Fill fluid into empty <gl>Gaps</gl> or <gl>Pins</gl> of a shape and harden it with the <gl>Crystal Generator</gl>.\n\nWe tried our best, but they still seem a little fragile - so better don't <gl>Cut</gl> through or <gl>Stack</gl> them.",
+    "research.RNCrystals.description": "Alright, let's spice things up a bit with <gl>Crystals</gl>! Fill fluid into empty <gl>Gaps</gl> or <gl>Pins</gl> of a shape and harden it with the <gl>Crystal Generator</gl>.\n\nWe tried our best, but they still seem a little fragile - so you better not <gl>Cut</gl> through or <gl>Stack</gl> them.",
     "research.RNEndOfGame.title": "Final Qualification",
-    "research.RNEndOfGame.description": "Congratulations, operator, you <gl>Passed</gl> the final qualification!",
+    "research.RNEndOfGame.description": "Congratulations, operator, you <gl>Passed</gl> the final qualification! Continue to improve your <gl>Operator Level</gl> to compete against other operators!",
 
     "research.RNWireBasics.title": "Wire Basics",
     "research.RNWireBasics.description": "Unlocks <gl>Wires</gl>, <gl>Signals</gl>, <gl>Filters</gl>, <gl>Readers</gl>, <gl>Displays</gl> and <gl>Buttons</gl> to automate your factory even more!",
@@ -961,23 +1009,21 @@
     "research.RNWireVirtualProcessing.title": "Simulated Buildings",
     "research.RNWireVirtualProcessing.description": "Allows you to <gl>Simulate</gl> the <gl>Cutting</gl>, <gl>Stacking</gl>, <gl>Unstacking</gl> and <gl>Painting</gl> of logical shape signals.",
     "research.RNWireTransmission.title": "Global Wire Transmission",
-    "research.RNWireTransmission.description": "Unlocks <gl>Global Wire Transmitters</gl>, allowing you to send signals wireless over different channels and reading the <gl>Operator Shapes</gl>. Requires 3rd Floor.",
-    "research.RNFluidMinerExtension.title": "Fluid Miner Extensions",
-    "research.RNFluidMinerExtension.description": "Allows you to connect <gl>Extensions</gl> to the <gl>Fluid Miner</gl> to increase its throughput.",
+    "research.RNWireTransmission.description": "Unlocks <gl>Global Wire Transmitters</gl>, allowing you to send signals wirelessly over different channels and reading the <gl>Operator Shapes</gl>. Requires 3rd Floor.",
     "research.RNTrainsGreen.title": "Trains - Green",
-    "research.RNTrainsGreen.description": "Allows you build <gl>Green</gl> trains & rails for more routing options.",
+    "research.RNTrainsGreen.description": "Allows you to build <gl>Green</gl> trains & rails for more routing options.",
     "research.RNTrainsBlue.title": "Trains - Blue",
-    "research.RNTrainsBlue.description": "Allows you build <gl>Blue</gl> trains & rails for more routing options.",
+    "research.RNTrainsBlue.description": "Allows you to build <gl>Blue</gl> trains & rails for more routing options.",
     "research.RNTrainsWhite.title": "Trains - White",
-    "research.RNTrainsWhite.description": "Allows you build <gl>White</gl> trains & rails for more routing options.",
+    "research.RNTrainsWhite.description": "Allows you to build <gl>White</gl> trains & rails for more routing options.",
     "research.RNTrainsFillerWagon.title": "Trains - Filler Wagon",
-    "research.RNTrainsFillerWagon.description": "Allows you build <gl>Filler Wagons</gl>, which can be used to space-out other wagons.",
+    "research.RNTrainsFillerWagon.description": "Unlocks <gl>Filler Wagons</gl>, which can be used to space-out other wagons.",
     "research.RNTrainHubDelivery.title": "Train Vortex Delivery",
     "research.RNTrainHubDelivery.description": "Allows you to <gl>Launch Trains</gl> into the <gl>Vortex</gl> to deliver shapes!",
     "research.RNTrainsFluidWagons.title": "Trains - Fluid Wagon",
     "research.RNTrainsFluidWagons.description": "Unlocks <gl>Fluid Wagons</gl>, allowing you to transport fluids via trains.",
     "research.RNRailRollerCoasterDLCContent.title": "Trains - Roller Coaster",
-    "research.RNRailRollerCoasterDLCContent.description": "Unlocks the purely cosmetic <gl>Rail Loop</gl> and <gl>Rail Twister</gl>.",
+    "research.RNRailRollerCoasterDLCContent.description": "Unlocks the purely cosmetic <gl>Rail Loop</gl> and <gl>Rail Twister</gl>. Exclusive to the <gl>Supporter Edition</gl>.",
     "research.RNSandboxTools.title": "Sandbox Tools",
     "research.RNSandboxTools.description": "Unlocks Sandbox Tools, allowing you to create any shape or fluid on the fly. Can only be unlocked via cheats.",
     "research.RNLayer3.title": "3rd Floor",
@@ -985,11 +1031,11 @@
     "research.RNHubSize.title": "More Vortex Inputs",
     "research.RNHubSize.description": "Increases the <gl>Size</gl> of the <gl>Vortex</gl> to allow for more inputs.",
     "research.RNIslandLayouts1.title": "Foundations I",
-    "research.RNIslandLayouts1.description": "Unlocks a larger <gl>L-Shaped</gl> foundation.",
+    "research.RNIslandLayouts1.description": "Unlocks a longer <gl>1x3</gl> foundation.",
     "research.RNIslandLayouts2.title": "Foundations II",
-    "research.RNIslandLayouts2.description": "Unlocks a larger <gl>T-Shaped</gl> foundation.",
+    "research.RNIslandLayouts2.description": "Unlocks a larger <gl>2x2</gl> foundation.",
     "research.RNIslandLayouts3.title": "Foundations III",
-    "research.RNIslandLayouts3.description": "Unlocks a larger <gl>2x2</gl> and <gl>Cross</gl> foundation.",
+    "research.RNIslandLayouts3.description": "Unlocks a larger <gl>2x3</gl> foundation.",
     "research.RNIslandLayouts4.title": "Foundations IV",
     "research.RNIslandLayouts4.description": "Unlocks a larger <gl>3x3</gl> foundation.",
     "research.RNHalfCutter.title": "<copy-from:building-variant.CutterHalfVariant.title/>",
@@ -1049,9 +1095,7 @@
     "research.LRUTrainSpeed.title": "Train Speed",
     "research.LRUTrainCapacity.title": "Train Capacity",
     "research.LRUHubInputSize.title": "Vortex Inputs",
-
-
-
+    "research.LRUShapeQuantity.title": "Shape Multiplier",
 
 
 
@@ -1072,7 +1116,7 @@
     "side-goal.legacy-2": "Second Legacy",
     "side-goal.legacy-3": "Third Legacy",
     "side-goal.crystals-using-pins": "Crystals using Pins",
-    "side-goal.crystals-use-halves-swapper": "Halves Swapper Only",
+    "side-goal.crystals-use-halves-swapper": "Swapper Only",
     "side-goal.crystals-dont-need-pins": "Starting without Pins",
     "side-goal.recycling": "Recycling Milestone Shapes",
     "side-goal.cutting-step-by-step": "Cutting Step by Step",
@@ -1201,7 +1245,7 @@
 
 
 
-    "island-layout.Layout_HUB.title": "",
+    "island-layout.Layout_HUB.title": "Vortex",
     "island-layout.Layout_HUB.description": "",
 
     "island-layout.SpaceBeltPathPlacement.title": "Space Belt",
@@ -1237,18 +1281,24 @@
     "island-layout.Layout_GenericPlatform.title": "Foundation",
     "island-layout.Layout_GenericPlatform.description": "More <gl>Building Space</gl> for your factory.",
 
+    "island-layout.deprecated": "\n\n<gl>WARNING</gl> This layout is <b>deprecated</b> and will be removed in a future version.",
+
     "island-layout.Layout_Normal_1.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
     "island-layout.Layout_Normal_1.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
     "island-layout.Layout_Normal_2.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
     "island-layout.Layout_Normal_2.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
     "island-layout.Layout_Normal_3_L.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
-    "island-layout.Layout_Normal_3_L.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
+    "island-layout.Layout_Normal_3_L.description": "<copy-from:island-layout.Layout_GenericPlatform.description/><copy-from:island-layout.deprecated/>",
+    "island-layout.Layout_Normal_3x1.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
+    "island-layout.Layout_Normal_3x1.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
+    "island-layout.Layout_Normal_3x2.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
+    "island-layout.Layout_Normal_3x2.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
     "island-layout.Layout_Normal_4_2x2.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
     "island-layout.Layout_Normal_4_2x2.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
     "island-layout.Layout_Normal_4_T.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
-    "island-layout.Layout_Normal_4_T.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
+    "island-layout.Layout_Normal_4_T.description": "<copy-from:island-layout.Layout_GenericPlatform.description/><copy-from:island-layout.deprecated/>",
     "island-layout.Layout_Normal_5_Cross.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
-    "island-layout.Layout_Normal_5_Cross.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
+    "island-layout.Layout_Normal_5_Cross.description": "<copy-from:island-layout.Layout_GenericPlatform.description/><copy-from:island-layout.deprecated/>",
     "island-layout.Layout_Normal_9_3x3.title": "<copy-from:island-layout.Layout_GenericPlatform.title/>",
     "island-layout.Layout_Normal_9_3x3.description": "<copy-from:island-layout.Layout_GenericPlatform.description/>",
 
@@ -1322,17 +1372,70 @@
 
     "island-layout.Layout_TrainRollerCoasterLoop.title": "Rail Loop",
     "island-layout.Layout_TrainRollerCoasterLoop.description": "Decorative only, makes trains move in a <gl>Loop</gl>.\n\nPart of the <gl>Supporter Edition</gl>.",
+    "island-layout.Layout_TrainRollerCoasterLoop_Flipped.title": "<copy-from:island-layout.Layout_TrainRollerCoasterLoop.title/>",
+    "island-layout.Layout_TrainRollerCoasterLoop_Flipped.description": "<copy-from:island-layout.Layout_TrainRollerCoasterLoop.description/>",
 
 
+    "_______________ GROUPS ______________________________________________________": "",
+    "island-group.SpaceBeltsGroup.title": "<copy-from:island-layout.SpaceBeltPathPlacement.title/>",
+    "island-group.SpaceBeltsGroup.description": "<copy-from:island-layout.SpaceBeltPathPlacement.description/>",
 
+    "island-group.SpacePipesGroup.title": "<copy-from:island-layout.SpacePipePathPlacement.title/>",
+    "island-group.SpacePipesGroup.description": "<copy-from:island-layout.SpacePipePathPlacement.description/>",
 
+    "island-group.SpaceBeltTunnelEntrancesGroup.title": "<copy-from:island-layout.Layout_SpaceBeltTunnel_Entrance.title/>",
+    "island-group.SpaceBeltTunnelEntrancesGroup.description": "<copy-from:island-layout.Layout_SpaceBeltTunnel_Entrance.description/>",
+    "island-group.SpaceBeltTunnelExitsGroup.title": "<copy-from:island-layout.Layout_SpaceBeltTunnel_Exit.title/>",
+    "island-group.SpaceBeltTunnelExitsGroup.description": "<copy-from:island-layout.Layout_SpaceBeltTunnel_Exit.description/>",
 
+    "island-group.SpacePipeTunnelEntrancesGroup.title": "<copy-from:island-layout.Layout_SpacePipeTunnel_Entrance.title/>",
+    "island-group.SpacePipeTunnelEntrancesGroup.description": "<copy-from:island-layout.Layout_SpacePipeTunnel_Entrance.description/>",
+    "island-group.SpacePipeTunnelExitsGroup.title": "<copy-from:island-layout.Layout_SpacePipeTunnel_Exit.title/>",
+    "island-group.SpacePipeTunnelExitsGroup.description": "<copy-from:island-layout.Layout_SpacePipeTunnel_Exit.description/>",
 
+    "island-group.RailsGroup.title": "<copy-from:island-layout.Layout_RailNode.title/>",
+    "island-group.RailsGroup.description": "<copy-from:island-layout.Layout_RailNode.description/>",
 
+    "island-group.TrainCatchersGroup.title": "<copy-from:island-layout.Layout_TrainCatcher.title/>",
+    "island-group.TrainCatchersGroup.description": "<copy-from:island-layout.Layout_TrainCatcher.description/>",
+    "island-group.TrainLaunchersGroup.title": "<copy-from:island-layout.Layout_TrainLauncher.title/>",
+    "island-group.TrainLaunchersGroup.description": "<copy-from:island-layout.Layout_TrainLauncher.description/>",
 
+    "island-group.TrainLoopsGroup.title": "<copy-from:island-layout.Layout_TrainTwister.title/>",
+    "island-group.TrainLoopsGroup.description": "<copy-from:island-layout.Layout_TrainTwister.description/>",
 
+    "island-group.TrainTwistersGroup.title": "<copy-from:island-layout.Layout_TrainTwister.title/>",
+    "island-group.TrainTwistersGroup.description": "<copy-from:island-layout.Layout_TrainTwister.description/>",
 
+    "island-group.TrainFluidLoadersGroup.title": "<copy-from:island-layout.Layout_TrainLoader_Fluids.title/>",
+    "island-group.TrainFluidLoadersGroup.description": "<copy-from:island-layout.Layout_TrainLoader_Fluids.description/>",
+    "island-group.TrainFluidUnloadersGroup.title": "<copy-from:island-layout.Layout_TrainUnloader_Fluids.title/>",
+    "island-group.TrainFluidUnloadersGroup.description": "<copy-from:island-layout.Layout_TrainUnloader_Fluids.description/>",
 
+    "island-group.TrainShapeLoadersGroup.title": "<copy-from:island-layout.Layout_TrainLoader_Shapes.title/>",
+    "island-group.TrainShapeLoadersGroup.description": "<copy-from:island-layout.Layout_TrainLoader_Shapes.description/>",
+    "island-group.TrainShapeUnloadersGroup.title": "<copy-from:island-layout.Layout_TrainUnloader_Shapes.title/>",
+    "island-group.TrainShapeUnloadersGroup.description": "<copy-from:island-layout.Layout_TrainUnloader_Shapes.description/>",
+
+    "island-group.ShapeCargoFactoriesGroup.title": "<copy-from:island-layout.Layout_TrainShapeWagonExtension.title/>",
+    "island-group.ShapeCargoFactoriesGroup.description": "<copy-from:island-layout.Layout_TrainShapeWagonExtension.description/>",
+    "island-group.FluidCargoFactoriesGroup.title": "<copy-from:island-layout.Layout_TrainFluidWagonExtension.title/>",
+    "island-group.FluidCargoFactoriesGroup.description": "<copy-from:island-layout.Layout_TrainFluidWagonExtension.description/>",
+    "island-group.FillerCargoFactoriesGroup.title": "<copy-from:island-layout.Layout_TrainFillerWagonExtension.title/>",
+    "island-group.FillerCargoFactoriesGroup.description": "<copy-from:island-layout.Layout_TrainFillerWagonExtension.description/>",
+
+    "island-group.TrainStationsGroup.title": "<copy-from:island-layout.Layout_TrainStation.title/>",
+    "island-group.TrainStationsGroup.description": "<copy-from:island-layout.Layout_TrainStation.description/>",
+
+    "island-group.ShapeMinerExtractorsGroup.title": "<copy-from:island-layout.Layout_ShapeMiner.title/>",
+    "island-group.ShapeMinerExtractorsGroup.description": "<copy-from:island-layout.Layout_ShapeMiner.description/>",
+    "island-group.ShapeMinerChainsGroup.title": "<copy-from:island-layout.Layout_ShapeMinerExtension.title/>",
+    "island-group.ShapeMinerChainsGroup.description": "<copy-from:island-layout.Layout_ShapeMinerExtension.description/>",
+
+    "island-group.FluidMinerExtractorsGroup.title": "<copy-from:island-layout.Layout_FluidMinerExtension.title/>",
+    "island-group.FluidMinerExtractorsGroup.description": "<copy-from:island-layout.Layout_FluidMinerExtension.description/>",
+    "island-group.FluidMinerChainsGroup.title": "<copy-from:island-layout.Layout_FluidMiner.title/>",
+    "island-group.FluidMinerChainsGroup.description": "<copy-from:island-layout.Layout_FluidMiner.description/>",
 
     "_______________ KEYS ______________________________________________________": "",
 
@@ -1399,6 +1502,8 @@
     "keybinding.main.toggle-blueprint-library.description": "Toggles the <gl>Blueprint Library</gl> interface.",
     "keybinding.main.toggle-ui": "Hide/Show Interface",
     "keybinding.main.toggle-ui.description": "Toggles the interface, useful for creating screenshots.",
+    "keybinding.main.toggle-statistics": "Statistics",
+    "keybinding.main.toggle-statistics.description": "Toggles the statistics panel.",
     "keybinding.main.scope-change": "Toggle Building Mode",
     "keybinding.main.scope-change.description": "Toggle between <gl>Platform</gl> and <gl>Building</gl> mode. This also automatically happens while zooming.",
     "keybinding.main.undo": "Undo",
@@ -1441,6 +1546,9 @@
     "keybinding.camera.angle-up.description": "You can bind this a key to allow changing the camera angle without using a middle mouse button.",
     "keybinding.camera.angle-down": "Vertical Angle Down",
     "keybinding.camera.angle-down.description": "<copy-from:keybinding.camera.angle-up.description/>",
+    "keybinding.camera.reset-orientation": "Reset Camera Rotation",
+    "keybinding.camera.reset-orientation.description": "Reset the camera rotation so that the camera is pointing <gl>North</gl> again.",
+
 
     "keybindings.toolbar": "Toolbar",
     "keybinding.toolbar.select-slot-0": "Select Slot 1",
@@ -1646,6 +1754,12 @@
     "setting.autosave-interval.Minutes30": "30 Minutes",
     "setting.autosave-interval.Minutes60": "1 Hour",
 
+    "setting.threaded-saving": "Multi-threaded Saving",
+    "setting.threaded-saving.description": "Distributes the serialization of savegames over multiple threads. Vastly reduces delays when saving large factories. Can decrease the stability of the saving process.",
+
+    "setting.asynchronous-saving": "Asynchronous Saving",
+    "setting.asynchronous-saving.description": "Writes savegame files to disc asynchronously. Vastly reduces delays when saving large factories. Can decrease the stability of the saving process.",
+
     "setting.telemetry": "Anonymized Analytics",
     "setting.telemetry.description": "Whether to send anonymized analytics to help improving the game.",
 
@@ -1658,6 +1772,25 @@
     "setting.color-visualization-scheme.RGBColorBlind": "RGB (Color blind)",
     "setting.color-visualization-scheme.RYB": "RYB",
     "setting.color-visualization-scheme.CMYK": "CMYK",
+
+    "setting.threads-used-by-simulation": "Simulation Threads",
+    "setting.threads-used-by-simulation.description": "The maximum number of threads used for the simulation, vastly improves the performance for large factories but can decrease the stability of the game.\n\n<copy-from:setting.performance-impact-very-high/>",
+    "setting.threads-used-by-simulation.Zero": "Disabled",
+    "setting.threads-used-by-simulation.Two": "2",
+    "setting.threads-used-by-simulation.Four": "4",
+    "setting.threads-used-by-simulation.Eight": "8",
+    "setting.threads-used-by-simulation.Sixteen": "16",
+    "setting.threads-used-by-simulation.ThirtyTwo": "Max",
+
+    "setting.parallel-simulation": "Parallel Rendering",
+    "setting.parallel-simulation.description": "Whether to render the game parallel to the simulation, improves the performance but can decrease the stability of the game.\n\n<copy-from:setting.performance-impact-high/>",
+
+    "setting.simulation-details": "Simulation Details",
+    "setting.simulation-details.description": "Controls the continuity of the animations, lower values use less steps for animations at the cost of visual continuity.\n\n<copy-from:setting.performance-impact-moderate/>",
+    "setting.simulation-details.Low": "<copy-from:setting.quality-low/>",
+    "setting.simulation-details.High": "<copy-from:setting.quality-high/>",
+
+
 
 
 
@@ -1727,6 +1860,9 @@
 
     "setting.invert-zoom": "Invert Zoom",
     "setting.invert-zoom.description": "If enabled, inverts the direction the camera zooms when you use the scroll wheel.",
+
+    "setting.invert-vertical-axis": "Invert Y Axis",
+    "setting.invert-vertical-axis.description": "If enabled, inverts the Y Axis of the camera during movement.",
 
     "setting.zoom-sensitivity": "Zoom Sensitivity",
     "setting.zoom-sensitivity.description": "Controls how fast the camera zooms in/out when you use the scroll wheel.",
@@ -1913,9 +2049,6 @@
 
 
 
-
-
-
     "_______________ KNOWLEDGE PANEL ______________________________________________________": "",
 
     "wiki.title": "Knowledge Panel",
@@ -1930,8 +2063,8 @@
     "wiki.category.Debug.title": "Debug",
 
     "wiki.WKWelcome.title": "Welcome to your Certification!",
-    "wiki.WKWelcome.text-intro-1": "Thank you for signing up! You did sign up, right ..?\n\nEither way .. the <gl>Vortex</gl> requires us to evaluate your <gl>Factory Operator</gl> skills before issuing your <gl>Operator Certification</gl>. \n\nSimply deliver the requested <gl>Shapes</gl> as efficient as possible. That's it!\n\nWe might reward you with new <gl>Upgrades</gl> and <gl>Technologies</gl> based on your performance..",
-    "wiki.WKWelcome.text-intro-3": "Ah, and you can have as many <gl>Buildings</gl> as you want. But please don't damage them - we still need them for the next participant.",
+    "wiki.WKWelcome.text-intro-1": "Thank you for signing up! You did sign up, right... ?\n\nEither way... the <gl>Vortex</gl> requires us to evaluate your <gl>Factory Operator</gl> skills before issuing your <gl>Operator Certification</gl>. \n\nSimply deliver the requested <gl>Shapes</gl> as efficiently as possible. That's it!\n\nWe might reward you with new <gl>Upgrades</gl> and <gl>Technologies</gl> based on your performance...",
+    "wiki.WKWelcome.text-intro-3": "Ah, and you can have as many <gl>Buildings</gl> as you want, but please don't damage them -\nwe still need them for the next participant.",
 
     "wiki.WKShapes.title": "Shapes",
     "wiki.WKShapes.text-shapes-1": "<gl>Shapes</gl> are composed of smaller sections, named <gl>Quarters</gl>, that can be separated and reorganized.",
@@ -2061,8 +2194,10 @@
     "wiki.WKBlueprints.text-library-1": "Any blueprint or selection can be saved to the <gl>Blueprint Library</gl> with <hotkey:building-placement.save-blueprint/>.",
     "wiki.WKBlueprints.text-library-2": "The library can be accessed with <hotkey:main.toggle-blueprint-library/> or its designated button at the top-right of the screen.",
     "wiki.WKBlueprints.text-library-3": "Saved blueprints can be edited with right click.",
+    "wiki.WKBlueprints.heading-icons": "Custom Icons",
+    "wiki.WKBlueprints.text-icons": "You can make it easier to identify blueprints by setting a <gl>Custom Icon</gl> during blueprint creation or when editing.",
     "wiki.WKBlueprints.heading-toolbar": "Blueprint Toolbar",
-    "wiki.WKBlueprints.text-toolbar-1": "Any blueprint can be placed in the <gl>Blueprint Toolbar</gl>.",
+    "wiki.WKBlueprints.text-toolbar-1": "Any blueprint and blueprint folder can be placed in the <gl>Blueprint Toolbar</gl>.",
     "wiki.WKBlueprints.heading-cost": "Cost",
     "wiki.WKBlueprints.text-cost-1": "Only in <gl>Challenge</gl> difficulty, blueprints cost <gl>Blueprint Points</gl>. You need to deliver specific shapes to generate <gl>Blueprint Points</gl> first.",
 
@@ -2080,7 +2215,8 @@
     "wiki.WKPlatforms.heading-belt-connection": "Connecting Space Belts",
     "wiki.WKPlatforms.text-belt-connection-1": "Simply drag a belt towards or from a space belt to send and receive items.",
     "wiki.WKPlatforms.heading-belt-tunnels": "Space Belt Tunnels",
-    "wiki.WKPlatforms.text-belt-tunnels": "You can use <gl>Space Belt Tunnels</gl> to route belts below other platforms, belts or rails.",
+    "wiki.WKPlatforms.text-belt-tunnels": "When dragging space belts over obstacles up to 4 blocks long, <gl>Space Belt Tunnels</gl> will be automatically placed.",
+    "wiki.WKPlatforms.text-belt-tunnels-2": "<gl>Space Belt Tunnels</gl> allow you to connect space belts across platforms, miners, rails & other space belts/pipes.",
     "wiki.WKPlatforms.heading-miner": "Miners",
     "wiki.WKPlatforms.text-miner-1": "<gl>Miner Platforms</gl> can only be placed on top of <gl>Asteroids</gl> - once placed, the resource can be obtained by placing the appropriate extractors on the platform.",
     "wiki.WKPlatforms.heading-miner-extension": "Miner Extensions",
@@ -2102,34 +2238,36 @@
     "wiki.WKTrains.text-intro": "With <gl>Trains</gl> you can transport huge amounts of shapes and fluids over long distances.",
     "wiki.WKTrains.heading-rails": "Rails",
     "wiki.WKTrains.text-rails-1": "Trains can only go on <gl>Rails</gl>. Place them just like you would place regular belts or space belts.",
-    "wiki.WKTrains.text-rails-2": "Once trains reach the end of a rail, they will go back on the <gl>Bottom Side</gl>, following the same path they took on the top side.",
+    "wiki.WKTrains.text-rails-2": "Once trains reach the end of a rail, they will go back on the <gl>Bottom Side</gl>, following the <gl>Train Line</gl> that matches its color.",
     "wiki.WKTrains.heading-depots": "Locomotives & Wagons",
-    "wiki.WKTrains.text-depots-1": "Every train starts with a <gl>Locomotive</gl>. When placing it, you can select which color the train will have - more colors are available as upgrades.",
-    "wiki.WKTrains.text-depots-2": "You can add as many <gl>Wagons</gl> as you'd like by placing additional wagons behind the locomotive, as long as they're all connected.",
+    "wiki.WKTrains.text-depots-1": "Every train starts with choosing a color and placing a <gl>Locomotive</gl>. You can then place as many <gl>Wagons</gl> as you'd like behind the locomotive, as long as they're all connected.",
+    "wiki.WKTrains.text-depots-2": "A <gl>Train Line</gl> matching the train's color will appear - you can route it with <gl>Train Routing</gl>. Additional colors are available as upgrades.",
     "wiki.WKTrains.heading-loading": "Train Stops & Loading",
     "wiki.WKTrains.text-loading-1": "To <gl>Load</gl> and <gl>Unload</gl> wagons, place a <gl>Train Stop</gl> to signal the locomotive to halt.",
     "wiki.WKTrains.text-loading-2": "To load wagons, place one or more <gl>Loaders</gl> next to a <gl>Train Stop</gl>, similarly to how you build locomotives & wagons.",
     "wiki.WKTrains.text-loading-3": "To unload wagons, do the same but with <gl>Unloaders</gl>.",
     "wiki.WKTrains.heading-routing": "Train Routing",
-    "wiki.WKTrains.text-routing-1": "Trains drive forward, unless otherwise specified. You can use <gl>Rail Routing</gl> to make different colored trains go into different directions.",
-    "wiki.WKTrains.text-routing-2": "For example, you can make red trains skip a certain stop:",
+    "wiki.WKTrains.text-routing-1": "Trains follow <gl>Train Lines</gl> that match their color. Use <gl>Rail Routing</gl> to redirect lines of different colors.",
+    "wiki.WKTrains.text-routing-2": "For example, to make green trains skip a certain stop, you can separate their <gl>Train Line</gl>:",
+    "wiki.WKTrains.text-routing-3": "If there isn't only one valid <gl>Train Line</gl>, trains will prioritize going forward, right or left, in that order.",
     "wiki.WKTrains.heading-launchers": "Train Launchers",
     "wiki.WKTrains.text-launchers-1": "Just like belts, you can also launch trains to cross gaps using <gl>Train Launchers</gl>. You can adjust the range with the scroll wheel <hotkey:camera.angle-drag-modifier/>.",
-    "wiki.WKTrains.text-launchers-2": "Trains can also be launched directly into the <gl>Vortex</gl> to deliver all of their contained shapes.",
+    "wiki.WKTrains.text-launchers-2": "Once unlocked in the shop, trains can also be launched directly into the <gl>Vortex</gl> to deliver all of their contained shapes.",
 
 
     "wiki.WKFluids.title": "Fluids & Painting",
     "wiki.WKFluids.text-intro": "<gl>Color Fluids</gl> are required to paint shapes, introducing multiple new concepts.",
     "wiki.WKFluids.heading-fluid-miner": "Fluid Miner",
     "wiki.WKFluids.text-fluid-miner-1": "Use <gl>Fluid Miners</gl> to extract from <gl>Fluid Deposits</gl> on the map, similar to shape miners.",
-    "wiki.WKFluids.text-fluid-miner-2": "You can unlock the <gl>Fluid Miner Extension</gl> to increase the throughput.",
+    "wiki.WKFluids.text-fluid-miner-2": "You can use <gl>Fluid Miner Extensions</gl> to increase the throughput.",
     "wiki.WKFluids.heading-pumps": "Pumps",
     "wiki.WKFluids.text-pumps-1": "Place one or multiple <gl>Pumps</gl> on the Fluid Miner. Every pump extracts a fixed amount of liters per minute, which you can view by clicking the pump.",
+    "wiki.WKFluids.text-pumps-2": "Pumps increase their production per minute based on <gl>Painting Speed</gl>.",
     "wiki.WKFluids.heading-pipes": "Pipes",
-    "wiki.WKFluids.text-pipes-1": "<gl>Pipes</gl> are required to transport fluids. They have a throughput limit of 9,000 liters per minute.",
+    "wiki.WKFluids.text-pipes-1": "<gl>Pipes</gl> are required to transport fluids. Transportation happens instantly, but they have a throughput limit of <b>7,200</b> liters per minute.",
     "wiki.WKFluids.heading-space-pipes": "Space Pipes",
     "wiki.WKFluids.text-space-pipes-1": "Use <gl>Space Pipes</gl> to transport fluid between platforms, as it can't go on regular space belts.",
-    "wiki.WKFluids.text-space-pipes-2": "<gl>Space Pipe Tunnels</gl> are also available and work exactly as the space belt tunnels.",
+    "wiki.WKFluids.text-space-pipes-2": "<gl>Space Pipe Tunnels</gl> are also available and work just like space belt tunnels.",
     "wiki.WKFluids.heading-painting": "Painting",
     "wiki.WKFluids.text-painter-1": "Connect both fluid and shapes to a <gl>Painter</gl> to paint the shape. The painter always paints the <b>Topmost</b> layer of a given shape.",
     "wiki.WKFluids.heading-color-blind": "Color Blindness",
@@ -2143,28 +2281,54 @@
     "wiki.WKMixing.text-mixer-1": "Use the <gl>Color Mixer</gl> and connect two <gl>Color Fluids</gl> to mix them.",
     "wiki.WKMixing.text-mixer-2": "The <gl>Fluid Volume</gl> is preserved, so if you mix 10 liters of red and 10 liters of green, you will get 20 liters of yellow.",
     "wiki.WKMixing.heading-mixing-scheme": "Color Mode",
-    "wiki.WKMixing.text-mixing-scheme-1": "By default, colors are mixed using <gl>Additive Color Mixing</gl>, similar to light.",
+    "wiki.WKMixing.text-mixing-scheme-1": "By default, colors use <gl>Additive Color Mixing</gl>, which works just like light: mixing red, green and blue together makes white.",
     "wiki.WKMixing.text-mixing-scheme-2": "If you prefer alternative schemes like RYB or CMYK, you can change the <gl>Color Mode</gl> in the settings any time.",
 
 
     "wiki.WKCrystals.title": "Crystals",
     "wiki.WKCrystals.text-intro": "<gl>Crystals</gl> are produced by hardening fluids and are designed by the vortex to challenge even the most experienced operators.",
     "wiki.WKCrystals.heading-crystal-generation": "Crystal Generation",
-    "wiki.WKCrystals.text-crystal-generation": "The <gl>Crystal Generator</gl> fills <gl>Gaps</gl> and <gl>Pins</gl> in a shape with the provided fluid, hardening the fluid to <gl>Crystal</gl> in the process.",
+    "wiki.WKCrystals.text-crystal-generation-1": "The <gl>Crystal Generator</gl> fills <gl>Gaps</gl> and <gl>Pins</gl> in a shape with the provided fluid, hardening the fluid to <gl>Crystal</gl> in the process.",
+    "wiki.WKCrystals.text-crystal-generation-2": "You can also use multiple crystal generators in a row, to combine different colored crystals in one shape.",
     "wiki.WKCrystals.heading-crystal-behaviour": "Crystal Specifics",
     "wiki.WKCrystals.text-crystal-behaviour-1": "Crystals are <gl>Fragile</gl>, and thus break when falling down, for example while <link:wiki.WKStacking>Stacked</link>.",
     "wiki.WKCrystals.text-crystal-behaviour-2": "<link:wiki.WKCutting>Cutting</link> through a crystal will <gl>Shatter</gl> it, destroying all connected crystals on the same, upper and lower shape layers.",
-    "wiki.WKCrystals.text-crystal-behaviour-3": "While stacking crystals breaks them, you can use the <gl>Halves Swapper</gl> to swap halves, as long as you don't cut through them.",
+    "wiki.WKCrystals.text-crystal-behaviour-3": "While stacking crystals breaks them, you can use the <gl>Swapper</gl> to swap halves, as long as you don't cut through them.",
+    "wiki.WKCrystals.heading-advanced": "Advanced Mechanics",
+    "wiki.WKCrystals.text-advanced-1": "These mechanics are only required for the Hard and Insane scenarios.",
+    "wiki.WKCrystals.text-advanced-2": "You can <gl>Break Crystals</gl> during swapping to create shapes with gaps <b>below</b> crystals.",
 
 
     "wiki.WKOperatorLevel.title": "Operator Level",
-    "wiki.WKOperatorLevel.text-intro": "Once unlocked, you can compete with other players using the <gl>Operator level</gl>.",
+    "wiki.WKOperatorLevel.text-intro": "Once unlocked, you can compete with other players using the <gl>Operator Level</gl>.",
     "wiki.WKOperatorLevel.heading-leveling": "Leveling Up",
     "wiki.WKOperatorLevel.text-levelling-1": "Deliver eligible <gl>Past Milestone Shapes</gl> to increase your <gl>Operator Level</gl>. Increasing your operator level grants you rewards that allow you to grow your factory even more.",
-    "wiki.WKOperatorLevel.text-levelling-2": "You can view your current level and required shapes in the <gl>Operator Research Tab</gl>. The level is also shown on the <gl>Compass</gl> in the lower right, and with every level gained your shape badge evolves.",
-
+    "wiki.WKOperatorLevel.text-levelling-2": "You can view your current level and required shapes in the <gl>Operator Research Tab</gl>. The level is also shown on the <gl>Compass</gl> in the lower left, and with every level gained your <gl>Shape Badge</gl> evolves.",
     "wiki.WKOperatorLevel.heading-competition": "Global Rank",
-    "wiki.WKOperatorLevel.text-competition-1": "Once you are in the top 50%, your global rank is shown in the operator level tab.",
+    "wiki.WKOperatorLevel.text-competition-1": "Once you have reached the global top 50%, your global rank will be displayed on the operator level tab.",
+
+
+    "wiki.WKWires.title": "Wires",
+    "wiki.WKWires.text-intro": "With <gl>Wires</gl> you can fully automate factories, and even build dynamic factories that can build any shape (<gl>Make Anything Machine</gl> or also called <gl>MaM</gl>).",
+    "wiki.WKWires.heading-signals": "Logic Signals",
+    "wiki.WKWires.text-signals-1": "Wire buildings work by transporting and processing <gl>Logical Signals</gl>. A logical signal can either be a:\n\n- <gl>Number</gl>: 0, 1, 2, 3, ...\n- <gl>Color</gl>: Red (<b>r</b>), Green (<b>g</b>), Blue (<b>b</b>), Cyan (<b>c</b>), Magenta (<b>m</b>), Yellow (<b>y</b>), White (<b>w</b>), Uncolored (<b>u</b>)\n- <gl>Shape</gl>: Any shape, i.e. 'CuCuCuCu'\n- <gl>Empty</gl>: Also often called 'null'\n- <gl>Conflict</gl>: Whenever signals conflict, i.e. connecting two outputs with different signals." ,
+    "wiki.WKWires.heading-truthiness": "Truthiness (On/Off)",
+    "wiki.WKWires.text-truthiness-1": "<gl>Empty</gl> and the number <gl>0</gl> are classified as <gl>Off</gl>. All other signal values are considered as <gl>On</gl>. This is important for logic gates.",
+    "wiki.WKWires.heading-belt-control": "Controlling Conveyor Belts",
+    "wiki.WKWires.text-belt-control-1": "Use a <gl>Belt Filter</gl> to control the flow of shapes. This is the essential tool for building dynamic factories.",
+    "wiki.WKWires.text-belt-control-2": "The belt filter routes shapes based on the wire input signal:\n\n- <gl>Shape</gl>: Matching shapes are allowed straight through, everything else is filtered out to the side.\n- <gl>Number</gl>: If the number is <gl>0</gl>, shapes are filtered out. Otherwise, shapes are allowed through.\n- <gl>Empty</gl> or <gl>Conflict</gl>: Completely blocks the conveyor belt.",
+    "wiki.WKWires.heading-operator-shapes": "Random Operator Shapes",
+    "wiki.WKWires.text-operator-shapes-1": "Once you complete the last milestone, the operator level introduces a <gl>Randomized Shape</gl> goal. While you can of course build a new factory for every goal, we suggest trying to build a <gl>Make Anything Machine</gl> (see below) that reads in the shape and automatically produces it.",
+    "wiki.WKWires.text-operator-shapes-2": "You can receive the current random shape by placing a <gl>Global Wire Receiver</gl> and setting the channel to <b>Operator Shape</b>.",
+    "wiki.WKWires.heading-virtual-processors": "Simulated Buildings",
+    "wiki.WKWires.text-virtual-processors-1": "Using <gl>Simulated Buildings</gl>, you can process shapes that are stored in logical signals.",
+    "wiki.WKWires.text-virtual-processors-2": "For example, let's say you are reading the target shape (see above) and want to find out whether there is a circle or rectangle in the top right, so you can configure your belt filters accordingly.",
+    "wiki.WKWires.text-virtual-processors-3": "Using a simulated half destroyer, rotator and half destroyer again, you can reduce the shape signal to only the given quarter.",
+    "wiki.WKWires.text-virtual-processors-4": "If you now repeat this for every possible quarter and possible shape type (there are 4 quarters and 4 shape types) and stack the results, you can already produce any given uncolored one layer shape!",
+    "wiki.WKWires.heading-panel-wip-discord": "Join our discord!",
+    "wiki.WKWires.text-panel-wip-discord": "Until this knowledge panel entry is expanded, we highly recommend joining our <gl>Discord</gl> and joining the <b>#make-anything-machine</b> and <b>#wires</b> channel to get support from other players! You can find the link in the main menu or via the 'Feedback' button.",
+
+
 
 
 
@@ -2272,8 +2436,8 @@
 
 
     "tutorial.TGStacker": "Stacking Tutorial",
-    "tutorial.TSStacker_0_PlaceStacker": "Let's combine circles and squares!\n\nPlace <b>4</b> <gl>Stackers</gl> (<placed/> / <b>4</b>).",
-    "tutorial.TSStacker_0_PlaceStacker_Skill": "<gl>Stackers</gl> output to the <b>side</b>, so you need a <gl>Gap</gl> between.",
+    "tutorial.TSStacker_0_PlaceStacker": "Let's combine circles and squares!\n\nPlace <b>6</b> <gl>Stackers</gl> (<placed/> / <b>6</b>).",
+    "tutorial.TSStacker_0_PlaceStacker_Skill": "<gl>Stackers</gl> are <b>slow</b>, so always place multiple of them!",
     "tutorial.TSStacker_StackedWrongOrder_Skill": "Oops! Connect the stackers in the right order, it matters which belt goes on the <b>top</b> and which on the <b>bottom</b>.",
 
     "tutorial.TSStacker_1_ConnectStackers": "Supply the stackers with circles and squares!",

@@ -9,7 +9,7 @@
     "InternalVariants": [
       {
         "Id": "BeltDefaultForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -40,7 +40,7 @@
       },
       {
         "Id": "BeltDefaultLeftInternalVariant",
-        "MirroredInternalVariantId": "BeltDefaultLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "BeltDefaultLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -71,7 +71,7 @@
       },
       {
         "Id": "BeltDefaultLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "BeltDefaultLeftInternalVariant",
+        "MirroredDefinitionId": "BeltDefaultLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -112,7 +112,7 @@
     "InternalVariants": [
       {
         "Id": "BeltFilterDefaultInternalVariant",
-        "MirroredInternalVariantId": "BeltFilterDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "BeltFilterDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -151,7 +151,7 @@
       },
       {
         "Id": "BeltFilterDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "BeltFilterDefaultInternalVariant",
+        "MirroredDefinitionId": "BeltFilterDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -200,7 +200,7 @@
     "InternalVariants": [
       {
         "Id": "BeltPortReceiverInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -232,7 +232,7 @@
     "InternalVariants": [
       {
         "Id": "BeltPortSenderInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -264,7 +264,7 @@
     "InternalVariants": [
       {
         "Id": "BeltReaderDefaultInternalVariant",
-        "MirroredInternalVariantId": "BeltReaderDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "BeltReaderDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -295,7 +295,7 @@
       },
       {
         "Id": "BeltReaderDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "BeltReaderDefaultInternalVariant",
+        "MirroredDefinitionId": "BeltReaderDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -336,7 +336,7 @@
     "InternalVariants": [
       {
         "Id": "ButtonDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -359,7 +359,7 @@
     "InternalVariants": [
       {
         "Id": "ConstantSignalDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -382,7 +382,7 @@
     "InternalVariants": [
       {
         "Id": "CrystalGeneratorDefaultInternalVariant",
-        "MirroredInternalVariantId": "CrystalGeneratorDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "CrystalGeneratorDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -423,7 +423,7 @@
       },
       {
         "Id": "CrystalGeneratorDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "CrystalGeneratorDefaultInternalVariant",
+        "MirroredDefinitionId": "CrystalGeneratorDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -474,7 +474,7 @@
     "InternalVariants": [
       {
         "Id": "CutterDefaultInternalVariant",
-        "MirroredInternalVariantId": "CutterDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "CutterDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -518,7 +518,7 @@
       },
       {
         "Id": "CutterDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "CutterDefaultInternalVariant",
+        "MirroredDefinitionId": "CutterDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -572,7 +572,7 @@
     "InternalVariants": [
       {
         "Id": "CutterHalfInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -613,7 +613,7 @@
     "InternalVariants": [
       {
         "Id": "DisplayDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -636,7 +636,7 @@
     "InternalVariants": [
       {
         "Id": "ExtractorDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -664,11 +664,11 @@
     "Selectable": true,
     "PlayerBuildable": true,
     "AutoConnectBelts": true,
-    "PipetteOverrideVariantId": "PipeDefaultVariant",
+    "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
         "Id": "FluidPortReceiverInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -687,11 +687,11 @@
     "Selectable": true,
     "PlayerBuildable": true,
     "AutoConnectBelts": true,
-    "PipetteOverrideVariantId": "PipeDefaultVariant",
+    "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
         "Id": "FluidPortSenderInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -714,7 +714,7 @@
     "InternalVariants": [
       {
         "Id": "FluidStorageDefaultInternalVariant",
-        "MirroredInternalVariantId": "FluidStorageDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "FluidStorageDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": -1,
@@ -742,7 +742,7 @@
       },
       {
         "Id": "FluidStorageDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "FluidStorageDefaultInternalVariant",
+        "MirroredDefinitionId": "FluidStorageDefaultInternalVariant",
         "Tiles": [
           {
             "X": -1,
@@ -780,7 +780,7 @@
     "InternalVariants": [
       {
         "Id": "HalvesSwapperDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -842,7 +842,7 @@
     "InternalVariants": [
       {
         "Id": "HubDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -865,7 +865,7 @@
     "InternalVariants": [
       {
         "Id": "LabelDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": -1,
@@ -908,7 +908,7 @@
     "InternalVariants": [
       {
         "Id": "Lift1DownBackwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -944,7 +944,7 @@
       },
       {
         "Id": "Lift1DownForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -980,7 +980,7 @@
       },
       {
         "Id": "Lift1DownLeftInternalVariant",
-        "MirroredInternalVariantId": "Lift1DownLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "Lift1DownLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -1016,7 +1016,7 @@
       },
       {
         "Id": "Lift1DownLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "Lift1DownLeftInternalVariant",
+        "MirroredDefinitionId": "Lift1DownLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -1052,7 +1052,7 @@
       },
       {
         "Id": "Lift1UpBackwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1088,7 +1088,7 @@
       },
       {
         "Id": "Lift1UpForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1124,7 +1124,7 @@
       },
       {
         "Id": "Lift1UpLeftInternalVariant",
-        "MirroredInternalVariantId": "Lift1UpLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "Lift1UpLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -1160,7 +1160,7 @@
       },
       {
         "Id": "Lift1UpLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "Lift1UpLeftInternalVariant",
+        "MirroredDefinitionId": "Lift1UpLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -1206,7 +1206,7 @@
     "InternalVariants": [
       {
         "Id": "Lift2DownBackwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1247,7 +1247,7 @@
       },
       {
         "Id": "Lift2DownForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1288,7 +1288,7 @@
       },
       {
         "Id": "Lift2DownLeftInternalVariant",
-        "MirroredInternalVariantId": "Lift2DownLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "Lift2DownLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -1329,7 +1329,7 @@
       },
       {
         "Id": "Lift2DownLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "Lift2DownLeftInternalVariant",
+        "MirroredDefinitionId": "Lift2DownLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -1370,7 +1370,7 @@
       },
       {
         "Id": "Lift2UpBackwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1411,7 +1411,7 @@
       },
       {
         "Id": "Lift2UpForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1452,7 +1452,7 @@
       },
       {
         "Id": "Lift2UpLeftInternalVariant",
-        "MirroredInternalVariantId": "Lift2UpLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "Lift2UpLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -1493,7 +1493,7 @@
       },
       {
         "Id": "Lift2UpLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "Lift2UpLeftInternalVariant",
+        "MirroredDefinitionId": "Lift2UpLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -1544,7 +1544,7 @@
     "InternalVariants": [
       {
         "Id": "LogicGateAndInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1567,7 +1567,20 @@
     "InternalVariants": [
       {
         "Id": "LogicGateCompareInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": "LogicGateCompareInternalVariantMirrored",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "LogicGateCompareInternalVariantMirrored",
+        "MirroredDefinitionId": "LogicGateCompareInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -1590,7 +1603,7 @@
     "InternalVariants": [
       {
         "Id": "LogicGateIfInternalVariant",
-        "MirroredInternalVariantId": "LogicGateIfInternalVariantMirrored",
+        "MirroredDefinitionId": "LogicGateIfInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -1603,7 +1616,7 @@
       },
       {
         "Id": "LogicGateIfInternalVariantMirrored",
-        "MirroredInternalVariantId": "LogicGateIfInternalVariant",
+        "MirroredDefinitionId": "LogicGateIfInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -1626,7 +1639,7 @@
     "InternalVariants": [
       {
         "Id": "LogicGateNotInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1649,7 +1662,7 @@
     "InternalVariants": [
       {
         "Id": "LogicGateOrInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1672,7 +1685,7 @@
     "InternalVariants": [
       {
         "Id": "LogicGateXOrInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1695,7 +1708,7 @@
     "InternalVariants": [
       {
         "Id": "Merger2To1LInternalVariant",
-        "MirroredInternalVariantId": "Merger2To1LInternalVariantMirrored",
+        "MirroredDefinitionId": "Merger2To1LInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -1734,7 +1747,7 @@
       },
       {
         "Id": "Merger2To1LInternalVariantMirrored",
-        "MirroredInternalVariantId": "Merger2To1LInternalVariant",
+        "MirroredDefinitionId": "Merger2To1LInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -1783,7 +1796,7 @@
     "InternalVariants": [
       {
         "Id": "Merger3To1InternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1840,7 +1853,7 @@
     "InternalVariants": [
       {
         "Id": "MergerTShapeInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -1889,7 +1902,7 @@
     "InternalVariants": [
       {
         "Id": "MixerDefaultInternalVariant",
-        "MirroredInternalVariantId": "MixerDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "MixerDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -1922,7 +1935,7 @@
       },
       {
         "Id": "MixerDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "MixerDefaultInternalVariant",
+        "MirroredDefinitionId": "MixerDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -1965,7 +1978,7 @@
     "InternalVariants": [
       {
         "Id": "PainterDefaultInternalVariant",
-        "MirroredInternalVariantId": "PainterDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "PainterDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -2001,7 +2014,7 @@
       },
       {
         "Id": "PainterDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "PainterDefaultInternalVariant",
+        "MirroredDefinitionId": "PainterDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -2047,7 +2060,7 @@
     "InternalVariants": [
       {
         "Id": "PinPusherDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2088,7 +2101,7 @@
     "InternalVariants": [
       {
         "Id": "PipeUpBackwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2106,7 +2119,7 @@
       },
       {
         "Id": "PipeUpForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2124,7 +2137,7 @@
       },
       {
         "Id": "PipeUpLeftInternalVariant",
-        "MirroredInternalVariantId": "PipeUpLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "PipeUpLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -2142,7 +2155,7 @@
       },
       {
         "Id": "PipeUpLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "PipeUpLeftInternalVariant",
+        "MirroredDefinitionId": "PipeUpLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -2170,7 +2183,7 @@
     "InternalVariants": [
       {
         "Id": "Pipe2UpBackwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2193,7 +2206,7 @@
       },
       {
         "Id": "Pipe2UpForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2216,7 +2229,7 @@
       },
       {
         "Id": "Pipe2UpLeftInternalVariant",
-        "MirroredInternalVariantId": "Pipe2UpLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "Pipe2UpLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -2239,7 +2252,7 @@
       },
       {
         "Id": "Pipe2UpLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "Pipe2UpLeftInternalVariant",
+        "MirroredDefinitionId": "Pipe2UpLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -2272,7 +2285,7 @@
     "InternalVariants": [
       {
         "Id": "PipeForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2285,7 +2298,7 @@
       },
       {
         "Id": "PipeLeftInternalVariant",
-        "MirroredInternalVariantId": "PipeLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "PipeLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -2298,7 +2311,7 @@
       },
       {
         "Id": "PipeLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "PipeLeftInternalVariant",
+        "MirroredDefinitionId": "PipeLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -2311,7 +2324,7 @@
       },
       {
         "Id": "PipeCrossInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2324,7 +2337,43 @@
       },
       {
         "Id": "PipeJunctionInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      }
+    ]
+  },
+  {
+    "Id": "PipeGateDefaultVariant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
+      {
+        "Id": "PipeGateDefaultInternalVariant",
+        "MirroredDefinitionId": "PipeGateDefaultInternalVariantMirrored",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "PipeGateDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "PipeGateDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -2347,7 +2396,7 @@
     "InternalVariants": [
       {
         "Id": "PumpDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2370,7 +2419,7 @@
     "InternalVariants": [
       {
         "Id": "RotatorHalfInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2411,7 +2460,7 @@
     "InternalVariants": [
       {
         "Id": "RotatorOneQuadCCWInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2452,7 +2501,7 @@
     "InternalVariants": [
       {
         "Id": "RotatorOneQuadInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2493,7 +2542,7 @@
     "InternalVariants": [
       {
         "Id": "SandboxFluidProducerDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2516,7 +2565,7 @@
     "InternalVariants": [
       {
         "Id": "SandboxItemProducerDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2548,7 +2597,7 @@
     "InternalVariants": [
       {
         "Id": "Splitter1To2LInternalVariant",
-        "MirroredInternalVariantId": "Splitter1To2LInternalVariantMirrored",
+        "MirroredDefinitionId": "Splitter1To2LInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -2587,7 +2636,7 @@
       },
       {
         "Id": "Splitter1To2LInternalVariantMirrored",
-        "MirroredInternalVariantId": "Splitter1To2LInternalVariant",
+        "MirroredDefinitionId": "Splitter1To2LInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -2636,7 +2685,7 @@
     "InternalVariants": [
       {
         "Id": "Splitter1To3InternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2693,7 +2742,7 @@
     "InternalVariants": [
       {
         "Id": "SplitterTShapeInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2742,7 +2791,7 @@
     "InternalVariants": [
       {
         "Id": "StackerDefaultInternalVariant",
-        "MirroredInternalVariantId": "StackerDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "StackerDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -2786,7 +2835,7 @@
       },
       {
         "Id": "StackerDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "StackerDefaultInternalVariant",
+        "MirroredDefinitionId": "StackerDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -2840,7 +2889,7 @@
     "InternalVariants": [
       {
         "Id": "StackerStraightInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2894,7 +2943,7 @@
     "InternalVariants": [
       {
         "Id": "TrashDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -2950,7 +2999,7 @@
     "InternalVariants": [
       {
         "Id": "VirtualAnalyzerDefaultInternalVariant",
-        "MirroredInternalVariantId": "VirtualAnalyzerDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "VirtualAnalyzerDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -2963,7 +3012,7 @@
       },
       {
         "Id": "VirtualAnalyzerDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "VirtualAnalyzerDefaultInternalVariant",
+        "MirroredDefinitionId": "VirtualAnalyzerDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -2986,7 +3035,7 @@
     "InternalVariants": [
       {
         "Id": "VirtualHalfCutterDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3009,7 +3058,7 @@
     "InternalVariants": [
       {
         "Id": "VirtualPainterDefaultInternalVariant",
-        "MirroredInternalVariantId": "VirtualPainterDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "VirtualPainterDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -3022,7 +3071,30 @@
       },
       {
         "Id": "VirtualPainterDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "VirtualPainterDefaultInternalVariant",
+        "MirroredDefinitionId": "VirtualPainterDefaultInternalVariant",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      }
+    ]
+  },
+  {
+    "Id": "VirtualPinPusherDefaultVariant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
+      {
+        "Id": "VirtualPinPusherDefaultInternalVariant",
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3045,7 +3117,7 @@
     "InternalVariants": [
       {
         "Id": "VirtualRotatorDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3068,7 +3140,7 @@
     "InternalVariants": [
       {
         "Id": "VirtualStackerDefaultInternalVariant",
-        "MirroredInternalVariantId": "VirtualStackerDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "VirtualStackerDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -3081,7 +3153,7 @@
       },
       {
         "Id": "VirtualStackerDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "VirtualStackerDefaultInternalVariant",
+        "MirroredDefinitionId": "VirtualStackerDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -3104,7 +3176,7 @@
     "InternalVariants": [
       {
         "Id": "VirtualUnstackerDefaultInternalVariant",
-        "MirroredInternalVariantId": "VirtualUnstackerDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "VirtualUnstackerDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -3117,7 +3189,7 @@
       },
       {
         "Id": "VirtualUnstackerDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "VirtualUnstackerDefaultInternalVariant",
+        "MirroredDefinitionId": "VirtualUnstackerDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -3140,7 +3212,7 @@
     "InternalVariants": [
       {
         "Id": "VirtualCrystalGeneratorDefaultInternalVariant",
-        "MirroredInternalVariantId": "VirtualCrystalGeneratorDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "VirtualCrystalGeneratorDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -3153,7 +3225,7 @@
       },
       {
         "Id": "VirtualCrystalGeneratorDefaultInternalVariantMirrored",
-        "MirroredInternalVariantId": "VirtualCrystalGeneratorDefaultInternalVariant",
+        "MirroredDefinitionId": "VirtualCrystalGeneratorDefaultInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -3176,7 +3248,7 @@
     "InternalVariants": [
       {
         "Id": "VirtualHalvesSwapperDefaultInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3204,7 +3276,7 @@
     "InternalVariants": [
       {
         "Id": "WireDefaultBridgeInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3227,7 +3299,7 @@
     "InternalVariants": [
       {
         "Id": "WireDefaultForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3240,7 +3312,7 @@
       },
       {
         "Id": "WireDefaultLeftInternalVariant",
-        "MirroredInternalVariantId": "WireDefaultLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "WireDefaultLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -3253,7 +3325,7 @@
       },
       {
         "Id": "WireDefaultLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "WireDefaultLeftInternalVariant",
+        "MirroredDefinitionId": "WireDefaultLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -3266,7 +3338,7 @@
       },
       {
         "Id": "WireDefaultJunctionInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3279,7 +3351,7 @@
       },
       {
         "Id": "WireDefaultCrossInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3292,7 +3364,7 @@
       },
       {
         "Id": "WireDefault1UpBackwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3310,7 +3382,7 @@
       },
       {
         "Id": "WireDefault1UpForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3328,7 +3400,7 @@
       },
       {
         "Id": "WireDefault1UpLeftInternalVariant",
-        "MirroredInternalVariantId": "WireDefault1UpLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "WireDefault1UpLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -3346,7 +3418,7 @@
       },
       {
         "Id": "WireDefault1UpLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "WireDefault1UpLeftInternalVariant",
+        "MirroredDefinitionId": "WireDefault1UpLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -3364,7 +3436,7 @@
       },
       {
         "Id": "WireDefault2UpBackwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3387,7 +3459,7 @@
       },
       {
         "Id": "WireDefault2UpForwardInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3410,7 +3482,7 @@
       },
       {
         "Id": "WireDefault2UpLeftInternalVariant",
-        "MirroredInternalVariantId": "WireDefault2UpLeftInternalVariantMirrored",
+        "MirroredDefinitionId": "WireDefault2UpLeftInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -3433,7 +3505,7 @@
       },
       {
         "Id": "WireDefault2UpLeftInternalVariantMirrored",
-        "MirroredInternalVariantId": "WireDefault2UpLeftInternalVariant",
+        "MirroredDefinitionId": "WireDefault2UpLeftInternalVariant",
         "Tiles": [
           {
             "X": 0,
@@ -3466,7 +3538,7 @@
     "InternalVariants": [
       {
         "Id": "WireGlobalTransmitterReceiverInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3619,7 +3691,7 @@
     "InternalVariants": [
       {
         "Id": "WireGlobalTransmitterSenderInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3772,7 +3844,7 @@
     "InternalVariants": [
       {
         "Id": "WireTransmitterReceiverInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3795,7 +3867,7 @@
     "InternalVariants": [
       {
         "Id": "WireTransmitterSenderInternalVariant",
-        "MirroredInternalVariantId": null,
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,

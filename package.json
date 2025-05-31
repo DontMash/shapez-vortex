@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "prepare:schemas": "json2ts -i \"src/lib/assets/data/json-schemas/**/*.json\" -o \"src/lib/schemas\"",
     "prepare:buildings": "bash resources/scripts/buildings-pipeline.sh",
     "prepare:shapes": "bash resources/scripts/shapes-pipeline.sh",
     "dev": "vite dev",
@@ -54,6 +55,7 @@
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-svelte": "^3.5.1",
+    "json-schema-to-typescript": "^15.0.4",
     "prettier": "^3.5.3",
     "prettier-plugin-svelte": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
