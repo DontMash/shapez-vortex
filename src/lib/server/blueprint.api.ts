@@ -143,7 +143,7 @@ export const put = async (
 
 const createBlueprintTags = async (pb: PocketBase, value: Array<string>) =>
   new Promise<Array<string>>((resolve) => {
-    const user = pb.authStore.model;
+    const user = pb.authStore.record;
     const tags = new Set(value);
     const promises = [...tags].map(
       (tag) =>
@@ -186,7 +186,7 @@ const getBlueprintFormData = (
   formData.append('buildings', JSON.stringify(Object.fromEntries(buildings)));
   formData.append('buildingCount', buildingCount.toString());
   formData.append('islandCount', islandCount.toString());
-  formData.append('creator', pb.authStore.model?.id ?? '');
+  formData.append('creator', pb.authStore.record?.id ?? '');
   formData.append('viewCount', String(1));
   formData.append('downloadCount', String(1));
   formData.append('bookmarkCount', String(1));
