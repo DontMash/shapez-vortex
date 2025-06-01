@@ -23,7 +23,7 @@
     "@tailwindcss/vite": "^4.1.7",
     "@threlte/core": "^8.0.4",
     "@threlte/extras": "^9.2.1",
-    "bits-ui": "^1.7.0",
+    "bits-ui": "^2.4.1",
     "class-variance-authority": "^0.7.1",
     "embla-carousel": "^8.6.0",
     "formsnap": "^2.0.1",
