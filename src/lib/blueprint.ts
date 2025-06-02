@@ -49,8 +49,7 @@ export function update(
 ): BlueprintIdentifier {
   const blueprint = decode(value);
   blueprint.V = version;
-  const fixed = fix(blueprint);
-  const identifier = encode(fixed);
+  const identifier = encode(blueprint);
   return identifier;
 }
 export function decode(value: BlueprintIdentifier): Blueprint {
@@ -82,43 +81,12 @@ export function encode(value: Blueprint): BlueprintIdentifier {
   const zipedData = btoa(String.fromCharCode(...zipedDataArray));
   return stringify(zipedData) as BlueprintIdentifier;
 }
-export function isBlueprint(value: unknown) {
+export function isBlueprint(value: unknown): value is Blueprint {
   const validation = BLUEPRINT_SCHEMA.safeParse(value);
   return validation.success;
 }
 function stringify(value: string): string {
   return `${BLUEPRINT_IDENTIFIER_PREFIX}${BLUEPRINT_IDENTIFIER_SEPERATOR}${BLUEPRINT_IDENTIFIER_VERSION}${BLUEPRINT_IDENTIFIER_SEPERATOR}${value}${BLUEPRINT_IDENTIFIER_SUFFIX}`;
-}
-
-function fix(value: Blueprint): Blueprint {
-  const bp =
-    value.BP.$type === 'Island'
-      ? fixBlueprintIsland(value.BP)
-      : fixBlueprintBuilding(value.BP);
-  return { ...value, BP: bp };
-}
-function fixBlueprintIsland(value: BlueprintIsland): BlueprintIsland {
-  const entries = value.Entries.map((entry) => {
-    if (!entry.B) {
-      return entry;
-    }
-    return { ...entry, B: fixBlueprintBuilding(entry.B) };
-  });
-  return { ...value, Entries: entries };
-}
-const BLUEPRINT_EMPTY_DATA = '//8=';
-function fixBlueprintBuilding(value: BlueprintBuilding): BlueprintBuilding {
-  const entries = value.Entries.map((entry) => {
-    switch (entry.T) {
-      case 'TrainStationLoaderInternalVariant':
-      case 'TrainStationUnloaderInternalVariant':
-        return { ...entry, C: BLUEPRINT_EMPTY_DATA };
-
-      default:
-        return entry;
-    }
-  });
-  return { ...value, Entries: entries };
 }
 
 export function getBuildingCount(blueprint: Blueprint): number {
