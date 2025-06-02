@@ -1,12 +1,14 @@
 <script lang="ts">
   import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
-  import { decode, encode } from '$lib/blueprint';
-  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
   import {
+    decode,
+    encode,
     type Blueprint,
     type BlueprintIdentifier,
-  } from '$lib/blueprint.types';
+  } from '$lib/blueprint';
+  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
+  import { copy, paste } from '$lib/client/actions/clipboard.svelte';
   import { add } from '$lib/client/toast.service';
 
   import { button } from '$lib/components/button';
@@ -14,7 +16,6 @@
   import { section } from '$lib/components/section';
 
   import PageHeader from '$lib/components/PageHeader.svelte';
-  import { copy, paste } from '$lib/client/actions/clipboard.svelte';
 
   let { data }: PageProps = $props();
 

@@ -12,6 +12,7 @@
   import { tick, untrack } from 'svelte';
   import { slide } from 'svelte/transition';
   import { superForm } from 'sveltekit-superforms';
+  import type { BlueprintTag } from '$lib/blueprint';
   import {
     PAGINATION_PAGE_DEFAULT,
     PAGINATION_PER_PAGE_DEFAULT,
@@ -25,7 +26,6 @@
 
   import BlueprintItemList from '$lib/components/blueprint/BlueprintItemList.svelte';
   import PageHeader from '$lib/components/PageHeader.svelte';
-  import type { BlueprintTag } from '$lib/blueprint.types';
 
   let { data }: PageProps = $props();
 

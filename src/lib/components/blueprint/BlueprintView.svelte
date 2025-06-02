@@ -7,12 +7,12 @@
   import { blur } from 'svelte/transition';
   import { MOUSE, NoToneMapping, WebGLRenderer } from 'three';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
-  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
   import type {
     Blueprint,
     BlueprintIdentifier,
     BlueprintIslandEntry,
-  } from '$lib/blueprint.types';
+  } from '$lib/blueprint';
+  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
   import { capture } from '$lib/client/actions/capture.svelte';
   import { copy, paste } from '$lib/client/actions/clipboard.svelte';
   import { fullscreen } from '$lib/client/actions/fullscreen.svelte';

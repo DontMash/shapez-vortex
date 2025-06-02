@@ -3,11 +3,11 @@
   import { Button } from 'bits-ui';
   import type { SuperValidated } from 'sveltekit-superforms';
   import { z } from 'zod';
-  import type { BlueprintRecord } from '$lib/blueprint.types';
   import { copy } from '$lib/client/actions/clipboard.svelte';
   import { add } from '$lib/client/toast.service';
-  import { REPORT_CREATE_SCHEMA } from '$lib/report.types';
-  import type { User } from '$lib/user.types';
+  import type { BlueprintRecord } from '$lib/blueprint';
+  import { REPORT_CREATE_SCHEMA } from '$lib/report';
+  import type { User } from '$lib/user';
 
   import BlueprintDelete from '$lib/components/blueprint/BlueprintDelete.svelte';
   import BlueprintReport from '$lib/components/blueprint/BlueprintReport.svelte';

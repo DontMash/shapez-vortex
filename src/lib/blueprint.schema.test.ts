@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type z from 'zod';
+import type { Blueprint, BlueprintIdentifier } from './blueprint';
 import {
   BLUEPRINT_CREATE_SCHEMA,
   BLUEPRINT_FORM_SCHEMA,
   BLUEPRINT_SCHEMA,
   type BlueprintFormData,
 } from './blueprint.schema';
-import type { Blueprint, BlueprintIdentifier } from './blueprint.types';
 
 const mockBlueprintIdentifier: BlueprintIdentifier =
   'SHAPEZ2-1-H4sIAAAAAAAAA62QwYrCQBBE/6XwOAdz2MscgysEFpEgQZEgzWZcB9qOzPQgIcy/70Qv+wFLQ0FTdL2iZ3SwVbX+MKj3sDNWOj0cLJrIJAMMmu9RFmNDSrBn+LLbPZNex3CPMJKY34J4o4ezbXoP+mzwKRq8i+VwRltIBocS/kXTmPSyKwnEl6pQ6r/sOnkevPz8K/0IuzY4vbR96dKkdqwbd6XEuh3Dk8LQiLogxB0FT6LIfWnnhcLUuRD9Umf5V859zr/Lq0txPgEAAA==$';

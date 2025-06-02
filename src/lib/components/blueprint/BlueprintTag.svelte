@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from 'bits-ui';
-  import type { BlueprintTag } from '$lib/blueprint.types';
+  import type { BlueprintTag } from '$lib/blueprint';
 
   import { button } from '$lib/components/button';
 

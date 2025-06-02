@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BlueprintRecord } from '$lib/blueprint.types';
+  import type { BlueprintRecord } from '$lib/blueprint';
 
   import BlueprintItem from './BlueprintItem.svelte';
 

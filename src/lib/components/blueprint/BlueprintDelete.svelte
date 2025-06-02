@@ -2,7 +2,7 @@
   import { AlertDialog } from 'bits-ui';
   import { fade } from 'svelte/transition';
   import { enhance } from '$app/forms';
-  import type { BlueprintRecord } from '$lib/blueprint.types';
+  import type { BlueprintRecord } from '$lib/blueprint';
 
   import { button } from '$lib/components/button';
   import * as dialog from '$lib/components/dialog';

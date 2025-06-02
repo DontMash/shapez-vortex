@@ -5,9 +5,8 @@ import {
   ADMIN_EMAIL,
   ADMIN_PASSWORD,
 } from '$env/static/private';
-import type { BlueprintRecord } from '$lib/blueprint.types';
 import type { User } from '$lib/user.types';
-import { decode } from '$lib/blueprint';
+import { decode, type BlueprintRecord } from '$lib/blueprint';
 import type { LayoutServerLoad } from './$types';
 
 export const load = (async ({ depends, locals, params }) => {

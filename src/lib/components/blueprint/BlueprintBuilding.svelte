@@ -15,7 +15,7 @@
   import type {
     BlueprintBuildingEntry,
     BlueprintBuildingIdentifier,
-  } from '$lib/blueprint.types';
+  } from '$lib/blueprint';
 
   import COLOR_MAP from '$lib/assets/images/MaterialLUT.png';
   import BUILDING_VERTEXSHADER from '$lib/assets/shaders/building/building.vs?raw';

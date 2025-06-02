@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { decode } from '$lib/blueprint';
 import {
   BLUEPRINT_IDENTIFIER_REGEX,
+  decode,
   type BlueprintIdentifier,
-} from '$lib/blueprint.types';
+} from '$lib/blueprint';
 import { GAME_VERSION } from '$lib/game';
-import { isShapeIdentifier, type ShapeIdentifier } from './shape.types';
+import { isShapeIdentifier, type ShapeIdentifier } from '$lib/shape.types';
 
 export const BLUEPRINT_FILE_FORMAT = '.spz2bp' as const;
 

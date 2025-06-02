@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button } from 'bits-ui';
   import { page } from '$app/state';
-  import type { BlueprintRecord } from '$lib/blueprint.types';
+  import type { BlueprintRecord } from '$lib/blueprint';
 
   import BlueprintInteraction from './BlueprintInteraction.svelte';
   import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';

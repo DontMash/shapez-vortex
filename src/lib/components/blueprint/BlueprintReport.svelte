@@ -4,9 +4,9 @@
   import { fade } from 'svelte/transition';
   import { superForm, type SuperValidated } from 'sveltekit-superforms';
   import { z } from 'zod';
-  import { page } from '$app/stores';
-  import type { BlueprintRecord } from '$lib/blueprint.types';
-  import { REPORT_CREATE_SCHEMA, REPORT_REASONS } from '$lib/report.types';
+  import { page } from '$app/state';
+  import type { BlueprintRecord } from '$lib/blueprint';
+  import { REPORT_CREATE_SCHEMA, REPORT_REASONS } from '$lib/report';
 
   import { button } from '$lib/components/button';
   import * as dialog from '$lib/components/dialog';
@@ -30,7 +30,7 @@
   });
   const { form: formData, enhance, delayed } = reportForm;
   $formData.blueprint = blueprint.id;
-  const userId = $page.data.user?.id ?? '';
+  const userId = page.data.user?.id ?? '';
   $formData.user = userId;
   let isReportDialogOpen = $state(false);
 

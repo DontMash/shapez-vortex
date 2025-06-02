@@ -8,8 +8,8 @@ import {
   ADMIN_PASSWORD,
   POCKETBASE_URL,
 } from '$env/static/private';
-import type { BlueprintRecord } from '$lib/blueprint.types';
-import { REPORT_CREATE_SCHEMA } from '$lib/report.types';
+import type { BlueprintRecord } from '$lib/blueprint';
+import { REPORT_CREATE_SCHEMA } from '$lib/report';
 
 export const load = (async () => {
   const form = await superValidate(zod(REPORT_CREATE_SCHEMA));

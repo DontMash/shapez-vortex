@@ -1,6 +1,5 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
-import type { Blueprint } from '$lib/blueprint.types';
-import { encode } from '$lib/blueprint';
+import { encode, type Blueprint } from '$lib/blueprint';
 
 export const POST = (({ request }) =>
   new Promise<Response>((resolve, reject) => {

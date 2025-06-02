@@ -1,6 +1,5 @@
 import type { Component } from 'svelte';
-
-import type { BlueprintBuildingIdentifier } from '$lib/blueprint.types';
+import type { BlueprintBuildingIdentifier } from '$lib/blueprint';
 
 import ErrorModel from '$lib/components/models/Error.svelte';
 import BeltDefaultForwardInternalVariant_Layer0 from '$lib/components/models/buildings/BeltDefaultForwardInternalVariant_Layer0.svelte';

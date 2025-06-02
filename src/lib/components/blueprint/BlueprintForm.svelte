@@ -20,7 +20,14 @@
   import { beforeNavigate, goto } from '$app/navigation';
   import { toBlob, toFileList } from '$lib/utils';
   import { add } from '$lib/client/toast.service';
-  import { decode, isBlueprintIdentifier } from '$lib/blueprint';
+  import {
+    decode,
+    isBlueprintIdentifier,
+    type Blueprint,
+    type BlueprintIdentifier,
+    type BlueprintRecordData,
+    type BlueprintTag,
+  } from '$lib/blueprint';
   import {
     BLUEPRINT_FILE_FORMAT,
     BLUEPRINT_DESCRIPTION_MAX_LENGTH,
@@ -34,12 +41,6 @@
     BLUEPRINT_TITLE_MAX_LENGTH,
     BLUEPRINT_TITLE_MIN_LENGTH,
   } from '$lib/blueprint.schema';
-  import {
-    type Blueprint,
-    type BlueprintIdentifier,
-    type BlueprintRecordData,
-    type BlueprintTag,
-  } from '$lib/blueprint.types';
 
   import { button } from '$lib/components/button';
   import * as dialog from '$lib/components/dialog';

@@ -1,6 +1,6 @@
-import type { BlueprintRecord } from '$lib/blueprint.types';
-import type { User } from '$lib/user.types';
 import type { PageServerLoad } from './$types';
+import type { BlueprintRecord } from '$lib/blueprint';
+import type { User } from '$lib/user.types';
 
 export const load = (async ({ locals, parent }) => {
   const { profile } = await parent();

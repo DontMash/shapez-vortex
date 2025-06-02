@@ -2,8 +2,8 @@ import { fail, isRedirect, redirect } from '@sveltejs/kit';
 import { setError, superValidate, withFiles } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { put } from '$lib/server/blueprint.api';
+import type { BlueprintTag } from '$lib/blueprint';
 import { BLUEPRINT_FORM_SCHEMA } from '$lib/blueprint.schema';
-import type { BlueprintTag } from '$lib/blueprint.types';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals, parent, url }) => {

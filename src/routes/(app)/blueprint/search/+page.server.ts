@@ -2,14 +2,14 @@ import type { PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
-import type { BlueprintTag } from '$lib/blueprint.types';
+import type { BlueprintTag } from '$lib/blueprint';
+import { get, getBlueprintOptions } from '$lib/server/blueprint.api';
 import {
   PAGINATION_SCHEMA,
   SEARCH_SCHEMA,
   type SearchOrderOption,
   type SearchSortOption,
 } from '$lib/search.schema';
-import { get, getBlueprintOptions } from '$lib/server/blueprint.api';
 
 export const load = (async ({ locals, url }) => {
   const options = getBlueprintOptions(url);

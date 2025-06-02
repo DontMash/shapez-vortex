@@ -1,9 +1,9 @@
+import type { LayoutServerLoad } from './$types';
 import type { ListResult } from 'pocketbase';
 import UAParser from 'ua-parser-js';
-import type { LayoutServerLoad } from './$types';
-import type { BlueprintRecord } from '$lib/blueprint.types';
-import type { User } from '$lib/user.types';
+import type { BlueprintRecord } from '$lib/blueprint';
 import { get } from '$lib/server/blueprint.api';
+import type { User } from '$lib/user.types';
 
 export const load = (async ({ fetch, locals, request, url }) => {
   let agent;

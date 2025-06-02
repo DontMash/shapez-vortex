@@ -1,10 +1,10 @@
+import type { RequestHandler } from './$types';
 import { error, json } from '@sveltejs/kit';
 import { superValidate, type SuperValidated } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { put } from '$lib/server/blueprint.api';
+import type { BlueprintRecordData } from '$lib/blueprint';
 import { BLUEPRINT_FORM_SCHEMA } from '$lib/blueprint.schema';
-import type { BlueprintRecordData } from '$lib/blueprint.types';
-import type { RequestHandler } from './$types';
+import { put } from '$lib/server/blueprint.api';
 
 export const PUT: RequestHandler = async ({ locals, params, request }) => {
   if (!locals.user) {

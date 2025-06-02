@@ -7,13 +7,14 @@ import {
   getBuildings,
   getCost,
   getIslandCount,
+  type BlueprintRecord,
+  type BlueprintTag,
 } from '$lib/blueprint';
 import {
   BLUEPRINT_CREATE_SCHEMA,
   BLUEPRINT_TAG_NEW_SYMBOL,
   type BlueprintFormData,
 } from '$lib/blueprint.schema';
-import type { BlueprintRecord, BlueprintTag } from '$lib/blueprint.types';
 import type { User } from '$lib/user.types';
 import {
   PAGINATION_PAGE_DEFAULT,
