@@ -15,7 +15,7 @@ import {
   BLUEPRINT_TAG_NEW_SYMBOL,
   type BlueprintFormData,
 } from '$lib/blueprint.schema';
-import type { User } from '$lib/user';
+import type { User } from '$lib/user.schema';
 import {
   PAGINATION_PAGE_DEFAULT,
   PAGINATION_PER_PAGE_DEFAULT,

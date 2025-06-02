@@ -3,7 +3,7 @@ import type { ListResult } from 'pocketbase';
 import UAParser from 'ua-parser-js';
 import type { BlueprintRecord } from '$lib/blueprint';
 import { get } from '$lib/server/blueprint.api';
-import type { User } from '$lib/user';
+import type { User } from '$lib/user.schema';
 
 export const load = (async ({ fetch, locals, request, url }) => {
   let agent;

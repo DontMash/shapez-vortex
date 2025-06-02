@@ -7,7 +7,7 @@
   import { add } from '$lib/client/toast.service';
   import type { BlueprintRecord } from '$lib/blueprint';
   import { REPORT_CREATE_SCHEMA } from '$lib/report';
-  import type { User } from '$lib/user';
+  import type { User } from '$lib/user.schema';
 
   import BlueprintDelete from '$lib/components/blueprint/BlueprintDelete.svelte';
   import BlueprintReport from '$lib/components/blueprint/BlueprintReport.svelte';

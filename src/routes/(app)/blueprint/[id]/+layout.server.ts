@@ -7,7 +7,7 @@ import {
   ADMIN_PASSWORD,
 } from '$env/static/private';
 import { decode, type BlueprintRecord } from '$lib/blueprint';
-import type { User } from '$lib/user';
+import type { User } from '$lib/user.schema';
 
 export const load = (async ({ depends, locals, params }) => {
   try {

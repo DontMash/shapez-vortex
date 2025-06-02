@@ -1,7 +1,7 @@
 import { type Handle } from '@sveltejs/kit';
 import PocketBase from 'pocketbase';
 import { POCKETBASE_URL } from '$env/static/private';
-import type { User } from '$lib/user';
+import type { User } from '$lib/user.schema';
 
 export const handle: Handle = async ({ event, resolve }) => {
   const pb = new PocketBase(POCKETBASE_URL);
