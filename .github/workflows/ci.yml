@@ -132,11 +132,7 @@ jobs:
         with:
           tag_name: ${{ needs.changelog.outputs.tag }}
           name: ${{ needs.changelog.outputs.tag }}
-          body: |
-            <details>
-              <summary>Changelog</summary>
-              ${{ needs.changelog.outputs.clean_changelog }}
-            </details>
+          body: ${{ needs.changelog.outputs.clean_changelog }}
 
   build-deploy:
     name: Build & Push
