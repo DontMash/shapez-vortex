@@ -1,24 +1,80 @@
-import {
-  type ShapeColorIdentifier,
-  type Shape,
-  type ShapeIdentifier,
-  type ShapeLayerData,
-  type ShapePartData,
-  type ShapeColor,
-  type ShapeType,
-  SHAPE_COLORS,
-  SHAPE_MAX_LAYERS,
-  SHAPE_MAX_DEFAULT_PARTS,
-  isShapeIdentifier,
-  SHAPE_LAYER_IDENTIFIER_SEPERATOR,
-  SHAPE_PART_REGEX,
-  SHAPE_PART_PARAMETERS_REGEX,
-  SHAPE_MAX_HEX_PARTS,
-  SHAPE_HEX_TYPES,
-  type ShapeTypeIdentifier,
-  SHAPE_DEFAULT_TYPE_IDENTIFIERS,
-  SHAPE_HEX_TYPE_IDENTIFIER,
-} from '$lib/shape.types';
+import { z } from 'zod';
+
+export type ShapeData = {
+  identifier: ShapeIdentifier;
+  data: Shape;
+  meta: {
+    types: Set<ShapeType>;
+    colors: Set<ShapeColor>;
+    layerCount: number;
+    partCount: number;
+  };
+};
+
+export type ShapeIdentifier = string;
+const SHAPE_SUPPORT_TYPES = ['P', 'c'] as const;
+export const SHAPE_DEFAULT_TYPES = ['C', 'R', 'S', 'W'] as const;
+export type ShapeDefaultType = (typeof SHAPE_DEFAULT_TYPES)[number];
+export const SHAPE_DEFAULT_TYPE_IDENTIFIERS = [
+  ...SHAPE_DEFAULT_TYPES,
+  ...SHAPE_SUPPORT_TYPES,
+] as const;
+export type ShapeDefaultTypeIdentifier =
+  (typeof SHAPE_DEFAULT_TYPE_IDENTIFIERS)[number];
+export const SHAPE_HEX_TYPES = ['F', 'G', 'H'] as const;
+export type ShapeHexTypes = (typeof SHAPE_HEX_TYPES)[number];
+export const SHAPE_HEX_TYPE_IDENTIFIER = [
+  ...SHAPE_HEX_TYPES,
+  ...SHAPE_SUPPORT_TYPES,
+] as const;
+export type ShapeHexTypeIdentifier = (typeof SHAPE_HEX_TYPE_IDENTIFIER)[number];
+export type ShapeType = ShapeDefaultType | ShapeHexTypes;
+export const SHAPE_TYPE_IDENTIFIER = [
+  ...SHAPE_DEFAULT_TYPE_IDENTIFIERS,
+  ...SHAPE_HEX_TYPE_IDENTIFIER,
+  '-',
+] as const;
+export type ShapeTypeIdentifier = (typeof SHAPE_TYPE_IDENTIFIER)[number];
+export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'm', 'y', 'k', 'w'] as const;
+export type ShapeColor = (typeof SHAPE_COLORS)[number];
+export const SHAPE_COLOR_IDENTIFIERS = [...SHAPE_COLORS, 'u', '-'] as const;
+export type ShapeColorIdentifier = (typeof SHAPE_COLOR_IDENTIFIERS)[number];
+export type Shape = Array<ShapeLayerData>;
+export type ShapeLayerData = Array<ShapePartData>;
+export type ShapePartData = {
+  type: ShapeTypeIdentifier;
+  color: ShapeColorIdentifier;
+};
+export const SHAPE_LAYER_IDENTIFIER_SEPERATOR = ':';
+export const SHAPE_PART_REGEX = /(..?)/g;
+export const SHAPE_PART_PARAMETERS_REGEX = /(.?)/g;
+
+export const SHAPE_MAX_LAYERS = 6;
+export const SHAPE_MAX_DEFAULT_PARTS = 4;
+export const SHAPE_MAX_HEX_PARTS = 6;
+const SHAPE_DEFAULT_PART_REGEX = `[CRSWPc-]`;
+const SHAPE_HEX_PART_REGEX = `[FGHPc-]`;
+const SHAPE_COLOR_REGEX = `[rgbcmykwu-]`;
+const SHAPE_DEFAULT_LAYER_REGEX = `${SHAPE_DEFAULT_PART_REGEX}${SHAPE_COLOR_REGEX}){1,${SHAPE_MAX_DEFAULT_PARTS}}`;
+const SHAPE_DEFAULT_IDENTIFIER_REGEX = new RegExp(
+  `^(${SHAPE_DEFAULT_LAYER_REGEX}(:(${SHAPE_DEFAULT_LAYER_REGEX})*$`,
+);
+const SHAPE_HEX_LAYER_REGEX = `${SHAPE_HEX_PART_REGEX}${SHAPE_COLOR_REGEX}){1,${SHAPE_MAX_HEX_PARTS}}`;
+const SHAPE_HEX_IDENTIFIER_REGEX = new RegExp(
+  `^(${SHAPE_HEX_LAYER_REGEX}(:(${SHAPE_HEX_LAYER_REGEX})*$`,
+);
+export const isDefaultShapeIdentifier = (
+  identifier: ShapeIdentifier,
+): boolean =>
+  z.string().regex(SHAPE_DEFAULT_IDENTIFIER_REGEX).safeParse(identifier)
+    .success;
+export const isHexShapeIdentifier = (identifier: ShapeIdentifier): boolean =>
+  z.string().regex(SHAPE_HEX_IDENTIFIER_REGEX).safeParse(identifier).success;
+export const isShapeIdentifier = (identifier: ShapeIdentifier): boolean => {
+  const a = isDefaultShapeIdentifier(identifier);
+  const b = isHexShapeIdentifier(identifier);
+  return (a && !b) || (!a && b) || (a && b);
+};
 
 export const parse = (identifier: ShapeIdentifier): Shape => {
   if (!isShapeIdentifier(identifier)) {

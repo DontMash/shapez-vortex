@@ -5,7 +5,7 @@ import {
   type BlueprintIdentifier,
 } from '$lib/blueprint';
 import { GAME_VERSION } from '$lib/game';
-import { isShapeIdentifier, type ShapeIdentifier } from '$lib/shape.types';
+import { isShapeIdentifier, type ShapeIdentifier } from '$lib/shape';
 
 export const BLUEPRINT_FILE_FORMAT = '.spz2bp' as const;
 

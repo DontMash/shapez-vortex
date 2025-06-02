@@ -3,7 +3,7 @@
   import { cva } from 'class-variance-authority';
   import { fade } from 'svelte/transition';
   import { page } from '$app/state';
-  import { isShapeIdentifier } from '$lib/shape.types';
+  import { isShapeIdentifier } from '$lib/shape';
 
   import { button } from '$lib/components/button';
   import * as dialog from '$lib/components/dialog';

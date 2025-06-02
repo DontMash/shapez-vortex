@@ -1,6 +1,5 @@
-import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { SHAPE, type ShapeData } from '$lib/shape.types';
+import { error, redirect } from '@sveltejs/kit';
 import {
   getColors,
   getLayerCount,
@@ -8,11 +7,15 @@ import {
   getPartCount,
   getTypes,
   random,
+  type ShapeIdentifier,
+  type ShapeData,
 } from '$lib/shape';
+
+const DEFAULT_SHAPE: ShapeIdentifier = 'CwRwCwCw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
 
 export const load = (({ url }) => {
   try {
-    const identifier = url.searchParams.get('identifier') ?? SHAPE;
+    const identifier = url.searchParams.get('identifier') ?? DEFAULT_SHAPE;
     const data = parse(identifier);
     const shape: ShapeData = {
       identifier,

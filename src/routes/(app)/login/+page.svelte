@@ -6,7 +6,7 @@
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { page } from '$app/stores';
   import { add } from '$lib/client/toast.service';
-  import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';
+  import { USER_LOGIN_FORM_SCHEMA } from '$lib/user';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';

@@ -1,21 +1,26 @@
 <script lang="ts">
+  import { Canvas, T } from '@threlte/core';
+  import { OrbitControls, Suspense } from '@threlte/extras';
   import { DropdownMenu } from 'bits-ui';
   import screenfull from 'screenfull';
   import { blur } from 'svelte/transition';
-  import { page } from '$app/state';
-  import { Group, NoToneMapping, WebGLRenderer, type Mesh } from 'three';
+  import {
+    Group,
+    MeshStandardMaterial,
+    NoToneMapping,
+    WebGLRenderer,
+    type Mesh,
+  } from 'three';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
-  import { Canvas, T } from '@threlte/core';
-  import { OrbitControls, Suspense } from '@threlte/extras';
+  import { page } from '$app/state';
   import { copy } from '$lib/client/actions/clipboard.svelte';
   import { fullscreen } from '$lib/client/actions/fullscreen.svelte';
   import { add } from '$lib/client/toast.service';
   import {
     isDefaultShapeIdentifier,
-    SHAPE_COLOR_BASE_MATERIAL,
     SHAPE_MAX_LAYERS,
     type ShapeData,
-  } from '$lib/shape.types';
+  } from '$lib/shape';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
@@ -30,6 +35,13 @@
   const SHAPE_PART_EXPAND_OFFSET = 0.4;
   const SHAPE_CAMERA_START_POSITION: ThrelteVector3 = [0, 0, 1.5];
   const SHAPE_CAMERA_TOP_POSITION: ThrelteVector3 = [0, 1.5, 0];
+  const SHAPE_COLOR_BASE = 0x333333;
+  const SHAPE_COLOR_BASE_MATERIAL = new MeshStandardMaterial({
+    name: 'BASE_MATERIAL',
+    color: SHAPE_COLOR_BASE,
+    roughness: 0.8,
+    metalness: 0.3,
+  });
 
   interface Props {
     data: ShapeData;
