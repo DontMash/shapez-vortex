@@ -7,14 +7,11 @@
   import { blur } from 'svelte/transition';
   import { MOUSE, NoToneMapping, WebGLRenderer } from 'three';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
-  import {
-    BLUEPRINT_FILE_FORMAT,
-    BLUEPRINT_GRID_COLOR,
-    BLUEPRINT_GRID_SIZE,
-    ISLAND_LAYOUT_UNIT,
-    type Blueprint,
-    type BlueprintIdentifier,
-    type BlueprintIslandEntry,
+  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
+  import type {
+    Blueprint,
+    BlueprintIdentifier,
+    BlueprintIslandEntry,
   } from '$lib/blueprint.types';
   import { capture } from '$lib/client/actions/capture.svelte';
   import { copy, paste } from '$lib/client/actions/clipboard.svelte';
@@ -24,6 +21,15 @@
   import { button } from '$lib/components/button';
 
   import BlueprintBuilding from './BlueprintBuilding.svelte';
+
+  const BLUEPRINT_GRID_SIZE = 1001;
+  const BLUEPRINT_GRID_COLOR = 0x444444;
+
+  const BLUEPRINT_ISLAND_PADDING_SIZE = 3;
+  const BLUEPRINT_ISLAND_GAP_SIZE = BLUEPRINT_ISLAND_PADDING_SIZE * 2;
+  const BLUEPRINT_ISLAND_MIN_SIZE = 12;
+  const BLUEPRINT_ISLAND_LAYOUT_UNIT =
+    BLUEPRINT_ISLAND_MIN_SIZE + BLUEPRINT_ISLAND_GAP_SIZE;
 
   type ControlOptions = {
     download?: boolean;
@@ -91,12 +97,12 @@
   ): [number, number, number] {
     const x = entry.X ?? 0;
     const z = entry.Y ?? 0;
-    const offset = ISLAND_LAYOUT_UNIT * 0.5;
+    const offset = BLUEPRINT_ISLAND_LAYOUT_UNIT * 0.5;
 
     return [
-      x * ISLAND_LAYOUT_UNIT - offset,
+      x * BLUEPRINT_ISLAND_LAYOUT_UNIT - offset,
       0,
-      z * ISLAND_LAYOUT_UNIT - offset,
+      z * BLUEPRINT_ISLAND_LAYOUT_UNIT - offset,
     ];
   }
 

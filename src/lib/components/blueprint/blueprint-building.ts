@@ -1,7 +1,6 @@
-import type {
-  BlueprintBuildingIdentifier,
-  BlueprintBuildingModel,
-} from '$lib/blueprint.types';
+import type { Component } from 'svelte';
+
+import type { BlueprintBuildingIdentifier } from '$lib/blueprint.types';
 
 import ErrorModel from '$lib/components/models/Error.svelte';
 import BeltDefaultForwardInternalVariant_Layer0 from '$lib/components/models/buildings/BeltDefaultForwardInternalVariant_Layer0.svelte';
@@ -127,6 +126,10 @@ import MixerDefaultInternalVariant from '$lib/components/models/buildings/MixerD
 import FluidStorageDefaultInternalVariant from '$lib/components/models/buildings/FluidStorageDefaultInternalVariant.svelte';
 import CrystalGeneratorDefaultInternalVariant from '$lib/components/models/buildings/CrystalGeneratorDefaultInternalVariant.svelte';
 
+type BlueprintBuildingModel = {
+  base: Component;
+  layers?: [Component, Component, Component];
+};
 const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
   BeltDefaultForwardInternalVariant: {
     base: BeltDefaultForwardInternalVariant_Layer0,

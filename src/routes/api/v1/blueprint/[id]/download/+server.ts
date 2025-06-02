@@ -1,14 +1,12 @@
+import type { RequestHandler } from './$types';
 import PocketBase from 'pocketbase';
 import {
   POCKETBASE_URL,
   ADMIN_EMAIL,
   ADMIN_PASSWORD,
 } from '$env/static/private';
-import type { RequestHandler } from './$types';
-import {
-  BLUEPRINT_FILE_FORMAT,
-  type BlueprintRecord,
-} from '$lib/blueprint.types';
+import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
+import type { BlueprintRecord } from '$lib/blueprint.types';
 
 export const GET: RequestHandler = async ({ locals, params }) => {
   const blueprint = await locals.pb

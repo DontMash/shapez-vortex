@@ -5,8 +5,10 @@
   import { superForm } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import { isBlueprintIdentifier } from '$lib/blueprint';
-  import { BLUEPRINT_VIEW_SCHEMA } from '$lib/blueprint.schema';
-  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
+  import {
+    BLUEPRINT_FILE_FORMAT,
+    BLUEPRINT_VIEW_SCHEMA,
+  } from '$lib/blueprint.schema';
   import { add } from '$lib/client/toast.service';
 
   import { button } from '$lib/components/button';

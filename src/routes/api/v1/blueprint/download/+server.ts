@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
+import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
 
 export const GET: RequestHandler = async ({ url }) => {
   const title = url.searchParams.get('title') ?? 'blueprint';

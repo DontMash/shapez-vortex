@@ -2,8 +2,8 @@
   import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
   import { decode, encode } from '$lib/blueprint';
+  import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
   import {
-    BLUEPRINT_FILE_FORMAT,
     type Blueprint,
     type BlueprintIdentifier,
   } from '$lib/blueprint.types';

@@ -5,7 +5,6 @@ import {
   type BlueprintIdentifier,
   type BlueprintBuilding,
   type BlueprintIsland,
-  BLUEPRINT_EMPTY_DATA,
   BLUEPRINT_IDENTIFIER_PREFIX,
   BLUEPRINT_IDENTIFIER_SEPERATOR,
   BLUEPRINT_IDENTIFIER_SUFFIX,
@@ -78,6 +77,7 @@ function fixBlueprintIsland(value: BlueprintIsland): BlueprintIsland {
   });
   return { ...value, Entries: entries };
 }
+const BLUEPRINT_EMPTY_DATA = '//8=';
 function fixBlueprintBuilding(value: BlueprintBuilding): BlueprintBuilding {
   const entries = value.Entries.map((entry) => {
     switch (entry.T) {

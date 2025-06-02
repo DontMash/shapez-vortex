@@ -1,13 +1,13 @@
-import type { Component } from 'svelte';
 import type { RecordModel } from 'pocketbase';
 import type { z } from 'zod';
-import type { BLUEPRINT_RECORD_SCHEMA } from '$lib/blueprint.schema';
-import type { ShapeIdentifier } from '$lib/shape.types';
-
-export const BLUEPRINT_FILE_FORMAT = '.spz2bp' as const;
-export const BLUEPRINT_EMPTY_DATA = '//8=';
-export const BLUEPRINT_GRID_SIZE = 1001;
-export const BLUEPRINT_GRID_COLOR = 0x444444;
+import type {
+  BLUEPRINT_BUILDING_ENTRY_SCHEMA,
+  BLUEPRINT_BUILDING_SCHEMA,
+  BLUEPRINT_ISLAND_ENTRY_SCHEMA,
+  BLUEPRINT_ISLAND_SCHEMA,
+  BLUEPRINT_RECORD_SCHEMA,
+  BLUEPRINT_SCHEMA,
+} from '$lib/blueprint.schema';
 
 export type BlueprintRecordData = z.infer<typeof BLUEPRINT_RECORD_SCHEMA>;
 export type BlueprintRecord = RecordModel &
@@ -30,75 +30,13 @@ export const BLUEPRINT_IDENTIFIER_REGEX = new RegExp(
 export type BlueprintIdentifier =
   `${BlueprintIdentifierPrefix}${BlueprintIdentifierSeperator}${BlueprintIdentifierVersion}${BlueprintIdentifierSeperator}${string}${BlueprintIdentifierSuffix}`;
 
-export const BLUEPRINT_TYPES = ['Island', 'Building'] as const;
-export type Blueprint = {
-  // version
-  V: number;
-  BP: BlueprintIsland | BlueprintBuilding;
-};
-export type BlueprintIsland = {
-  $type: (typeof BLUEPRINT_TYPES)[0];
-  Entries: Array<BlueprintIslandEntry>;
-} & BlueprintInfo;
-export type BlueprintIslandEntry = {
-  // island layout type
-  T: string;
-  // relative x position
-  X?: number;
-  // relative y position
-  Y?: number;
-  R?: BlueprintEntryRotation;
-  B?: BlueprintBuilding;
-};
-export type BlueprintBuilding = {
-  $type: (typeof BLUEPRINT_TYPES)[1];
-  Entries: Array<BlueprintBuildingEntry>;
-} & BlueprintInfo;
-export type BlueprintBuildingEntry = {
-  // building identifier
-  T: BlueprintBuildingIdentifier;
-  // relative x position
-  X?: number;
-  // relative y position
-  Y?: number;
-  // layer
-  L?: 0 | 1 | 2;
-  R?: BlueprintEntryRotation;
-  // Additional data
-  C?: string;
-};
-export const BLUEPRINT_ENTRYROTATIONS = {
-  East: 0,
-  South: 1,
-  West: 2,
-  North: 3,
-} as const;
-type BlueprintEntryRotation =
-  (typeof BLUEPRINT_ENTRYROTATIONS)[keyof typeof BLUEPRINT_ENTRYROTATIONS];
-type BlueprintInfo = {
-  Icon: {
-    Data: Array<BlueprintIconData>;
-  };
-};
-type BlueprintIconData = `icon:${string}` | `shape:${ShapeIdentifier}`;
-
+export type Blueprint = z.infer<typeof BLUEPRINT_SCHEMA>;
+export type BlueprintIsland = z.infer<typeof BLUEPRINT_ISLAND_SCHEMA>;
+export type BlueprintIslandEntry = z.infer<
+  typeof BLUEPRINT_ISLAND_ENTRY_SCHEMA
+>;
+export type BlueprintBuilding = z.infer<typeof BLUEPRINT_BUILDING_SCHEMA>;
+export type BlueprintBuildingEntry = z.infer<
+  typeof BLUEPRINT_BUILDING_ENTRY_SCHEMA
+>;
 export type BlueprintBuildingIdentifier = string;
-export type BlueprintBuildingModel = {
-  base: Component;
-  layers?: [Component, Component, Component];
-};
-
-const ISLAND_PADDING_SIZE = 3;
-const ISLAND_GAP_SIZE = ISLAND_PADDING_SIZE * 2;
-const ISLAND_MIN_SIZE = 12;
-export const ISLAND_LAYOUT_UNIT = ISLAND_MIN_SIZE + ISLAND_GAP_SIZE;
-export const ISLAND_LAYOUT_IDENTIFIER = [
-  'Layout_1',
-  'Layout_2',
-  'Layout_3_L',
-  'Layout_4_Quad_TwoNotches',
-  'Layout_4_T',
-  'Layout_5_Cross',
-  'Layout_9_Quad_TopAllNotches',
-] as const;
-export type IslandLayoutIdentifier = (typeof ISLAND_LAYOUT_IDENTIFIER)[number];

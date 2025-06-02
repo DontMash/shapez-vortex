@@ -22,6 +22,7 @@
   import { add } from '$lib/client/toast.service';
   import { decode, isBlueprintIdentifier } from '$lib/blueprint';
   import {
+    BLUEPRINT_FILE_FORMAT,
     BLUEPRINT_DESCRIPTION_MAX_LENGTH,
     BLUEPRINT_FORM_SCHEMA,
     BLUEPRINT_IMAGE_MAX_FILE_SIZE,
@@ -34,7 +35,6 @@
     BLUEPRINT_TITLE_MIN_LENGTH,
   } from '$lib/blueprint.schema';
   import {
-    BLUEPRINT_FILE_FORMAT,
     type Blueprint,
     type BlueprintIdentifier,
     type BlueprintRecordData,
