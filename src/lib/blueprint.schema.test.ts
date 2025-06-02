@@ -29,12 +29,12 @@ describe('form', () => {
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).not.toThrow();
   });
 
-  it('title min length failure', () => {
+  it('failure title min length', () => {
     const data = createBlueprintFormData({ title: 'te' });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('title max length failure', () => {
+  it('failure title max length', () => {
     const data = createBlueprintFormData({
       title:
         'This is a test - This is a test - This is a test - This is a test',
@@ -42,12 +42,12 @@ describe('form', () => {
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('title regex failure', () => {
+  it('failure title regex', () => {
     const data = createBlueprintFormData({ title: 'test.' });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('data failure', () => {
+  it('failure data', () => {
     const data = createBlueprintFormData({
       data: mockInvalidBlueprintIdentifier,
     });
@@ -61,7 +61,7 @@ describe('form', () => {
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).not.toThrow();
   });
 
-  it('description failure', () => {
+  it('failure description', () => {
     const data = createBlueprintFormData({
       description:
         'This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. ',
@@ -69,33 +69,33 @@ describe('form', () => {
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('images success', () => {
+  it('success images', () => {
     const data = createBlueprintFormData({ images: [] });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).not.toThrow();
   });
 
-  it('images file success', () => {
+  it('success images file', () => {
     const data = createBlueprintFormData({
       images: [mockImageFile],
     });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).not.toThrow();
   });
 
-  it('images empty file failure', () => {
+  it('failure images empty file', () => {
     const data = createBlueprintFormData({
       images: [new File([], 'Test', { type: 'image/jpeg' })],
     });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('images file type failure', () => {
+  it('failure images file type', () => {
     const data = createBlueprintFormData({
       images: [new File(['0'], 'Test', { type: 'application/json' })],
     });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('images amount failure', () => {
+  it('failure images amount', () => {
     const data = createBlueprintFormData({
       images: [
         mockImageFile,
@@ -108,32 +108,32 @@ describe('form', () => {
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('tags success', () => {
+  it('success tags', () => {
     const data = createBlueprintFormData({ tags: ['test'] });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).not.toThrow();
   });
 
-  it('new tags success', () => {
+  it('success new tags', () => {
     const data = createBlueprintFormData({ tags: ['$test'] });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).not.toThrow();
   });
 
-  it('tags length failure', () => {
+  it('failure tags length', () => {
     const data = createBlueprintFormData({ tags: ['te'] });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('new tags length failure', () => {
+  it('failure new tags length', () => {
     const data = createBlueprintFormData({ tags: ['$te'] });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('tags regex failure', () => {
+  it('failure tags regex', () => {
     const data = createBlueprintFormData({ tags: ['test+'] });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
 
-  it('new tags regex failure', () => {
+  it('failure new tags regex', () => {
     const data = createBlueprintFormData({ tags: ['$test+'] });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
@@ -167,12 +167,12 @@ describe('create', () => {
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).not.toThrow();
   });
 
-  it('title min length failure', () => {
+  it('failure title min length', () => {
     const data = createBlueprintCreateData({ title: 'te' });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('title max length failure', () => {
+  it('failure title max length', () => {
     const data = createBlueprintCreateData({
       title:
         'This is a test - This is a test - This is a test - This is a test',
@@ -180,19 +180,19 @@ describe('create', () => {
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('title regex failure', () => {
+  it('failure title regex', () => {
     const data = createBlueprintCreateData({ title: 'test.' });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('data failure', () => {
+  it('failure data', () => {
     const data = createBlueprintCreateData({
       data: mockInvalidBlueprintIdentifier,
     });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('description failure', () => {
+  it('failure description', () => {
     const data = createBlueprintCreateData({
       description:
         'This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. ',
@@ -200,51 +200,51 @@ describe('create', () => {
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('images empty file failure', () => {
+  it('failure images empty file', () => {
     const data = createBlueprintCreateData({
       images: [new File([], 'Test', { type: 'image/jpeg' })],
     });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('images file type failure', () => {
+  it('failure images file type', () => {
     const data = createBlueprintCreateData({
       images: [new File(['0'], 'Test', { type: 'application/json' })],
     });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('cost failure', () => {
+  it('failure cost', () => {
     const data = createBlueprintCreateData({ cost: -1 });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('buildingCount failure', () => {
+  it('failure buildingCount', () => {
     const data = createBlueprintCreateData({ buildingCount: 0 });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('islandCount failure', () => {
+  it('failure islandCount', () => {
     const data = createBlueprintCreateData({ islandCount: -1 });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('viewCount failure', () => {
+  it('failure viewCount', () => {
     const data = createBlueprintCreateData({ viewCount: 0 });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('bookmarkCount failure', () => {
+  it('failure bookmarkCount', () => {
     const data = createBlueprintCreateData({ bookmarkCount: 0 });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('downloadCount failure', () => {
+  it('failure downloadCount', () => {
     const data = createBlueprintCreateData({ downloadCount: 0 });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
 
-  it('version failure', () => {
+  it('failure version', () => {
     const data = createBlueprintCreateData({ version: 0 });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });
@@ -281,26 +281,26 @@ describe('blueprint', () => {
     expect(() => BLUEPRINT_SCHEMA.parse(data)).not.toThrow();
   });
 
-  it('version failure', () => {
+  it('failure version', () => {
     const data = createBlueprintData({ V: 1 });
     expect(() => BLUEPRINT_SCHEMA.parse(data)).toThrow();
   });
 
-  it('Icon Data entry format "icon" failure', () => {
+  it('failure Icon Data entry format "icon"', () => {
     const data = createBlueprintData({
       BP: { ...mockBlueprint.BP, Icon: { Data: ['icon:', null, null, null] } },
     });
     expect(() => BLUEPRINT_SCHEMA.parse(data)).toThrow();
   });
 
-  it('Icon Data entry format "shape" failure', () => {
+  it('failure Icon Data entry format "shape"', () => {
     const data = createBlueprintData({
       BP: { ...mockBlueprint.BP, Icon: { Data: ['shape:', null, null, null] } },
     });
     expect(() => BLUEPRINT_SCHEMA.parse(data)).toThrow();
   });
 
-  it('Icon Data entry invalid shape failure', () => {
+  it('failure Icon Data entry invalid shape', () => {
     const data = createBlueprintData({
       BP: {
         ...mockBlueprint.BP,
