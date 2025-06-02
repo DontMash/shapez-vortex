@@ -162,13 +162,14 @@ export const BLUEPRINT_BUILDING_SCHEMA = z.object({
   $type: z.literal(BLUEPRINT_TYPES[1]),
   Entries: BLUEPRINT_BUILDING_ENTRY_SCHEMA.array(),
   Icon: BLUEPRINT_ICON_SCHEMA.optional(),
+  BinaryVersion: z.number().int().min(GAME_VERSION).optional(),
 });
 export const BLUEPRINT_ISLAND_ENTRY_SCHEMA = z.object({
   T: z.string(),
   X: z.number().int().optional(),
   Y: z.number().int().optional(),
   R: BLUEPRINT_ENTRY_ROTATION_SCHEMA.optional(),
-  B: BLUEPRINT_BUILDING_SCHEMA,
+  B: BLUEPRINT_BUILDING_SCHEMA.optional(),
 });
 export const BLUEPRINT_ISLAND_SCHEMA = z.object({
   $type: z.literal(BLUEPRINT_TYPES[0]),
@@ -176,7 +177,7 @@ export const BLUEPRINT_ISLAND_SCHEMA = z.object({
   Icon: BLUEPRINT_ICON_SCHEMA.optional(),
 });
 export const BLUEPRINT_SCHEMA = z.object({
-  V: z.number().int().min(GAME_VERSION) /* version */,
+  V: z.number().int().min(GAME_VERSION),
   BP: z.discriminatedUnion('$type', [
     BLUEPRINT_ISLAND_SCHEMA,
     BLUEPRINT_BUILDING_SCHEMA,
