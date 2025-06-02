@@ -1,13 +1,13 @@
-import PocketBase from 'pocketbase';
+import type { LayoutServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import PocketBase from 'pocketbase';
 import {
   POCKETBASE_URL,
   ADMIN_EMAIL,
   ADMIN_PASSWORD,
 } from '$env/static/private';
-import type { User } from '$lib/user.types';
 import { decode, type BlueprintRecord } from '$lib/blueprint';
-import type { LayoutServerLoad } from './$types';
+import type { User } from '$lib/user';
 
 export const load = (async ({ depends, locals, params }) => {
   try {

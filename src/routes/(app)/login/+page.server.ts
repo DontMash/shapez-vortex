@@ -3,7 +3,7 @@ import { fail, redirect, isRedirect } from '@sveltejs/kit';
 import { ClientResponseError } from 'pocketbase';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';
+import { USER_LOGIN_FORM_SCHEMA } from '$lib/user';
 
 export const load = (async ({ locals }) => {
   if (locals.user) {

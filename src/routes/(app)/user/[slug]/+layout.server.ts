@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
-import type { User } from '$lib/user.types';
+import type { User } from '$lib/user';
 
 export const load = (async ({ locals, params }) => {
   try {

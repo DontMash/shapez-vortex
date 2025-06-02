@@ -4,7 +4,7 @@
   import { Field, Control, Label, FieldErrors } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
+  import { USER_REGISTER_FORM_SCHEMA } from '$lib/user';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';

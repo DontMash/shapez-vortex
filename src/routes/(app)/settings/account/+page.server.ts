@@ -2,7 +2,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
+import { USER_REGISTER_FORM_SCHEMA } from '$lib/user';
 
 const USER_UPDATE_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({ email: true });
 
