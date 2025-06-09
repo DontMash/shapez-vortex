@@ -8,13 +8,6 @@ export const REPORT_REASONS = {
   other: 'Other',
 } as const;
 type ReportReason = keyof typeof REPORT_REASONS;
-export type ReportRecord = RecordModel & {
-  blueprint: string;
-  reason: ReportReason;
-  message: string;
-  user: string;
-  resolved: boolean | undefined;
-};
 export const REPORT_CREATE_SCHEMA = z.object({
   blueprint: z.string().length(15),
   user: z.string(),
@@ -24,3 +17,5 @@ export const REPORT_CREATE_SCHEMA = z.object({
   message: z.string().max(256),
   resolved: z.boolean().optional(),
 });
+export type Report = z.infer<typeof REPORT_CREATE_SCHEMA>;
+export type ReportRecord = RecordModel & Report;
