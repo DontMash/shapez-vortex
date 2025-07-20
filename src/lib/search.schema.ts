@@ -24,8 +24,8 @@ export type SearchOrderOption = z.infer<typeof SEARCH_ORDER_SCHEMA>;
 export const SEARCH_SCHEMA = z.object({
   query: z.string().optional(),
   filter: z.string().optional(),
-  sort: SEARCH_SORT_SCHEMA.optional().default(SEARCH_SORT_OPTION_DEFAULT),
-  order: SEARCH_ORDER_SCHEMA.optional().default(SEARCH_ORDER_OPTION_DEFAULT),
+  sort: SEARCH_SORT_SCHEMA.default(SEARCH_SORT_OPTION_DEFAULT),
+  order: SEARCH_ORDER_SCHEMA.default(SEARCH_ORDER_OPTION_DEFAULT),
 });
 
 export const PAGINATION_SCHEMA = z.object({
