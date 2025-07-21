@@ -12,6 +12,7 @@ export type ShapeData = {
 };
 
 export type ShapeIdentifier = string;
+const SHAPE_EMPTY_TYPE = '-' as const;
 const SHAPE_SUPPORT_TYPES = ['P', 'c'] as const;
 export const SHAPE_DEFAULT_TYPES = ['C', 'R', 'S', 'W'] as const;
 export type ShapeDefaultType = (typeof SHAPE_DEFAULT_TYPES)[number];
@@ -32,12 +33,16 @@ export type ShapeType = ShapeDefaultType | ShapeHexTypes;
 export const SHAPE_TYPE_IDENTIFIER = [
   ...SHAPE_DEFAULT_TYPE_IDENTIFIERS,
   ...SHAPE_HEX_TYPE_IDENTIFIER,
-  '-',
+  SHAPE_EMPTY_TYPE,
 ] as const;
 export type ShapeTypeIdentifier = (typeof SHAPE_TYPE_IDENTIFIER)[number];
 export const SHAPE_COLORS = ['r', 'g', 'b', 'c', 'm', 'y', 'k', 'w'] as const;
 export type ShapeColor = (typeof SHAPE_COLORS)[number];
-export const SHAPE_COLOR_IDENTIFIERS = [...SHAPE_COLORS, 'u', '-'] as const;
+export const SHAPE_COLOR_IDENTIFIERS = [
+  ...SHAPE_COLORS,
+  'u',
+  SHAPE_EMPTY_TYPE,
+] as const;
 export type ShapeColorIdentifier = (typeof SHAPE_COLOR_IDENTIFIERS)[number];
 export type Shape = Array<ShapeLayerData>;
 export type ShapeLayerData = Array<ShapePartData>;
@@ -90,14 +95,10 @@ export const parse = (identifier: ShapeIdentifier): Shape => {
       partIdentifiers?.map<ShapePartData>((partIdentifier) => {
         const partShapeParameters = partIdentifier.match(
           SHAPE_PART_PARAMETERS_REGEX,
-        );
+        )!;
         const partData: ShapePartData = {
-          type: partShapeParameters
-            ? (partShapeParameters[0] as ShapeTypeIdentifier)
-            : '-',
-          color: partShapeParameters
-            ? (partShapeParameters[1] as ShapeColorIdentifier)
-            : '-',
+          type: partShapeParameters[0] as ShapeTypeIdentifier,
+          color: partShapeParameters[1] as ShapeColorIdentifier,
         };
         return partData;
       }) ?? [];
@@ -107,6 +108,10 @@ export const parse = (identifier: ShapeIdentifier): Shape => {
   return layers;
 };
 export function stringify(shape: Shape): ShapeIdentifier {
+  if (!isShape(shape)) {
+    throw new Error('Invalid shape data');
+  }
+
   return shape.reduce<ShapeIdentifier>((resultLayer, currentLayer, index) => {
     const layerIdentifier = stringifyLayer(currentLayer);
     return index === 0 ? layerIdentifier : `${resultLayer}:${layerIdentifier}`;
@@ -120,23 +125,68 @@ function stringifyLayer(layer: ShapeLayerData): ShapeIdentifier {
 function stringifyPart(part: ShapePartData): string {
   return part.type + part.color;
 }
-const isHex = (types: Readonly<Array<ShapeTypeIdentifier>>): boolean => {
-  return types.reduce((result, current) => {
+const isDefault = (types: Readonly<Set<ShapeTypeIdentifier>>): boolean => {
+  return types.values().reduce((result, current) => {
+    return result || !!SHAPE_DEFAULT_TYPES.find((value) => value === current);
+  }, false);
+};
+const isHex = (types: Readonly<Set<ShapeTypeIdentifier>>): boolean => {
+  return types.values().reduce((result, current) => {
     return result || !!SHAPE_HEX_TYPES.find((value) => value === current);
   }, false);
 };
+const isSupport = (types: Readonly<Set<ShapeTypeIdentifier>>) => {
+  return types.values().reduce((result, current) => {
+    return (
+      result ||
+      !!SHAPE_SUPPORT_TYPES.find((value) => value === current) ||
+      current === SHAPE_EMPTY_TYPE
+    );
+  }, false);
+};
+const isColor = (colors: Readonly<Set<ShapeColorIdentifier>>): boolean => {
+  return colors.values().reduce((result, current) => {
+    return (
+      result || !!SHAPE_COLOR_IDENTIFIERS.find((value) => value === current)
+    );
+  }, false);
+};
+const isShape = (shape: Shape): boolean => {
+  const props = shape.reduce<{
+    types: Set<ShapeTypeIdentifier>;
+    colors: Set<ShapeColorIdentifier>;
+  }>(
+    (result, layer) => {
+      layer.forEach((part) => {
+        result.types.add(part.type);
+        result.colors.add(part.color);
+      });
+      return result;
+    },
+    { types: new Set(), colors: new Set() },
+  );
+  const a = isDefault(props.types);
+  const b = isHex(props.types);
+  return (
+    ((a && !b) || (!a && b) || (a && b) || isSupport(props.types)) &&
+    isColor(props.colors)
+  );
+};
 
 type RandomOptions = {
-  types?: Readonly<Array<ShapeTypeIdentifier>>;
-  colors?: Readonly<Array<ShapeColor>>;
+  types?: Readonly<Set<ShapeTypeIdentifier>>;
+  colors?: Readonly<Set<ShapeColor>>;
 };
 export function random(options: RandomOptions): ShapeIdentifier {
   const {
-    types = Math.random() < 0.5
-      ? SHAPE_DEFAULT_TYPE_IDENTIFIERS
-      : SHAPE_HEX_TYPE_IDENTIFIER,
-    colors = SHAPE_COLORS,
+    types = new Set(
+      Math.random() < 0.5
+        ? SHAPE_DEFAULT_TYPE_IDENTIFIERS
+        : SHAPE_HEX_TYPE_IDENTIFIER,
+    ),
+    colors = new Set(SHAPE_COLORS),
   } = options;
+
   const layerCount = Math.round(Math.random() * (SHAPE_MAX_LAYERS - 1));
   let identifier: ShapeIdentifier = randomLayer({ types, colors });
   for (let i = 0; i < layerCount; i++) {
@@ -165,22 +215,28 @@ function randomPart(options: Required<RandomOptions>): ShapeIdentifier {
   return type + color;
 }
 function randomType(
-  types: Readonly<Array<ShapeTypeIdentifier>>,
+  types: Readonly<Set<ShapeTypeIdentifier>>,
 ): ShapeTypeIdentifier {
-  const typeIndex = Math.round(Math.random() * (types.length - 1));
-  return types[typeIndex];
+  const typeChance = 0.85;
+  const hasType = Math.random() < typeChance;
+  if (hasType) {
+    const typeIndex = Math.round(Math.random() * (types.size - 1));
+    return types.values().toArray()[typeIndex];
+  } else {
+    return SHAPE_EMPTY_TYPE;
+  }
 }
 function randomColor(
   type: ShapeTypeIdentifier,
-  colors: Readonly<Array<ShapeColor>>,
+  colors: Readonly<Set<ShapeColor>>,
 ): ShapeColorIdentifier {
-  if (!isRigid(type)) return '-';
+  if (!isRigid(type)) return SHAPE_EMPTY_TYPE;
 
   const colorChance = 0.7;
   const hasColor = Math.random() < colorChance;
   if (type === 'c' || hasColor) {
-    const colorIndex = Math.round(Math.random() * (colors.length - 1));
-    return colors[colorIndex];
+    const colorIndex = Math.round(Math.random() * (colors.size - 1));
+    return colors.values().toArray()[colorIndex];
   } else {
     return 'u';
   }
@@ -299,7 +355,7 @@ function isRigid(type: ShapeTypeIdentifier): boolean {
   return type !== 'P' && isSolid(type);
 }
 function isSolid(type: ShapeTypeIdentifier): boolean {
-  return type !== '-';
+  return type !== SHAPE_EMPTY_TYPE;
 }
 function isPartFloating(
   shape: Shape,
@@ -360,14 +416,18 @@ function setPart(
   const newPart = newShape[newLayerIndex][newPartIndex];
   const type = oldPart.type;
   const color = oldPart.color;
-  oldPart.type = '-';
-  oldPart.color = '-';
+  oldPart.type = SHAPE_EMPTY_TYPE;
+  oldPart.color = SHAPE_EMPTY_TYPE;
   newPart.type = type;
   newPart.color = color;
   return newShape;
 }
 
 export function getTypes(shape: Shape): Set<ShapeType> {
+  if (!isShape(shape)) {
+    throw new Error('invalid shape data');
+  }
+
   return shape.reduce<Set<ShapeType>>((previousLayer, currentLayer) => {
     const types = currentLayer.reduce<Set<ShapeType>>(
       (previousPart, currentPart) => {
@@ -390,6 +450,10 @@ export function getTypes(shape: Shape): Set<ShapeType> {
   }, new Set());
 }
 export function getColors(shape: Shape): Set<ShapeColor> {
+  if (!isShape(shape)) {
+    throw new Error('invalid shape data');
+  }
+
   return shape.reduce<Set<ShapeColor>>((previousLayer, currentLayer) => {
     const colors = currentLayer.reduce<Set<ShapeColor>>(
       (previousPart, currentPart) => {
@@ -404,6 +468,10 @@ export function getColors(shape: Shape): Set<ShapeColor> {
   }, new Set());
 }
 export function getLayerCount(shape: Shape): number {
+  if (!isShape(shape)) {
+    throw new Error('invalid shape data');
+  }
+
   return shape.reduce<number>(
     (perviousLayer, currentLayer) =>
       perviousLayer + Number(currentLayer.length > 0),
@@ -411,11 +479,15 @@ export function getLayerCount(shape: Shape): number {
   );
 }
 export function getPartCount(shape: Shape): number {
+  if (!isShape(shape)) {
+    throw new Error('invalid shape data');
+  }
+
   return shape.reduce<number>((perviousLayer, currentLayer) => {
     return (
       perviousLayer +
       currentLayer.reduce<number>((previousPart, currentPart) => {
-        if (currentPart.type === '-') {
+        if (currentPart.type === SHAPE_EMPTY_TYPE) {
           return previousPart;
         }
         return previousPart + 1;
