@@ -27,11 +27,6 @@ export const PASSWORD_RESET_FORM_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({
   email: true,
 });
 
-export const USER_FORM_ERROR_MESSAGES: Record<string, string> = {
-  username: 'Username unavailable',
-  email: 'Email unavailable',
-};
-
 export interface User extends RecordModel {
   username: string;
   displayname: string;
