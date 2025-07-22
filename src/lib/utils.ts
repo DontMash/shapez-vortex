@@ -1,7 +1,7 @@
 export const capitalize = <T extends string>(value: T) =>
   (value[0].toUpperCase() + value.slice(1)) as Capitalize<typeof value>;
 
-export const debounce = (fn: () => void, wait: number) => {
+export const debounce = (fn: () => void, waitInMillis: number) => {
   let timeout: number | undefined;
   let exec: (() => void) | undefined;
 
@@ -11,11 +11,11 @@ export const debounce = (fn: () => void, wait: number) => {
       clear();
       fn.call(debounce);
     };
-    timeout = setTimeout(exec, wait);
+    timeout = setTimeout(exec, waitInMillis);
   };
 
   const clear = () => {
-    if (typeof timeout !== 'number') return;
+    if (timeout === undefined) return;
 
     clearTimeout(timeout);
     timeout = undefined;
@@ -23,23 +23,4 @@ export const debounce = (fn: () => void, wait: number) => {
   };
 
   return debounced;
-};
-
-export const toBlob = (
-  canvas: HTMLCanvasElement,
-  type: string = 'image/webp',
-) =>
-  new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        return reject('Invalid blob');
-      }
-      resolve(blob);
-    }, type);
-  });
-
-export const toFileList = (files: Array<File>) => {
-  const data = new DataTransfer();
-  files.forEach((file) => data.items.add(file));
-  return data.files;
 };

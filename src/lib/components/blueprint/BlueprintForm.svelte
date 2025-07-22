@@ -18,7 +18,7 @@
   } from 'sveltekit-superforms';
   import { z } from 'zod';
   import { beforeNavigate, goto } from '$app/navigation';
-  import { toBlob, toFileList } from '$lib/utils';
+  import { toBlob, toFileList } from '$lib/client/utils';
   import { add } from '$lib/client/toast.service';
   import {
     decode,
