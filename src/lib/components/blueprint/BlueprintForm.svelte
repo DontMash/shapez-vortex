@@ -19,7 +19,7 @@
   import { z } from 'zod';
   import { beforeNavigate, goto } from '$app/navigation';
   import { toBlob, toFileList } from '$lib/client/utils';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
   import {
     decode,
     isBlueprintIdentifier,
@@ -61,6 +61,7 @@
   let { data }: Props = $props();
 
   const form = superForm(data.form);
+  const toastService = ToastService.instance;
 
   const { form: formData, enhance, submit, tainted } = form;
   const images = filesProxy(form, 'images');
@@ -91,7 +92,10 @@
 
     if (!isBlueprintIdentifier($formData.data)) {
       blueprint = undefined;
-      add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
+      toastService.add({
+        message: 'Invalid blueprint identifier',
+        type: 'ERROR',
+      });
       return;
     }
 
@@ -108,7 +112,10 @@
       blueprint = decode($formData.data);
     } catch {
       blueprint = undefined;
-      add({ message: 'Invalid blueprint identifier', type: 'ERROR' });
+      toastService.add({
+        message: 'Invalid blueprint identifier',
+        type: 'ERROR',
+      });
     }
   });
 
@@ -202,7 +209,7 @@
         const codec = new TextDecoder();
         const identifier = codec.decode(buffer);
         if (!isBlueprintIdentifier(identifier)) {
-          return add({
+          return toastService.add({
             message: 'Invalid blueprint file',
             type: 'ERROR',
           });
@@ -213,7 +220,10 @@
         $formData.data = identifier;
 
         input.files = null;
-        add({ message: 'Updated blueprint fields', type: 'SUCCESS' });
+        toastService.add({
+          message: 'Updated blueprint fields',
+          type: 'SUCCESS',
+        });
       }}
     />
     <div class="absolute inset-0 flex items-center justify-center">
@@ -403,10 +413,13 @@
             });
 
             $formData.images = [...($formData.images ?? []), previewImage];
-            add({ message: 'Screenshot added to images', type: 'SUCCESS' });
+            toastService.add({
+              message: 'Screenshot added to images',
+              type: 'SUCCESS',
+            });
           } catch (err) {
             if (err instanceof Error) {
-              add({ message: err.message, type: 'ERROR' });
+              toastService.add({ message: err.message, type: 'ERROR' });
             }
           }
         }}

@@ -4,7 +4,7 @@
   import type { SuperValidated } from 'sveltekit-superforms';
   import { z } from 'zod';
   import { copy } from '$lib/client/actions/clipboard.svelte';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
   import type { BlueprintRecord } from '$lib/blueprint';
   import { REPORT_CREATE_SCHEMA } from '$lib/report';
   import type { User } from '$lib/user.schema';
@@ -22,6 +22,8 @@
   }
 
   let { user, blueprint, reportForm = undefined }: Props = $props();
+
+  const toastService = ToastService.instance;
 </script>
 
 {#if user}
@@ -73,7 +75,7 @@
   class={button({ kind: 'ghost', intent: 'muted', size: 'icon-sm' })}
   {@attach copy({
     value: window.location.href,
-    oncopy: () => add({ message: 'Blueprint url copied.' }),
+    oncopy: () => toastService.add({ message: 'Blueprint url copied.' }),
   })}
 >
   <span class="icon-[tabler--share]"></span>

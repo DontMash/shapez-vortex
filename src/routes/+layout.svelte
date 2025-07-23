@@ -3,7 +3,7 @@
   import '@fontsource-variable/outfit';
 
   import { page } from '$app/state';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
 
   import Footer from '$lib/components/Footer.svelte';
   import Header from '$lib/components/Header.svelte';
@@ -11,9 +11,11 @@
 
   let { children } = $props();
 
+  const toastService = ToastService.instance;
+
   function onError(event: Event) {
     const errorEvent = event as ErrorEvent;
-    add({ message: errorEvent.message ?? 'Error', type: 'ERROR' });
+    toastService.add({ message: errorEvent.message ?? 'Error', type: 'ERROR' });
   }
   const BASE_KEYWORDS = new Set([
     'Shapez',

@@ -9,7 +9,7 @@
     BLUEPRINT_FILE_FORMAT,
     BLUEPRINT_VIEW_SCHEMA,
   } from '$lib/blueprint.schema';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
@@ -22,6 +22,8 @@
     validators: zod(BLUEPRINT_VIEW_SCHEMA),
   });
   const { form: formData, enhance } = form;
+
+  const toastService = ToastService.instance;
 
   type Tool = {
     icon: string;
@@ -82,7 +84,7 @@
           const codec = new TextDecoder();
           const identifier = codec.decode(buffer);
           if (!isBlueprintIdentifier(identifier)) {
-            return add({
+            return toastService.add({
               message: 'Invalid blueprint file',
               type: 'ERROR',
             });
@@ -91,7 +93,7 @@
           $formData.identifier = identifier;
 
           input.files = null;
-          add({
+          toastService.add({
             message: 'Updated blueprint fields',
             type: 'SUCCESS',
           });

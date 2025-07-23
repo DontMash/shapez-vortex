@@ -5,7 +5,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { page } from '$app/stores';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
   import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.schema';
 
   import { button } from '$lib/components/button';
@@ -16,10 +16,11 @@
 
   let { data }: PageProps = $props();
 
+  const toastService = ToastService.instance;
   const form = superForm(data.form, {
     validators: zodClient(USER_LOGIN_FORM_SCHEMA),
     onError({ result }) {
-      add({ message: result.error.message, type: 'ERROR' });
+      toastService.add({ message: result.error.message, type: 'ERROR' });
     },
   });
   const { form: formData, enhance } = form;

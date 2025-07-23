@@ -9,7 +9,7 @@
   } from '$lib/blueprint';
   import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
   import { copy, paste } from '$lib/client/actions/clipboard.svelte';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
@@ -18,6 +18,8 @@
   import PageHeader from '$lib/components/PageHeader.svelte';
 
   let { data }: PageProps = $props();
+
+  const toastService = ToastService.instance;
 
   let blueprintImportIdentifier: BlueprintIdentifier | undefined = $state();
   const blueprintImportData: Blueprint | undefined = $derived(
@@ -38,7 +40,7 @@
       blueprintField = JSON.stringify(blueprintImportData, null, 4);
     } catch (err) {
       const error = err as Error;
-      add({ type: 'ERROR', message: error.message });
+      toastService.add({ type: 'ERROR', message: error.message });
     }
   });
 </script>
@@ -88,7 +90,7 @@
               (await file.text()) as BlueprintIdentifier;
           } catch (err) {
             const error = err as Error;
-            add({ type: 'ERROR', message: error.message });
+            toastService.add({ type: 'ERROR', message: error.message });
           }
         }}
       />
@@ -101,10 +103,10 @@
       {@attach paste({
         onpaste: (value) => {
           blueprintImportIdentifier = value.trim() as BlueprintIdentifier;
-          add({ message: 'Blueprint pasted.' });
+          toastService.add({ message: 'Blueprint pasted.' });
         },
         onerror: (error) =>
-          add({
+          toastService.add({
             message: error.message,
             type: 'ERROR',
           }),
@@ -134,9 +136,9 @@
         title="Copy blueprint"
         {@attach copy({
           value: blueprintExportIdentifier,
-          oncopy: () => add({ message: 'Content copied' }),
+          oncopy: () => toastService.add({ message: 'Content copied' }),
           onerror: (error) =>
-            add({
+            toastService.add({
               message: error.message,
               type: 'ERROR',
             }),

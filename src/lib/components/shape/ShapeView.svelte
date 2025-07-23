@@ -15,7 +15,7 @@
   import { page } from '$app/state';
   import { copy } from '$lib/client/actions/clipboard.svelte';
   import { fullscreen } from '$lib/client/actions/fullscreen.svelte';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
   import {
     isDefaultShapeIdentifier,
     SHAPE_MAX_LAYERS,
@@ -58,6 +58,8 @@
   let orbitControls: OrbitControlsType | undefined = $state();
   let baseComponentModel: Group | undefined = $state();
 
+  const toastService = ToastService.instance;
+
   function onCapture() {
     canvasElement?.toBlob(
       (blob) => {
@@ -67,9 +69,9 @@
         const clipboardItem = new ClipboardItem(items);
         navigator.clipboard
           .write([clipboardItem])
-          .then(() => add({ message: 'Copied shape image' }))
+          .then(() => toastService.add({ message: 'Copied shape image' }))
           .catch(() =>
-            add({
+            toastService.add({
               message: 'Error while creating shape image',
               type: 'ERROR',
             }),
@@ -213,9 +215,14 @@
                         {@attach copy({
                           value: data.identifier,
                           oncopy: () =>
-                            add({ message: 'Shape identifier copied' }),
+                            toastService.add({
+                              message: 'Shape identifier copied',
+                            }),
                           onerror: (error) =>
-                            add({ message: error.message, type: 'ERROR' }),
+                            toastService.add({
+                              message: error.message,
+                              type: 'ERROR',
+                            }),
                         })}
                       >
                         <span class="icon-[tabler--copy] text-lg"></span>
@@ -245,7 +252,10 @@
                         {@attach fullscreen({
                           fullscreenElement: viewer!,
                           onerror: (error) =>
-                            add({ message: error.message, type: 'ERROR' }),
+                            toastService.add({
+                              message: error.message,
+                              type: 'ERROR',
+                            }),
                         })}
                       >
                         {#if screenfull.isFullscreen}

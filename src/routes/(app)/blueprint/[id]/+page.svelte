@@ -3,7 +3,7 @@
   import { Button } from 'bits-ui';
   import EmblaCarousel, { type EmblaCarouselType } from 'embla-carousel';
   import { copy } from '$lib/client/actions/clipboard.svelte';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
 
   import BlueprintInteraction from '$lib/components/blueprint/BlueprintInteraction.svelte';
   import BlueprintTag from '$lib/components/blueprint/BlueprintTag.svelte';
@@ -16,6 +16,7 @@
   const dateFormatter = new Intl.DateTimeFormat('en-US', {
     dateStyle: 'medium',
   });
+  const toastService = ToastService.instance;
 
   type Property = {
     iconClass: string;
@@ -230,9 +231,9 @@
             title="Copy blueprint"
             {@attach copy({
               value: data.blueprint.entry.data,
-              oncopy: () => add({ message: 'Content copied' }),
+              oncopy: () => toastService.add({ message: 'Content copied' }),
               onerror: (error) =>
-                add({ message: error.message, type: 'ERROR' }),
+                toastService.add({ message: error.message, type: 'ERROR' }),
             })}
           >
             <span class="icon-[tabler--copy]"></span>

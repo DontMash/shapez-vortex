@@ -16,7 +16,7 @@
   import { capture } from '$lib/client/actions/capture.svelte';
   import { copy, paste } from '$lib/client/actions/clipboard.svelte';
   import { fullscreen } from '$lib/client/actions/fullscreen.svelte';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
 
   import { button } from '$lib/components/button';
 
@@ -57,6 +57,7 @@
     },
   }: Props = $props();
 
+  const toastService = ToastService.instance;
   let viewer: HTMLElement | undefined = $state();
   let viewForm: HTMLFormElement | undefined = $state();
   let canvasElement: HTMLCanvasElement | undefined = $state();
@@ -176,12 +177,12 @@
               {@attach paste({
                 onpaste: (value) => {
                   onPaste(value);
-                  add({
+                  toastService.add({
                     message: 'Blueprint pasted.',
                   });
                 },
                 onerror: (error) =>
-                  add({
+                  toastService.add({
                     message: error.message,
                     type: 'ERROR',
                   }),
@@ -197,9 +198,9 @@
             title="Copy blueprint"
             {@attach copy({
               value: identifier,
-              oncopy: () => add({ message: 'Content copied' }),
+              oncopy: () => toastService.add({ message: 'Content copied' }),
               onerror: (error) =>
-                add({
+                toastService.add({
                   message: error.message,
                   type: 'ERROR',
                 }),
@@ -256,7 +257,7 @@
                             {@attach fullscreen({
                               fullscreenElement: viewer!,
                               onerror: (error) =>
-                                add({
+                                toastService.add({
                                   message: error.message,
                                   type: 'ERROR',
                                 }),

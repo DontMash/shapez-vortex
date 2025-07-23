@@ -1,6 +1,6 @@
 <script lang="ts">
   import { copy } from '$lib/client/actions/clipboard.svelte';
-  import { add } from '$lib/client/toast.service';
+  import ToastService from '$lib/client/toast.svelte';
 
   import { button } from '$lib/components/button';
 
@@ -10,6 +10,7 @@
 
   let { value }: Props = $props();
 
+  const toastService = ToastService.instance;
   let isLoading = $state(false);
 </script>
 
@@ -27,11 +28,11 @@
     value,
     oncopy: () => {
       isLoading = false;
-      add({ message: 'Content copied' });
+      toastService.add({ message: 'Content copied' });
     },
     onerror: (error) => {
       isLoading = false;
-      add({ message: error.message, type: 'ERROR' });
+      toastService.add({ message: error.message, type: 'ERROR' });
     },
   })}
 >
