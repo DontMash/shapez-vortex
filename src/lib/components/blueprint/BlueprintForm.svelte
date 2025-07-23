@@ -447,7 +447,7 @@
                 const target = event.currentTarget;
                 const files = [...(target.files ?? []), ...$images];
                 if (files.length > BLUEPRINT_IMAGES_MAX) {
-                  add({
+                  toastService.add({
                     message: `Max. amount of images is ${BLUEPRINT_IMAGES_MAX}`,
                     type: 'WARNING',
                   });
