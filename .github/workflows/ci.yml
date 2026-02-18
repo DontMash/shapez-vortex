@@ -26,7 +26,7 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
       - name: Lint
-        run: bun run lint
+        run: bun run --filter shapez-vortex-sveltekit lint
 
   build:
     name: Build
@@ -46,7 +46,7 @@ jobs:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
-        run: bun run build
+        run: bun run --filter shapez-vortex-sveltekit build
 
   test:
     name: Test
@@ -67,7 +67,7 @@ jobs:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
-        run: bun run test
+        run: bun run --filter shapez-vortex-sveltekit test
 
   changelog:
     name: Changelog
@@ -98,8 +98,8 @@ jobs:
         id: changelog
         with:
           github-token: ${{ github.token }}
-          git-user-name: 'github-actions[bot]'
-          git-user-email: 'github-actions[bot]@users.noreply.github.com'
+          git-user-name: "github-actions[bot]"
+          git-user-email: "github-actions[bot]@users.noreply.github.com"
           git-branch: ${{ env.PR_BRANCH }}
           skip-git-pull: true
           output-file: false
@@ -152,7 +152,7 @@ jobs:
         run: |
           echo "REGISTRY_DIR=${GITHUB_REPOSITORY_OWNER@L}" >> "${GITHUB_ENV}"
       - name: Build
-        working-directory: ./resources/deployment
+        working-directory: ./apps/shapez-vortex-pocketbase
         run: |
           docker compose -f compose.production.yml build
           docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ needs.changelog.outputs.tag }}
@@ -180,7 +180,7 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
           context-use: true
       - name: Deploy
-        working-directory: ./resources/deployment
+        working-directory: ./apps/shapez-vortex-pocketbase
         # todo use docker stack deploy
         run: |
           docker compose -f compose.production.yml up -d --force-recreate --pull always

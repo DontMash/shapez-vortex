@@ -13,26 +13,40 @@ Shapez Vortex is a community web platform for the game [Shapez 2](https://store.
 
 **Stack**: Svelte 5, SvelteKit 2, TypeScript (strict), Three.js/Threlte, Tailwind CSS 4, Zod, PocketBase
 
+**Monorepo**: Bun workspaces with apps in `apps/` and shared packages in `packages/`.
+
+## Monorepo Structure
+
+This project is organized as a Bun workspaces monorepo:
+
+| Path                             | Purpose                                                      |
+| -------------------------------- | ------------------------------------------------------------ |
+| `apps/shapez-vortex-sveltekit/`  | SvelteKit web application (frontend + API routes)            |
+| `apps/shapez-vortex-pocketbase/` | PocketBase backend (Dockerfile, Caddy proxy, Docker Compose) |
+| `packages/`                      | Shared packages (placeholder — future extraction of logic)   |
+
 ## Commands
 
 Use `bun` as the package manager and runtime — not npm, yarn, or pnpm.
 
+All commands are run from the **repository root**. Use `--filter` to target specific workspaces.
+
 ```sh
-bun install                # Install dependencies
-bun run dev                # Start dev server (localhost:5173)
-bun run build              # Production build (requires env vars — see below)
-bun run check              # TypeScript + Svelte type checking
-bun run test               # Run all tests once
-bun run test:coverage      # Run tests with coverage report
-bun run lint               # Check formatting (Prettier) and linting (ESLint)
-bun run format             # Auto-format source code
+bun install                                              # Install dependencies for all workspaces
+bun run --filter shapez-vortex-sveltekit dev             # Start dev server (localhost:5173)
+bun run --filter shapez-vortex-sveltekit build           # Production build (requires env vars — see below)
+bun run --filter shapez-vortex-sveltekit check           # TypeScript + Svelte type checking
+bun run --filter shapez-vortex-sveltekit test            # Run all tests once
+bun run --filter shapez-vortex-sveltekit test:coverage   # Run tests with coverage report
+bun run --filter shapez-vortex-sveltekit lint            # Check formatting (Prettier) and linting (ESLint)
+bun run --filter shapez-vortex-sveltekit format          # Auto-format source code
 ```
 
-Always run `bun run lint` and `bun run test` before considering a change complete. The CI pipeline enforces both on all PRs.
+Always run `bun run --filter shapez-vortex-sveltekit lint` and `bun run --filter shapez-vortex-sveltekit test` before considering a change complete. The CI pipeline enforces both on all PRs.
 
 ## Environment Variables
 
-Copy `.env.example` to `.env` and fill in the values before running the dev server or build:
+Copy `apps/shapez-vortex-sveltekit/.env.example` to `apps/shapez-vortex-sveltekit/.env` and fill in the values before running the dev server or build:
 
 ```
 POCKETBASE_URL="http://localhost:8080"
@@ -46,21 +60,22 @@ Never commit `.env` files.
 
 ### Directory Structure
 
-| Path                         | Purpose                                                                  |
-| ---------------------------- | ------------------------------------------------------------------------ |
-| `src/routes/`                | SvelteKit file-based routing (pages + API endpoints)                     |
-| `src/lib/`                   | Shared library code                                                      |
-| `src/lib/blueprint.ts`       | Blueprint encode/decode logic                                            |
-| `src/lib/shape.ts`           | Shape identifier parsing and validation                                  |
-| `src/lib/server/`            | Server-only code (PocketBase API calls)                                  |
-| `src/lib/client/`            | Client-only code (Svelte actions, toast service, utilities)              |
-| `src/lib/components/`        | Svelte UI components organized by feature                                |
-| `src/lib/components/models/` | Auto-generated 3D model components — do not edit manually                |
-| `src/lib/schemas/`           | Auto-generated TypeScript types from JSON schemas — do not edit manually |
-| `src/lib/assets/`            | Static data, JSON schemas, GLSL shaders, images                          |
-| `static/`                    | Static assets served directly (GLTF models, favicon, robots.txt)         |
-| `resources/`                 | Deployment configs and asset pipeline scripts                            |
-| `docs/`                      | Project documentation                                                    |
+| Path                                                      | Purpose                                                                  |
+| --------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `apps/shapez-vortex-sveltekit/src/routes/`                | SvelteKit file-based routing (pages + API endpoints)                     |
+| `apps/shapez-vortex-sveltekit/src/lib/`                   | Shared library code                                                      |
+| `apps/shapez-vortex-sveltekit/src/lib/blueprint.ts`       | Blueprint encode/decode logic                                            |
+| `apps/shapez-vortex-sveltekit/src/lib/shape.ts`           | Shape identifier parsing and validation                                  |
+| `apps/shapez-vortex-sveltekit/src/lib/server/`            | Server-only code (PocketBase API calls)                                  |
+| `apps/shapez-vortex-sveltekit/src/lib/client/`            | Client-only code (Svelte actions, toast service, utilities)              |
+| `apps/shapez-vortex-sveltekit/src/lib/components/`        | Svelte UI components organized by feature                                |
+| `apps/shapez-vortex-sveltekit/src/lib/components/models/` | Auto-generated 3D model components — do not edit manually                |
+| `apps/shapez-vortex-sveltekit/src/lib/schemas/`           | Auto-generated TypeScript types from JSON schemas — do not edit manually |
+| `apps/shapez-vortex-sveltekit/src/lib/assets/`            | Static data, JSON schemas, GLSL shaders, images                          |
+| `apps/shapez-vortex-sveltekit/static/`                    | Static assets served directly (GLTF models, favicon, robots.txt)         |
+| `apps/shapez-vortex-sveltekit/resources/`                 | Asset pipeline scripts                                                   |
+| `apps/shapez-vortex-pocketbase/`                          | PocketBase backend (Docker, Caddy, migrations)                           |
+| `docs/`                                                   | Project documentation                                                    |
 
 ### Key Patterns
 
@@ -96,6 +111,8 @@ $: doubled = count * 2;
 
 Strict mode is enabled. Avoid `any` — use proper types or `unknown` with narrowing.
 
+A shared `tsconfig.base.json` at the repo root defines common compiler options. Each app extends it (e.g., `apps/shapez-vortex-sveltekit/tsconfig.json` extends both the base config and `.svelte-kit/tsconfig.json`).
+
 ### Commits
 
 Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
@@ -118,11 +135,11 @@ chore/<description>
 
 - Single quotes
 - 2-space indentation
-- Run `bun run format` to auto-apply Prettier formatting
+- Run `bun run --filter shapez-vortex-sveltekit format` to auto-apply Prettier formatting
 
 ## Testing
 
-Tests are co-located with source files. There are two Vitest workspaces:
+Tests are co-located with source files in `apps/shapez-vortex-sveltekit/src/`. There are two Vitest workspaces:
 
 | Workspace | Environment | File Pattern                                |
 | --------- | ----------- | ------------------------------------------- |
@@ -135,7 +152,7 @@ Use `@testing-library/svelte` for component tests. The client setup file (`vites
 
 The following files and directories are generated by tooling. Do not edit them manually — re-run the relevant script instead.
 
-| Path                         | Generator                        | Script                                                 |
-| ---------------------------- | -------------------------------- | ------------------------------------------------------ |
-| `src/lib/components/models/` | `@threlte/gltf` from GLTF models | `bun run prepare:buildings` / `bun run prepare:shapes` |
-| `src/lib/schemas/`           | `json2ts` from JSON schemas      | `bun run prepare:schemas`                              |
+| Path                                                      | Generator                        | Script                                                                                                                   |
+| --------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `apps/shapez-vortex-sveltekit/src/lib/components/models/` | `@threlte/gltf` from GLTF models | `bun run --filter shapez-vortex-sveltekit prepare:buildings` / `bun run --filter shapez-vortex-sveltekit prepare:shapes` |
+| `apps/shapez-vortex-sveltekit/src/lib/schemas/`           | `json2ts` from JSON schemas      | `bun run --filter shapez-vortex-sveltekit prepare:schemas`                                                               |

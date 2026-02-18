@@ -1,0 +1,7 @@
+{
+  "name": "shapez-vortex-pocketbase",
+  "private": true,
+  "scripts": {
+    "dev":"docker-compose up --build"
+  }
+}

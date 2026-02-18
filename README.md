@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/DontMash/shapez-vortex">
-    <img src="static/favicon.png" alt="Logo" width="80" height="80">
+    <img src="apps/shapez-vortex-sveltekit/static/favicon.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Shapez Vortex</h3>
@@ -45,6 +45,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li><a href="#project-structure">Project Structure</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -65,19 +66,19 @@ You can also share content related to the game with other users.
 
 In the current state it provides the following features:
 
-* [shape-viewer](https://shapez.soren.codes/shape) - visualize shapes by their identifier
-* [blueprint-codec](https://shapez.soren.codes/blueprint) - modify blueprint data
-* [blueprint-viewer](https://shapez.soren.codes/blueprint) - visualize blueprints
+- [shape-viewer](https://shapez.soren.codes/shape) - visualize shapes by their identifier
+- [blueprint-codec](https://shapez.soren.codes/blueprint) - modify blueprint data
+- [blueprint-viewer](https://shapez.soren.codes/blueprint) - visualize blueprints
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
-* [![TailwindCSS][Tailwind-badge]][Tailwind-url]
-* [![three.js][threejs-badge]][threejs-url]
-* [![Svelte][Svelte-badge]][Svelte-url]
-* [![Typescript][Typescript-badge]][Typescript-url]
-* [![Vercel][Vercel-badge]][Vercel-url]
+- [![TailwindCSS][Tailwind-badge]][Tailwind-url]
+- [![three.js][threejs-badge]][threejs-url]
+- [![Svelte][Svelte-badge]][Svelte-url]
+- [![Typescript][Typescript-badge]][Typescript-url]
+- [![Vercel][Vercel-badge]][Vercel-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -89,8 +90,8 @@ In the current state it provides the following features:
 
 To setup, install & develop you may need some tools:
 
-* [Bun (JavaScript runtime & toolkit)](https://bun.sh/)
-* [Docker (Test & Deployment)](https://docs.docker.com/get-docker/)
+- [Bun (JavaScript runtime & toolkit)](https://bun.sh/)
+- [Docker (Test & Deployment)](https://docs.docker.com/get-docker/)
 
 ### Installation
 
@@ -100,13 +101,49 @@ To setup, install & develop you may need some tools:
    git clone https://github.com/DontMash/shapez-vortex.git
    ```
 
-2. Install packages
+2. Install dependencies (from repo root — installs all workspaces)
 
-    ```sh
-      bun install
-    ```
+   ```sh
+   bun install
+   ```
 
-3. Visit [localhost:5173](http://localhost:5173)
+3. Copy environment config
+
+   ```sh
+   cp apps/shapez-vortex-sveltekit/.env.example apps/shapez-vortex-sveltekit/.env
+   ```
+
+4. Start the dev server
+
+   ```sh
+   bun run --filter shapez-vortex-sveltekit dev
+   ```
+
+5. Visit [localhost:5173](http://localhost:5173)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- PROJECT STRUCTURE -->
+
+## Project Structure
+
+This is a Bun workspaces monorepo:
+
+```
+shapez-vortex/
+├── apps/
+│   ├── shapez-vortex-sveltekit/   # SvelteKit web application
+│   └── shapez-vortex-pocketbase/  # PocketBase backend (Docker)
+├── packages/                       # Shared packages (future)
+├── docs/                           # Project documentation
+├── package.json                    # Workspace root
+└── tsconfig.base.json              # Shared TypeScript config
+```
+
+| Workspace                  | Description                                              |
+| -------------------------- | -------------------------------------------------------- |
+| `shapez-vortex-sveltekit`  | SvelteKit frontend + API routes, deployed to Vercel      |
+| `shapez-vortex-pocketbase` | PocketBase backend with Caddy proxy, deployed via Docker |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -147,6 +184,7 @@ To get in touch or support, see [`SUPPORT`][support-url].
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS -->
+
 [repo-url]: https://github.com/DontMash/shapez-vortex
 [product-url]: https://shapez.soren.codes
 [product-image]: docs/images/product.png
@@ -155,6 +193,7 @@ To get in touch or support, see [`SUPPORT`][support-url].
 [support-url]: https://github.com/DontMash/shapez-vortex/blob/main/docs/SUPPORT.md
 
 <!-- SHIELDS -->
+
 [stars-shield]: https://img.shields.io/github/stars/DontMash/shapez-vortex.svg?style=for-the-badge
 [stars-url]: https://github.com/DontMash/shapez-vortex/stargazers
 [issues-shield]: https://img.shields.io/github/issues/DontMash/shapez-vortex.svg?style=for-the-badge
@@ -163,6 +202,7 @@ To get in touch or support, see [`SUPPORT`][support-url].
 [license-url]: https://github.com/DontMash/shapez-vortex/blob/main/LICENSE
 
 <!-- BADGES -->
+
 [Tailwind-badge]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
 [Tailwind-url]: https://tailwindcss.com/
 [threejs-badge]: https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white
