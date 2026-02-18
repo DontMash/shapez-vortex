@@ -7,6 +7,13 @@ const config = {
 
   kit: {
     adapter: adapter(),
+    csrf: {
+      trustedOrigins: [
+        'https://shapez.soren.codes',
+        'https://community-vortex.shapez2.com',
+        'https://vortex.shapez2.io',
+      ],
+    },
     version: {
       name: process.env.npm_package_version,
     },
