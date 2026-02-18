@@ -14,4 +14,3 @@ yarn.lock
 
 src/lib/assets/*
 src/lib/components/models/*
-src/lib/components/ui/*
