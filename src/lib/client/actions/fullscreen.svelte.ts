@@ -26,8 +26,8 @@ export const fullscreen = (
       }
     };
 
-    screenfull.on('change', () => onsuccess);
-    screenfull.on('error', () => onfailure);
+    screenfull.on('change', onsuccess);
+    screenfull.on('error', onfailure);
 
     element.addEventListener('click', toggle, { passive: true });
 

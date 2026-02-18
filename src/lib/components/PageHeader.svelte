@@ -17,7 +17,7 @@
   </hgroup>
   {#if description}
     <p>
-      {@render description?.()}
+      {@render description()}
     </p>
   {/if}
 </header>
