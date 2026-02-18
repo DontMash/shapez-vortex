@@ -35,8 +35,11 @@
 
   let isFilterOpen: boolean = $state(false);
   let filterTagNames: Array<string> | undefined = $state();
-  // eslint-disable-next-line svelte/prefer-writable-derived
-  let filterTagOptions: Array<string> | undefined = $state();
+  let filterTagOptions: Array<string> | undefined = $derived(
+    data.tags
+      .filter((tag) => filterTagNames?.includes(tag.name))
+      .map((tag) => tag.id),
+  );
   let filterTags: Array<BlueprintTag> | undefined = $derived(
     filterTagOptions
       ?.map((value) => data.tags.find((tag) => tag.id === value))
@@ -53,12 +56,6 @@
     untrack(() => {
       filterTagNames = getFilterTagNames($formData.filter);
     });
-  });
-
-  $effect(() => {
-    filterTagOptions = data.tags
-      .filter((tag) => filterTagNames?.includes(tag.name))
-      .map((tag) => tag.id);
   });
 
   $effect(() => {

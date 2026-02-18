@@ -39,7 +39,7 @@ Command: npx @threlte/gltf@3.0.1 static/models/buildings/Merger2To1LInternalVari
     ...props
   }: Props<THREE.Group> & {
     ref?: THREE.Group
-    children?: Snippet<[{ ref: THREE.Group }]>
+    children?: Snippet<[{ ref: THREE.Group | undefined }]>
     fallback?: Snippet
     error?: Snippet<[{ error: Error }]>
   } = $props()

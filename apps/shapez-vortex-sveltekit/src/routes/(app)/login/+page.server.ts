@@ -2,7 +2,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect, isRedirect } from '@sveltejs/kit';
 import { ClientResponseError } from 'pocketbase';
 import { setError, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 as zod } from 'sveltekit-superforms/adapters';
 import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.schema';
 
 export const load = (async ({ locals }) => {

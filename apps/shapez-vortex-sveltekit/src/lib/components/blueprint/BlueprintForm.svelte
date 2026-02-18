@@ -853,6 +853,8 @@
                   onclick={async () => {
                     if (!leaveUrl) return;
 
+                    // leaveUrl comes from navigation.to.url which is already resolved by SvelteKit
+                    // eslint-disable-next-line svelte/no-navigation-without-resolve
                     await goto(leaveUrl);
                     leaveUrl = undefined;
                   }}

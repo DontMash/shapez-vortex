@@ -40,7 +40,7 @@ Command: npx @threlte/gltf@3.0.1 static/models/buildings/RotatorHalfInternalVari
     ...props
   }: Props<THREE.Group> & {
     ref?: THREE.Group
-    children?: Snippet<[{ ref: THREE.Group }]>
+    children?: Snippet<[{ ref: THREE.Group | undefined }]>
     fallback?: Snippet
     error?: Snippet<[{ error: Error }]>
   } = $props()

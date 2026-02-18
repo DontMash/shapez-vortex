@@ -17,16 +17,9 @@
     const errorEvent = event as ErrorEvent;
     toastService.add({ message: errorEvent.message ?? 'Error', type: 'ERROR' });
   }
-  const BASE_KEYWORDS = new Set([
-    'Shapez',
-    'Shapez 2',
-    'Visualization',
-    'Tools',
-  ]);
+  const BASE_KEYWORDS = ['Shapez', 'Shapez 2', 'Visualization', 'Tools'];
   function getKeywords(pageKeywords: Array<string>): Array<string> {
-    const keywords = new Set([...BASE_KEYWORDS]);
-    pageKeywords.forEach((keyword) => keywords.add(keyword));
-    return Array.from(keywords);
+    return [...new Set([...BASE_KEYWORDS, ...pageKeywords])];
   }
 </script>
 

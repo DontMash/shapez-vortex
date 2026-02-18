@@ -26,6 +26,8 @@ const mockRequestEvent: () => RequestEvent = () => ({
   url: mockUrl,
   isDataRequest: false,
   isSubRequest: false,
+  isRemoteRequest: false,
+  tracing: { enabled: false, root: null, current: null },
 });
 const mockRequestResolve = vi.fn().mockResolvedValue(new Response());
 

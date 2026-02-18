@@ -13,6 +13,11 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
 
     wait
     mv *.svelte src/lib/components/models/shapes
+
+    # Fix snippet ref type: bind:ref can be undefined, so the snippet type must reflect that
+    for file in src/lib/components/models/shapes/*.svelte; do
+        sed -i '' 's/Snippet<\[{ ref: THREE\.Group }\]>/Snippet<[{ ref: THREE.Group | undefined }]>/g' "$file"
+    done
     exit 0
 then
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1 # handle exits from shell or function but don't exit interactive shell

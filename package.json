@@ -2,12 +2,14 @@
   "name": "shapez-vortex",
   "version": "0.14.0",
   "private": true,
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "dev:sveltekit": "bun run --filter shapez-vortex-sveltekit dev",
+    "dev:pocketbase": "bun run --filter shapez-vortex-pocketbase dev",
+    "check": "bun run --filter '*' check"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "scripts": {
-    "dev:sveltekit": "bun run --filter shapez-vortex-sveltekit dev",
-    "dev:pocketbase": "bun run --filter shapez-vortex-pocketbase dev"
-  }
+  ]
 }

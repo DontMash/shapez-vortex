@@ -3,7 +3,7 @@
   import { Button, Toggle } from 'bits-ui';
   import { Field, Control, Label, FieldErrors } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
-  import { zodClient } from 'sveltekit-superforms/adapters';
+  import { zod4Client as zodClient } from 'sveltekit-superforms/adapters';
   import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.schema';
 
   import { button } from '$lib/components/button';

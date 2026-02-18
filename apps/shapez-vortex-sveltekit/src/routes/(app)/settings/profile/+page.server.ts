@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 import { message, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 as zod } from 'sveltekit-superforms/adapters';
 import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.schema';
 
 const USER_UPDATE_SCHEMA = USER_REGISTER_FORM_SCHEMA.pick({

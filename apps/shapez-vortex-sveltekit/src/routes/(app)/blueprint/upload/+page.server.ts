@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
 import { fail, isRedirect, redirect } from '@sveltejs/kit';
 import { setError, superValidate, withFiles } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 as zod } from 'sveltekit-superforms/adapters';
 import type { BlueprintTag } from '$lib/blueprint';
 import { BLUEPRINT_FORM_SCHEMA } from '$lib/blueprint.schema';
 import { post } from '$lib/server/blueprint.api';

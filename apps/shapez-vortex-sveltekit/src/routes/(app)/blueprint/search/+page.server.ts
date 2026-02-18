@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
-import { z } from 'zod';
+import { zod4 as zod } from 'sveltekit-superforms/adapters';
+
 import type { BlueprintTag } from '$lib/blueprint';
 import { get, getBlueprintOptions } from '$lib/server/blueprint.api';
 import {
@@ -40,7 +40,7 @@ export const load = (async ({ locals, url }) => {
       page: options.page,
       perPage: options.perPage,
     },
-    zod(z.intersection(SEARCH_SCHEMA, PAGINATION_SCHEMA)),
+    zod(SEARCH_SCHEMA.merge(PAGINATION_SCHEMA)),
   );
 
   return {

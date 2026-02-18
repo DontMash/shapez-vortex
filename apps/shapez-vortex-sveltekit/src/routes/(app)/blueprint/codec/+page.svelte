@@ -59,8 +59,8 @@
         rel="noreferrer"
         >JSON-Object
       </Button.Root>. <br />
-      It is also able to encode said object to a blueprint identifier, which can
-      be used in the game.
+      It is also able to encode said object to a blueprint identifier, which can be
+      used in the game.
     {/snippet}
   </PageHeader>
 

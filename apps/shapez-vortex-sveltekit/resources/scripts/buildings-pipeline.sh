@@ -14,6 +14,11 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
     wait
     mv *.svelte src/lib/components/models/buildings
 
+    # Fix snippet ref type: bind:ref can be undefined, so the snippet type must reflect that
+    for file in src/lib/components/models/buildings/*.svelte; do
+        sed -i '' 's/Snippet<\[{ ref: THREE\.Group }\]>/Snippet<[{ ref: THREE.Group | undefined }]>/g' "$file"
+    done
+
     mkdir -p src/lib/components/models/
     for file in static/models/*.gltf; do
         echo $file
@@ -25,6 +30,11 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
 
     wait
     mv *.svelte src/lib/components/models
+
+    # Fix snippet ref type: bind:ref can be undefined, so the snippet type must reflect that
+    for file in src/lib/components/models/*.svelte; do
+        sed -i '' 's/Snippet<\[{ ref: THREE\.Group }\]>/Snippet<[{ ref: THREE.Group | undefined }]>/g' "$file"
+    done
     exit 0
 then
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1 # handle exits from shell or function but don't exit interactive shell

@@ -39,7 +39,7 @@ Command: npx @threlte/gltf@3.0.1 static/models/Error.gltf -s -k -P -t -u -r /mod
     ...props
   }: Props<THREE.Group> & {
     ref?: THREE.Group
-    children?: Snippet<[{ ref: THREE.Group }]>
+    children?: Snippet<[{ ref: THREE.Group | undefined }]>
     fallback?: Snippet
     error?: Snippet<[{ error: Error }]>
   } = $props()

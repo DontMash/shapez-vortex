@@ -3,7 +3,7 @@
   import { Button, Tooltip } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
+  import { zod4Client as zodClient } from 'sveltekit-superforms/adapters';
   import { isBlueprintIdentifier } from '$lib/blueprint';
   import {
     BLUEPRINT_FILE_FORMAT,
@@ -19,7 +19,7 @@
   let { data }: PageProps = $props();
 
   const form = superForm(data.form, {
-    validators: zod(BLUEPRINT_VIEW_SCHEMA),
+    validators: zodClient(BLUEPRINT_VIEW_SCHEMA),
   });
   const { form: formData, enhance } = form;
 
