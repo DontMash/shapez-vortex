@@ -1,9 +1,19 @@
 import { type Handle } from '@sveltejs/kit';
 import PocketBase from 'pocketbase';
+
+import { dev } from '$app/environment';
 import { POCKETBASE_URL } from '$env/static/private';
+
 import type { User } from '$lib/user.schema';
 
+const CHROME_DEV_TOOLS_PATH =
+  '/.well-known/appspecific/com.chrome.devtools.json' as const;
+
 export const handle: Handle = async ({ event, resolve }) => {
+  if (dev && event.url.pathname === CHROME_DEV_TOOLS_PATH) {
+    return new Response(undefined, { status: 404 });
+  }
+
   const pb = new PocketBase(POCKETBASE_URL);
   pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
 
