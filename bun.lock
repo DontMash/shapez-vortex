@@ -25,7 +25,7 @@
         "formsnap": "^2.0.1",
         "pocketbase": "^0.26.8",
         "screenfull": "^6.0.2",
-        "sveltekit-superforms": "^2.25.0",
+        "sveltekit-superforms": "^2.29.1",
         "three": "^0.176.0",
         "three-custom-shader-material": "^6.3.7",
         "ua-parser-js": "1.0.40",

@@ -5,7 +5,7 @@ import type { BlueprintRecord } from '$lib/blueprint';
 import { get } from '$lib/server/blueprint.api';
 import type { User } from '$lib/user.schema';
 
-export const load = (async ({ fetch, locals, request, url }) => {
+export const load = (async ({ locals, request, url }) => {
   let agent;
   const userAgent = request.headers.get('user-agent');
   if (userAgent) {

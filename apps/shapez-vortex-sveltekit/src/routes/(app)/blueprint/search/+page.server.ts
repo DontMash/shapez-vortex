@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 as zod } from 'sveltekit-superforms/adapters';
+import z from 'zod';
 
 import type { BlueprintTag } from '$lib/blueprint';
 import { get, getBlueprintOptions } from '$lib/server/blueprint.api';
@@ -31,16 +32,18 @@ export const load = (async ({ locals, url }) => {
   const sort = (url.searchParams.get('sort') ?? 'created') as SearchSortOption;
   const order = (url.searchParams.get('order') ?? 'desc') as SearchOrderOption;
 
+  const SEARCH_FORM_SCHEMA = z.object({
+    ...SEARCH_SCHEMA.shape,
+    ...PAGINATION_SCHEMA.shape,
+  });
   const form = await superValidate(
     {
       query,
       filter,
       sort,
       order,
-      page: options.page,
-      perPage: options.perPage,
     },
-    zod(SEARCH_SCHEMA.merge(PAGINATION_SCHEMA)),
+    zod(SEARCH_FORM_SCHEMA),
   );
 
   return {
