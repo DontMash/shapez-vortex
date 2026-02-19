@@ -2,6 +2,7 @@
   import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { untrack } from 'svelte';
   import { superForm } from 'sveltekit-superforms';
   import { zod4Client as zodClient } from 'sveltekit-superforms/adapters';
   import { PASSWORD_RESET_FORM_SCHEMA } from '$lib/user.schema';
@@ -14,9 +15,11 @@
 
   let { data }: PageProps = $props();
 
-  const form = superForm(data.form, {
-    validators: zodClient(PASSWORD_RESET_FORM_SCHEMA),
-  });
+  const form = untrack(() =>
+    superForm(data.form, {
+      validators: zodClient(PASSWORD_RESET_FORM_SCHEMA),
+    }),
+  );
   const { form: formData, enhance } = form;
 </script>
 

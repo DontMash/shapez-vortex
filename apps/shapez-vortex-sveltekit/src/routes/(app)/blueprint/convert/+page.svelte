@@ -2,6 +2,7 @@
   import type { PageProps } from './$types';
   import { Button } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { untrack } from 'svelte';
   import { superForm } from 'sveltekit-superforms';
 
   import { button } from '$lib/components/button';
@@ -13,9 +14,11 @@
 
   let { data }: PageProps = $props();
 
-  const form = superForm(data.form, {
-    resetForm: true,
-  });
+  const form = untrack(() =>
+    superForm(data.form, {
+      resetForm: true,
+    }),
+  );
   const { form: formData, enhance, message } = form;
 </script>
 

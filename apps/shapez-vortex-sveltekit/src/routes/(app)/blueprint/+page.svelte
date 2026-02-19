@@ -2,6 +2,7 @@
   import type { PageProps } from './$types';
   import { Button, Tooltip } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { untrack } from 'svelte';
   import { superForm } from 'sveltekit-superforms';
   import { zod4Client as zodClient } from 'sveltekit-superforms/adapters';
   import { isBlueprintIdentifier } from '$lib/blueprint';
@@ -18,9 +19,11 @@
 
   let { data }: PageProps = $props();
 
-  const form = superForm(data.form, {
-    validators: zodClient(BLUEPRINT_VIEW_SCHEMA),
-  });
+  const form = untrack(() =>
+    superForm(data.form, {
+      validators: zodClient(BLUEPRINT_VIEW_SCHEMA),
+    }),
+  );
   const { form: formData, enhance } = form;
 
   const toastService = ToastService.instance;

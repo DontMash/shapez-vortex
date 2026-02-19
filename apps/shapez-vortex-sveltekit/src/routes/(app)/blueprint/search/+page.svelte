@@ -30,7 +30,7 @@
   let { data }: PageProps = $props();
 
   let formElement: HTMLFormElement | undefined = $state();
-  const form = superForm(data.form);
+  const form = untrack(() => superForm(data.form));
   const { form: formData } = form;
 
   let isFilterOpen: boolean = $state(false);

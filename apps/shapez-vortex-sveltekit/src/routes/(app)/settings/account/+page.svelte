@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PageProps } from './$types';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
+  import { untrack } from 'svelte';
   import { superForm } from 'sveltekit-superforms';
 
   import { button } from '$lib/components/button';
@@ -8,7 +9,7 @@
 
   let { data }: PageProps = $props();
 
-  const form = superForm(data.form);
+  const form = untrack(() => superForm(data.form));
   const { form: formData, enhance } = form;
 </script>
 

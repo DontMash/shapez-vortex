@@ -2,6 +2,7 @@
   import type { PageProps } from './$types';
   import { Button, Toggle } from 'bits-ui';
   import { Field, Control, Label, FieldErrors } from 'formsnap';
+  import { untrack } from 'svelte';
   import { superForm } from 'sveltekit-superforms';
   import { zod4Client as zodClient } from 'sveltekit-superforms/adapters';
   import { page } from '$app/stores';
@@ -17,12 +18,14 @@
   let { data }: PageProps = $props();
 
   const toastService = ToastService.instance;
-  const form = superForm(data.form, {
-    validators: zodClient(USER_LOGIN_FORM_SCHEMA),
-    onError({ result }) {
-      toastService.add({ message: result.error.message, type: 'ERROR' });
-    },
-  });
+  const form = untrack(() =>
+    superForm(data.form, {
+      validators: zodClient(USER_LOGIN_FORM_SCHEMA),
+      onError({ result }) {
+        toastService.add({ message: result.error.message, type: 'ERROR' });
+      },
+    }),
+  );
   const { form: formData, enhance } = form;
   let isPasswordHidden = $state(true);
 </script>

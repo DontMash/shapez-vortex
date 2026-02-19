@@ -8,7 +8,7 @@
     Tooltip,
   } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
-  import { onMount } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import { fade, slide } from 'svelte/transition';
   import {
     arrayProxy,
@@ -60,7 +60,7 @@
 
   let { data }: Props = $props();
 
-  const form = superForm(data.form);
+  const form = untrack(() => superForm(data.form));
   const toastService = ToastService.instance;
 
   const { form: formData, enhance, submit, tainted } = form;
@@ -76,7 +76,7 @@
 
   let blueprint: Blueprint | undefined = $state();
   let blueprintIdentifier: BlueprintIdentifier | undefined = $state();
-  let blueprintPreview: boolean = $state(data.type === 'create');
+  let blueprintPreview: boolean = $derived(data.type === 'create');
   const tags: Array<BlueprintTag> = $derived(
     blueprintTagInputValue
       ? data.tags?.filter((tag: BlueprintTag) =>

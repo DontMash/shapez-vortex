@@ -2,6 +2,7 @@
   import { AlertDialog, Button, Select } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { fade } from 'svelte/transition';
+  import { untrack } from 'svelte';
   import { superForm, type SuperValidated } from 'sveltekit-superforms';
   import { z } from 'zod';
   import { page } from '$app/state';
@@ -19,17 +20,21 @@
 
   let { form, blueprint }: Props = $props();
 
-  const reportForm = superForm(form, {
-    onError: 'apply',
-    onResult({ result }) {
-      if (result.type !== 'success') {
-        return;
-      }
-      isReportDialogOpen = false;
-    },
-  });
+  const reportForm = untrack(() =>
+    superForm(form, {
+      onError: 'apply',
+      onResult({ result }) {
+        if (result.type !== 'success') {
+          return;
+        }
+        isReportDialogOpen = false;
+      },
+    }),
+  );
   const { form: formData, enhance, delayed } = reportForm;
-  $formData.blueprint = blueprint.id;
+  $effect(() => {
+    $formData.blueprint = blueprint.id;
+  });
   const userId = page.data.user?.id ?? '';
   $formData.user = userId;
   let isReportDialogOpen = $state(false);

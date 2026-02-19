@@ -82,14 +82,14 @@
   * {
     @apply border-border;
   }
+  *[class*='icon-'] {
+    @apply shrink-0 align-bottom text-2xl;
+  }
 }
 
 @layer utilities {
   *[class~='prose'] {
     @apply proses;
-  }
-  *[class*='icon-'] {
-    @apply shrink-0 align-bottom text-2xl;
   }
 }
 
