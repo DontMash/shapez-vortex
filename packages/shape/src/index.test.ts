@@ -13,7 +13,7 @@ import {
   type ShapeColor,
   type ShapeColorIdentifier,
   type ShapeTypeIdentifier,
-} from './shape';
+} from './index';
 
 describe('default shape identifier', () => {
   it('success', () => {

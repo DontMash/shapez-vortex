@@ -19,6 +19,7 @@
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.5",
     "@shapez-vortex/blueprint": "workspace:*",
+    "@shapez-vortex/shape": "workspace:*",
     "@sveltejs/adapter-vercel": "^5.7.2",
     "@tailwindcss/vite": "^4.1.7",
     "@threlte/core": "^8.0.4",
@@ -27,7 +28,7 @@
     "class-variance-authority": "^0.7.1",
     "embla-carousel": "^8.6.0",
     "formsnap": "^2.0.1",
-    "pocketbase": "^0.26.0",
+    "pocketbase": "^0.26.8",
     "screenfull": "^6.0.2",
     "sveltekit-superforms": "^2.25.0",
     "three": "^0.176.0",

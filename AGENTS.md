@@ -24,6 +24,7 @@ This project is organized as a Bun workspaces monorepo:
 | `apps/shapez-vortex-sveltekit/`  | SvelteKit web application (frontend + API routes)                          |
 | `apps/shapez-vortex-pocketbase/` | PocketBase backend (Dockerfile, Caddy proxy, Docker Compose)               |
 | `packages/blueprint/`           | Shared package — pure blueprint codec and Zod schemas (`@shapez-vortex/blueprint`) |
+| `packages/shape/`               | Shared package — pure shape codec, identifier types, and simulation logic (`@shapez-vortex/shape`) |
 
 ## Commands
 
@@ -41,9 +42,10 @@ bun run --filter shapez-vortex-sveltekit test:coverage   # Run tests with covera
 bun run --filter shapez-vortex-sveltekit lint            # Check formatting (Prettier) and linting (ESLint)
 bun run --filter shapez-vortex-sveltekit format          # Auto-format source code
 bun run --filter @shapez-vortex/blueprint test           # Run blueprint package tests
+bun run --filter @shapez-vortex/shape test               # Run shape package tests
 ```
 
-Always run `bun run --filter shapez-vortex-sveltekit lint` and `bun run --filter shapez-vortex-sveltekit test` before considering a change complete. The CI pipeline enforces both on all PRs. When modifying `packages/blueprint/`, also run `bun run --filter @shapez-vortex/blueprint test`.
+Always run `bun run --filter shapez-vortex-sveltekit lint` and `bun run --filter shapez-vortex-sveltekit test` before considering a change complete. The CI pipeline enforces both on all PRs. When modifying `packages/blueprint/`, also run `bun run --filter @shapez-vortex/blueprint test`. When modifying `packages/shape/`, also run `bun run --filter @shapez-vortex/shape test`.
 
 ## Environment Variables
 
@@ -67,7 +69,7 @@ Never commit `.env` files.
 | `apps/shapez-vortex-sveltekit/src/lib/`                   | Shared library code                                                      |
 | `apps/shapez-vortex-sveltekit/src/lib/blueprint.ts`       | Thin shim — re-exports from `@shapez-vortex/blueprint`, adds `BlueprintRecord`/`BlueprintTag` (PocketBase types), wraps `encode`/`isBlueprint`/`update` with injected schema |
 | `apps/shapez-vortex-sveltekit/src/lib/blueprint.schema.ts` | Thin shim — re-exports package constants and instantiates schema factories with `GAME_VERSION` and `isShapeIdentifier` |
-| `apps/shapez-vortex-sveltekit/src/lib/shape.ts`           | Shape identifier parsing and validation                                  |
+| `apps/shapez-vortex-sveltekit/src/lib/shape.ts`           | Thin shim — re-exports everything from `@shapez-vortex/shape`             |
 | `apps/shapez-vortex-sveltekit/src/lib/server/`            | Server-only code (PocketBase API calls)                                  |
 | `apps/shapez-vortex-sveltekit/src/lib/client/`            | Client-only code (Svelte actions, toast service, utilities)              |
 | `apps/shapez-vortex-sveltekit/src/lib/components/`        | Svelte UI components organized by feature                                |
@@ -79,6 +81,7 @@ Never commit `.env` files.
 | `apps/shapez-vortex-pocketbase/`                          | PocketBase backend (Docker, Caddy, migrations)                           |
 | `packages/blueprint/src/index.ts`                        | Package entry point — codec functions (`decode`, `encode`, `update`, `isBlueprint`, `isBlueprintIdentifier`, `getBuildingCount`, etc.) and all identifier constants/types |
 | `packages/blueprint/src/schema.ts`                       | Package schemas — static Zod schemas plus factory functions (`makeBlueprintSchema`, `makeBlueprintFormSchema`, etc.) that accept `gameVersion` / `isShapeIdentifier` |
+| `packages/shape/src/index.ts`                            | Package entry point — shape codec (`parse`, `stringify`, `random`), physics simulation, identifier validators (`isShapeIdentifier`, etc.), metadata extractors (`getTypes`, `getColors`, etc.), and all shape types/constants |
 | `docs/`                                                   | Project documentation                                                    |
 
 ### Key Patterns
@@ -153,6 +156,8 @@ Tests are co-located with source files in `apps/shapez-vortex-sveltekit/src/`. T
 Use `@testing-library/svelte` for component tests. The client setup file (`vitest-setup-client.ts`) provides `@testing-library/jest-dom` matchers and mocks `window.matchMedia`.
 
 The `packages/blueprint/` package has its own Vitest setup. Tests are co-located in `packages/blueprint/src/` and run with `bun run --filter @shapez-vortex/blueprint test`.
+
+The `packages/shape/` package has its own Vitest setup. Tests are co-located in `packages/shape/src/` and run with `bun run --filter @shapez-vortex/shape test`.
 
 ## Auto-Generated Files
 

@@ -75,6 +75,7 @@ export const get = async (pb: PocketBase, options?: BlueprintGetOptions) => {
       }
     }
   }
+
   const blueprints = await pb
     .collection<BlueprintRecord>('blueprints')
     .getList(page, perPage, {
