@@ -24,15 +24,15 @@ export const load = (async ({ fetch, locals, request, url }) => {
 
   // fetch the latest 100 users for client-side search
   let searchUsers: Array<User> = [];
-  const userUrl = new URL('/api/v1/user', url.origin);
-  userUrl.searchParams.append('perPage', String(100));
   try {
-    const response = await fetch(userUrl);
-    if (!response.ok) {
-      throw new Error('Invalid user fetch', { cause: response });
-    }
-    const result = (await response.json()) as ListResult<User>;
-    searchUsers = result.items;
+    const displayname = url.searchParams.get('displayname');
+    const filter = [`displayname~"${displayname ?? ''}"`];
+    const result = await locals.pb
+      .collection('users')
+      .getList(1, 100, { fields: 'displayname', filter: filter.join('&&') });
+
+    const users = result as ListResult<User>;
+    searchUsers = users.items;
   } catch {
     searchUsers = [];
   }
