@@ -1,12 +1,26 @@
 import { describe, expect, it } from 'vitest';
 import type z from 'zod';
-import type { Blueprint, BlueprintIdentifier } from './blueprint';
+import type { Blueprint, BlueprintIdentifier } from './index.js';
 import {
-  BLUEPRINT_CREATE_SCHEMA,
-  BLUEPRINT_FORM_SCHEMA,
-  BLUEPRINT_SCHEMA,
-  type BlueprintFormData,
-} from './blueprint.schema';
+  makeBlueprintCreateSchema,
+  makeBlueprintFormSchema,
+  makeBlueprintSchema,
+} from './schema.js';
+
+// Pinned game version used across all schema tests.
+const GAME_VERSION = 1105;
+
+// Minimal shape identifier validator: accepts the simple identifiers used in
+// the mock data (e.g. "RuRuRuRu", "CuCuCuCu") without pulling in shape.ts.
+const isShapeIdentifier = (id: string): boolean =>
+  /^[CRSWFGHPc-][rgbcmykwu-]/.test(id);
+
+const BLUEPRINT_FORM_SCHEMA = makeBlueprintFormSchema(
+  GAME_VERSION,
+  isShapeIdentifier,
+);
+const BLUEPRINT_CREATE_SCHEMA = makeBlueprintCreateSchema();
+const BLUEPRINT_SCHEMA = makeBlueprintSchema(GAME_VERSION, isShapeIdentifier);
 
 const mockBlueprintIdentifier: BlueprintIdentifier =
   'SHAPEZ2-1-H4sIAAAAAAAAA62QwYrCQBBE/6XwOAdz2MscgysEFpEgQZEgzWZcB9qOzPQgIcy/70Qv+wFLQ0FTdL2iZ3SwVbX+MKj3sDNWOj0cLJrIJAMMmu9RFmNDSrBn+LLbPZNex3CPMJKY34J4o4ezbXoP+mzwKRq8i+VwRltIBocS/kXTmPSyKwnEl6pQ6r/sOnkevPz8K/0IuzY4vbR96dKkdqwbd6XEuh3Dk8LQiLogxB0FT6LIfWnnhcLUuRD9Umf5V859zr/Lq0txPgEAAA==$';
@@ -17,6 +31,7 @@ const mockBlueprintFormData: BlueprintFormData = {
   title: 'test',
   data: mockBlueprintIdentifier,
 };
+type BlueprintFormData = z.infer<typeof BLUEPRINT_FORM_SCHEMA>;
 const createBlueprintFormData = (
   mock?: Partial<BlueprintFormData>,
 ): BlueprintFormData => {
@@ -63,8 +78,7 @@ describe('form', () => {
 
   it('failure description', () => {
     const data = createBlueprintFormData({
-      description:
-        'This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. ',
+      description: 'x'.repeat(2049),
     });
     expect(() => BLUEPRINT_FORM_SCHEMA.parse(data)).toThrow();
   });
@@ -194,8 +208,7 @@ describe('create', () => {
 
   it('failure description', () => {
     const data = createBlueprintCreateData({
-      description:
-        'This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. ',
+      description: 'x'.repeat(2049),
     });
     expect(() => BLUEPRINT_CREATE_SCHEMA.parse(data)).toThrow();
   });

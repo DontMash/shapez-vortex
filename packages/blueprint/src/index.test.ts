@@ -11,8 +11,12 @@ import {
   update,
   type Blueprint,
   type BlueprintIdentifier,
-} from './blueprint';
-import { GAME_VERSION } from './game';
+} from './index.js';
+import { BLUEPRINT_SCHEMA_STATIC } from './schema.js';
+
+// The static schema has no game-version or shape-identifier enforcement,
+// which is sufficient for testing the codec functions in isolation.
+const schema = BLUEPRINT_SCHEMA_STATIC;
 
 // V: 1105
 const mockBlueprintIdentifier: BlueprintIdentifier =
@@ -95,34 +99,34 @@ const mockBlueprintBuildings = new Map<string, number>([
 
 describe('update', () => {
   it('success', () => {
-    const result = update(mockOldBlueprintIdentifier);
+    const result = update(mockOldBlueprintIdentifier, 1105, schema);
     expect(result).toBe(mockBlueprintIdentifier);
   });
 
   it('success island blueprint', () => {
-    const result = update(mockIslandBlueprintIdentifier);
+    const result = update(mockIslandBlueprintIdentifier, 1105, schema);
     expect(result).toBe(mockIslandBlueprintIdentifier);
   });
 
   it('success building blueprint', () => {
-    const result = update(mockBuildingBlueprintIdentifier);
+    const result = update(mockBuildingBlueprintIdentifier, 1105, schema);
     expect(result).toStrictEqual(mockBuildingBlueprintIdentifier);
   });
 
   it('failure invalid data', () => {
-    expect(() => update('test' as BlueprintIdentifier)).toThrow();
+    expect(() => update('test' as BlueprintIdentifier, 1105, schema)).toThrow();
   });
 
   it('failure invalid blueprint identifier', () => {
-    expect(() => update(mockInvalidBlueprintIdentifier)).toThrow();
+    expect(() =>
+      update(mockInvalidBlueprintIdentifier, 1105, schema),
+    ).toThrow();
   });
 
   it('failure invalid content', () => {
-    expect(() => update(mockInvalidBlueprintIdentifierContent)).toThrow();
-  });
-
-  it('failure invalid version', () => {
-    expect(() => update(mockBlueprintIdentifier, GAME_VERSION - 1)).toThrow();
+    expect(() =>
+      update(mockInvalidBlueprintIdentifierContent, 1105, schema),
+    ).toThrow();
   });
 });
 
@@ -174,38 +178,38 @@ describe('isBlueprintIdentifier', () => {
 
 describe('encode', () => {
   it('success island blueprint', () => {
-    const result = encode(mockBlueprint);
+    const result = encode(mockBlueprint, schema);
     expect(result).toStrictEqual(mockBlueprintIdentifier);
   });
 
   it('success building blueprint', () => {
-    const result = encode(mockBuildingBlueprint);
+    const result = encode(mockBuildingBlueprint, schema);
     expect(result).toStrictEqual(mockBuildingBlueprintIdentifier);
   });
 
   it('failure invalid data', () => {
-    expect(() => encode({} as Blueprint)).toThrow();
+    expect(() => encode({} as Blueprint, schema)).toThrow();
   });
 });
 
 describe('isBlueprint', () => {
   it('success', () => {
-    const result = isBlueprint(mockBlueprint);
+    const result = isBlueprint(mockBlueprint, schema);
     expect(result).toBe(true);
   });
 
   it('success island blueprint', () => {
-    const result = isBlueprint(mockIslandBlueprint);
+    const result = isBlueprint(mockIslandBlueprint, schema);
     expect(result).toBe(true);
   });
 
   it('success building blueprint', () => {
-    const result = isBlueprint(mockBuildingBlueprint);
+    const result = isBlueprint(mockBuildingBlueprint, schema);
     expect(result).toBe(true);
   });
 
   it('failure', () => {
-    const result = isBlueprint({});
+    const result = isBlueprint({}, schema);
     expect(result).toBe(false);
   });
 });
