@@ -1,4 +1,5 @@
 {
+  "id": "Game.Core.GameData.Presets.SerializedGameDifficultyPreset",
   "type": "object",
   "properties": {
     "Version": {
@@ -20,6 +21,7 @@
       ]
     },
     "Parameters": {
+      "id": "Game.Core.Mode.DifficultyGameParameters+SerializedData",
       "required": true,
       "type": [
         "object",

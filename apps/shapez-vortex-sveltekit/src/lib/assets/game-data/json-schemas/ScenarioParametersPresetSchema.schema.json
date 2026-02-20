@@ -1,4 +1,5 @@
 {
+  "id": "Game.Core.GameData.Presets.SerializedGameScenarioParametersPreset",
   "type": "object",
   "properties": {
     "Version": {
@@ -27,6 +28,7 @@
       ]
     },
     "Parameters": {
+      "id": "Game.Core.Mode.ScenarioGameParameters+SerializedData",
       "required": true,
       "type": [
         "object",
@@ -34,6 +36,7 @@
       ],
       "properties": {
         "MapGenerationParameters": {
+          "id": "Game.Core.Mode.MapGenerationParameters+SerializedData",
           "required": true,
           "type": [
             "object",
@@ -96,13 +99,27 @@
               "required": true,
               "type": "integer"
             },
+            "SpiralGeneration": {
+              "required": true,
+              "type": "boolean"
+            },
+            "SpiralThickness": {
+              "required": true,
+              "type": "number"
+            },
+            "SpiralTwist": {
+              "required": true,
+              "type": "number"
+            },
             "ShapePatchGenerationLikeliness": {
+              "id": "Game.Core.Mode.SerializedMapGenerationShapeLikeliness[]",
               "required": true,
               "type": [
                 "array",
                 "null"
               ],
               "items": {
+                "id": "Game.Core.Mode.SerializedMapGenerationShapeLikeliness",
                 "type": [
                   "object",
                   "null"
@@ -134,7 +151,11 @@
                     "required": true,
                     "type": "integer"
                   },
-                  "LikelinessPerMille": {
+                  "Weight": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "MaximumDistanceToOrigin": {
                     "required": true,
                     "type": "integer"
                   }
@@ -144,6 +165,7 @@
           }
         },
         "GameRuleParameters": {
+          "id": "Game.Core.Mode.GameRuleParameters+SerializedData",
           "required": true,
           "type": [
             "object",
@@ -151,6 +173,7 @@
           ],
           "properties": {
             "RuleIds": {
+              "id": "System.String[]",
               "required": true,
               "type": [
                 "array",

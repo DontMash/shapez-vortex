@@ -1,0 +1,13 @@
+{
+  "Version": "1",
+  "UniqueId": "default-scenario-parameter-preset",
+  "Title": "@scenario-preset.default.title",
+  "Description": "@scenario-preset.default.description",
+  "Parameters": {
+    "ScenarioId": "default-scenario",
+    "MapGenerationParameters": "#include:Scenarios/SharedData/BaseMapGenerationParameters",
+    "GameRuleParameters": {
+      "RuleIds": []
+    }
+  }
+}

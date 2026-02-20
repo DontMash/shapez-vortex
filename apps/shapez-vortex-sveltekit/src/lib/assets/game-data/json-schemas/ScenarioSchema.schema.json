@@ -1,0 +1,1953 @@
+{
+  "id": "SerializedGameScenario",
+  "type": "object",
+  "properties": {
+    "FormatVersion": {
+      "required": true,
+      "type": "integer"
+    },
+    "GameVersion": {
+      "required": true,
+      "type": "integer"
+    },
+    "UniqueId": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "IsTutorial": {
+      "required": true,
+      "type": "boolean"
+    },
+    "SupportedGameModes": {
+      "id": "System.String[]",
+      "required": true,
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "NextScenarios": {
+      "$ref": "System.String[]"
+    },
+    "ExampleShapes": {
+      "$ref": "System.String[]"
+    },
+    "Title": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Description": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "PreviewImageId": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "PlayerBadge": {
+      "id": "SerializedPlayerBadge",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Title": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ImageId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "ResearchConfig": {
+      "id": "SerializedResearchConfig",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "BaseChunkLimitMultiplier": {
+          "required": true,
+          "type": "integer"
+        },
+        "BaseBlueprintRewardMultiplier": {
+          "required": true,
+          "type": "integer"
+        },
+        "MaxShapeLayers": {
+          "required": true,
+          "type": "integer"
+        },
+        "InitialResearchPoints": {
+          "required": true,
+          "type": "integer"
+        },
+        "ShapesConfigurationId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ColorSchemeConfigurationId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ResearchLevelsAreProgressive": {
+          "required": true,
+          "type": "boolean"
+        },
+        "ResearchPointsGenerationMode": {
+          "required": true,
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2
+          ]
+        },
+        "BlueprintCurrencyShapes": {
+          "id": "SerializedBlueprintCurrencyShape[]",
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "id": "SerializedBlueprintCurrencyShape",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Shape": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "RequiredUpgradeIds": {
+                "$ref": "System.String[]"
+              },
+              "RequiredMechanicIds": {
+                "$ref": "System.String[]"
+              },
+              "Amount": {
+                "required": true,
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "IntroductionWikiEntryId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiallyUnlockedUpgrades": {
+          "$ref": "System.String[]"
+        },
+        "TutorialConfig": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "Progression": {
+      "id": "SerializedResearchProgression",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Levels": {
+          "id": "SerializedResearchProgressionLevels",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "Levels": {
+              "id": "SerializedResearchLevel[]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "SerializedResearchLevel",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "Definition": {
+                    "id": "SerializedResearchLevelDefinition",
+                    "required": true,
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "Id": {
+                        "required": true,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "VideoId": {
+                        "required": true,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "PreviewImageId": {
+                        "required": true,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "Title": {
+                        "required": true,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "Description": {
+                        "required": true,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "WikiEntryId": {
+                        "required": true,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "SignatureShape": {
+                        "required": true,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "Icon": {
+                        "required": true,
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "Lines": {
+                    "id": "SerializedResearchLevelLines",
+                    "required": true,
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "Lines": {
+                        "id": "SerializedResearchLevelLine[]",
+                        "required": true,
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "id": "SerializedResearchLevelLine",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "ReusedAtNextMilestone": {
+                              "required": true,
+                              "type": "boolean"
+                            },
+                            "ReusedAtNextMilestoneOffset": {
+                              "required": true,
+                              "type": "integer"
+                            },
+                            "ReusedAtSameMilestone": {
+                              "required": true,
+                              "type": "boolean"
+                            },
+                            "ReusedAtSameMilestoneOffset": {
+                              "required": true,
+                              "type": "integer"
+                            },
+                            "ReusedForPlayerLevel": {
+                              "required": true,
+                              "type": "boolean"
+                            },
+                            "StartingOffset": {
+                              "required": true,
+                              "type": "integer"
+                            },
+                            "Shapes": {
+                              "id": "SerializedResearchCostShapes[]",
+                              "required": true,
+                              "type": [
+                                "array",
+                                "null"
+                              ],
+                              "items": {
+                                "id": "SerializedResearchCostShapes",
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "Shape": {
+                                    "required": true,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "Amount": {
+                                    "required": true,
+                                    "type": "integer"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "Rewards": {
+                    "id": "SerializedResearchLevelRewards",
+                    "required": true,
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "Rewards": {
+                        "id": "ISerializedResearchReward[]",
+                        "required": true,
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "items": {
+                          "id": "ISerializedResearchReward",
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SideQuestGroups": {
+          "id": "SerializedResearchProgressionSideQuests",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "SideQuestGroups": {
+              "id": "SerializedResearchProgressionSideQuestGroup[]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "SerializedResearchProgressionSideQuestGroup",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "Title": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "RequiredUpgradeIds": {
+                    "$ref": "System.String[]"
+                  },
+                  "RequiredMechanicIds": {
+                    "$ref": "System.String[]"
+                  },
+                  "SideQuests": {
+                    "id": "SerializedResearchSideQuest[]",
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "id": "SerializedResearchSideQuest",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "Id": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "IsFollowupForLevel": {
+                          "required": true,
+                          "type": "boolean"
+                        },
+                        "Rewards": {
+                          "$ref": "ISerializedResearchReward[]"
+                        },
+                        "Costs": {
+                          "$ref": "SerializedResearchCostShapes[]"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ScenarioContent": {
+          "id": "SerializedResearchProgressionScenarioContent",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "UpgradeCategories": {
+              "$ref": "System.String[]"
+            },
+            "ContentBundles": {
+              "id": "SerializedResearchProgressionScenarioContentBundles[]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "SerializedResearchProgressionScenarioContentBundles",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "ContentBundle": {
+                    "id": "SerializedResearchProgressionSideUpgrade[]",
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "id": "SerializedResearchProgressionSideUpgrade",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "Id": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "PreviewImageId": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "VideoId": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "Title": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "IconId": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "Description": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "Hidden": {
+                          "required": true,
+                          "type": "boolean"
+                        },
+                        "Category": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "LinkedConverter": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "ShopDisplayMode": {
+                          "required": true,
+                          "type": "integer",
+                          "enum": [
+                            0,
+                            1,
+                            2
+                          ]
+                        },
+                        "RequiredUpgradeIds": {
+                          "$ref": "System.String[]"
+                        },
+                        "RequiredMechanicIds": {
+                          "$ref": "System.String[]"
+                        },
+                        "Rewards": {
+                          "$ref": "ISerializedResearchReward[]"
+                        },
+                        "Costs": {
+                          "id": "ISerializedResearchCost[]",
+                          "required": true,
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "id": "ISerializedResearchCost",
+                            "required": true,
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {}
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "LinearUpgrades": {
+          "id": "SerializedResearchProgressionLinearUpgrades",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "ConverterHubOutputCountUpgradeId": {
+              "required": true,
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ConverterHubOutputQualityUpgradeId": {
+              "required": true,
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "HubInputSizeUpgradeId": {
+              "required": true,
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ShapeQuantityUpgradeId": {
+              "required": true,
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ChunkLimitAddUpgradeId": {
+              "required": true,
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ChunkLimitMultiplyUpgradeId": {
+              "required": true,
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "SpeedsToLinearUpgradeMappings": {
+              "required": true,
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "LinearUpgrades": {
+              "id": "SerializedResearchProgressionLinearUpgrade[]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "SerializedResearchProgressionLinearUpgrade",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "Id": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "Title": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "DisplayType": {
+                    "required": true,
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5
+                    ]
+                  },
+                  "Levels": {
+                    "id": "SerializedResearchProgressionLinearUpgrade+Level[]",
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "id": "SerializedResearchProgressionLinearUpgrade+Level",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "Value": {
+                          "required": true,
+                          "type": "integer"
+                        },
+                        "Cost": {
+                          "$ref": "ISerializedResearchCost"
+                        }
+                      }
+                    }
+                  },
+                  "Attribute": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "Description": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "RequiredUpgradeIds": {
+                    "$ref": "System.String[]"
+                  },
+                  "RequiredMechanicIds": {
+                    "$ref": "System.String[]"
+                  },
+                  "Category": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "WikiConfiguration": {
+          "id": "Game.Core.Research.SerializedWikiConfiguration",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "Categories": {
+              "id": "Game.Core.Research.SerializedWikiCategory[][]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "Game.Core.Research.SerializedWikiCategory[]",
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "id": "Game.Core.Research.SerializedWikiCategory",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "Id": {
+                      "required": true,
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "IconId": {
+                      "required": true,
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "TitleId": {
+                      "required": true,
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "RequiredUpgradeIds": {
+                      "$ref": "System.String[]"
+                    },
+                    "RequiredMechanicIds": {
+                      "$ref": "System.String[]"
+                    }
+                  }
+                }
+              }
+            },
+            "WikiEntries": {
+              "id": "Game.Core.Research.SerializedUnlockableWikiReference[][]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "Game.Core.Research.SerializedUnlockableWikiReference[]",
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "id": "Game.Core.Research.SerializedUnlockableWikiReference",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "EntryId": {
+                      "required": true,
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "CategoryId": {
+                      "required": true,
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "RequiredMechanicIds": {
+                      "$ref": "System.String[]"
+                    },
+                    "RequiredUpgradeIds": {
+                      "$ref": "System.String[]"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "StartingLocation": {
+      "id": "SerializedStartingLocationData",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "InitialViewport": {
+          "id": "Viewport+SerializedData",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "PositionX": {
+              "required": true,
+              "type": "number"
+            },
+            "PositionY": {
+              "required": true,
+              "type": "number"
+            },
+            "Zoom": {
+              "required": true,
+              "type": "number"
+            },
+            "RotationDegrees": {
+              "required": true,
+              "type": "number"
+            },
+            "Angle": {
+              "required": true,
+              "type": "number"
+            },
+            "BuildingLayer": {
+              "required": true,
+              "type": "integer"
+            },
+            "IslandLayer": {
+              "required": true,
+              "type": "integer"
+            },
+            "ShowAllBuildingLayers": {
+              "required": true,
+              "type": "boolean"
+            },
+            "ShowAllIslandLayers": {
+              "required": true,
+              "type": "boolean"
+            }
+          }
+        },
+        "CentralElementCoordinate": {
+          "id": "Game.Core.Coordinates.GlobalChunkCoordinate",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "required": true,
+              "type": "integer"
+            },
+            "y": {
+              "required": true,
+              "type": "integer"
+            },
+            "z": {
+              "required": true,
+              "type": "integer"
+            }
+          }
+        },
+        "InitialIslands": {
+          "id": "SerializedStartingLocationDataInitialIslands",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "InitialIslands": {
+              "id": "SerializedStartingLocationDataInitialIsland[]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "SerializedStartingLocationDataInitialIsland",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "Position_GC": {
+                    "$ref": "Game.Core.Coordinates.GlobalChunkCoordinate"
+                  },
+                  "Rotation": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "LayoutId": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "FixedPatches": {
+          "id": "SerializedStartingLocationDataFixedPatches",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "FixedPatches": {
+              "id": "SerializedStartingLocationDataFixedPatch[]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "SerializedStartingLocationDataFixedPatch",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "Shape": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "Position_LC": {
+                    "id": "Game.Core.Coordinates.ChunkVector",
+                    "required": true,
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "x": {
+                        "required": true,
+                        "type": "integer"
+                      },
+                      "y": {
+                        "required": true,
+                        "type": "integer"
+                      },
+                      "z": {
+                        "required": true,
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "LocalTiles": {
+                    "id": "Game.Core.Coordinates.ChunkVector[]",
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "$ref": "Game.Core.Coordinates.ChunkVector"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "StartingChunks": {
+          "id": "SerializedStartingLocationDataStartingChunks",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "StartingChunks": {
+              "id": "SerializedStartingLocationDataStartingChunk[]",
+              "required": true,
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "id": "SerializedStartingLocationDataStartingChunk",
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "SuperChunk": {
+                    "id": "Game.Core.Coordinates.SuperChunkCoordinate",
+                    "required": true,
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "x": {
+                        "required": true,
+                        "type": "integer"
+                      },
+                      "y": {
+                        "required": true,
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "GuaranteedShapePatches": {
+                    "$ref": "System.String[]"
+                  },
+                  "GuaranteedColorPatches": {
+                    "id": "System.Char[]",
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "PlayerLevelConfig": {
+      "id": "SerializedResearchPlayerLevelConfig",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "IconicLevelShapes": {
+          "id": "SerializedResearchPlayerLevelLevelShapes",
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "LevelShapes": {
+              "$ref": "System.String[]"
+            }
+          }
+        },
+        "IconicLevelShapeInterval": {
+          "required": true,
+          "type": "integer"
+        },
+        "GoalLines": {
+          "id": "SerializedResearchPlayerLevelConfig+GoalLine[]",
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "id": "SerializedResearchPlayerLevelConfig+GoalLine",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Id": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Randomized": {
+                "required": true,
+                "type": "boolean"
+              },
+              "RandomizedUseCrystals": {
+                "required": true,
+                "type": "boolean"
+              },
+              "RandomizedExtraShapesPer10Level": {
+                "$ref": "System.String[]"
+              },
+              "Shape": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "ConvertedShape": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "StartingAmount": {
+                "required": true,
+                "type": "integer"
+              },
+              "ExponentialGrowthPercentPerLevel": {
+                "required": true,
+                "type": "integer"
+              },
+              "RequiredUpgradeIds": {
+                "$ref": "System.String[]"
+              },
+              "RequiredMechanicIds": {
+                "$ref": "System.String[]"
+              }
+            }
+          }
+        },
+        "Rewards": {
+          "id": "SerializedResearchPlayerLevelConfig+Reward[]",
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "id": "SerializedResearchPlayerLevelConfig+Reward",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "MinimumLevel": {
+                "required": true,
+                "type": "integer"
+              },
+              "Rewards": {
+                "$ref": "ISerializedResearchReward[]"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Mechanics": {
+      "id": "SerializedResearchMechanics",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Mechanics": {
+          "id": "SerializedResearchMechanic[]",
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "id": "SerializedResearchMechanic",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Id": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Title": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Description": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "IconId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "BuildingLayerMechanicIds": {
+          "$ref": "System.String[]"
+        },
+        "IslandLayerMechanicIds": {
+          "$ref": "System.String[]"
+        },
+        "IslandLayersUnlockOrder": {
+          "id": "System.Int32[]",
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer"
+          }
+        },
+        "BlueprintsMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "RailsMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "IslandManagementMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "PlayerLevelMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "TrainHubDeliveryMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "SideUpgradeMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "ConvertersConfig": {
+      "id": "SerializedConvertersConfig",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "RocketGroups": {
+          "id": "SerializedRocketGroup[]",
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "id": "SerializedRocketGroup",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "RocketGroupId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "IconId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "TitleId": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "RocketIds": {
+                "$ref": "System.String[]"
+              },
+              "RequiredUpgradeIds": {
+                "$ref": "System.String[]"
+              },
+              "RequiredMechanicIds": {
+                "$ref": "System.String[]"
+              }
+            }
+          }
+        },
+        "Configs": {
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "id": "SerializedConverterConfig",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Title": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Description": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "Icon": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "ChunkCost": {
+                "required": true,
+                "type": "integer"
+              },
+              "IsSelectable": {
+                "required": true,
+                "type": "boolean"
+              },
+              "IsBuildable": {
+                "required": true,
+                "type": "boolean"
+              },
+              "IsRemovable": {
+                "required": true,
+                "type": "boolean"
+              },
+              "AccentColorPaletteIndex": {
+                "required": true,
+                "type": "integer"
+              },
+              "Modules": {
+                "id": "SerializedConverterModule[]",
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "id": "SerializedConverterModule",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "Transform": {
+                      "id": "SerializedTransform",
+                      "required": true,
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "X": {
+                          "required": true,
+                          "type": "integer"
+                        },
+                        "Y": {
+                          "required": true,
+                          "type": "integer"
+                        },
+                        "Z": {
+                          "required": true,
+                          "type": "integer"
+                        },
+                        "Rotation": {
+                          "required": true,
+                          "type": "integer"
+                        },
+                        "ToChunkTransform": {
+                          "id": "Game.Core.Coordinates.LocalChunkTransform",
+                          "required": true,
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "additionalProperties": false,
+                          "properties": {
+                            "Position": {
+                              "$ref": "Game.Core.Coordinates.ChunkVector"
+                            },
+                            "Rotation": {
+                              "id": "Game.Core.Coordinates.GridRotation",
+                              "required": true,
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "additionalProperties": false,
+                              "properties": {
+                                "Value": {
+                                  "required": true,
+                                  "type": "integer",
+                                  "enum": [
+                                    0,
+                                    1,
+                                    2,
+                                    3
+                                  ]
+                                },
+                                "MirroredHorizontally": {
+                                  "$ref": "Game.Core.Coordinates.GridRotation"
+                                },
+                                "MirroredVertically": {
+                                  "$ref": "Game.Core.Coordinates.GridRotation"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "ToChunkPivot": {
+                          "id": "Game.Core.Coordinates.LocalChunkPivot",
+                          "required": true,
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "additionalProperties": false,
+                          "properties": {
+                            "Position": {
+                              "$ref": "Game.Core.Coordinates.ChunkVector"
+                            },
+                            "Direction": {
+                              "id": "Game.Core.Coordinates.ChunkDirection",
+                              "required": true,
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "additionalProperties": false,
+                              "properties": {
+                                "Value": {
+                                  "required": true,
+                                  "type": "integer",
+                                  "enum": [
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5
+                                  ]
+                                },
+                                "AxisSign": {
+                                  "required": true,
+                                  "type": "integer",
+                                  "enum": [
+                                    0,
+                                    1
+                                  ]
+                                },
+                                "Axis": {
+                                  "id": "Game.Core.Coordinates.ChunkAxis",
+                                  "required": true,
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "Value": {
+                                      "required": true,
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "Opposite": {
+                                  "$ref": "Game.Core.Coordinates.ChunkDirection"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Name": {
+                      "required": true,
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              },
+              "SimpleAnimationModules": {
+                "id": "SerializedConverterSimpleAnimationModule[]",
+                "required": true,
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "id": "SerializedConverterSimpleAnimationModule",
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "Transform": {
+                      "$ref": "SerializedTransform"
+                    },
+                    "Name": {
+                      "required": true,
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              },
+              "IOs": {
+                "id": "SerializedConverterIOs",
+                "required": true,
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "Inputs": {
+                    "id": "SerializedTransform[]",
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "$ref": "SerializedTransform"
+                    }
+                  },
+                  "Outputs": {
+                    "$ref": "SerializedTransform[]"
+                  },
+                  "TopUI": {
+                    "$ref": "SerializedTransform"
+                  },
+                  "Rockets": {
+                    "$ref": "SerializedConverterModule[]"
+                  }
+                }
+              },
+              "Recipe": {
+                "id": "SerializedConverterRecipe",
+                "required": true,
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "Inputs": {
+                    "id": "SerializedConverterRecipe+Input[]",
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "id": "SerializedConverterRecipe+Input",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "Shape": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "Outputs": {
+                    "id": "SerializedConverterRecipe+Output[]",
+                    "required": true,
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "id": "SerializedConverterRecipe+Output",
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "Shape": {
+                          "required": true,
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "RocketId": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "ConversionsPerRocket": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "ConvertersPerFullBelt": {
+                    "required": true,
+                    "type": "integer"
+                  },
+                  "RequiredUpgradeIds": {
+                    "$ref": "System.String[]"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ResearchStationConfig": {
+      "id": "SerializedResearchStationConfig",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Recipes": {
+          "required": true,
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "RailColorsConfig": {
+      "id": "SerializedRailColorsConfig",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "RailColors": {
+          "id": "System.Collections.Generic.List`1[[SerializableRailColor, SPZGameAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "id": "SerializableRailColor",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "Id": {
+                "id": "Game.Core.Rails.SerializableRailColorId",
+                "required": true,
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "RailColorId": {
+                    "required": true,
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "Tint": {
+                "id": "UnityEngine.Color",
+                "required": true,
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "r": {
+                    "required": true,
+                    "type": "number"
+                  },
+                  "g": {
+                    "required": true,
+                    "type": "number"
+                  },
+                  "b": {
+                    "required": true,
+                    "type": "number"
+                  },
+                  "a": {
+                    "required": true,
+                    "type": "number"
+                  },
+                  "grayscale": {
+                    "required": true,
+                    "type": "number"
+                  },
+                  "linear": {
+                    "$ref": "UnityEngine.Color"
+                  },
+                  "gamma": {
+                    "$ref": "UnityEngine.Color"
+                  },
+                  "maxColorComponent": {
+                    "required": true,
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ToolbarConfig": {
+      "id": "LazySerializedToolbarConfig",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "ToolbarDataJson": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Value": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "CinematicIntroConfig": {
+      "id": "SerializedCinematicIntroConfig",
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Steps": {
+          "id": "SerializedCinematicIntroStep[]",
+          "required": true,
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "id": "SerializedCinematicIntroStep",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "PositionX": {
+                "required": true,
+                "type": "number"
+              },
+              "PositionY": {
+                "required": true,
+                "type": "number"
+              },
+              "Zoom": {
+                "required": true,
+                "type": "number"
+              },
+              "RotationDegrees": {
+                "required": true,
+                "type": "number"
+              },
+              "Angle": {
+                "required": true,
+                "type": "number"
+              },
+              "Text": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "TransitionDuration": {
+                "required": true,
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

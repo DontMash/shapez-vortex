@@ -1,0 +1,13 @@
+{
+  "Version": "1",
+  "UniqueId": "hard-scenario-parameter-preset",
+  "Title": "@scenario-preset.hard.title",
+  "Description": "@scenario-preset.hard.description",
+  "Parameters": {
+    "ScenarioId": "hard-scenario",
+    "MapGenerationParameters": "#include:Scenarios/SharedData/BaseMapGenerationParameters",
+    "GameRuleParameters": {
+      "RuleIds": []
+    }
+  }
+}

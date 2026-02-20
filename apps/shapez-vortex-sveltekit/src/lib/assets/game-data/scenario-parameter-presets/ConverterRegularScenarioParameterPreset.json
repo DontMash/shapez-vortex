@@ -1,0 +1,13 @@
+{
+  "Version": "1",
+  "UniqueId": "converter-regular-scenario-parameter-preset",
+  "Title": "@scenario-preset.converter-regular.title",
+  "Description": "@scenario-preset.converter-regular.description",
+  "Parameters": {
+    "ScenarioId": "converter-regular-scenario",
+    "MapGenerationParameters": "#include:Scenarios/Converter/DefaultData/ConverterMapGenerationParameters",
+    "GameRuleParameters": {
+      "RuleIds": []
+    }
+  }
+}

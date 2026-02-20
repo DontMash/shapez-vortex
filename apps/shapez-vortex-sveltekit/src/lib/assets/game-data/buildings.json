@@ -627,6 +627,188 @@
     ]
   },
   {
+    "Id": "Display2x2Variant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
+      {
+        "Id": "Display2x2InternalVariant",
+        "MirroredDefinitionId": "Display2x2InternalVariantMirrored",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "Display2x2InternalVariantMirrored",
+        "MirroredDefinitionId": "Display2x2InternalVariant",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      }
+    ]
+  },
+  {
+    "Id": "Display3x3Variant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
+      {
+        "Id": "Display3x3InternalVariant",
+        "MirroredDefinitionId": "Display3x3InternalVariantMirrored",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 2,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 2,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": -2,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": -2,
+            "Z": 0
+          },
+          {
+            "X": 2,
+            "Y": -2,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "Display3x3InternalVariantMirrored",
+        "MirroredDefinitionId": "Display3x3InternalVariant",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 2,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 2,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 2,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 2,
+            "Z": 0
+          },
+          {
+            "X": 2,
+            "Y": 2,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      }
+    ]
+  },
+  {
     "Id": "ExtractorDefaultVariant",
     "Removable": true,
     "Selectable": true,
@@ -833,29 +1015,6 @@
     ]
   },
   {
-    "Id": "HubDefaultVariant",
-    "Removable": false,
-    "Selectable": false,
-    "PlayerBuildable": false,
-    "AutoConnectBelts": true,
-    "PipetteOverrideVariantId": null,
-    "InternalVariants": [
-      {
-        "Id": "HubDefaultInternalVariant",
-        "MirroredDefinitionId": null,
-        "Tiles": [
-          {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          }
-        ],
-        "BeltInputs": [],
-        "BeltOutputs": []
-      }
-    ]
-  },
-  {
     "Id": "LabelDefaultVariant",
     "Removable": true,
     "Selectable": true,
@@ -985,12 +1144,12 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": 0
+            "Z": -1
           },
           {
             "X": 0,
             "Y": 0,
-            "Z": -1
+            "Z": 0
           }
         ],
         "BeltInputs": [
@@ -1021,12 +1180,12 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": 0
+            "Z": -1
           },
           {
             "X": 0,
             "Y": 0,
-            "Z": -1
+            "Z": 0
           }
         ],
         "BeltInputs": [
@@ -1211,7 +1370,7 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": 0
+            "Z": -2
           },
           {
             "X": 0,
@@ -1221,7 +1380,7 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": -2
+            "Z": 0
           }
         ],
         "BeltInputs": [
@@ -1252,7 +1411,7 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": 0
+            "Z": -2
           },
           {
             "X": 0,
@@ -1262,7 +1421,7 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": -2
+            "Z": 0
           }
         ],
         "BeltInputs": [
@@ -1293,7 +1452,7 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": 0
+            "Z": -2
           },
           {
             "X": 0,
@@ -1303,7 +1462,7 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": -2
+            "Z": 0
           }
         ],
         "BeltInputs": [
@@ -1334,7 +1493,7 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": 0
+            "Z": -2
           },
           {
             "X": 0,
@@ -1344,7 +1503,7 @@
           {
             "X": 0,
             "Y": 0,
-            "Z": -2
+            "Z": 0
           }
         ],
         "BeltInputs": [
@@ -2323,7 +2482,33 @@
         "BeltOutputs": []
       },
       {
-        "Id": "PipeCrossInternalVariant",
+        "Id": "PipeLift",
+        "MirroredDefinitionId": null,
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "PipeLiftInverter",
+        "MirroredDefinitionId": null,
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "PipeUp",
         "MirroredDefinitionId": null,
         "Tiles": [
           {
@@ -2337,6 +2522,19 @@
       },
       {
         "Id": "PipeJunctionInternalVariant",
+        "MirroredDefinitionId": null,
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "PipeCrossInternalVariant",
         "MirroredDefinitionId": null,
         "Tiles": [
           {
@@ -3131,7 +3329,7 @@
     ]
   },
   {
-    "Id": "VirtualStackerDefaultVariant",
+    "Id": "VirtualRotatorCCWVariant",
     "Removable": true,
     "Selectable": true,
     "PlayerBuildable": true,
@@ -3139,21 +3337,8 @@
     "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
-        "Id": "VirtualStackerDefaultInternalVariant",
-        "MirroredDefinitionId": "VirtualStackerDefaultInternalVariantMirrored",
-        "Tiles": [
-          {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          }
-        ],
-        "BeltInputs": [],
-        "BeltOutputs": []
-      },
-      {
-        "Id": "VirtualStackerDefaultInternalVariantMirrored",
-        "MirroredDefinitionId": "VirtualStackerDefaultInternalVariant",
+        "Id": "VirtualRotatorCCWInternalVariant",
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
@@ -3167,7 +3352,7 @@
     ]
   },
   {
-    "Id": "VirtualUnstackerDefaultVariant",
+    "Id": "VirtualStackerTallVariant",
     "Removable": true,
     "Selectable": true,
     "PlayerBuildable": true,
@@ -3175,26 +3360,46 @@
     "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
-        "Id": "VirtualUnstackerDefaultInternalVariant",
-        "MirroredDefinitionId": "VirtualUnstackerDefaultInternalVariantMirrored",
+        "Id": "VirtualStackerTallInternalVariant",
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
             "Y": 0,
             "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
           }
         ],
         "BeltInputs": [],
         "BeltOutputs": []
-      },
+      }
+    ]
+  },
+  {
+    "Id": "VirtualUnstackerTallVariant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
       {
-        "Id": "VirtualUnstackerDefaultInternalVariantMirrored",
-        "MirroredDefinitionId": "VirtualUnstackerDefaultInternalVariant",
+        "Id": "VirtualUnstackerTallInternalVariant",
+        "MirroredDefinitionId": null,
         "Tiles": [
           {
             "X": 0,
             "Y": 0,
             "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
           }
         ],
         "BeltInputs": [],
@@ -3682,7 +3887,7 @@
     ]
   },
   {
-    "Id": "WireGlobalTransmitterSenderVariant",
+    "Id": "ControlledSignalTransmitterVariant",
     "Removable": true,
     "Selectable": true,
     "PlayerBuildable": true,
@@ -3690,8 +3895,8 @@
     "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
-        "Id": "WireGlobalTransmitterSenderInternalVariant",
-        "MirroredDefinitionId": null,
+        "Id": "ControlledSignalTransmitterInternalVariant",
+        "MirroredDefinitionId": "ControlledSignalTransmitterInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
@@ -3826,6 +4031,149 @@
           {
             "X": 1,
             "Y": -1,
+            "Z": 2
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "ControlledSignalTransmitterInternalVariantMirrored",
+        "MirroredDefinitionId": "ControlledSignalTransmitterInternalVariant",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 2
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": 1,
             "Z": 2
           }
         ],
@@ -3873,6 +4221,390 @@
             "X": 0,
             "Y": 0,
             "Z": 0
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      }
+    ]
+  },
+  {
+    "Id": "SplitterOverflowVariant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
+      {
+        "Id": "SplitterOverflowLInternalVariant",
+        "MirroredDefinitionId": "SplitterOverflowLInternalVariantMirrored",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [
+          {
+            "Position_L": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Direction_L": 2
+          }
+        ],
+        "BeltOutputs": [
+          {
+            "Position_L": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Direction_L": 0
+          },
+          {
+            "Position_L": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Direction_L": 3
+          }
+        ]
+      },
+      {
+        "Id": "SplitterOverflowLInternalVariantMirrored",
+        "MirroredDefinitionId": "SplitterOverflowLInternalVariant",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        ],
+        "BeltInputs": [
+          {
+            "Position_L": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Direction_L": 2
+          }
+        ],
+        "BeltOutputs": [
+          {
+            "Position_L": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Direction_L": 0
+          },
+          {
+            "Position_L": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Direction_L": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "ControlledSignalReceiverVariant",
+    "Removable": true,
+    "Selectable": true,
+    "PlayerBuildable": true,
+    "AutoConnectBelts": true,
+    "PipetteOverrideVariantId": null,
+    "InternalVariants": [
+      {
+        "Id": "ControlledSignalReceiverInternalVariant",
+        "MirroredDefinitionId": "ControlledSignalReceiverInternalVariantMirrored",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 2
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 2
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "ControlledSignalReceiverInternalVariantMirrored",
+        "MirroredDefinitionId": "ControlledSignalReceiverInternalVariant",
+        "Tiles": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 0
+          },
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          {
+            "X": 0,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": 0,
+            "Z": 2
+          },
+          {
+            "X": 0,
+            "Y": -1,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": -1,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": -1,
+            "Z": 2
+          },
+          {
+            "X": 0,
+            "Y": 1,
+            "Z": 2
+          },
+          {
+            "X": -1,
+            "Y": 1,
+            "Z": 2
+          },
+          {
+            "X": 1,
+            "Y": 1,
+            "Z": 2
           }
         ],
         "BeltInputs": [],

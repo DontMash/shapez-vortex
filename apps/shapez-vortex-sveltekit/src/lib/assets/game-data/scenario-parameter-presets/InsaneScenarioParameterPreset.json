@@ -1,0 +1,13 @@
+{
+  "Version": "1",
+  "UniqueId": "insane-scenario-parameter-preset",
+  "Title": "@scenario-preset.insane.title",
+  "Description": "@scenario-preset.insane.description",
+  "Parameters": {
+    "ScenarioId": "insane-scenario",
+    "MapGenerationParameters": "#include:Scenarios/SharedData/BaseMapGenerationParameters",
+    "GameRuleParameters": {
+      "RuleIds": []
+    }
+  }
+}

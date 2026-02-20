@@ -1,0 +1,13 @@
+{
+  "Version": "1",
+  "UniqueId": "onboarding-scenario-parameter-preset",
+  "Title": "@scenario-preset.onboarding.title",
+  "Description": "@scenario-preset.onboarding.description",
+  "Parameters": {
+    "ScenarioId": "onboarding-scenario",
+    "MapGenerationParameters": "#include:Scenarios/Classic/Onboarding/OnboardingMapGenerationParameters",
+    "GameRuleParameters": {
+      "RuleIds": []
+    }
+  }
+}
