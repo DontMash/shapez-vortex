@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "prepare:schemas": "json2ts -i \"src/lib/assets/data/json-schemas/**/*.json\" -o \"src/lib/schemas\"",
-    "prepare:buildings": "bash resources/scripts/buildings-pipeline.sh",
-    "prepare:shapes": "bash resources/scripts/shapes-pipeline.sh",
+    "prepare:models": "copy-models ./static/models",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
@@ -19,6 +18,7 @@
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.5",
     "@shapez-vortex/blueprint": "workspace:*",
+    "@shapez-vortex/models": "workspace:*",
     "@shapez-vortex/shape": "workspace:*",
     "@sveltejs/adapter-vercel": "^5.7.2",
     "@tailwindcss/vite": "^4.1.7",
@@ -48,7 +48,6 @@
     "@tailwindcss/typography": "^0.5.19",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/svelte": "^5.2.8",
-    "@threlte/gltf": "^3.0.1",
     "@types/three": "^0.176.0",
     "@types/ua-parser-js": "^0.7.39",
     "@vitest/coverage-v8": "^3.1.3",

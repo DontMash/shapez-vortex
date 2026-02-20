@@ -1,0 +1,35 @@
+{
+  "name": "@shapez-vortex/models",
+  "version": "0.14.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "prepare:models": "bun run resources/scripts/pipeline.ts all",
+    "prepare:buildings": "bun run resources/scripts/pipeline.ts buildings",
+    "prepare:shapes": "bun run resources/scripts/pipeline.ts shapes",
+    "prepare:index": "bun run resources/scripts/pipeline.ts index",
+    "check": "svelte-check"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "copy-models": "./bin/copy-models.js"
+  },
+  "peerDependencies": {
+    "@threlte/core": "^8.0.0",
+    "@threlte/extras": "^9.0.0",
+    "svelte": "^5.0.0",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@sveltejs/package": "^2.3.9",
+    "@threlte/gltf": "^3.0.1",
+    "@types/bun": "^1.3.9",
+    "@types/node": "^25.3.0",
+    "@types/three": "^0.176.0",
+    "svelte": "^5.32.1",
+    "svelte-check": "^4.0.0",
+    "typescript": "^5.8.3"
+  }
+}

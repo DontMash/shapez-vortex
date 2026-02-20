@@ -19,12 +19,13 @@ Shapez Vortex is a community web platform for the game [Shapez 2](https://store.
 
 This project is organized as a Bun workspaces monorepo:
 
-| Path                             | Purpose                                                                    |
-| -------------------------------- | -------------------------------------------------------------------------- |
-| `apps/shapez-vortex-sveltekit/`  | SvelteKit web application (frontend + API routes)                          |
-| `apps/shapez-vortex-pocketbase/` | PocketBase backend (Dockerfile, Caddy proxy, Docker Compose)               |
-| `packages/blueprint/`           | Shared package — pure blueprint codec and Zod schemas (`@shapez-vortex/blueprint`) |
-| `packages/shape/`               | Shared package — pure shape codec, identifier types, and simulation logic (`@shapez-vortex/shape`) |
+| Path                             | Purpose                                                                                                |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `apps/shapez-vortex-sveltekit/`  | SvelteKit web application (frontend + API routes)                                                      |
+| `apps/shapez-vortex-pocketbase/` | PocketBase backend (Dockerfile, Caddy proxy, Docker Compose)                                           |
+| `packages/blueprint/`            | Shared package — pure blueprint codec and Zod schemas (`@shapez-vortex/blueprint`)                     |
+| `packages/shape/`                | Shared package — pure shape codec, identifier types, and simulation logic (`@shapez-vortex/shape`)     |
+| `packages/models/`               | Shared package — pre-generated Threlte 3D Svelte components and .gltf assets (`@shapez-vortex/models`) |
 
 ## Commands
 
@@ -63,26 +64,24 @@ Never commit `.env` files.
 
 ### Directory Structure
 
-| Path                                                      | Purpose                                                                  |
-| --------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `apps/shapez-vortex-sveltekit/src/routes/`                | SvelteKit file-based routing (pages + API endpoints)                     |
-| `apps/shapez-vortex-sveltekit/src/lib/`                   | Shared library code                                                      |
-| `apps/shapez-vortex-sveltekit/src/lib/blueprint.ts`       | Thin shim — re-exports from `@shapez-vortex/blueprint`, adds `BlueprintRecord`/`BlueprintTag` (PocketBase types), wraps `encode`/`isBlueprint`/`update` with injected schema |
-| `apps/shapez-vortex-sveltekit/src/lib/blueprint.schema.ts` | Thin shim — re-exports package constants and instantiates schema factories with `GAME_VERSION` and `isShapeIdentifier` |
-| `apps/shapez-vortex-sveltekit/src/lib/shape.ts`           | Thin shim — re-exports everything from `@shapez-vortex/shape`             |
-| `apps/shapez-vortex-sveltekit/src/lib/server/`            | Server-only code (PocketBase API calls)                                  |
-| `apps/shapez-vortex-sveltekit/src/lib/client/`            | Client-only code (Svelte actions, toast service, utilities)              |
-| `apps/shapez-vortex-sveltekit/src/lib/components/`        | Svelte UI components organized by feature                                |
-| `apps/shapez-vortex-sveltekit/src/lib/components/models/` | Auto-generated 3D model components — do not edit manually                |
-| `apps/shapez-vortex-sveltekit/src/lib/schemas/`           | Auto-generated TypeScript types from JSON schemas — do not edit manually |
-| `apps/shapez-vortex-sveltekit/src/lib/assets/`            | Static data, JSON schemas, GLSL shaders, images                          |
-| `apps/shapez-vortex-sveltekit/static/`                    | Static assets served directly (GLTF models, favicon, robots.txt)         |
-| `apps/shapez-vortex-sveltekit/resources/`                 | Asset pipeline scripts                                                   |
-| `apps/shapez-vortex-pocketbase/`                          | PocketBase backend (Docker, Caddy, migrations)                           |
-| `packages/blueprint/src/index.ts`                        | Package entry point — codec functions (`decode`, `encode`, `update`, `isBlueprint`, `isBlueprintIdentifier`, `getBuildingCount`, etc.) and all identifier constants/types |
-| `packages/blueprint/src/schema.ts`                       | Package schemas — static Zod schemas plus factory functions (`makeBlueprintSchema`, `makeBlueprintFormSchema`, etc.) that accept `gameVersion` / `isShapeIdentifier` |
-| `packages/shape/src/index.ts`                            | Package entry point — shape codec (`parse`, `stringify`, `random`), physics simulation, identifier validators (`isShapeIdentifier`, etc.), metadata extractors (`getTypes`, `getColors`, etc.), and all shape types/constants |
-| `docs/`                                                   | Project documentation                                                    |
+| Path                                                       | Purpose                                                                                                                                                                                                                       |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/shapez-vortex-sveltekit/src/routes/`                 | SvelteKit file-based routing (pages + API endpoints)                                                                                                                                                                          |
+| `apps/shapez-vortex-sveltekit/src/lib/`                    | Shared library code                                                                                                                                                                                                           |
+| `apps/shapez-vortex-sveltekit/src/lib/blueprint.ts`        | Thin shim — re-exports from `@shapez-vortex/blueprint`, adds `BlueprintRecord`/`BlueprintTag` (PocketBase types), wraps `encode`/`isBlueprint`/`update` with injected schema                                                  |
+| `apps/shapez-vortex-sveltekit/src/lib/blueprint.schema.ts` | Thin shim — re-exports package constants and instantiates schema factories with `GAME_VERSION` and `isShapeIdentifier`                                                                                                        |
+| `apps/shapez-vortex-sveltekit/src/lib/shape.ts`            | Thin shim — re-exports everything from `@shapez-vortex/shape`                                                                                                                                                                 |
+| `apps/shapez-vortex-sveltekit/src/lib/server/`             | Server-only code (PocketBase API calls)                                                                                                                                                                                       |
+| `apps/shapez-vortex-sveltekit/src/lib/client/`             | Client-only code (Svelte actions, toast service, utilities)                                                                                                                                                                   |
+| `apps/shapez-vortex-sveltekit/src/lib/components/`         | Svelte UI components organized by feature                                                                                                                                                                                     |
+| `apps/shapez-vortex-sveltekit/src/lib/schemas/`            | Auto-generated TypeScript types from JSON schemas — do not edit manually                                                                                                                                                      |
+| `apps/shapez-vortex-sveltekit/src/lib/assets/`             | Static data, JSON schemas, GLSL shaders, images                                                                                                                                                                               |
+| `apps/shapez-vortex-sveltekit/static/`                     | Static assets served directly (GLTF models via copy-shapez-models, favicon, robots.txt)                                                                                                                                       |
+| `apps/shapez-vortex-pocketbase/`                           | PocketBase backend (Docker, Caddy, migrations)                                                                                                                                                                                |
+| `packages/blueprint/src/index.ts`                          | Package entry point — codec functions (`decode`, `encode`, `update`, `isBlueprint`, `isBlueprintIdentifier`, `getBuildingCount`, etc.) and all identifier constants/types                                                     |
+| `packages/blueprint/src/schema.ts`                         | Package schemas — static Zod schemas plus factory functions (`makeBlueprintSchema`, `makeBlueprintFormSchema`, etc.) that accept `gameVersion` / `isShapeIdentifier`                                                          |
+| `packages/shape/src/index.ts`                              | Package entry point — shape codec (`parse`, `stringify`, `random`), physics simulation, identifier validators (`isShapeIdentifier`, etc.), metadata extractors (`getTypes`, `getColors`, etc.), and all shape types/constants |
+| `docs/`                                                    | Project documentation                                                                                                                                                                                                         |
 
 ### Key Patterns
 
@@ -130,6 +129,8 @@ fix: correct shape layer rendering order
 chore: update PocketBase SDK to 0.27
 ```
 
+Do not commit changes yourself. A human will always review the changes locally first.
+
 ### Branch Naming
 
 ```
@@ -163,7 +164,6 @@ The `packages/shape/` package has its own Vitest setup. Tests are co-located in 
 
 The following files and directories are generated by tooling. Do not edit them manually — re-run the relevant script instead.
 
-| Path                                                      | Generator                        | Script                                                                                                                   |
-| --------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `apps/shapez-vortex-sveltekit/src/lib/components/models/` | `@threlte/gltf` from GLTF models | `bun run --filter shapez-vortex-sveltekit prepare:buildings` / `bun run --filter shapez-vortex-sveltekit prepare:shapes` |
-| `apps/shapez-vortex-sveltekit/src/lib/schemas/`           | `json2ts` from JSON schemas      | `bun run --filter shapez-vortex-sveltekit prepare:schemas`                                                               |
+| Path                                            | Generator                   | Script                                                     |
+| ----------------------------------------------- | --------------------------- | ---------------------------------------------------------- |
+| `apps/shapez-vortex-sveltekit/src/lib/schemas/` | `json2ts` from JSON schemas | `bun run --filter shapez-vortex-sveltekit prepare:schemas` |

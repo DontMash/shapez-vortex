@@ -134,7 +134,10 @@ shapez-vortex/
 ├── apps/
 │   ├── shapez-vortex-sveltekit/   # SvelteKit web application
 │   └── shapez-vortex-pocketbase/  # PocketBase backend (Docker)
-├── packages/                       # Shared packages (future)
+├── packages/
+│   ├── blueprint/                 # Shared pure blueprint codec package
+│   ├── models/                    # Shared pre-generated Threlte models
+│   └── shape/                     # Shared pure shape codec package
 ├── docs/                           # Project documentation
 ├── package.json                    # Workspace root
 └── tsconfig.base.json              # Shared TypeScript config
@@ -144,6 +147,9 @@ shapez-vortex/
 | -------------------------- | -------------------------------------------------------- |
 | `shapez-vortex-sveltekit`  | SvelteKit frontend + API routes, deployed to Vercel      |
 | `shapez-vortex-pocketbase` | PocketBase backend with Caddy proxy, deployed via Docker |
+| `@shapez-vortex/blueprint` | Pure typescript blueprint codec module                   |
+| `@shapez-vortex/shape`     | Pure typescript shape codec module                       |
+| `@shapez-vortex/models`    | Generated 3D models with Three.js/Threlte components     |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

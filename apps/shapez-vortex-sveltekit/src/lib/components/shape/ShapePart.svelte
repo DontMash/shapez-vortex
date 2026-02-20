@@ -1,4 +1,15 @@
 <script lang="ts">
+  import {
+    ShapeDefaultC,
+    ShapeDefaultR,
+    ShapeDefaultS,
+    ShapeDefaultW,
+    ShapeDefaultP,
+    ShapeHexF,
+    ShapeHexG,
+    ShapeHexH,
+    ShapeHexP,
+  } from '@shapez-vortex/models';
   import type { Component } from 'svelte';
   import { Material, Mesh, MeshStandardMaterial, Object3D } from 'three';
   import { Suspense } from '@threlte/extras';
@@ -7,16 +18,6 @@
     type ShapePartData,
     type ShapeTypeIdentifier,
   } from '$lib/shape';
-
-  import ShapeDefaultC from '$lib/components/models/shapes/ShapeDefaultC.svelte';
-  import ShapeDefaultR from '$lib/components/models/shapes/ShapeDefaultR.svelte';
-  import ShapeDefaultS from '$lib/components/models/shapes/ShapeDefaultS.svelte';
-  import ShapeDefaultW from '$lib/components/models/shapes/ShapeDefaultW.svelte';
-  import ShapeDefaultP from '$lib/components/models/shapes/ShapeDefaultP.svelte';
-  import ShapeHexF from '$lib/components/models/shapes/ShapeHexF.svelte';
-  import ShapeHexG from '$lib/components/models/shapes/ShapeHexG.svelte';
-  import ShapeHexH from '$lib/components/models/shapes/ShapeHexH.svelte';
-  import ShapeHexP from '$lib/components/models/shapes/ShapeHexP.svelte';
 
   const SHAPE_COLOR_NONE = 0x777777;
   const SHAPE_COLOR_PIN = 0x444450;

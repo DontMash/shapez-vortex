@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ShapeDefaultSupport } from '@shapez-vortex/models';
   import { Canvas, T } from '@threlte/core';
   import { OrbitControls, Suspense } from '@threlte/extras';
   import { DropdownMenu } from 'bits-ui';
@@ -25,7 +26,6 @@
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
   import ShapePart from '$lib/components/shape/ShapePart.svelte';
-  import ShapeDefaultSupport from '$lib/components/models/shapes/ShapeDefaultSupport.svelte';
 
   type ThrelteVector3 = [x: number, y: number, z: number];
 
