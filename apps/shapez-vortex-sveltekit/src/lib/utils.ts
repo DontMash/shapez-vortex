@@ -2,7 +2,7 @@ export const capitalize = <T extends string>(value: T) =>
   (value[0].toUpperCase() + value.slice(1)) as Capitalize<typeof value>;
 
 export const debounce = (fn: () => void, waitInMillis: number) => {
-  let timeout: number | undefined;
+  let timeout: ReturnType<typeof setTimeout> | undefined;
   let exec: (() => void) | undefined;
 
   const debounced = () => {

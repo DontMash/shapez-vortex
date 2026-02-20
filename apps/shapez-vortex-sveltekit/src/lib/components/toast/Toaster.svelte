@@ -16,7 +16,7 @@
 
   const toastService = ToastService.instance;
   let toast = $state<Toast | undefined>();
-  let timeout = $state<number | undefined>();
+  let timeout = $state<ReturnType<typeof setTimeout> | undefined>();
 
   $effect(() => {
     if (!toastService.queue.length || toast) {
