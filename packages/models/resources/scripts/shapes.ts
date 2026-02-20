@@ -33,6 +33,7 @@ async function fixSnippetType(filePath: string) {
   if (await file.exists()) {
     let content = await file.text();
     content = content.replace(/Snippet<\[\{ ref: THREE\.Group \}\]>/g, 'Snippet<[{ ref: THREE.Group | undefined }]>');
+    content = content.replace(/context="module"/g, 'module');
     await Bun.write(filePath, content);
   }
 }

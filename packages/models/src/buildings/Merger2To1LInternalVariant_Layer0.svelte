@@ -4,7 +4,7 @@ Command: npx @threlte/gltf@3.0.1 static/models/buildings/Merger2To1LInternalVari
 -->
 
 <script
-  context="module"
+  module
   lang="ts"
 >
   import type * as THREE from 'three'

@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "prepare:schemas": "json2ts -i \"src/lib/assets/data/json-schemas/**/*.json\" -o \"src/lib/schemas\"",
-    "prepare:models": "copy-models ./static/models",
+    "prepare:models": "models ./static/models",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
