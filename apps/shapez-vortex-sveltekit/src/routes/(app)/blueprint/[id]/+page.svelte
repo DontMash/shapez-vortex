@@ -82,7 +82,7 @@
   } = $state({});
 
   $effect(() => {
-    if (!slider.root || slider.api) {
+    if (!slider.root || slider.api || data.blueprint.images.length < 2) {
       return;
     }
 
