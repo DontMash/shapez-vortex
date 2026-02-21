@@ -5,8 +5,6 @@
   import { page } from '$app/state';
   import ToastService from '$lib/client/toast.svelte';
 
-  import Footer from '$lib/components/Footer.svelte';
-  import Header from '$lib/components/Header.svelte';
   import Toaster from '$lib/components/toast/Toaster.svelte';
 
   let { children } = $props();
@@ -51,12 +49,6 @@
 </svelte:head>
 <svelte:window onerror={(event) => onError(event)} />
 
-<Header />
-
-<main class="flex min-h-screen flex-col overflow-x-hidden">
-  {@render children()}
-</main>
+{@render children()}
 
 <Toaster />
-
-<Footer />
