@@ -116,7 +116,7 @@ To setup, install & develop you may need some tools:
 4. Start the dev server
 
    ```sh
-   bun run --filter shapez-vortex-sveltekit dev
+   bun run dev
    ```
 
 5. Visit [localhost:5173](http://localhost:5173)
@@ -136,11 +136,12 @@ shapez-vortex/
 │   └── shapez-vortex-pocketbase/  # PocketBase backend (Docker)
 ├── packages/
 │   ├── blueprint/                 # Shared pure blueprint codec package
+│   ├── game-data/                 # Shared extracted game data, JSON schemas, and auto-generated types
 │   ├── models/                    # Shared pre-generated Threlte models
 │   └── shape/                     # Shared pure shape codec package
-├── docs/                           # Project documentation
-├── package.json                    # Workspace root
-└── tsconfig.base.json              # Shared TypeScript config
+├── docs/                          # Project documentation
+├── package.json                   # Workspace root
+└── tsconfig.base.json             # Shared TypeScript config
 ```
 
 | Workspace                  | Description                                              |
@@ -148,6 +149,7 @@ shapez-vortex/
 | `shapez-vortex-sveltekit`  | SvelteKit frontend + API routes, deployed to Vercel      |
 | `shapez-vortex-pocketbase` | PocketBase backend with Caddy proxy, deployed via Docker |
 | `@shapez-vortex/blueprint` | Pure typescript blueprint codec module                   |
+| `@shapez-vortex/game-data` | Extracted game data, JSON schemas, and auto-generated types |
 | `@shapez-vortex/shape`     | Pure typescript shape codec module                       |
 | `@shapez-vortex/models`    | Generated 3D models with Three.js/Threlte components     |
 
