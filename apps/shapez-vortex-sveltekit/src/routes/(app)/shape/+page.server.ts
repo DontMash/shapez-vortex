@@ -7,11 +7,9 @@ import {
   getPartCount,
   getTypes,
   random,
-  type ShapeIdentifier,
+  DEFAULT_SHAPE,
   type ShapeData,
 } from '$lib/shape';
-
-const DEFAULT_SHAPE: ShapeIdentifier = 'CwRwCwCw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
 
 export const load = (({ url }) => {
   try {

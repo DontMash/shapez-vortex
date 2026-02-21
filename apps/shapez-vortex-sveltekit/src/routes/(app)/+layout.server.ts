@@ -1,18 +1,10 @@
 import type { LayoutServerLoad } from './$types';
 import type { ListResult } from 'pocketbase';
-import UAParser from 'ua-parser-js';
 import type { BlueprintRecord } from '$lib/blueprint';
 import { get } from '$lib/server/blueprint.api';
 import type { User } from '$lib/user.schema';
 
-export const load = (async ({ locals, request, url }) => {
-  let agent;
-  const userAgent = request.headers.get('user-agent');
-  if (userAgent) {
-    const parser = new UAParser(userAgent);
-    agent = parser.getResult();
-  }
-
+export const load = (async ({ locals, url }) => {
   // fetch the latest 100 blueprints for client-side search
   let searchBlueprints: Array<BlueprintRecord> = [];
   try {
@@ -42,8 +34,6 @@ export const load = (async ({ locals, request, url }) => {
       description:
         'The purpose of this project is to provide a suite of tools to visualize and modify data used by or generated from the game.',
     },
-    user: locals.user,
-    agent,
     searchBlueprints,
     searchUsers,
   };

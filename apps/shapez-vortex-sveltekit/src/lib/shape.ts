@@ -1,3 +1,5 @@
+import type { ShapeIdentifier } from '@shapez-vortex/shape';
+
 export {
   SHAPE_DEFAULT_TYPES,
   SHAPE_DEFAULT_TYPE_IDENTIFIERS,
@@ -36,3 +38,6 @@ export {
   type ShapeLayerData,
   type ShapePartData,
 } from '@shapez-vortex/shape';
+
+export const DEFAULT_SHAPE: ShapeIdentifier =
+  'CwRwCwCw:P-P-P-P-:P-P-P-P-:CcCcCcCc';
