@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { GAME_VERSION } from '@shapez-vortex/game-data';
 import {
   decode,
   encode,
@@ -18,21 +19,19 @@ import { BLUEPRINT_SCHEMA_STATIC } from './schema.js';
 // which is sufficient for testing the codec functions in isolation.
 const schema = BLUEPRINT_SCHEMA_STATIC;
 
-// V: 1105
 const mockBlueprintIdentifier: BlueprintIdentifier =
-  'SHAPEZ2-1-H4sIAAAAAAAAA62QwYrCQBBE/6XwOAdz2MscgysEFpEgQZEgzWZcB9qOzPQgIcy/70Qv+wFLQ0FTdL2iZ3SwVbX+MKj3sDNWOj0cLJrIJAMMmu9RFmNDSrBn+LLbPZNex3CPMJKY34J4o4ezbXoP+mzwKRq8i+VwRltIBocS/kXTmPSyKwnEl6pQ6r/sOnkevPz8K/0IuzY4vbR96dKkdqwbd6XEuh3Dk8LQiLogxB0FT6LIfWnnhcLUuRD9Umf5V859zr/Lq0txPgEAAA==$';
-// V: 1100
+  'SHAPEZ2-1-H4sIAAAAAAAAA62QQQvCMAyF/8vDYw8Obz0OFXaTIUORIcFVLdRU2hSV0f9upxd/gAQehEfyvWREB11Vi7lCvYEeMZPX3UCjiY54gEJz8jwZSxKCPsCWXm8cydmHW4Ti5NxXEK90N7pN30KfFVYswZpYBke0haSwLcvXPvFAYj0fq2dVIPUvuk7WDZYvf4XvoMuN+4+2H52C1MbJ0pwpOVn78KAwNCwmMLmOgiUW5L6ks0zh1ZkQ7RRnelfOfc5vYXseaD0BAAA=$';
 const mockOldBlueprintIdentifier: BlueprintIdentifier =
-  'SHAPEZ2-1-H4sIAAAAAAAAA62QwWrDQAxE/2XocQ/xoZc9mrRgKCWYYhqCCaLetAuqHHa1FGP23ysnl35AEQwIoXkjrRjgm2a3c2gP8CsedLkGeHSZSSY4dB+zbIM9KcGfEK33Bya9zOk7w0lhvgvyF12D78u9MFaHJ9EUQ7bFFb2RHN7M/IWWuej51RyIz41R2r/stkSeonz+K/0d3o483rS/6ZakDaz7cKHC+jynH0pTJxqSEA+UIomijpYuCqVlCCnHLY7967HWsdZfUA+i7T4BAAA=$';
+  'SHAPEZ2-1-H4sIAAAAAAAAA62PwQrCMAyG3+XHYw/btccxhd3GEFFEJLhOCzUdXYrK2LvbbRcfQBI+CCH5khEH6DzPMoWihh6xkU9voFENjriFQnXzPDdKEoI+w6Za146k8+E5QHF0bgWGB/VGN3ENXCaFLUuwZkiDI5pkUtin5TsfuSWxnq/5O0+S4lddROtay/e/yo/Q6cfTwmbhfEhhnJSmo+hk58OLQluxmMDkDhQssWC6THN+AVfPtycoAQAA$';
 const mockBuildingBlueprintIdentifier: BlueprintIdentifier =
-  'SHAPEZ2-1-H4sIAAAAAAAAAzWOPQvCQBBE/8tgeUVS2FwZo5BORIIiKRZz6sKxCfeBhHD/3VyCLDxYhmHejBa6LIu9QnWGnrEL02igUUW2PcsbCs1zkBzVFAj6AV5+/c89lERrN8B/aDT6ELdDlxSOEhwbvxRn3KALhfvKy8prnjI21OZF0YbT4L7k+kaCcUK2JcckAalb9FjITa1xnrNOdk7pBz72cBi/AAAA$';
+  'SHAPEZ2-1-H4sIAAAAAAAAAzWOTQvCMBBE/8vgMQfFW461Cr2JSFGkh8VGXQjbkg+klPx3kxZZeLAMw7wZLfRut98qVGfoGZswjQYaVWTbs7yh0DwHKVFNgaAf4Pzrf+6hJFq7Av5Do9GHuB66pHCU4Nj4XJxxg85D94WXhdcyZWyozYuiDafBfcn1jQTjhGxLjkkCUpf1WMhNrXGei05xTukHfJ/bOb8AAAA=$';
 const mockIslandBlueprintIdentifier: BlueprintIdentifier =
-  'SHAPEZ2-1-H4sIAAAAAAAAAyWMwQrCMBBE/2XwmIM5eNmjqNBbEfEipSw2YiBuSrMBS8i/GykDA4/hTcEdZO3+YHDsQQU7XWcHQpcCywSD7hnlP5xYGfSAb0x9YH3F5ZNgJIewFdKbZ0fXvAVDNTiLLt6lJhbc2u0lZplYfZTRfi3qUOsPrNdn7oMAAAA=$';
+  'SHAPEZ2-1-H4sIAAAAAAAAAyWMwQrCMBBE/2XwmIPB2x5Fhd6KiBcpZbERA3FTmg1YQv7dSBkYeAxvCu4gaw97g2MPKtjpOjsQuhRYJhh0zyj/4cTKoAd8Y+oD6ysunwQjOYStkN48O7rmLRiqwVl08S41seDWbi8xy8Tqo4z2a1GHWn9f43d0gwAAAA==$';
 const mockInvalidBlueprintIdentifier: BlueprintIdentifier = 'SHAPEZ2-1-=$';
 const mockInvalidBlueprintIdentifierContent: BlueprintIdentifier =
   'SHAPEZ2-1-H4sIAAAAAAAAAytJLS4BAAx+f9gEAAAA$';
 const mockBlueprint: Blueprint = {
-  V: 1105,
+  V: GAME_VERSION,
   BP: {
     $type: 'Island',
     Icon: {
@@ -41,7 +40,7 @@ const mockBlueprint: Blueprint = {
     Entries: [
       {
         R: 1,
-        T: 'Layout_Normal_1',
+        T: 'Foundation_1x1',
         B: {
           $type: 'Building',
           Icon: {
@@ -55,14 +54,14 @@ const mockBlueprint: Blueprint = {
               T: 'BeltDefaultForwardInternalVariant',
             },
           ],
-          BinaryVersion: 1105,
+          BinaryVersion: GAME_VERSION,
         },
       },
     ],
   },
 };
 const mockBuildingBlueprint: Blueprint = {
-  V: 1105,
+  V: GAME_VERSION,
   BP: {
     $type: 'Building',
     Icon: {
@@ -76,11 +75,11 @@ const mockBuildingBlueprint: Blueprint = {
         T: 'BeltDefaultForwardInternalVariant',
       },
     ],
-    BinaryVersion: 1105,
+    BinaryVersion: GAME_VERSION,
   },
 };
 const mockIslandBlueprint: Blueprint = {
-  V: 1105,
+  V: GAME_VERSION,
   BP: {
     $type: 'Island',
     Icon: {
@@ -99,33 +98,34 @@ const mockBlueprintBuildings = new Map<string, number>([
 
 describe('update', () => {
   it('success', () => {
-    const result = update(mockOldBlueprintIdentifier, 1105, schema);
-    expect(result).toBe(mockBlueprintIdentifier);
+    const expectedUpdatedIdentifier = 'SHAPEZ2-1-H4sIAAAAAAAAA62PwQrCMAyG3+XHYw8Obz0WHewmQ4YiIsFVLdR0dCkqY+9uNy8+gCR8EELyJQMa6KJYLRXMFnrAQt6dhUbVe+IWCtUl8NRYkxD0ES7XeutJriE+eihO3n+B/k6d1XX6Bk6jwoYlOtvnwQF1Nins8vIyJG5JXOBz8SqyxPyqTXK+dXz7q3wPnX88zKxnTocY62Vtr5S8lCE+KbYVi41MvqHoiAXjaZzyA8WjzcYoAQAA$';
+    const result = update(mockOldBlueprintIdentifier, GAME_VERSION, schema);
+    expect(result).toBe(expectedUpdatedIdentifier);
   });
 
   it('success island blueprint', () => {
-    const result = update(mockIslandBlueprintIdentifier, 1105, schema);
+    const result = update(mockIslandBlueprintIdentifier, GAME_VERSION, schema);
     expect(result).toBe(mockIslandBlueprintIdentifier);
   });
 
   it('success building blueprint', () => {
-    const result = update(mockBuildingBlueprintIdentifier, 1105, schema);
+    const result = update(mockBuildingBlueprintIdentifier, GAME_VERSION, schema);
     expect(result).toStrictEqual(mockBuildingBlueprintIdentifier);
   });
 
   it('failure invalid data', () => {
-    expect(() => update('test' as BlueprintIdentifier, 1105, schema)).toThrow();
+    expect(() => update('test' as BlueprintIdentifier, GAME_VERSION, schema)).toThrow();
   });
 
   it('failure invalid blueprint identifier', () => {
     expect(() =>
-      update(mockInvalidBlueprintIdentifier, 1105, schema),
+      update(mockInvalidBlueprintIdentifier, GAME_VERSION, schema),
     ).toThrow();
   });
 
   it('failure invalid content', () => {
     expect(() =>
-      update(mockInvalidBlueprintIdentifierContent, 1105, schema),
+      update(mockInvalidBlueprintIdentifierContent, GAME_VERSION, schema),
     ).toThrow();
   });
 });

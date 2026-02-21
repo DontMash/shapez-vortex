@@ -4,7 +4,6 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "prepare:schemas": "node resources/scripts/prepare-schemas.js",
     "prepare:models": "models ./static/models",
     "dev": "vite dev",
     "build": "vite build",
@@ -18,6 +17,7 @@
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.5",
     "@shapez-vortex/blueprint": "workspace:*",
+    "@shapez-vortex/game-data": "workspace:*",
     "@shapez-vortex/models": "workspace:*",
     "@shapez-vortex/shape": "workspace:*",
     "@sveltejs/adapter-vercel": "^5.7.2",
@@ -56,7 +56,6 @@
     "eslint-plugin-svelte": "^3.5.1",
     "globals": "^17.3.0",
     "jsdom": "^26.1.0",
-    "json-schema-to-typescript": "^15.0.4",
     "prettier": "^3.8.1",
     "prettier-plugin-svelte": "^3.4.1",
     "prettier-plugin-tailwindcss": "^0.7.2",

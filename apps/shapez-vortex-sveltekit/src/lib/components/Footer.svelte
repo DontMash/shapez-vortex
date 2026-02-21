@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Button } from 'bits-ui';
+  import { GAME_VERSION } from '@shapez-vortex/game-data';
+
   import { version } from '$app/environment';
-  import { GAME_VERSION } from '$lib/game';
 
   import { button } from '$lib/components/button';
   import Logo from '$lib/components/Logo.svelte';

@@ -10,7 +10,7 @@ import {
   BLUEPRINT_TYPE_SCHEMA,
 } from '@shapez-vortex/blueprint/schema';
 
-import { GAME_VERSION } from '$lib/game';
+import { GAME_VERSION } from '@shapez-vortex/game-data';
 import { isShapeIdentifier } from '$lib/shape';
 
 export {
@@ -141,19 +141,10 @@ export type BlueprintFormData = import('zod').z.infer<
   typeof BLUEPRINT_FORM_SCHEMA
 >;
 
-export const BLUEPRINT_SCHEMA = makeBlueprintSchema(
-  GAME_VERSION,
-  isShapeIdentifier,
-);
-export const BLUEPRINT_BUILDING_SCHEMA = makeBlueprintBuildingSchema(
-  GAME_VERSION,
-  isShapeIdentifier,
-);
-export const BLUEPRINT_ISLAND_ENTRY_SCHEMA = makeBlueprintIslandEntrySchema(
-  GAME_VERSION,
-  isShapeIdentifier,
-);
-export const BLUEPRINT_ISLAND_SCHEMA = makeBlueprintIslandSchema(
-  GAME_VERSION,
-  isShapeIdentifier,
-);
+export const BLUEPRINT_SCHEMA = makeBlueprintSchema(isShapeIdentifier);
+export const BLUEPRINT_BUILDING_SCHEMA =
+  makeBlueprintBuildingSchema(isShapeIdentifier);
+export const BLUEPRINT_ISLAND_ENTRY_SCHEMA =
+  makeBlueprintIslandEntrySchema(isShapeIdentifier);
+export const BLUEPRINT_ISLAND_SCHEMA =
+  makeBlueprintIslandSchema(isShapeIdentifier);

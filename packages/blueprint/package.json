@@ -12,6 +12,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@shapez-vortex/game-data": "workspace:*",
     "pako": "^2.1.0",
     "zod": "^4.3.6"
   },

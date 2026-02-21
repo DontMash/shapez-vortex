@@ -31,7 +31,7 @@ import {
   BLUEPRINT_RECORD_SCHEMA,
   BLUEPRINT_SCHEMA,
 } from '$lib/blueprint.schema';
-import { GAME_VERSION } from '$lib/game';
+import { GAME_VERSION } from '@shapez-vortex/game-data';
 
 export type BlueprintRecordData = z.infer<typeof BLUEPRINT_RECORD_SCHEMA>;
 export type BlueprintRecord = RecordModel &

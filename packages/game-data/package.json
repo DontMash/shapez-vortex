@@ -1,0 +1,15 @@
+{
+  "name": "@shapez-vortex/game-data",
+  "version": "0.14.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "prepare:schemas": "node scripts/prepare-schemas.js"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.4"
+  }
+}

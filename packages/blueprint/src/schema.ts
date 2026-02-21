@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { GAME_VERSION, identifiers } from '@shapez-vortex/game-data';
 import {
   BLUEPRINT_IDENTIFIER_REGEX,
   decode,
@@ -101,7 +102,7 @@ export function makeBlueprintIconSchema(
 }
 
 export const BLUEPRINT_BUILDING_ENTRY_SCHEMA = z.object({
-  T: z.string(),
+  T: z.enum(identifiers.BuildingInternalVariantIds as unknown as [string, ...string[]]),
   X: z.number().int().optional(),
   Y: z.number().int().optional(),
   L: z.number().int().optional(),
@@ -113,14 +114,13 @@ export const BLUEPRINT_BUILDING_ENTRY_SCHEMA = z.object({
  * Creates the building schema, requiring the minimum game version.
  */
 export function makeBlueprintBuildingSchema(
-  gameVersion: number,
   isShapeIdentifier: (id: string) => boolean,
 ) {
   return z.object({
     $type: z.literal(BLUEPRINT_TYPES[1]),
     Entries: BLUEPRINT_BUILDING_ENTRY_SCHEMA.array(),
     Icon: makeBlueprintIconSchema(isShapeIdentifier).optional(),
-    BinaryVersion: z.number().int().min(gameVersion).optional(),
+    BinaryVersion: z.number().int().min(GAME_VERSION).optional(),
   });
 }
 
@@ -128,15 +128,14 @@ export function makeBlueprintBuildingSchema(
  * Creates the island entry schema, requiring the minimum game version.
  */
 export function makeBlueprintIslandEntrySchema(
-  gameVersion: number,
   isShapeIdentifier: (id: string) => boolean,
 ) {
   return z.object({
-    T: z.string(),
+    T: z.enum(identifiers.IslandLayoutIds as unknown as [string, ...string[]]),
     X: z.number().int().optional(),
     Y: z.number().int().optional(),
     R: BLUEPRINT_ENTRY_ROTATION_SCHEMA.optional(),
-    B: makeBlueprintBuildingSchema(gameVersion, isShapeIdentifier).optional(),
+    B: makeBlueprintBuildingSchema(isShapeIdentifier).optional(),
   });
 }
 
@@ -144,12 +143,11 @@ export function makeBlueprintIslandEntrySchema(
  * Creates the island schema, requiring the minimum game version.
  */
 export function makeBlueprintIslandSchema(
-  gameVersion: number,
   isShapeIdentifier: (id: string) => boolean,
 ) {
   return z.object({
     $type: z.literal(BLUEPRINT_TYPES[0]),
-    Entries: makeBlueprintIslandEntrySchema(gameVersion, isShapeIdentifier).array(),
+    Entries: makeBlueprintIslandEntrySchema(isShapeIdentifier).array(),
     Icon: makeBlueprintIconSchema(isShapeIdentifier).optional(),
   });
 }
@@ -158,14 +156,13 @@ export function makeBlueprintIslandSchema(
  * Creates the top-level blueprint schema, requiring the minimum game version.
  */
 export function makeBlueprintSchema(
-  gameVersion: number,
   isShapeIdentifier: (id: string) => boolean,
 ) {
   return z.object({
-    V: z.number().int().min(gameVersion),
+    V: z.number().int().min(GAME_VERSION),
     BP: z.discriminatedUnion('$type', [
-      makeBlueprintIslandSchema(gameVersion, isShapeIdentifier),
-      makeBlueprintBuildingSchema(gameVersion, isShapeIdentifier),
+      makeBlueprintIslandSchema(isShapeIdentifier),
+      makeBlueprintBuildingSchema(isShapeIdentifier),
     ]),
   });
 }
@@ -180,7 +177,7 @@ export const BLUEPRINT_BUILDING_SCHEMA_STATIC = z.object({
 });
 
 export const BLUEPRINT_ISLAND_ENTRY_SCHEMA_STATIC = z.object({
-  T: z.string(),
+  T: z.enum(identifiers.IslandLayoutIds as unknown as [string, ...string[]]),
   X: z.number().int().optional(),
   Y: z.number().int().optional(),
   R: BLUEPRINT_ENTRY_ROTATION_SCHEMA.optional(),

@@ -5,29 +5,28 @@ import {
   makeBlueprintSchema,
 } from './schema.js';
 
-// Pinned game version used across all schema tests.
-const GAME_VERSION = 1105;
+import { GAME_VERSION } from '@shapez-vortex/game-data';
 
 // Minimal shape identifier validator: accepts the simple identifiers used in
 // the mock data (e.g. "RuRuRuRu", "CuCuCuCu") without pulling in shape.ts.
 const isShapeIdentifier = (id: string): boolean =>
   /^[CRSWFGHPc-][rgbcmykwu-]/.test(id);
 
-const BLUEPRINT_SCHEMA = makeBlueprintSchema(GAME_VERSION, isShapeIdentifier);
+const BLUEPRINT_SCHEMA = makeBlueprintSchema(isShapeIdentifier);
 
 const mockBlueprintIdentifier: BlueprintIdentifier =
   'SHAPEZ2-1-H4sIAAAAAAAAA62QwYrCQBBE/6XwOAdz2MscgysEFpEgQZEgzWZcB9qOzPQgIcy/70Qv+wFLQ0FTdL2iZ3SwVbX+MKj3sDNWOj0cLJrIJAMMmu9RFmNDSrBn+LLbPZNex3CPMJKY34J4o4ezbXoP+mzwKRq8i+VwRltIBocS/kXTmPSyKwnEl6pQ6r/sOnkevPz8K/0IuzY4vbR96dKkdqwbd6XEuh3Dk8LQiLogxB0FT6LIfWnnhcLUuRD9Umf5V859zr/Lq0txPgEAAA==$';
 const mockInvalidBlueprintIdentifier: BlueprintIdentifier = 'SHAPEZ2-1-=$';
 
 const mockBlueprint: Blueprint = {
-  V: 1105,
+  V: GAME_VERSION,
   BP: {
     $type: 'Island',
     Icon: { Data: ['icon:Platforms', null, null, 'shape:RuRuRuRu'] },
     Entries: [
       {
         R: 1,
-        T: 'Layout_Normal_1',
+        T: 'Foundation_1x1',
         B: {
           $type: 'Building',
           Icon: { Data: ['icon:Platforms', null, null, 'shape:RuRuRuRu'] },
