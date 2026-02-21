@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "bun run --filter shapez-vortex-sveltekit --filter shapez-vortex-pocketbase dev",
     "check": "bun run --filter '*' check",
+    "lint": "bun run --filter '*' lint",
     "test": "bun run --filter '*' test",
     "test:coverage": "bun run --filter '*' test:coverage"
   },
