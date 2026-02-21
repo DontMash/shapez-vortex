@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { DropdownMenu } from 'bits-ui';
+  import { DropdownMenu, Popover, Tabs } from 'bits-ui';
   import screenfull from 'screenfull';
   import { blur } from 'svelte/transition';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
@@ -30,6 +30,13 @@
   let orbitControls: OrbitControlsType | undefined = $state();
 
   const toastService = ToastService.instance;
+
+  const shareLink = $derived(
+    `${page.url.origin}/shape?identifier=${data.identifier}`,
+  );
+  const embedCode = $derived(
+    `<iframe title="Shape - ${data.identifier}" src="${page.url.origin}/shape/embed?identifier=${data.identifier}" width="100%" height="400" frameborder="0"></iframe>`,
+  );
 
   function onCapture() {
     canvasElement?.toBlob(
@@ -148,6 +155,110 @@
           <span class="icon-[tabler--arrows-shuffle]">Shuffle</span>
         </button>
       </form>
+
+      <Popover.Root>
+        <Popover.Trigger
+          class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
+        >
+          <span class="icon-[tabler--share]">Share</span>
+        </Popover.Trigger>
+
+        <Popover.Content
+          class="bg-layer/70 z-20 w-80 space-y-1 rounded-md border p-2 shadow-lg outline-hidden backdrop-blur-lg"
+          sideOffset={16}
+          align="end"
+          alignOffset={-8}
+        >
+          <Tabs.Root value="link">
+            <Tabs.List class="bg-muted mb-2 flex rounded-xs p-1">
+              <Tabs.Trigger
+                class="data-[state=active]:bg-background flex-1 rounded-xs px-2 py-1 text-sm font-medium transition-all data-[state=active]:shadow-sm"
+                value="link"
+              >
+                Link
+              </Tabs.Trigger>
+              <Tabs.Trigger
+                class="data-[state=active]:bg-background flex-1 rounded-xs px-2 py-1 text-sm font-medium transition-all data-[state=active]:shadow-sm"
+                value="embed"
+              >
+                Embed
+              </Tabs.Trigger>
+            </Tabs.List>
+            <Tabs.Content value="link" class="outline-hidden">
+              <div class="flex flex-col gap-2">
+                <p class="text-muted-foreground text-sm">
+                  Share this shape via direct link.
+                </p>
+                <div class={input.group()}>
+                  <input
+                    class={input.field()}
+                    type="text"
+                    value={shareLink}
+                    readonly
+                  />
+                  <button
+                    class="{button({
+                      kind: 'ghost',
+                      intent: 'muted',
+                      size: 'icon-sm',
+                    })} shrink-0"
+                    title="Copy link"
+                    {@attach copy({
+                      value: shareLink,
+                      oncopy: () =>
+                        toastService.add({ message: 'Link copied' }),
+                      onerror: (error) =>
+                        toastService.add({
+                          message: error.message,
+                          type: 'ERROR',
+                        }),
+                    })}
+                  >
+                    <span class="icon-[tabler--copy] text-lg"></span>
+                    <span class="sr-only">Copy link</span>
+                  </button>
+                </div>
+              </div>
+            </Tabs.Content>
+            <Tabs.Content value="embed" class="outline-hidden">
+              <div class="flex flex-col gap-2">
+                <p class="text-muted-foreground text-sm">
+                  Embed this shape in your website.
+                </p>
+                <div class={input.group()}>
+                  <input
+                    class={input.field()}
+                    type="text"
+                    value={embedCode}
+                    readonly
+                  />
+                  <button
+                    class="{button({
+                      kind: 'ghost',
+                      intent: 'muted',
+                      size: 'icon-sm',
+                    })} shrink-0"
+                    title="Copy embed code"
+                    {@attach copy({
+                      value: embedCode,
+                      oncopy: () =>
+                        toastService.add({ message: 'Embed code copied' }),
+                      onerror: (error) =>
+                        toastService.add({
+                          message: error.message,
+                          type: 'ERROR',
+                        }),
+                    })}
+                  >
+                    <span class="icon-[tabler--copy] text-lg"></span>
+                    <span class="sr-only">Copy embed code</span>
+                  </button>
+                </div>
+              </div>
+            </Tabs.Content>
+          </Tabs.Root>
+        </Popover.Content>
+      </Popover.Root>
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger

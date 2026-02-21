@@ -17,6 +17,7 @@
       download: true,
       zoom: true,
       utils: true,
+      share: true,
     }}
   />
 </section>

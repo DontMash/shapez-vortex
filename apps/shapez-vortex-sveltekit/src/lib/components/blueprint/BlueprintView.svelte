@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { DropdownMenu } from 'bits-ui';
+  import { DropdownMenu, Popover, Tabs } from 'bits-ui';
   import screenfull from 'screenfull';
   import { tick } from 'svelte';
   import { blur } from 'svelte/transition';
   import type { OrbitControls as OrbitControlsType } from 'three/addons/controls/OrbitControls.js';
 
+  import { page } from '$app/state';
   import type { Blueprint, BlueprintIdentifier } from '$lib/blueprint';
   import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.schema';
   import { capture } from '$lib/client/actions/capture.svelte';
@@ -12,6 +13,7 @@
   import { fullscreen } from '$lib/client/actions/fullscreen.svelte';
   import ToastService from '$lib/client/toast.svelte';
   import { button } from '$lib/components/button';
+  import * as input from '$lib/components/input';
 
   import BlueprintCanvas from './BlueprintCanvas.svelte';
 
@@ -20,6 +22,7 @@
     upload?: boolean;
     zoom?: boolean;
     utils?: boolean;
+    share?: boolean;
   };
   interface Props {
     identifier: BlueprintIdentifier;
@@ -37,6 +40,7 @@
       upload: false,
       zoom: true,
       utils: true,
+      share: true,
     },
   }: Props = $props();
 
@@ -47,6 +51,17 @@
   let orbitControls: OrbitControlsType | undefined = $state();
   let isFullscreen = false;
   let uploadIdentifier: string | undefined = $state();
+
+  const shareLink = $derived(
+    page.params.id ? `${page.url.origin}/blueprint/${page.params.id}` : null,
+  );
+  const embedCode = $derived(
+    page.params.id
+      ? `<iframe title="${title}" src="${page.url.origin}/blueprint/${page.params.id}/embed" width="100%" height="400" frameborder="0"></iframe>`
+      : null,
+  );
+
+  export const canvas = () => canvasElement;
 
   function reset() {
     if (!orbitControls) return;
@@ -171,6 +186,112 @@
             <span class="icon-[tabler--copy]">Copy</span>
           </button>
         {/if}
+      {/if}
+
+      {#if controls.share && shareLink && embedCode}
+        <Popover.Root>
+          <Popover.Trigger
+            class={button({ kind: 'outline', intent: 'muted', size: 'icon' })}
+          >
+            <span class="icon-[tabler--share]">Share</span>
+          </Popover.Trigger>
+
+          <Popover.Content
+            class="bg-layer z-20 w-80 space-y-1 rounded-md border p-2 shadow-lg outline-hidden backdrop-blur-lg"
+            sideOffset={16}
+            align="end"
+            alignOffset={-8}
+          >
+            <Tabs.Root value="link">
+              <Tabs.List class="bg-muted mb-2 flex rounded-xs p-1">
+                <Tabs.Trigger
+                  class="data-[state=active]:bg-background flex-1 rounded-xs px-2 py-1 text-sm font-medium transition-all data-[state=active]:shadow-sm"
+                  value="link"
+                >
+                  Link
+                </Tabs.Trigger>
+                <Tabs.Trigger
+                  class="data-[state=active]:bg-background flex-1 rounded-xs px-2 py-1 text-sm font-medium transition-all data-[state=active]:shadow-sm"
+                  value="embed"
+                >
+                  Embed
+                </Tabs.Trigger>
+              </Tabs.List>
+              <Tabs.Content value="link" class="outline-hidden">
+                <div class="flex flex-col gap-2">
+                  <p class="text-muted-foreground text-sm">
+                    Share this blueprint via direct link.
+                  </p>
+                  <div class={input.group()}>
+                    <input
+                      class={input.field()}
+                      type="text"
+                      value={shareLink}
+                      readonly
+                    />
+                    <button
+                      class="{button({
+                        kind: 'ghost',
+                        intent: 'muted',
+                        size: 'icon-sm',
+                      })} shrink-0"
+                      title="Copy link"
+                      {@attach copy({
+                        value: shareLink,
+                        oncopy: () =>
+                          toastService.add({ message: 'Link copied' }),
+                        onerror: (error) =>
+                          toastService.add({
+                            message: error.message,
+                            type: 'ERROR',
+                          }),
+                      })}
+                    >
+                      <span class="icon-[tabler--copy] text-lg"></span>
+                      <span class="sr-only">Copy link</span>
+                    </button>
+                  </div>
+                </div>
+              </Tabs.Content>
+              <Tabs.Content value="embed" class="outline-hidden">
+                <div class="flex flex-col gap-2">
+                  <p class="text-muted-foreground text-sm">
+                    Embed this blueprint in your website.
+                  </p>
+                  <div class={input.group()}>
+                    <input
+                      class={input.field()}
+                      type="text"
+                      value={embedCode}
+                      readonly
+                    />
+                    <button
+                      class="{button({
+                        kind: 'ghost',
+                        intent: 'muted',
+                        size: 'icon-sm',
+                      })} shrink-0"
+                      title="Copy embed code"
+                      {@attach copy({
+                        value: embedCode,
+                        oncopy: () =>
+                          toastService.add({ message: 'Embed code copied' }),
+                        onerror: (error) =>
+                          toastService.add({
+                            message: error.message,
+                            type: 'ERROR',
+                          }),
+                      })}
+                    >
+                      <span class="icon-[tabler--copy] text-lg"></span>
+                      <span class="sr-only">Copy embed code</span>
+                    </button>
+                  </div>
+                </div>
+              </Tabs.Content>
+            </Tabs.Root>
+          </Popover.Content>
+        </Popover.Root>
       {/if}
 
       {#if controls.utils}
