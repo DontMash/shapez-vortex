@@ -143,29 +143,31 @@
                         Blueprints
                       </Command.GroupHeading>
                       <Command.GroupItems>
-                        {#each page.data.searchBlueprints as blueprint (blueprint.id)}
-                          <Command.LinkItem
-                            class={command.item()}
-                            href="/blueprint/{blueprint.id}"
-                            value="{blueprint.title}_{blueprint.id}"
-                            onSelect={() => (isSearchDialogOpen = false)}
-                          >
-                            <span class="icon-[tabler--schema]"></span>
-                            <span class="truncate">
-                              {blueprint.title}
-                            </span>
-                            {#if blueprint.expand && blueprint.expand['creator']}
-                              <span
-                                class="{button({
-                                  intent: 'accent',
-                                  size: 'xs',
-                                })} ml-auto"
-                              >
-                                @{blueprint.expand['creator'].displayname}
+                        {#await page.data.searchBlueprints then blueprints}
+                          {#each blueprints as blueprint (blueprint.id)}
+                            <Command.LinkItem
+                              class={command.item()}
+                              href="/blueprint/{blueprint.id}"
+                              value="{blueprint.title}_{blueprint.id}"
+                              onSelect={() => (isSearchDialogOpen = false)}
+                            >
+                              <span class="icon-[tabler--schema]"></span>
+                              <span class="truncate">
+                                {blueprint.title}
                               </span>
-                            {/if}
-                          </Command.LinkItem>
-                        {/each}
+                              {#if blueprint.expand && blueprint.expand['creator']}
+                                <span
+                                  class="{button({
+                                    intent: 'accent',
+                                    size: 'xs',
+                                  })} ml-auto"
+                                >
+                                  @{blueprint.expand['creator'].displayname}
+                                </span>
+                              {/if}
+                            </Command.LinkItem>
+                          {/each}
+                        {/await}
                         <Command.LinkItem
                           class={command.item()}
                           href="/blueprint/search?query={searchValue}"
@@ -184,18 +186,20 @@
                         Users
                       </Command.GroupHeading>
                       <Command.GroupItems>
-                        {#each page.data.searchUsers as user (user.displayname)}
-                          <Command.LinkItem
-                            class={command.item()}
-                            href="/user/@{user.displayname}"
-                            onSelect={() => (isSearchDialogOpen = false)}
-                          >
-                            <span class="icon-[tabler--user]"></span>
-                            <span class="truncate">
-                              {user.displayname}
-                            </span>
-                          </Command.LinkItem>
-                        {/each}
+                        {#await page.data.searchUsers then users}
+                          {#each users as user (user.displayname)}
+                            <Command.LinkItem
+                              class={command.item()}
+                              href="/user/@{user.displayname}"
+                              onSelect={() => (isSearchDialogOpen = false)}
+                            >
+                              <span class="icon-[tabler--user]"></span>
+                              <span class="truncate">
+                                {user.displayname}
+                              </span>
+                            </Command.LinkItem>
+                          {/each}
+                        {/await}
                       </Command.GroupItems>
                     </Command.Group>
                   {/if}

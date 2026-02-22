@@ -129,13 +129,13 @@
   </div>
 </section>
 
-{#if data.searchBlueprints && data.searchBlueprints.length && data.blueprintImages}
+{#if data.latestBlueprints && data.latestBlueprints.length && data.latestBlueprintImages}
   <section class={section()} id="latest-blueprints">
     <h2 class="heading-2 mb-2">Latest blueprints</h2>
 
     <BlueprintItemList
-      items={data.searchBlueprints.slice(0, 3)}
-      images={data.blueprintImages}
+      items={data.latestBlueprints}
+      images={data.latestBlueprintImages}
     />
 
     <div class="mt-4 flex justify-center">
