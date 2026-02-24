@@ -1,5 +1,6 @@
 import { ungzip, gzip } from 'pako';
 import type { z } from 'zod';
+import type { BuildingInternalVariantId } from '@shapez-vortex/game-data';
 import type {
   BLUEPRINT_BUILDING_ENTRY_SCHEMA,
   BLUEPRINT_BUILDING_SCHEMA_STATIC,
@@ -33,7 +34,6 @@ export type BlueprintBuilding = z.infer<typeof BLUEPRINT_BUILDING_SCHEMA_STATIC>
 export type BlueprintBuildingEntry = z.infer<
   typeof BLUEPRINT_BUILDING_ENTRY_SCHEMA
 >;
-export type BlueprintBuildingIdentifier = string;
 
 export function update(
   value: BlueprintIdentifier,
@@ -114,11 +114,11 @@ export function getIslandCount(blueprint: Blueprint): number {
 
 export function getBuildings(
   blueprint: Blueprint,
-): Map<BlueprintBuildingIdentifier, number> {
+): Map<BuildingInternalVariantId, number> {
   if (blueprint.BP.$type === 'Island') {
     return blueprint.BP.Entries.reduce<
-      Map<BlueprintBuildingIdentifier, number>
-    >((result: Map<BlueprintBuildingIdentifier, number>, current: BlueprintIslandEntry) => {
+      Map<BuildingInternalVariantId, number>
+    >((result: Map<BuildingInternalVariantId, number>, current: BlueprintIslandEntry) => {
       if (!current.B) {
         return result;
       }
@@ -133,10 +133,11 @@ export function getBuildings(
 
 function getBuildingTypes(
   blueprint: BlueprintBuilding,
-): Map<BlueprintBuildingIdentifier, number> {
-  return blueprint.Entries.reduce<Map<BlueprintBuildingIdentifier, number>>(
-    (result: Map<BlueprintBuildingIdentifier, number>, current: BlueprintBuildingEntry) => {
-      result.set(current.T, (result.get(current.T) ?? 0) + 1);
+): Map<BuildingInternalVariantId, number> {
+  return blueprint.Entries.reduce<Map<BuildingInternalVariantId, number>>(
+    (result: Map<BuildingInternalVariantId, number>, current: BlueprintBuildingEntry) => {
+      const identifier = current.T as BuildingInternalVariantId;
+      result.set(identifier, (result.get(identifier) ?? 0) + 1);
       return result;
     },
     new Map(),

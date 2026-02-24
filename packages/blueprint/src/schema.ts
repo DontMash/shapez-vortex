@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GAME_VERSION, identifiers } from '@shapez-vortex/game-data';
+import { BuildingInternalVariantId, GAME_VERSION, identifiers } from '@shapez-vortex/game-data';
 import {
   BLUEPRINT_IDENTIFIER_REGEX,
   decode,
@@ -102,7 +102,7 @@ export function makeBlueprintIconSchema(
 }
 
 export const BLUEPRINT_BUILDING_ENTRY_SCHEMA = z.object({
-  T: z.enum(identifiers.BuildingInternalVariantIds as unknown as [string, ...string[]]),
+  T: z.enum(identifiers.BuildingInternalVariantIds as unknown as [BuildingInternalVariantId, ...BuildingInternalVariantId[]]),
   X: z.number().int().optional(),
   Y: z.number().int().optional(),
   L: z.number().int().optional(),
