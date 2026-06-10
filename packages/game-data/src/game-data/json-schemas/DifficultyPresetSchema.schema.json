@@ -20,6 +20,13 @@
         "null"
       ]
     },
+    "IconId": {
+      "required": true,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "Parameters": {
       "id": "Game.Core.Mode.DifficultyGameParameters+SerializedData",
       "required": true,

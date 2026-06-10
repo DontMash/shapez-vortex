@@ -2,6 +2,7 @@
   "Version": "1",
   "UniqueId": "difficulty-preset.challenge",
   "Title": "@difficulty-preset.challenge.title",
+  "IconId": "DifficultyPresetChallenge",
 
   "Parameters": {
     "ResearchShapeCostMultiplier": 150,

@@ -1,4 +1,7 @@
 <script lang="ts">
+  import type { BuildingInternalVariantId } from '@shapez-vortex/game-data';
+  import { T } from '@threlte/core';
+  import { Align, Suspense, Text3DGeometry } from '@threlte/extras';
   import {
     Color,
     MeshBasicMaterial,
@@ -10,17 +13,17 @@
     type IUniform,
     type Mesh,
   } from 'three';
-  import { Suspense } from '@threlte/extras';
   import CustomShaderMaterial from 'three-custom-shader-material/vanilla';
-  import type {
-    BlueprintBuildingEntry,
-    BlueprintBuildingIdentifier,
-  } from '$lib/blueprint';
+
+  import type { BlueprintBuildingEntry } from '$lib/blueprint';
+  import type { ThrelteVector3 } from '$lib/three';
 
   import COLOR_MAP from '$lib/assets/images/MaterialLUT.png';
   import BUILDING_VERTEXSHADER from '$lib/assets/shaders/building/building.vs?raw';
   import BUILDING_FRAGMENTSHADER from '$lib/assets/shaders/building/building.fs?raw';
   import { getBlueprintBuildingModel } from '$lib/components/blueprint/blueprint-building';
+
+  const MIRRORED_BUILDING_KEY = 'Mirrored' as const;
 
   const textureLoader = new TextureLoader();
   textureLoader.loadAsync(COLOR_MAP).then((texture) => {
@@ -59,28 +62,8 @@
   let ref: Object3D | undefined = $state();
   let buildingModel = $derived(getBlueprintBuildingModel(entry.T));
 
-  export const MIRRORED_BUILDINGS = [
-    'BeltDefaultRightInternalVariant',
-    'Splitter1To2RInternalVariant',
-    'Merger2To1RInternalVariant',
-    'Lift1UpRightInternalVariant',
-    'Lift1DownRightInternalVariant',
-    'Lift2UpRightInternalVariant',
-    'Lift2DownRightInternalVariant',
-    'PipeRightInternalVariant',
-    'PipeUpRightInternalVariant',
-    'Pipe2UpRightInternalVariant',
-    'WireDefaultRightInternalVariant',
-    'WireDefault1UpRightInternalVariant',
-    'WireDefault2UpRightInternalVariant',
-    'CutterMirroredInternalVariant',
-  ];
-  const isMirrored = (type: BlueprintBuildingIdentifier) => {
-    return (
-      type.toLowerCase().includes('mirrored') ||
-      MIRRORED_BUILDINGS.includes(type)
-    );
-  };
+  const isMirrored = (type: BuildingInternalVariantId) =>
+    type.toLowerCase().includes(MIRRORED_BUILDING_KEY.toLowerCase());
   const setMaterial = (entry: BlueprintBuildingEntry, object: Object3D) => {
     const mesh = object as Mesh;
     if (mesh.isMesh) {
@@ -105,39 +88,6 @@
     }
 
     setMaterial(entry, ref);
-
-    switch (entry.T) {
-      case 'LabelDefaultInternalVariant': {
-        ref.children.forEach((child, index) => (child.visible = index === 0));
-        const text = atob(String(entry.C))
-          .trim()
-          .replace(/[\W_]/g, '')
-          .toUpperCase();
-        const LETTER_SPACING = 0.525;
-        [...text].forEach((char, index, array) => {
-          if (!ref) {
-            throw new Error('[BLUEPRINT_BUILDING] letters not initialized');
-          }
-          const letterIndex = char.charCodeAt(0) - 65;
-          const letterModel = ref.children.at(letterIndex + 1);
-          if (!letterModel) {
-            throw new Error(
-              `[BLUEPRINT_BUILDING] letter not available: ${letterIndex}`,
-            );
-          }
-          const letter = letterModel.clone();
-          if (array.length > 8) {
-            const scale = (1 / array.length) * 8;
-            letter.translateX(index * scale * LETTER_SPACING * -1);
-            letter.scale.set(scale, 1, scale);
-          } else {
-            letter.translateX(index * LETTER_SPACING * -1);
-          }
-          letter.visible = true;
-          ref.add(letter);
-        });
-      }
-    }
   };
 </script>
 
@@ -145,10 +95,22 @@
   {@const Building = buildingModel.layers
     ? buildingModel.layers[entry.L ?? 0]
     : buildingModel.base}
-  <Building
-    position={[entry.X ?? 0, entry.L ?? 0, entry.Y ?? 0]}
-    rotation.y={(entry.R ?? 0) * -0.5 * Math.PI + Math.PI}
-    scale.z={isMirrored(entry.T) ? -1 : 1}
-    bind:ref
-  />
+  {@const position = [
+    entry.X ?? 0,
+    entry.L ?? 0,
+    entry.Y ?? 0,
+  ] as ThrelteVector3}
+  {@const rotationY =
+    (entry.R ?? 0) * -0.5 * Math.PI + (isMirrored(entry.T) ? 0 : Math.PI)}
+  <Building {position} rotation.y={rotationY} bind:ref />
+  {#if entry.T === 'LabelDefaultInternalVariant'}
+    {@const text = atob(String(entry.C)).trim().replace(/[\W_]/g, '')}
+    <T.Mesh
+      rotation.x={-0.5 * Math.PI}
+      rotation.z={(entry.R ?? 0) * -0.5 * Math.PI}
+      scale={0.0025}
+    >
+      <Text3DGeometry {text} depth={5} />
+    </T.Mesh>
+  {/if}
 </Suspense>

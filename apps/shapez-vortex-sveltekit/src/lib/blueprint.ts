@@ -1,5 +1,18 @@
 import type { RecordModel } from 'pocketbase';
 import type { z } from 'zod';
+import {
+  encode as _encode,
+  isBlueprint as _isBlueprint,
+  update as _update,
+  type Blueprint,
+  type BlueprintIdentifier,
+} from '@shapez-vortex/blueprint';
+import {
+  BLUEPRINT_RECORD_SCHEMA,
+  BLUEPRINT_SCHEMA,
+} from '$lib/blueprint.schema';
+import { GAME_VERSION } from '@shapez-vortex/game-data';
+
 export {
   BLUEPRINT_IDENTIFIER_PREFIX,
   BLUEPRINT_IDENTIFIER_VERSION,
@@ -18,20 +31,7 @@ export {
   type BlueprintIslandEntry,
   type BlueprintBuilding,
   type BlueprintBuildingEntry,
-  type BlueprintBuildingIdentifier,
 } from '@shapez-vortex/blueprint';
-import {
-  encode as _encode,
-  isBlueprint as _isBlueprint,
-  update as _update,
-  type Blueprint,
-  type BlueprintIdentifier,
-} from '@shapez-vortex/blueprint';
-import {
-  BLUEPRINT_RECORD_SCHEMA,
-  BLUEPRINT_SCHEMA,
-} from '$lib/blueprint.schema';
-import { GAME_VERSION } from '@shapez-vortex/game-data';
 
 export type BlueprintRecordData = z.infer<typeof BLUEPRINT_RECORD_SCHEMA>;
 export type BlueprintRecord = RecordModel &

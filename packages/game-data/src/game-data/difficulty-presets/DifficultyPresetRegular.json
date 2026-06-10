@@ -2,6 +2,7 @@
   "Version": "1",
   "UniqueId": "difficulty-preset.regular",
   "Title": "@difficulty-preset.normal.title",
+  "IconId": "DifficultyPresetRegular",
 
   "Parameters": {
     "ResearchShapeCostMultiplier": 100,

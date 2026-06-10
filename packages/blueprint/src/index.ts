@@ -11,7 +11,7 @@ import type {
 
 export const BLUEPRINT_IDENTIFIER_PREFIX = 'SHAPEZ2' as const;
 type BlueprintIdentifierPrefix = typeof BLUEPRINT_IDENTIFIER_PREFIX;
-export const BLUEPRINT_IDENTIFIER_VERSION = 1;
+export const BLUEPRINT_IDENTIFIER_VERSION = 4;
 type BlueprintIdentifierVersion = number;
 export const BLUEPRINT_IDENTIFIER_SEPERATOR = '-' as const;
 type BlueprintIdentifierSeperator = typeof BLUEPRINT_IDENTIFIER_SEPERATOR;

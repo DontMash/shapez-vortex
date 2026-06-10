@@ -1,3 +1,4 @@
+import type { BuildingInternalVariantId } from '@shapez-vortex/game-data';
 import {
   ErrorModel,
   BeltDefaultForwardInternalVariant_Layer0,
@@ -9,8 +10,6 @@ import {
   Splitter1To2LInternalVariant_Layer0,
   Splitter1To2LInternalVariant_Layer1,
   Splitter1To2LInternalVariant_Layer2,
-  BeltPortSenderInternalVariant,
-  BeltPortReceiverInternalVariant,
   SplitterTShapeInternalVariant_Layer0,
   SplitterTShapeInternalVariant_Layer1,
   SplitterTShapeInternalVariant_Layer2,
@@ -32,11 +31,8 @@ import {
   Lift1UpLeftInternalVariant_Layer1,
   Lift1UpBackwardInternalVariant_Layer0,
   Lift1UpBackwardInternalVariant_Layer1,
-  Lift1DownForwardInternalVariant_Layer0,
   Lift1DownForwardInternalVariant_Layer1,
-  Lift1DownLeftInternalVariant_Layer0,
   Lift1DownLeftInternalVariant_Layer1,
-  Lift1DownBackwardInternalVariant_Layer0,
   Lift1DownBackwardInternalVariant_Layer1,
   Lift2UpForwardInternalVariant,
   Lift2UpLeftInternalVariant,
@@ -66,8 +62,6 @@ import {
   Pipe2UpLeftInternalVariant,
   Pipe2UpBackwardInternalVariant,
   PipeGateDefaultInternalVariant,
-  FluidPortSenderInternalVariant,
-  FluidPortReceiverInternalVariant,
   WireDefaultForwardInternalVariant,
   WireDefaultLeftInternalVariant,
   WireDefault1UpForwardInternalVariant,
@@ -81,7 +75,6 @@ import {
   WireDefaultBridgeInternalVariant,
   WireTransmitterSenderInternalVariant,
   WireTransmitterReceiverInternalVariant,
-  WireGlobalTransmitterSenderInternalVariant,
   WireGlobalTransmitterReceiverInternalVariant,
   LogicGateAndInternalVariant,
   LogicGateNotInternalVariant,
@@ -93,8 +86,6 @@ import {
   VirtualRotatorDefaultInternalVariant,
   VirtualHalfCutterDefaultInternalVariant,
   VirtualHalvesSwapperDefaultInternalVariant,
-  VirtualStackerDefaultInternalVariant,
-  VirtualUnstackerDefaultInternalVariant,
   VirtualPainterDefaultInternalVariant,
   VirtualCrystalGeneratorDefaultInternalVariant,
   VirtualPinPusherDefaultInternalVariant,
@@ -122,15 +113,93 @@ import {
   MixerDefaultInternalVariant,
   FluidStorageDefaultInternalVariant,
   CrystalGeneratorDefaultInternalVariant,
+  ControlledSignalReceiverInternalVariantMirrored,
+  BeltFilterDefaultInternalVariantMirrored,
+  BeltReaderDefaultInternalVariantMirrored,
+  ControlledSignalReceiverInternalVariant,
+  ControlledSignalTransmitterInternalVariant,
+  ControlledSignalTransmitterInternalVariantMirrored,
+  CrystalGeneratorDefaultInternalVariantMirrored,
+  CutterDefaultInternalVariantMirrored,
+  Display2x2InternalVariant,
+  Display2x2InternalVariantMirrored,
+  Display3x3InternalVariant,
+  Display3x3InternalVariantMirrored,
+  FluidStorageDefaultInternalVariantMirrored,
+  Lift2DownLeftInternalVariantMirrored,
+  Lift2UpLeftInternalVariantMirrored,
+  LogicGateCompareInternalVariantMirrored,
+  LogicGateIfInternalVariantMirrored,
+  MixerDefaultInternalVariantMirrored,
+  PainterDefaultInternalVariantMirrored,
+  PipeGateDefaultInternalVariantMirrored,
+  StackerDefaultInternalVariantMirrored,
+  VirtualAnalyzerDefaultInternalVariantMirrored,
+  VirtualCrystalGeneratorDefaultInternalVariantMirrored,
+  VirtualPainterDefaultInternalVariantMirrored,
+  VirtualRotatorCCWInternalVariant,
+  VirtualStackerTallInternalVariant,
+  VirtualUnstackerTallInternalVariant,
+  WireDefault1UpLeftInternalVariantMirrored,
+  WireDefault2UpLeftInternalVariantMirrored,
+  WireDefaultLeftInternalVariantMirrored,
+  BeltDefaultLeftInternalVariantMirrored_Layer0,
+  BeltPortSenderInternalVariant_Layer0,
+  BeltPortSenderInternalVariant_Layer1,
+  BeltPortSenderInternalVariant_Layer2,
+  BeltPortReceiverInternalVariant_Layer0,
+  BeltPortReceiverInternalVariant_Layer1,
+  BeltPortReceiverInternalVariant_Layer2,
+  FluidPortSenderInternalVariant_Layer0,
+  FluidPortSenderInternalVariant_Layer1,
+  FluidPortSenderInternalVariant_Layer2,
+  FluidPortReceiverInternalVariant_Layer0,
+  FluidPortReceiverInternalVariant_Layer1,
+  FluidPortReceiverInternalVariant_Layer2,
+  Lift1DownLeftInternalVariantMirrored_Layer1,
+  Lift1DownLeftInternalVariantMirrored_Layer2,
+  Lift1UpLeftInternalVariantMirrored_Layer0,
+  Lift1UpLeftInternalVariantMirrored_Layer1,
+  Lift1DownLeftInternalVariant_Layer2,
+  Lift1DownBackwardInternalVariant_Layer2,
+  Lift1DownForwardInternalVariant_Layer2,
+  Merger2To1LInternalVariantMirrored_Layer0,
+  Merger2To1LInternalVariantMirrored_Layer1,
+  Merger2To1LInternalVariantMirrored_Layer2,
+  PipeLeftInternalVariantMirrored_Layer0,
+  PipeLeftInternalVariantMirrored_Layer1,
+  PipeLeftInternalVariantMirrored_Layer2,
+  PipeLift_Layer0,
+  PipeLift_Layer1,
+  PipeLift_Layer2,
+  PipeLiftInverter_Layer0,
+  PipeLiftInverter_Layer1,
+  PipeLiftInverter_Layer2,
+  PipeUp_Layer0,
+  PipeUp_Layer1,
+  PipeUp_Layer2,
+  Splitter1To2LInternalVariantMirrored_Layer0,
+  Splitter1To2LInternalVariantMirrored_Layer1,
+  Splitter1To2LInternalVariantMirrored_Layer2,
+  SplitterOverflowLInternalVariant_Layer0,
+  SplitterOverflowLInternalVariant_Layer1,
+  SplitterOverflowLInternalVariant_Layer2,
+  SplitterOverflowLInternalVariantMirrored_Layer0,
+  SplitterOverflowLInternalVariantMirrored_Layer1,
+  SplitterOverflowLInternalVariantMirrored_Layer2,
+  PipeUpLeftInternalVariantMirrored_Layer0,
+  PipeUpLeftInternalVariantMirrored_Layer1,
+  Pipe2UpLeftInternalVariantMirrored_Layer2,
+  BeltDefaultLeftInternalVariantMirrored_Layer1,
+  BeltDefaultLeftInternalVariantMirrored_Layer2,
 } from '@shapez-vortex/models';
 import type { Component } from 'svelte';
-import type { BlueprintBuildingIdentifier } from '$lib/blueprint';
 
 type BlueprintBuildingModel = {
   base: Component;
   layers?: [Component, Component, Component];
 };
-const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
+const BUILDINGS: Record<BuildingInternalVariantId, BlueprintBuildingModel> = {
   BeltDefaultForwardInternalVariant: {
     base: BeltDefaultForwardInternalVariant_Layer0,
     layers: [
@@ -148,10 +217,20 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
     ],
   },
   BeltPortSenderInternalVariant: {
-    base: BeltPortSenderInternalVariant,
+    base: BeltPortSenderInternalVariant_Layer0,
+    layers: [
+      BeltPortSenderInternalVariant_Layer0,
+      BeltPortSenderInternalVariant_Layer1,
+      BeltPortSenderInternalVariant_Layer2,
+    ],
   },
   BeltPortReceiverInternalVariant: {
-    base: BeltPortReceiverInternalVariant,
+    base: BeltPortReceiverInternalVariant_Layer0,
+    layers: [
+      BeltPortReceiverInternalVariant_Layer0,
+      BeltPortReceiverInternalVariant_Layer1,
+      BeltPortReceiverInternalVariant_Layer2,
+    ],
   },
   Splitter1To2LInternalVariant: {
     base: Splitter1To2LInternalVariant_Layer0,
@@ -226,27 +305,27 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
     ],
   },
   Lift1DownForwardInternalVariant: {
-    base: Lift1DownForwardInternalVariant_Layer0,
+    base: Lift1DownForwardInternalVariant_Layer1,
     layers: [
-      Lift1DownForwardInternalVariant_Layer0,
       Lift1DownForwardInternalVariant_Layer1,
       Lift1DownForwardInternalVariant_Layer1,
+      Lift1DownForwardInternalVariant_Layer2,
     ],
   },
   Lift1DownLeftInternalVariant: {
-    base: Lift1DownLeftInternalVariant_Layer0,
+    base: Lift1DownLeftInternalVariant_Layer1,
     layers: [
-      Lift1DownLeftInternalVariant_Layer0,
       Lift1DownLeftInternalVariant_Layer1,
       Lift1DownLeftInternalVariant_Layer1,
+      Lift1DownLeftInternalVariant_Layer2,
     ],
   },
   Lift1DownBackwardInternalVariant: {
-    base: Lift1DownBackwardInternalVariant_Layer0,
+    base: Lift1DownBackwardInternalVariant_Layer1,
     layers: [
-      Lift1DownBackwardInternalVariant_Layer0,
       Lift1DownBackwardInternalVariant_Layer1,
       Lift1DownBackwardInternalVariant_Layer1,
+      Lift1DownBackwardInternalVariant_Layer2,
     ],
   },
   Lift2UpForwardInternalVariant: {
@@ -336,10 +415,20 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
     base: PipeGateDefaultInternalVariant,
   },
   FluidPortSenderInternalVariant: {
-    base: FluidPortSenderInternalVariant,
+    base: FluidPortSenderInternalVariant_Layer0,
+    layers: [
+      FluidPortSenderInternalVariant_Layer0,
+      FluidPortSenderInternalVariant_Layer1,
+      FluidPortSenderInternalVariant_Layer2,
+    ],
   },
   FluidPortReceiverInternalVariant: {
-    base: FluidPortReceiverInternalVariant,
+    base: FluidPortReceiverInternalVariant_Layer0,
+    layers: [
+      FluidPortReceiverInternalVariant_Layer0,
+      FluidPortReceiverInternalVariant_Layer1,
+      FluidPortReceiverInternalVariant_Layer2,
+    ],
   },
   WireDefaultForwardInternalVariant: {
     base: WireDefaultForwardInternalVariant,
@@ -380,9 +469,6 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
   WireTransmitterReceiverInternalVariant: {
     base: WireTransmitterReceiverInternalVariant,
   },
-  WireGlobalTransmitterSenderInternalVariant: {
-    base: WireGlobalTransmitterSenderInternalVariant,
-  },
   WireGlobalTransmitterReceiverInternalVariant: {
     base: WireGlobalTransmitterReceiverInternalVariant,
   },
@@ -415,12 +501,6 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
   },
   VirtualHalvesSwapperDefaultInternalVariant: {
     base: VirtualHalvesSwapperDefaultInternalVariant,
-  },
-  VirtualStackerDefaultInternalVariant: {
-    base: VirtualStackerDefaultInternalVariant,
-  },
-  VirtualUnstackerDefaultInternalVariant: {
-    base: VirtualUnstackerDefaultInternalVariant,
   },
   VirtualPainterDefaultInternalVariant: {
     base: VirtualPainterDefaultInternalVariant,
@@ -503,12 +583,192 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
   FluidStorageDefaultInternalVariant: {
     base: FluidStorageDefaultInternalVariant,
   },
+  BeltDefaultLeftInternalVariantMirrored: {
+    base: BeltDefaultLeftInternalVariantMirrored_Layer0,
+    layers: [
+      BeltDefaultLeftInternalVariantMirrored_Layer0,
+      BeltDefaultLeftInternalVariantMirrored_Layer1,
+      BeltDefaultLeftInternalVariantMirrored_Layer2,
+    ],
+  },
+  BeltFilterDefaultInternalVariantMirrored: {
+    base: BeltFilterDefaultInternalVariantMirrored,
+  },
+  BeltReaderDefaultInternalVariantMirrored: {
+    base: BeltReaderDefaultInternalVariantMirrored,
+  },
+  CrystalGeneratorDefaultInternalVariantMirrored: {
+    base: CrystalGeneratorDefaultInternalVariantMirrored,
+  },
+  CutterDefaultInternalVariantMirrored: {
+    base: CutterDefaultInternalVariantMirrored,
+  },
+  Display2x2InternalVariant: {
+    base: Display2x2InternalVariant,
+  },
+  Display2x2InternalVariantMirrored: {
+    base: Display2x2InternalVariantMirrored,
+  },
+  Display3x3InternalVariant: {
+    base: Display3x3InternalVariant,
+  },
+  Display3x3InternalVariantMirrored: {
+    base: Display3x3InternalVariantMirrored,
+  },
+  FluidStorageDefaultInternalVariantMirrored: {
+    base: FluidStorageDefaultInternalVariantMirrored,
+  },
+  Lift1DownLeftInternalVariantMirrored: {
+    base: Lift1DownLeftInternalVariantMirrored_Layer1,
+    layers: [
+      Lift1DownLeftInternalVariantMirrored_Layer1,
+      Lift1DownLeftInternalVariantMirrored_Layer1,
+      Lift1DownLeftInternalVariantMirrored_Layer2,
+    ],
+  },
+  Lift1UpLeftInternalVariantMirrored: {
+    base: Lift1UpLeftInternalVariantMirrored_Layer0,
+    layers: [
+      Lift1UpLeftInternalVariantMirrored_Layer0,
+      Lift1UpLeftInternalVariantMirrored_Layer1,
+      Lift1UpLeftInternalVariantMirrored_Layer1,
+    ],
+  },
+  Lift2DownLeftInternalVariantMirrored: {
+    base: Lift2DownLeftInternalVariantMirrored,
+  },
+  Lift2UpLeftInternalVariantMirrored: {
+    base: Lift2UpLeftInternalVariantMirrored,
+  },
+  LogicGateCompareInternalVariantMirrored: {
+    base: LogicGateCompareInternalVariantMirrored,
+  },
+  LogicGateIfInternalVariantMirrored: {
+    base: LogicGateIfInternalVariantMirrored,
+  },
+  Merger2To1LInternalVariantMirrored: {
+    base: Merger2To1LInternalVariantMirrored_Layer0,
+    layers: [
+      Merger2To1LInternalVariantMirrored_Layer0,
+      Merger2To1LInternalVariantMirrored_Layer1,
+      Merger2To1LInternalVariantMirrored_Layer2,
+    ],
+  },
+  MixerDefaultInternalVariantMirrored: {
+    base: MixerDefaultInternalVariantMirrored,
+  },
+  PainterDefaultInternalVariantMirrored: {
+    base: PainterDefaultInternalVariantMirrored,
+  },
+  PipeUpLeftInternalVariantMirrored: {
+    base: PipeUpLeftInternalVariantMirrored_Layer0,
+    layers: [
+      PipeUpLeftInternalVariantMirrored_Layer0,
+      PipeUpLeftInternalVariantMirrored_Layer1,
+      Pipe2UpLeftInternalVariantMirrored_Layer2,
+    ],
+  },
+  Pipe2UpLeftInternalVariantMirrored: {
+    // TODO: Add model
+    base: ErrorModel,
+  },
+  PipeLeftInternalVariantMirrored: {
+    base: PipeLeftInternalVariantMirrored_Layer0,
+    layers: [
+      PipeLeftInternalVariantMirrored_Layer0,
+      PipeLeftInternalVariantMirrored_Layer1,
+      PipeLeftInternalVariantMirrored_Layer2,
+    ],
+  },
+  PipeLift: {
+    base: PipeLift_Layer0,
+    layers: [PipeLift_Layer0, PipeLift_Layer1, PipeLift_Layer2],
+  },
+  PipeLiftInverter: {
+    base: PipeLiftInverter_Layer0,
+    layers: [
+      PipeLiftInverter_Layer0,
+      PipeLiftInverter_Layer1,
+      PipeLiftInverter_Layer2,
+    ],
+  },
+  PipeUp: {
+    base: PipeUp_Layer0,
+    layers: [PipeUp_Layer0, PipeUp_Layer1, PipeUp_Layer2],
+  },
+  PipeGateDefaultInternalVariantMirrored: {
+    base: PipeGateDefaultInternalVariantMirrored,
+  },
+  Splitter1To2LInternalVariantMirrored: {
+    base: Splitter1To2LInternalVariantMirrored_Layer0,
+    layers: [
+      Splitter1To2LInternalVariantMirrored_Layer0,
+      Splitter1To2LInternalVariantMirrored_Layer1,
+      Splitter1To2LInternalVariantMirrored_Layer2,
+    ],
+  },
+  StackerDefaultInternalVariantMirrored: {
+    base: StackerDefaultInternalVariantMirrored,
+  },
+  VirtualAnalyzerDefaultInternalVariantMirrored: {
+    base: VirtualAnalyzerDefaultInternalVariantMirrored,
+  },
+  VirtualPainterDefaultInternalVariantMirrored: {
+    base: VirtualPainterDefaultInternalVariantMirrored,
+  },
+  VirtualRotatorCCWInternalVariant: {
+    base: VirtualRotatorCCWInternalVariant,
+  },
+  VirtualStackerTallInternalVariant: {
+    base: VirtualStackerTallInternalVariant,
+  },
+  VirtualUnstackerTallInternalVariant: {
+    base: VirtualUnstackerTallInternalVariant,
+  },
+  VirtualCrystalGeneratorDefaultInternalVariantMirrored: {
+    base: VirtualCrystalGeneratorDefaultInternalVariantMirrored,
+  },
+  WireDefaultLeftInternalVariantMirrored: {
+    base: WireDefaultLeftInternalVariantMirrored,
+  },
+  WireDefault1UpLeftInternalVariantMirrored: {
+    base: WireDefault1UpLeftInternalVariantMirrored,
+  },
+  WireDefault2UpLeftInternalVariantMirrored: {
+    base: WireDefault2UpLeftInternalVariantMirrored,
+  },
+  ControlledSignalTransmitterInternalVariant: {
+    base: ControlledSignalTransmitterInternalVariant,
+  },
+  ControlledSignalTransmitterInternalVariantMirrored: {
+    base: ControlledSignalTransmitterInternalVariantMirrored,
+  },
+  SplitterOverflowLInternalVariant: {
+    base: SplitterOverflowLInternalVariant_Layer0,
+    layers: [
+      SplitterOverflowLInternalVariant_Layer0,
+      SplitterOverflowLInternalVariant_Layer1,
+      SplitterOverflowLInternalVariant_Layer2,
+    ],
+  },
+  SplitterOverflowLInternalVariantMirrored: {
+    base: SplitterOverflowLInternalVariantMirrored_Layer0,
+    layers: [
+      SplitterOverflowLInternalVariantMirrored_Layer0,
+      SplitterOverflowLInternalVariantMirrored_Layer1,
+      SplitterOverflowLInternalVariantMirrored_Layer2,
+    ],
+  },
+  ControlledSignalReceiverInternalVariant: {
+    base: ControlledSignalReceiverInternalVariant,
+  },
+  ControlledSignalReceiverInternalVariantMirrored: {
+    base: ControlledSignalReceiverInternalVariantMirrored,
+  },
 };
 
-export const getBlueprintBuildingModel = (
-  type: BlueprintBuildingIdentifier,
-) => {
-  const model = BUILDINGS[getBlueprintBuildingType(type)];
+export const getBlueprintBuildingModel = (type: BuildingInternalVariantId) => {
+  const model = BUILDINGS[type];
   if (!model) {
     console.error(`unknown building ${type}`);
     return {
@@ -516,121 +776,4 @@ export const getBlueprintBuildingModel = (
     } as BlueprintBuildingModel;
   }
   return model;
-};
-const getBlueprintBuildingType = (type: BlueprintBuildingIdentifier) => {
-  const compatible = getCompatibleBlueprintBuildingType(type);
-  const mirrored = getMirroredBlueprintBuildingType(compatible);
-  return mirrored;
-};
-const getCompatibleBlueprintBuildingType = (
-  type: BlueprintBuildingIdentifier,
-) => {
-  switch (type) {
-    case 'BeltDefaultRightInternalVariant':
-      return 'BeltDefaultLeftInternalVariantMirrored';
-    case 'Splitter1To2RInternalVariant':
-      return 'Splitter1To2LInternalVariantMirrored';
-    case 'Merger2To1RInternalVariant':
-      return 'Merger2To1LInternalVariantMirrored';
-    case 'Lift1UpRightInternalVariant':
-      return 'Lift1UpLeftInternalVariantMirrored';
-    case 'Lift1DownRightInternalVariant':
-      return 'Lift1DownLeftInternalVariantMirrored';
-    case 'Lift2UpRightInternalVariant':
-      return 'Lift2UpLeftInternalVariantMirrored';
-    case 'Lift2DownRightInternalVariant':
-      return 'Lift2DownLeftInternalVariantMirrored';
-    case 'PipeRightInternalVariant':
-      return 'PipeLeftInternalVariantMirrored';
-    case 'PipeUpRightInternalVariant':
-      return 'PipeUpLeftInternalVariantMirrored';
-    case 'Pipe2UpRightInternalVariant':
-      return 'Pipe2UpLeftInternalVariantMirrored';
-    case 'WireDefaultRightInternalVariant':
-      return 'WireDefaultLeftInternalVariantMirrored';
-    case 'WireDefault1UpRightInternalVariant':
-      return 'WireDefault1UpLeftInternalVariantMirrored';
-    case 'WireDefault2UpRightInternalVariant':
-      return 'WireDefault2UpLeftInternalVariantMirrored';
-    case 'CutterMirroredInternalVariant':
-      return 'CutterDefaultInternalVariantMirrored';
-    case 'StackerMirroredInternalVariant':
-      return 'StackerDefaultInternalVariantMirrored';
-    case 'FluidBridgeSenderInternalVariant':
-      return 'FluidPortSenderInternalVariant';
-    case 'FluidBridgeReceiverInternalVariant':
-      return 'FluidPortReceiverInternalVariant';
-
-    default:
-      return type;
-  }
-};
-const getMirroredBlueprintBuildingType = (
-  type: BlueprintBuildingIdentifier,
-) => {
-  switch (type) {
-    case 'BeltDefaultLeftInternalVariantMirrored':
-      return 'BeltDefaultLeftInternalVariant';
-    case 'Splitter1To2LInternalVariantMirrored':
-      return 'Splitter1To2LInternalVariant';
-    case 'Merger2To1LInternalVariantMirrored':
-      return 'Merger2To1LInternalVariant';
-    case 'Lift1UpLeftInternalVariantMirrored':
-      return 'Lift1UpLeftInternalVariant';
-    case 'Lift1DownLeftInternalVariantMirrored':
-      return 'Lift1DownLeftInternalVariant';
-    case 'Lift2UpLeftInternalVariantMirrored':
-      return 'Lift2UpLeftInternalVariant';
-    case 'Lift2DownLeftInternalVariantMirrored':
-      return 'Lift2DownLeftInternalVariant';
-    case 'PipeLeftInternalVariantMirrored':
-      return 'PipeLeftInternalVariant';
-    case 'PipeUpLeftInternalVariantMirrored':
-      return 'PipeUpLeftInternalVariant';
-    case 'Pipe2UpLeftInternalVariantMirrored':
-      return 'Pipe2UpLeftInternalVariant';
-    case 'WireDefaultLeftInternalVariantMirrored':
-      return 'WireDefaultLeftInternalVariant';
-    case 'WireDefault1UpLeftInternalVariantMirrored':
-      return 'WireDefault1UpLeftInternalVariant';
-    case 'WireDefault2UpLeftInternalVariantMirrored':
-      return 'WireDefault2UpLeftInternalVariant';
-    case 'LogicGateIfInternalVariantMirrored':
-      return 'LogicGateIfInternalVariant';
-    case 'VirtualStackerDefaultInternalVariantMirrored':
-      return 'VirtualStackerDefaultInternalVariant';
-    case 'VirtualUnstackerDefaultInternalVariantMirrored':
-      return 'VirtualUnstackerDefaultInternalVariant';
-    case 'VirtualPainterDefaultInternalVariantMirrored':
-      return 'VirtualPainterDefaultInternalVariant';
-    case 'VirtualCrystalGeneratorDefaultInternalVariantMirrored':
-      return 'VirtualCrystalGeneratorDefaultInternalVariant';
-    case 'VirtualHalvesSwapperDefaultInternalVariantMirrored':
-      return 'VirtualHalvesSwapperDefaultInternalVariant';
-    case 'VirtualAnalyzerDefaultInternalVariantMirrored':
-      return 'VirtualAnalyzerDefaultInternalVariant';
-    case 'PipeGateDefaultInternalVariantMirrored':
-      return 'PipeGateDefaultInternalVariant';
-    case 'BeltFilterDefaultInternalVariantMirrored':
-      return 'BeltFilterDefaultInternalVariant';
-    case 'BeltReaderDefaultInternalVariantMirrored':
-      return 'BeltReaderDefaultInternalVariant';
-    case 'CutterDefaultInternalVariantMirrored':
-      return 'CutterDefaultInternalVariant';
-    case 'StackerDefaultInternalVariantMirrored':
-      return 'StackerDefaultInternalVariant';
-    case 'PainterDefaultInternalVariantMirrored':
-      return 'PainterDefaultInternalVariant';
-    case 'MixerDefaultInternalVariantMirrored':
-      return 'MixerDefaultInternalVariant';
-    case 'FluidStorageDefaultInternalVariantMirrored':
-      return 'FluidStorageDefaultInternalVariant';
-    case 'CrystalGeneratorDefaultInternalVariantMirrored':
-      return 'CrystalGeneratorDefaultInternalVariant';
-    case 'LogicGateCompareInternalVariantMirrored':
-      return 'LogicGateCompareInternalVariant';
-
-    default:
-      return type;
-  }
 };

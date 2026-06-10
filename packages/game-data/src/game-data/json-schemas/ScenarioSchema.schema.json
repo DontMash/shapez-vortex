@@ -277,7 +277,7 @@
                           "null"
                         ]
                       },
-                      "Icon": {
+                      "IconId": {
                         "required": true,
                         "type": [
                           "string",
@@ -620,20 +620,6 @@
             "null"
           ],
           "properties": {
-            "ConverterHubOutputCountUpgradeId": {
-              "required": true,
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "ConverterHubOutputQualityUpgradeId": {
-              "required": true,
-              "type": [
-                "string",
-                "null"
-              ]
-            },
             "HubInputSizeUpgradeId": {
               "required": true,
               "type": [
@@ -649,13 +635,6 @@
               ]
             },
             "ChunkLimitAddUpgradeId": {
-              "required": true,
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "ChunkLimitMultiplyUpgradeId": {
               "required": true,
               "type": [
                 "string",
@@ -870,6 +849,10 @@
                     },
                     "RequiredUpgradeIds": {
                       "$ref": "System.String[]"
+                    },
+                    "UnavailableIfLocked": {
+                      "required": true,
+                      "type": "boolean"
                     }
                   }
                 }
@@ -1152,6 +1135,10 @@
           "required": true,
           "type": "integer"
         },
+        "RankDifficultyMultiplier": {
+          "required": true,
+          "type": "number"
+        },
         "GoalLines": {
           "id": "SerializedResearchPlayerLevelConfig+GoalLine[]",
           "required": true,
@@ -1290,6 +1277,10 @@
                   "string",
                   "null"
                 ]
+              },
+              "HideReward": {
+                "required": true,
+                "type": "boolean"
               }
             }
           }
@@ -1347,6 +1338,13 @@
           ]
         },
         "SideUpgradeMechanicId": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "TradeStationsMechanicId": {
           "required": true,
           "type": [
             "string",
@@ -1463,6 +1461,13 @@
               "AccentColorPaletteIndex": {
                 "required": true,
                 "type": "integer"
+              },
+              "LinkedWikiEntry": {
+                "required": true,
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "Modules": {
                 "id": "SerializedConverterModule[]",
@@ -1750,6 +1755,9 @@
                     "type": "integer"
                   },
                   "RequiredUpgradeIds": {
+                    "$ref": "System.String[]"
+                  },
+                  "RequiredMechanicIds": {
                     "$ref": "System.String[]"
                   }
                 }

@@ -3352,7 +3352,7 @@
     ]
   },
   {
-    "Id": "VirtualStackerTallVariant",
+    "Id": "VirtualStackerDefaultVariant",
     "Removable": true,
     "Selectable": true,
     "PlayerBuildable": true,
@@ -3360,18 +3360,26 @@
     "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
-        "Id": "VirtualStackerTallInternalVariant",
-        "MirroredDefinitionId": null,
+        "Id": "VirtualStackerDefaultInternalVariant",
+        "MirroredDefinitionId": "VirtualStackerDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
             "Y": 0,
             "Z": 0
-          },
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "VirtualStackerDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "VirtualStackerDefaultInternalVariant",
+        "Tiles": [
           {
             "X": 0,
             "Y": 0,
-            "Z": 1
+            "Z": 0
           }
         ],
         "BeltInputs": [],
@@ -3380,7 +3388,7 @@
     ]
   },
   {
-    "Id": "VirtualUnstackerTallVariant",
+    "Id": "VirtualUnstackerDefaultVariant",
     "Removable": true,
     "Selectable": true,
     "PlayerBuildable": true,
@@ -3388,18 +3396,26 @@
     "PipetteOverrideVariantId": null,
     "InternalVariants": [
       {
-        "Id": "VirtualUnstackerTallInternalVariant",
-        "MirroredDefinitionId": null,
+        "Id": "VirtualUnstackerDefaultInternalVariant",
+        "MirroredDefinitionId": "VirtualUnstackerDefaultInternalVariantMirrored",
         "Tiles": [
           {
             "X": 0,
             "Y": 0,
             "Z": 0
-          },
+          }
+        ],
+        "BeltInputs": [],
+        "BeltOutputs": []
+      },
+      {
+        "Id": "VirtualUnstackerDefaultInternalVariantMirrored",
+        "MirroredDefinitionId": "VirtualUnstackerDefaultInternalVariant",
+        "Tiles": [
           {
             "X": 0,
             "Y": 0,
-            "Z": 1
+            "Z": 0
           }
         ],
         "BeltInputs": [],
