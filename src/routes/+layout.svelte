@@ -2,6 +2,8 @@
   import '../app.css';
   import '@fontsource-variable/outfit';
 
+  import { SvelteSet } from 'svelte/reactivity';
+
   import { page } from '$app/state';
   import { add } from '$lib/client/toast.service';
 
@@ -22,7 +24,7 @@
     'Tools',
   ]);
   function getKeywords(pageKeywords: Array<string>): Array<string> {
-    const keywords = new Set([...BASE_KEYWORDS]);
+    const keywords = new SvelteSet([...BASE_KEYWORDS]);
     pageKeywords.forEach((keyword) => keywords.add(keyword));
     return Array.from(keywords);
   }

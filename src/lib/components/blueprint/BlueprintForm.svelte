@@ -18,6 +18,7 @@
   } from 'sveltekit-superforms';
   import { z } from 'zod';
   import { beforeNavigate, goto } from '$app/navigation';
+  import { resolve } from '$app/paths';
   import { toBlob, toFileList } from '$lib/utils';
   import { add } from '$lib/client/toast.service';
   import { decode, isBlueprintIdentifier } from '$lib/blueprint';
@@ -820,7 +821,11 @@
                   onclick={async () => {
                     if (!leaveUrl) return;
 
-                    await goto(leaveUrl);
+                    await goto(
+                      resolve(
+                        leaveUrl.pathname + leaveUrl.search + leaveUrl.hash,
+                      ),
+                    );
                     leaveUrl = undefined;
                   }}
                 >
