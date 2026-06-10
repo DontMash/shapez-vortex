@@ -24,7 +24,7 @@ jobs:
           node-version-file: package.json
       - run: corepack enable
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
       - name: Lint
         run: pnpm run lint
 
@@ -40,7 +40,7 @@ jobs:
           node-version-file: package.json
       - run: corepack enable
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
       - name: Build
         env:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
@@ -61,7 +61,7 @@ jobs:
           node-version-file: package.json
       - run: corepack enable
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
       - name: Test
         env:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
