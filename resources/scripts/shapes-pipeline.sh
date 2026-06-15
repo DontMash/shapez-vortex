@@ -8,7 +8,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
         name=${file##*/}
         base=${name%.gltf}
 
-        bunx @threlte/gltf "$file" -k -P -t -u -r /models/shapes/ &
+        pnpm exec @threlte/gltf "$file" -k -P -t -u -r /models/shapes/ &
     done
 
     wait

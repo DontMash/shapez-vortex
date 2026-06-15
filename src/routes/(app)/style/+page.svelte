@@ -32,8 +32,8 @@
   </p>
 
   <p>
-    Creating a well thought out <a href="#0">base style</a> for a new website is
-    one of the most critical parts to ensure an overall successful project progression.
+    Creating a well thought out <a href="#0">base style</a> for a new website is one
+    of the most critical parts to ensure an overall successful project progression.
   </p>
   <p>
     The base style should contain all those basic HTML elements and their
