@@ -18,7 +18,7 @@
   } from 'sveltekit-superforms';
   import { z } from 'zod';
   import { beforeNavigate, goto } from '$app/navigation';
-  import { resolve } from '$app/paths';
+  import { untrack } from 'svelte';
   import { toBlob, toFileList } from '$lib/utils';
   import { add } from '$lib/client/toast.service';
   import { decode, isBlueprintIdentifier } from '$lib/blueprint';
@@ -59,7 +59,7 @@
 
   let { data }: Props = $props();
 
-  const form = superForm(data.form);
+  const form = untrack(() => superForm(data.form));
 
   const { form: formData, enhance, submit, tainted } = form;
   const images = filesProxy(form, 'images');
@@ -73,7 +73,7 @@
   let blueprintView: BlueprintView | undefined = $state();
 
   let blueprint: Blueprint | undefined = $state();
-  let blueprintPreview: boolean = $state(data.type === 'create');
+  let blueprintPreview: boolean = $state(untrack(() => data.type === 'create'));
   const tags: Array<BlueprintTag> = $derived(
     blueprintTagInputValue
       ? data.tags?.filter((tag: BlueprintTag) =>
@@ -822,9 +822,8 @@
                     if (!leaveUrl) return;
 
                     await goto(
-                      resolve(
-                        leaveUrl.pathname + leaveUrl.search + leaveUrl.hash,
-                      ),
+                      // eslint-disable-next-line svelte/no-navigation-without-resolve
+                      leaveUrl.pathname + leaveUrl.search + leaveUrl.hash,
                     );
                     leaveUrl = undefined;
                   }}

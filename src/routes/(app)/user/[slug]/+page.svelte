@@ -20,7 +20,7 @@
     url: string;
     tooltip: string;
   };
-  const features: Array<ProfileFeature> = [
+  const features: Array<ProfileFeature> = $derived([
     {
       image: {
         src: bookmarkImage,
@@ -47,7 +47,7 @@
       url: `/user/@${data.profile.displayname}/bookmarks`,
       tooltip: 'View bookmarks',
     },
-  ];
+  ]);
 </script>
 
 <section class={section()}>

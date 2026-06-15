@@ -1,4 +1,4 @@
-import type { ComponentType } from 'svelte';
+import type { Component } from 'svelte';
 import type { RecordModel } from 'pocketbase';
 import type { z } from 'zod';
 import type { BLUEPRINT_RECORD_SCHEMA } from '$lib/blueprint.schema';
@@ -89,8 +89,8 @@ type BlueprintIconData = `icon:${string}` | `shape:${ShapeIdentifier}`;
 export type BlueprintBuildingIdentifier =
   (typeof GAME_IDENTIFIERS)['BuildingInternalVariantIds'][number];
 export type BlueprintBuildingModel = {
-  base: ComponentType;
-  layers?: [ComponentType, ComponentType, ComponentType];
+  base: Component;
+  layers?: [Component, Component, Component];
 };
 
 const ISLAND_PADDING_SIZE = 3;

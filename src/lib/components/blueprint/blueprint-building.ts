@@ -504,13 +504,13 @@ const BUILDINGS: Record<BlueprintBuildingIdentifier, BlueprintBuildingModel> = {
 
 export const getBlueprintBuildingModel = (
   type: BlueprintBuildingIdentifier,
-) => {
+): BlueprintBuildingModel => {
   const model = BUILDINGS[getBlueprintBuildingType(type)];
   if (!model) {
     console.error(`unknown building ${type}`);
     return {
       base: ErrorModel,
-    } as BlueprintBuildingModel;
+    };
   }
   return model;
 };

@@ -18,7 +18,7 @@ type ToastOptions = Partial<Toast> & Pick<Toast, 'message'>;
 
 const queue: Array<Toast> = new Array<Toast>();
 export const toastStore = writable<Toast | undefined>(undefined);
-let timeout: number | undefined;
+let timeout: ReturnType<typeof setTimeout> | undefined;
 
 export const add = (options: ToastOptions) => {
   const {
