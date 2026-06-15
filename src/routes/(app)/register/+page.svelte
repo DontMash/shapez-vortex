@@ -3,7 +3,8 @@
   import { Button, Toggle } from 'bits-ui';
   import { Field, Control, Label, FieldErrors } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
-  import { zodClient } from 'sveltekit-superforms/adapters';
+  import { zod4Client } from 'sveltekit-superforms/adapters';
+  import { untrack } from 'svelte';
   import { USER_REGISTER_FORM_SCHEMA } from '$lib/user.types';
 
   import { button } from '$lib/components/button';
@@ -14,9 +15,11 @@
 
   let { data }: PageProps = $props();
 
-  const form = superForm(data.form, {
-    validators: zodClient(USER_REGISTER_FORM_SCHEMA),
-  });
+  const form = untrack(() =>
+    superForm(data.form, {
+      validators: zod4Client(USER_REGISTER_FORM_SCHEMA),
+    }),
+  );
   const { form: formData, enhance } = form;
   let isPasswordHidden = $state(true);
 </script>

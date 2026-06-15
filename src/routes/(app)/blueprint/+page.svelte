@@ -4,6 +4,7 @@
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
   import { zod4 as zod } from 'sveltekit-superforms/adapters';
+  import { untrack } from 'svelte';
   import { isBlueprintIdentifier } from '$lib/blueprint';
   import { BLUEPRINT_VIEW_SCHEMA } from '$lib/blueprint.schema';
   import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
@@ -16,9 +17,11 @@
 
   let { data }: PageProps = $props();
 
-  const form = superForm(data.form, {
-    validators: zod(BLUEPRINT_VIEW_SCHEMA),
-  });
+  const form = untrack(() =>
+    superForm(data.form, {
+      validators: zod(BLUEPRINT_VIEW_SCHEMA),
+    }),
+  );
   const { form: formData, enhance } = form;
 
   type Tool = {

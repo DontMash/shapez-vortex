@@ -3,7 +3,8 @@
   import { Button, Toggle } from 'bits-ui';
   import { Field, Control, Label, FieldErrors } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
-  import { zodClient } from 'sveltekit-superforms/adapters';
+  import { zod4Client } from 'sveltekit-superforms/adapters';
+  import { untrack } from 'svelte';
   import { page } from '$app/stores';
   import { add } from '$lib/client/toast.service';
   import { USER_LOGIN_FORM_SCHEMA } from '$lib/user.types';
@@ -16,12 +17,14 @@
 
   let { data }: PageProps = $props();
 
-  const form = superForm(data.form, {
-    validators: zodClient(USER_LOGIN_FORM_SCHEMA),
-    onError({ result }) {
-      add({ message: result.error.message, type: 'ERROR' });
-    },
-  });
+  const form = untrack(() =>
+    superForm(data.form, {
+      validators: zod4Client(USER_LOGIN_FORM_SCHEMA),
+      onError({ result }) {
+        add({ message: result.error.message, type: 'ERROR' });
+      },
+    }),
+  );
   const { form: formData, enhance } = form;
   let isPasswordHidden = $state(true);
 </script>

@@ -3,6 +3,7 @@
   import { Tooltip } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
+  import { untrack } from 'svelte';
 
   import { button } from '$lib/components/button';
   import * as input from '$lib/components/input';
@@ -10,7 +11,7 @@
 
   let { data }: PageProps = $props();
 
-  const form = superForm(data.form);
+  const form = untrack(() => superForm(data.form));
   const { form: formData, enhance } = form;
 
   $effect(() => {

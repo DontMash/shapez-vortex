@@ -23,7 +23,7 @@
     value: string | number;
     unit: string;
   };
-  const properties: Array<Array<Property>> = [
+  const properties: Array<Array<Property>> = $derived([
     [
       {
         iconClass: 'icon-[tabler--square-rounded-letter-t] text-primary',
@@ -73,7 +73,7 @@
           data.blueprint.entry.bookmarkCount > 1 ? 'bookmarks' : 'bookmarks',
       },
     ],
-  ];
+  ]);
 
   let slider: {
     root?: HTMLElement | undefined;
