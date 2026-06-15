@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 as zod } from 'sveltekit-superforms/adapters';
 import { BLUEPRINT_VIEW_SCHEMA } from '$lib/blueprint.schema';
 import type { Actions, PageServerLoad } from './$types';
 

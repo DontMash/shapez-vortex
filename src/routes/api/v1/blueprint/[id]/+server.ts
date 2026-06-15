@@ -1,6 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import { superValidate, type SuperValidated } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 as zod } from 'sveltekit-superforms/adapters';
 import { put } from '$lib/server/blueprint.api';
 import { BLUEPRINT_FORM_SCHEMA } from '$lib/blueprint.schema';
 import type { BlueprintRecordData } from '$lib/blueprint.types';

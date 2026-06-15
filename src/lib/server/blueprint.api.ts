@@ -1,6 +1,6 @@
 import type PocketBase from 'pocketbase';
 import { superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 as zod } from 'sveltekit-superforms/adapters';
 import {
   decode,
   getBuildingCount,
