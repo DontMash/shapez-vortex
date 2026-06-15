@@ -200,7 +200,7 @@
         </ul>
       {/if}
 
-      <div class="prose min-h-32 grow">{data.blueprint.entry.description}</div>
+      <div class="typo min-h-32 grow">{data.blueprint.entry.description}</div>
 
       <ul class="flex flex-col gap-2 sm:flex-row">
         <li>

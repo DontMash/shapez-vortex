@@ -2,11 +2,11 @@
   import { section } from '$lib/components/section';
 </script>
 
-<section class="{section()} prose">
+<section class="{section()} typo">
   <h1>Base Style</h1>
 </section>
 
-<section class="{section()} prose">
+<section class="{section()} typo">
   <h2>Typography</h2>
   <hr />
 
