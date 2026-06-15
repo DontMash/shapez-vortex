@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "commit": {
+      "source": "razzeee/skills",
+      "sourceType": "github",
+      "skillPath": "commit/SKILL.md",
+      "computedHash": "a843c62d7f2a6c0905302de14575075d0db5e13557f302f2526c701320647ae2"
+    },
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/productivity/grill-me/SKILL.md",
+      "computedHash": "784f0dbb7403b0f00324bce9a112f715342777a0daee7bbb7385f9c6f0a170ea"
+    }
+  }
+}
