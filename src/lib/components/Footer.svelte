@@ -124,7 +124,7 @@
               target="_blank"
               rel="noreferrer"
             >
-              <span class="icon-[simple-icons--discord] text-lg">
+              <span class="icon-[tabler--brand-discord] text-lg">
                 Shapez 2 Community Discord
               </span>
             </Button.Root>
@@ -141,7 +141,7 @@
               target="_blank"
               rel="noreferrer"
             >
-              <span class="icon-[simple-icons--steam] text-lg">
+              <span class="icon-[tabler--brand-steam] text-lg">
                 Shapez 2 on Steam
               </span>
             </Button.Root>
@@ -158,7 +158,7 @@
               target="_blank"
               rel="noreferrer"
             >
-              <span class="icon-[simple-icons--reddit] text-lg">
+              <span class="icon-[tabler--brand-reddit] text-lg">
                 Reddit - r/shapezio
               </span>
             </Button.Root>
@@ -198,7 +198,7 @@
               target="_blank"
               rel="noreferrer"
             >
-              <span class="icon-[simple-icons--x] text-lg"
+              <span class="icon-[tabler--brand-x] text-lg"
                 >tobspr Games on X</span
               >
             </Button.Root>
@@ -215,7 +215,7 @@
               target="_blank"
               rel="noreferrer"
             >
-              <span class="icon-[simple-icons--youtube] text-lg"
+              <span class="icon-[tabler--brand-youtube] text-lg"
                 >tobspr Games YouTube</span
               >
             </Button.Root>
@@ -244,7 +244,7 @@
             target="_blank"
             rel="noreferrer"
           >
-            <span class="icon-[simple-icons--github] text-lg">GitHub</span>
+            <span class="icon-[tabler--brand-github] text-lg">GitHub</span>
             Report an issue
           </Button.Root>
         </li>
@@ -255,7 +255,7 @@
             target="_blank"
             rel="noreferrer"
           >
-            <span class="icon-[simple-icons--kofi] text-lg">Ko-fi</span>
+            <span class="icon-[tabler--cup] text-lg">Ko-fi</span>
             Support me
           </Button.Root>
         </li>

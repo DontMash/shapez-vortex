@@ -3,7 +3,7 @@ import type { Actions, PageServerLoad } from './$types';
 import type { BlueprintIdentifier } from '$lib/blueprint.types';
 import { update } from '$lib/blueprint';
 import { message, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
+import { zod4 as zod } from 'sveltekit-superforms/adapters';
 import { BLUEPRINT_CONVERT_SCHEMA } from '$lib/blueprint.schema';
 
 export const load = (async () => {

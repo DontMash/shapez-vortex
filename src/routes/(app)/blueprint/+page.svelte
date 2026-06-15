@@ -3,7 +3,7 @@
   import { Button, Tooltip } from 'bits-ui';
   import { Control, Field, FieldErrors, Label } from 'formsnap';
   import { superForm } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
+  import { zod4 as zod } from 'sveltekit-superforms/adapters';
   import { isBlueprintIdentifier } from '$lib/blueprint';
   import { BLUEPRINT_VIEW_SCHEMA } from '$lib/blueprint.schema';
   import { BLUEPRINT_FILE_FORMAT } from '$lib/blueprint.types';
