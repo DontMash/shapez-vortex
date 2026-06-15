@@ -2,7 +2,6 @@
 
 @plugin '@tailwindcss/typography';
 @plugin '@iconify/tailwind4';
-@config '../tailwind.config.js';
 
 @theme {
   --color-*: initial;
@@ -88,31 +87,96 @@
     @apply shrink-0 align-bottom text-2xl;
   }
 
-  .small {
-    @apply leading-xl text-sm;
+  small {
+    @apply small;
   }
-  .paragraph {
-    @apply leading-xl text-base;
+  p {
+    @apply paragraph;
   }
-  .heading-6 {
-    @apply leading-lg text-base font-medium lg:text-lg;
+  h6 {
+    @apply heading-6;
   }
-  .heading-5 {
-    @apply leading-xl text-base font-medium sm:text-lg lg:text-xl;
+  h5 {
+    @apply heading-5;
   }
-  .heading-4 {
-    @apply leading-md text-lg font-medium sm:text-xl lg:text-2xl;
+  h4 {
+    @apply heading-4;
   }
-  .heading-3 {
-    @apply leading-lg text-xl font-medium sm:text-2xl lg:text-3xl;
+  h3 {
+    @apply heading-3;
   }
-  .heading-2 {
-    @apply leading-xl text-2xl font-semibold sm:text-3xl lg:text-4xl;
+  h2 {
+    @apply heading-2;
   }
-  .heading-1 {
-    @apply lg:text-hero leading-md text-3xl font-bold sm:text-4xl;
+  h1 {
+    @apply heading-1;
   }
-  .hero {
-    @apply lg:text-hero text-4xl leading-none font-black;
+
+  .typo {
+    @apply prose leading-xl dark:prose-invert max-w-none text-base;
+
+    --tw-prose-body: var(--color-foreground);
+    --tw-prose-headings: var(--color-foreground);
+    --tw-prose-lead: var(--color-foreground);
+    --tw-prose-links: var(--color-foreground);
+    --tw-prose-bold: var(--color-foreground);
+    --tw-prose-counters: var(--color-foreground);
+    --tw-prose-bullets: var(--color-foreground);
+    --tw-prose-hr: var(--color-foreground);
+    --tw-prose-quotes: var(--color-foreground);
+    --tw-prose-quote-borders: var(--color-foreground);
+    --tw-prose-captions: var(--color-foreground);
+    --tw-prose-code: var(--color-foreground);
+    --tw-prose-kbd-shadows: var(--color-foreground);
+    --tw-prose-pre-code: var(--color-background);
+    --tw-prose-pre-bg: var(--color-foreground);
+    --tw-prose-th-borders: var(--color-foreground);
+    --tw-prose-td-borders: var(--color-foreground);
+
+    --tw-prose-invert-body: var(--color-background);
+    --tw-prose-invert-headings: var(--color-background);
+    --tw-prose-invert-lead: var(--color-background);
+    --tw-prose-invert-links: var(--color-background);
+    --tw-prose-invert-bold: var(--color-background);
+    --tw-prose-invert-counters: var(--color-background);
+    --tw-prose-invert-bullets: var(--color-background);
+    --tw-prose-invert-hr: var(--color-background);
+    --tw-prose-invert-quotes: var(--color-background);
+    --tw-prose-invert-quote-borders: var(--color-background);
+    --tw-prose-invert-captions: var(--color-background);
+    --tw-prose-invert-code: var(--color-background);
+    --tw-prose-invert-kbd-shadows: var(--color-foreground);
+    --tw-prose-invert-pre-code: var(--color-background);
+    --tw-prose-invert-pre-bg: var(--color-background);
+    --tw-prose-invert-th-borders: var(--color-background);
+    --tw-prose-invert-td-borders: var(--color-background);
   }
+}
+
+@utility small {
+  @apply leading-xl text-sm;
+}
+@utility paragraph {
+  @apply leading-xl text-base;
+}
+@utility heading-6 {
+  @apply leading-lg text-base font-medium lg:text-lg;
+}
+@utility heading-5 {
+  @apply leading-xl text-base font-medium sm:text-lg lg:text-xl;
+}
+@utility heading-4 {
+  @apply leading-md text-lg font-medium sm:text-xl lg:text-2xl;
+}
+@utility heading-3 {
+  @apply leading-lg text-xl font-medium sm:text-2xl lg:text-3xl;
+}
+@utility heading-2 {
+  @apply leading-xl text-2xl font-semibold sm:text-3xl lg:text-4xl;
+}
+@utility heading-1 {
+  @apply lg:text-hero leading-md text-3xl font-bold sm:text-4xl;
+}
+@utility hero {
+  @apply lg:text-hero text-4xl leading-none font-black;
 }
