@@ -24,13 +24,15 @@ pnpm dev               # vite dev on :5173
 ## Verify (run in this order)
 
 ```sh
-pnpm lint       # prettier --check src + eslint src
+pnpm lint       # eslint src
 pnpm check      # svelte-kit sync + svelte-check (8GB heap; required after dep/tsconfig changes)
+pnpm format     # prettier --check src
 pnpm test       # vitest run
 pnpm build      # vite build (needs the .env vars)
+pnpm release    # changelogen --release --push && changelogen gh release (local dry-run; needs GITHUB_TOKEN + push access)
 ```
 
-In CI (`.github/workflows/ci.yml`) lint and build run in parallel, test `needs: build`. `test:coverage` is local-only; `format` writes with Prettier.
+In CI (`.github/workflows/ci.yml`) lint, check, format, and build run in parallel, test `needs: build`, and the single `release` job depends on all five plus is gated by `if: github.event_name != 'pull_request'`. The release job runs `pnpm release`, which uses [unjs/changelogen](https://unjs.io/packages/changelogen) to bump the version in `package.json`, update `CHANGELOG.md`, commit+tag with `[skip-ci]` (configured via the `changelog.templates.commitMessage` field in `package.json`), push to `main`, and create the GitHub release. `build-deploy` reads the new tag from the `release` job's outputs. The `package.json` `repository` field is what changelogen uses to target the GitHub release. `test:coverage` is local-only.
 
 ## Architecture (where to look)
 
@@ -64,7 +66,7 @@ Both scripts are **interactive** (require typing `y` at the prompt), so they can
 - No source comments unless asked (matches existing code).
 - Tailwind 4: theme tokens (`--color-*`, `--radius-*`, `--text-*`, `--leading-*`, `--font-*`) live in `src/app.css` under `@theme`. `tailwind.config.js` only customises the `@tailwindcss/typography` plugin; new colors go in `app.css`.
 - `csrf: { trustedOrigins: ['*'] }` is intentional for the OAuth-style sign-in flow; do not tighten it without a replacement strategy.
-- Conventional Commits are required — the changelog action reads them and bumps `package.json`.
+- Conventional Commits are required — `changelogen` reads them and bumps `package.json` + writes `CHANGELOG.md`.
 
 ## Tests
 
@@ -73,4 +75,4 @@ Both scripts are **interactive** (require typing `y` at the prompt), so they can
 
 ## Release / deploy (CI, for context)
 
-On push to `main`: lint + build → test → `changelog` (opens+merges `[skip-ci]` release PR via `TriPSs/conventional-changelog-action`) → `release` (GitHub tag) → `build-deploy` (Docker images `shapez-base`, `shapez-proxy` to `ghcr.io/<owner>/...`) → `deploy` (SSH to host, `docker compose -f compose.production.yml up -d --force-recreate --pull always`). PRs run only lint/build/test.
+On push to `main`: lint + check + format + build → test → `release` (`pnpm release`; `changelogen --release --push` bumps the version, writes `CHANGELOG.md`, commits+tags with `[skip-ci]`, pushes to `main`; `changelogen gh release` syncs the GitHub release from `CHANGELOG.md`) → `build-deploy` (Docker images `shapez-base`, `shapez-proxy` to `ghcr.io/<owner>/...`) → `deploy` (SSH to host, `docker compose -f compose.production.yml up -d --force-recreate --pull always`). PRs run only lint/check/format/build/test. The `release` job is also reachable via `workflow_dispatch` for manual re-runs.
