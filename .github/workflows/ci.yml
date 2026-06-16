@@ -42,6 +42,10 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
       - name: Check
+        env:
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
         run: pnpm run check
 
   format:
