@@ -3,6 +3,10 @@
   "version": "0.14.0",
   "type": "module",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DontMash/shapez-vortex.git"
+  },
   "engines": {
     "node": ">=22.0.0"
   },
@@ -14,11 +18,19 @@
     "dev:db": "docker-compose -f ./resources/deployment/compose.yml up",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-kit sync && NODE_OPTIONS=--max-old-space-size=8192 svelte-check --tsconfig ./tsconfig.json",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "lint": "prettier --check src && NODE_OPTIONS=--max-old-space-size=8192 eslint src",
-    "format": "prettier --write src"
+    "check": "svelte-kit sync && NODE_OPTIONS=--max-old-space-size=8192 svelte-check --tsconfig ./tsconfig.json",
+    "lint": "NODE_OPTIONS=--max-old-space-size=8192 eslint src",
+    "lint:fix": "NODE_OPTIONS=--max-old-space-size=8192 eslint src --fix",
+    "format": "prettier --check src",
+    "format:fix": "prettier --write src",
+    "release": "changelogen --release --push"
+  },
+  "changelog": {
+    "templates": {
+      "commitMessage": "chore(release): v{{newVersion}} [skip-ci]"
+    }
   },
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.5",
@@ -52,6 +64,7 @@
     "@types/three": "^0.176.0",
     "@types/ua-parser-js": "^0.7.39",
     "@vitest/coverage-v8": "^4.1.8",
+    "changelogen": "^0.6.2",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-svelte": "^3.19.0",

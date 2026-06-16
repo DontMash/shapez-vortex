@@ -24,9 +24,41 @@ jobs:
           node-version-file: package.json
       - run: corepack enable
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Lint
         run: pnpm run lint
+
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+      - run: corepack enable
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check
+        run: pnpm run check
+
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+      - run: corepack enable
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Format
+        run: pnpm run format
 
   build:
     name: Build
@@ -40,7 +72,7 @@ jobs:
           node-version-file: package.json
       - run: corepack enable
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Build
         env:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
@@ -61,7 +93,7 @@ jobs:
           node-version-file: package.json
       - run: corepack enable
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Test
         env:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
@@ -69,78 +101,45 @@ jobs:
           POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
         run: pnpm run test
 
-  changelog:
-    name: Changelog
-    needs:
-      - lint
-      - build
-      - test
+  release:
+    name: Release
+    needs: [lint, check, format, build, test]
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
 
     outputs:
-      skipped: ${{ steps.changelog.outputs.skipped }}
-      tag: ${{ steps.changelog.outputs.tag }}
-      clean_changelog: ${{ steps.changelog.outputs.clean_changelog }}
-      version: ${{ steps.changelog.outputs.version }}
-
-    env:
-      PR_BRANCH: release/ci-${{ github.sha }}
+      tag: ${{ steps.tag.outputs.tag }}
+      version: ${{ steps.version.outputs.version }}
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Create Branch
-        run: |
-          git checkout -b ${{ env.PR_BRANCH }}
-
-      - name: Create Changelog
-        uses: TriPSs/conventional-changelog-action@v5
-        id: changelog
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          github-token: ${{ github.token }}
-          git-user-name: 'github-actions[bot]'
-          git-user-email: 'github-actions[bot]@users.noreply.github.com'
-          git-branch: ${{ env.PR_BRANCH }}
-          skip-git-pull: true
-          output-file: false
-          version-file: package.json
-          create-summary: true
-
-      - name: Create Changelog PR
-        if: steps.changelog.outputs.skipped == 'false'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
-
-      - name: Merge Changelog PR
-        if: steps.changelog.outputs.skipped == 'false'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh pr merge --squash --delete-branch ${{ env.PR_BRANCH }}
-
-  release:
-    name: Release
-    needs: changelog
-    if: github.event_name != 'pull_request' && needs.changelog.outputs.skipped == 'false'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
         with:
-          tag_name: ${{ needs.changelog.outputs.tag }}
-          name: ${{ needs.changelog.outputs.tag }}
-          body: |
-            <details>
-              <summary>Changelog</summary>
-              ${{ needs.changelog.outputs.clean_changelog }}
-            </details>
+          node-version-file: package.json
+      - run: corepack enable
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: Run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run release
+      - name: Expose tag
+        id: tag
+        run: echo "tag=$(git describe --tags --abbrev=0)" > "$GITHUB_OUTPUT"
+      - name: Expose version
+        id: version
+        run: echo "version=$(node -p "require('./package.json').version")" > "$GITHUB_OUTPUT"
 
   build-deploy:
     name: Build & Push
-    needs: [changelog, release]
+    needs: release
     runs-on: ubuntu-latest
 
     steps:
@@ -149,9 +148,11 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ github.token }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Update env
         run: |
           echo "REGISTRY_DIR=${GITHUB_REPOSITORY_OWNER@L}" >> "${GITHUB_ENV}"
@@ -159,8 +160,8 @@ jobs:
         working-directory: ./resources/deployment
         run: |
           docker compose -f compose.production.yml build
-          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ needs.changelog.outputs.tag }}
-          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:${{ needs.changelog.outputs.tag }}
+          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ needs.release.outputs.tag }}
+          docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy ghcr.io/${{ env.REGISTRY_DIR }}/shapez-proxy:${{ needs.release.outputs.tag }}
       - name: Push
         run: |
           docker image ls
