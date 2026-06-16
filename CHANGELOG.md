@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v0.14.3
+
+[compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.2...v0.14.3)
+
 ## v0.14.2
 
 
