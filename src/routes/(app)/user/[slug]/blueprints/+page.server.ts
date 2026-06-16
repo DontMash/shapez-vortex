@@ -10,8 +10,16 @@ export const load = (async ({ locals, parent }) => {
     .collection('users')
     .getOne<Pick<User, 'expand'>>(profile.id, {
       expand: 'blueprints.tags,blueprints.creator',
-      fields:
-        'expand.blueprints.collectionId,expand.blueprints.id,expand.blueprints.title,expand.blueprints.images,expand.blueprints.creator,expand.blueprints.expand.tags.name,expand.blueprints.expand.creator.displayname',
+      fields: [
+        'expand.blueprints.collectionId',
+        'expand.blueprints.id',
+        'expand.blueprints.title',
+        'expand.blueprints.images',
+        'expand.blueprints.creator',
+        'expand.blueprints.expand.tags.id',
+        'expand.blueprints.expand.tags.name',
+        'expand.blueprints.expand.creator.displayname',
+      ].join(','),
     });
   const blueprints = (user.expand?.blueprints as Array<BlueprintRecord>) ?? [];
   const images = blueprints.reduce<Record<string, string>>(
