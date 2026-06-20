@@ -1,12 +1,6 @@
 # Changelog
 
-
-## v0.14.3
-
-[compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.2...v0.14.3)
-
 ## v0.14.2
-
 
 ### 🚀 Enhancements
 
@@ -165,7 +159,7 @@
 - Update fullscreen assignment ([7eb48d9](https://github.com/DontMash/shapez-vortex/commit/7eb48d9))
 - Downgrade threejs dependency ([588d57a](https://github.com/DontMash/shapez-vortex/commit/588d57a))
 - Use 'm' as shape color instead of 'p' feat: add support for up to 6 shape layer chore: remove console.error ([4518c3e](https://github.com/DontMash/shapez-vortex/commit/4518c3e))
-- Use partial model for PipeGate  glas ([13f1bf1](https://github.com/DontMash/shapez-vortex/commit/13f1bf1))
+- Use partial model for PipeGate glas ([13f1bf1](https://github.com/DontMash/shapez-vortex/commit/13f1bf1))
 - Update lint/format command ([1d9f5e9](https://github.com/DontMash/shapez-vortex/commit/1d9f5e9))
 - Update wording on "more" blueprints ([15b89d7](https://github.com/DontMash/shapez-vortex/commit/15b89d7))
 - Add length condition to latest blueprint list ([9fb78ec](https://github.com/DontMash/shapez-vortex/commit/9fb78ec))
@@ -414,4 +408,3 @@
 
 - Sören Maschmann ([@DontMash](https://github.com/DontMash))
 - Sören Maschmann <smaschmann@slashwhy.de>
-
