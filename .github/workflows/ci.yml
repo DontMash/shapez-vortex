@@ -5,6 +5,7 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -108,7 +109,7 @@ jobs:
   release:
     name: Release
     needs: [lint, check, format, build, test]
-    if: github.event_name != 'pull_request'
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     outputs:
