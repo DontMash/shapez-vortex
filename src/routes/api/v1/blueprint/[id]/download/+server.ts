@@ -1,9 +1,3 @@
-import PocketBase from 'pocketbase';
-import {
-  POCKETBASE_URL,
-  ADMIN_EMAIL,
-  ADMIN_PASSWORD,
-} from '$env/static/private';
 import type { RequestHandler } from './$types';
 import {
   BLUEPRINT_FILE_FORMAT,
@@ -20,9 +14,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
     locals.user.verified &&
     locals.user.id !== blueprint.creator
   ) {
-    const pb = new PocketBase(POCKETBASE_URL);
-    await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
-    await pb
+    await locals.pb
       .collection('blueprints')
       .update(params.id, { 'downloadCount+': 1 });
   }

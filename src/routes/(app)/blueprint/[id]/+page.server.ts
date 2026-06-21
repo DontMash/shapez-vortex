@@ -1,13 +1,7 @@
 import type { Actions, PageServerLoad } from './$types';
 import { error, fail, redirect } from '@sveltejs/kit';
-import PocketBase from 'pocketbase';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 as zod } from 'sveltekit-superforms/adapters';
-import {
-  ADMIN_EMAIL,
-  ADMIN_PASSWORD,
-  POCKETBASE_URL,
-} from '$env/static/private';
 import type { BlueprintRecord } from '$lib/blueprint.types';
 import { REPORT_CREATE_SCHEMA } from '$lib/report.types';
 
@@ -24,20 +18,18 @@ export const actions = {
     }
 
     const isBookmarked = locals.user.bookmarks.includes(params.id);
-    const pb = new PocketBase(POCKETBASE_URL);
-    await pb.admins.authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
     if (isBookmarked) {
       await locals.pb
         .collection('users')
         .update(locals.user.id, { 'bookmarks-': params.id });
-      await pb
+      await locals.pb
         .collection('blueprints')
         .update(params.id, { 'bookmarkCount-': 1 });
     } else {
       await locals.pb
         .collection('users')
         .update(locals.user.id, { 'bookmarks+': params.id });
-      await pb
+      await locals.pb
         .collection('blueprints')
         .update(params.id, { 'bookmarkCount+': 1 });
     }

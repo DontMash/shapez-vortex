@@ -1,10 +1,4 @@
-import PocketBase from 'pocketbase';
 import { error } from '@sveltejs/kit';
-import {
-  POCKETBASE_URL,
-  ADMIN_EMAIL,
-  ADMIN_PASSWORD,
-} from '$env/static/private';
 import type { BlueprintRecord } from '$lib/blueprint.types';
 import type { User } from '$lib/user.types';
 import { decode } from '$lib/blueprint';
@@ -34,11 +28,7 @@ export const load = (async ({ depends, locals, params }) => {
         locals.user.verified &&
         locals.user.id !== blueprint.creator
       ) {
-        const pb = new PocketBase(POCKETBASE_URL);
-        await pb
-          .collection('_superusers')
-          .authWithPassword(ADMIN_EMAIL, ADMIN_PASSWORD);
-        await pb
+        await locals.pb
           .collection('blueprints')
           .update(blueprint.id, { 'viewCount+': 1 });
       }

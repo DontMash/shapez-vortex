@@ -15,7 +15,7 @@
     "prepare:buildings": "bash resources/scripts/buildings-pipeline.sh",
     "prepare:shapes": "bash resources/scripts/shapes-pipeline.sh",
     "dev": "vite dev",
-    "dev:db": "docker-compose -f ./resources/deployment/compose.yml up",
+    "dev:db": "docker-compose -f ./resources/deployment/compose.yml up --build",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",

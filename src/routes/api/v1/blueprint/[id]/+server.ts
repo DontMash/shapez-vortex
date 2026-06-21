@@ -12,6 +12,17 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
   }
 
   const { id } = params;
+  try {
+    const existing = await locals.pb.collection('blueprints').getOne(id, {
+      fields: 'creator',
+    });
+    if (existing.creator !== locals.user.id) {
+      return error(403);
+    }
+  } catch {
+    return error(404, 'Blueprint not found');
+  }
+
   const form = await superValidate(request, zod(BLUEPRINT_FORM_SCHEMA));
   if (!form.valid) {
     return json(form.errors, { status: 400 });
