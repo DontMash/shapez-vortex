@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.14.3
+
+[compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.2...v0.14.3)
+
+### 🚀 Enhancements
+
+- Upgrade pocketbase to v0.39.4 ([efb789c](https://github.com/DontMash/shapez-vortex/commit/efb789c))
+
+### 🩹 Fixes
+
+- **ci:** Make release job manual-only and revert v0.14.3 ([85b5958](https://github.com/DontMash/shapez-vortex/commit/85b5958))
+
+### 🏡 Chore
+
+- **release:** V0.14.3 [skip-ci] ([a7c0a0d](https://github.com/DontMash/shapez-vortex/commit/a7c0a0d))
+- **pocketbase:** Move blueprint update authz to JSVM hook ([8147ca1](https://github.com/DontMash/shapez-vortex/commit/8147ca1))
+
+### ❤️ Contributors
+
+- Sören Maschmann <smaschmann@slashwhy.de>
+
 ## v0.14.2
 
 ### 🚀 Enhancements
