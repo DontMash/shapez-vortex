@@ -12,12 +12,12 @@ SvelteKit 2 + Svelte 5 (runes) + TypeScript app for the Shapez 2 community: 3D s
 
 ```sh
 pnpm install
-cp .env.example .env   # set POCKETBASE_URL (e.g. http://localhost:8080), ADMIN_EMAIL, ADMIN_PASSWORD
+cp .env.example .env   # set POCKETBASE_URL (e.g. http://localhost:8080)
 pnpm dev:db            # PocketBase via resources/deployment/compose.yml on :8080
 pnpm dev               # vite dev on :5173
 ```
 
-`.env` is git-ignored. The three vars above are the only required ones and are also passed as CI secrets (`POCKETBASE_URL`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`).
+`.env` is git-ignored. The vars above are the only required ones and are also passed as CI secrets.
 
 `pnpm-workspace.yaml` whitelists `esbuild` and `sharp` builds; keep that allow-list intact or `pnpm install` will refuse to run.
 
@@ -37,8 +37,9 @@ In CI (`.github/workflows/ci.yml`) lint, check, format, and build run in paralle
 ## Architecture (where to look)
 
 - `src/routes/(app)/...` — public pages. The parens are a SvelteKit route group, not a path segment. Do not nest another `(...)` group.
-- `src/hooks.server.ts` — PocketBase client + cookie auth, plus the protected routes (`/settings`, `/blueprint/upload`) and the protected form actions (`requestVerification`, `requestEmail`, `updateDisplayname`, `updateBookmark`). Add new protected endpoints there.
+- `src/hooks.server.ts` — PocketBase client + cookie auth, plus the protected routes (`/settings`, `/blueprint/upload`). Add new protected endpoints there.
 - `src/lib/server/blueprint.api.ts` — server-side `get`/`post`/`put` for blueprints; everything else talks to PocketBase through this module.
+- `resources/deployment/pb_hooks/blueprints.pb.js` — JSVM hook (`onRecordUpdateRequest`) that is the single source of authz for `blueprints` updates. `blueprints.updateRule` is intentionally empty; the hook allows creators any edit, and requires `auth.verified` for non-creators who may only `+1` `viewCount` / `downloadCount` / `bookmarkCount`. New authorization logic for blueprint updates belongs here. Mounted into the container by `pocketbase.dockerfile` and bind-mounted for local dev via `compose.yml`.
 - `src/lib/blueprint.ts` + `blueprint.types.ts` — encode/decode/update of the `SHAPEZ2-1-...$` blueprint identifier (gzip + base64). Bump `GAME_VERSION` (currently `1095`) when the in-game data changes. `BLUEPRINT_TAG_NEW_SYMBOL` is the `"$"` prefix the form uses to mark a tag as "create if missing".
 - `src/lib/shape.ts` + `shape.types.ts` — shape identifier parser (e.g. `RuRuCuCu:--CrCu`).
 - `src/routes/api/v1/...` — public REST endpoints (`blueprint`, `blueprint/[id]`, `blueprint/{decode,encode,download}`, `login`, `user`).

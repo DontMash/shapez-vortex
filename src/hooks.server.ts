@@ -4,12 +4,6 @@ import { POCKETBASE_URL } from '$env/static/private';
 import type { User } from '$lib/user.types';
 
 const protectedRoutes = ['settings', 'blueprint/upload'] as const;
-const protectedActions = [
-  'requestVerification',
-  'requestEmail',
-  'updateDisplayname',
-  'updateBookmark',
-] as const;
 
 export const handle: Handle = async ({ event, resolve }) => {
   const pb = new PocketBase(POCKETBASE_URL);
@@ -32,13 +26,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     protectedRoutes.filter((route) =>
       event.url.pathname.startsWith(`/${route}`),
     ).length > 0;
-  const isProtectedAction =
-    event.request.method === 'POST' &&
-    protectedActions.filter((action) =>
-      event.url.searchParams.has(`/${action}`),
-    ).length > 0;
-  const isProtected = isProtectedRoute || isProtectedAction;
-  if (isProtected && !event.locals.user) {
+  if (isProtectedRoute && !event.locals.user) {
     const loginUrl = new URL('login', event.url.origin);
     loginUrl.searchParams.set('redirect', event.url.pathname);
     redirect(303, loginUrl.href);

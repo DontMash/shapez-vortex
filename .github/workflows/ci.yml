@@ -44,8 +44,6 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Check
         env:
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
         run: pnpm run check
 
@@ -80,8 +78,6 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         env:
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
         run: pnpm run build
 
@@ -101,8 +97,6 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Test
         env:
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
         run: pnpm run test
 
