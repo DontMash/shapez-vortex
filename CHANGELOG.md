@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.14.4
+
+[compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.3...v0.14.4)
+
+### 🩹 Fixes
+
+- **blueprints:** Allow any auth user to increment counts and allow ±1 on bookmarkCount ([d8379ad](https://github.com/DontMash/shapez-vortex/commit/d8379ad))
+
+### ❤️ Contributors
+
+- Sören Maschmann <smaschmann@slashwhy.de>
+
 ## v0.14.3
 
 [compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.2...v0.14.3)
