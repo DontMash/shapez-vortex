@@ -9,11 +9,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
     .collection('blueprints')
     .getOne<BlueprintRecord>(params.id);
 
-  if (
-    locals.user &&
-    locals.user.verified &&
-    locals.user.id !== blueprint.creator
-  ) {
+  if (locals.user && locals.user.id !== blueprint.creator) {
     await locals.pb
       .collection('blueprints')
       .update(params.id, { 'downloadCount+': 1 });
