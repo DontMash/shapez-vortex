@@ -23,11 +23,7 @@ export const load = (async ({ depends, locals, params }) => {
     }
 
     try {
-      if (
-        locals.user &&
-        locals.user.verified &&
-        locals.user.id !== blueprint.creator
-      ) {
+      if (locals.user && locals.user.id !== blueprint.creator) {
         await locals.pb
           .collection('blueprints')
           .update(blueprint.id, { 'viewCount+': 1 });

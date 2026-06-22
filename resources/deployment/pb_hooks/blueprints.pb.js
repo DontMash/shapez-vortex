@@ -7,37 +7,43 @@ onRecordUpdateRequest((e) => {
   }
 
   const record = e.record;
+  if (!record) {
+    throw new BadRequestError('Undefined record');
+  }
+
   const original = record.original();
   const creator = original.get('creator');
-
   if (auth.id === creator) {
     e.next();
     return;
   }
 
-  if (!auth.get('verified')) {
-    throw new ForbiddenError('Account must be verified');
-  }
-
-  const allowed = ['viewCount', 'downloadCount', 'bookmarkCount'];
+  const incrementOnly = new Set(['viewCount', 'downloadCount']);
+  const allowed = [...incrementOnly, 'bookmarkCount'];
   const system = ['id', 'collectionId', 'collectionName', 'created', 'updated'];
+  const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
   for (const key of Object.keys(record.publicExport())) {
-    if (system.includes(key) || !record.has(key)) continue;
-    if (!allowed.includes(key)) {
-      throw new ForbiddenError(`Field "${key}" cannot be updated`);
-    }
+    if (system.includes(key) || allowed.includes(key)) continue;
+    const newVal = record.get(key);
+    const oldVal = original.get(key);
+    if (equals(newVal, oldVal)) continue;
+    throw new ForbiddenError(`Field "${key}" cannot be updated`);
   }
 
   for (const key of allowed) {
-    if (!record.has(key)) continue;
-    const oldVal = original.get(key) ?? 0;
     const newVal = record.get(key);
+    const oldVal = original.get(key) ?? 0;
+    if (equals(newVal, oldVal)) continue;
     if (typeof newVal !== 'number' || !Number.isInteger(newVal)) {
       throw new BadRequestError(`${key} must be an integer`);
     }
-    if (newVal - oldVal !== 1) {
+    const diff = newVal - oldVal;
+    if (incrementOnly.has(key) && diff !== 1) {
       throw new BadRequestError(`${key} can only increment by 1`);
+    }
+    if (!incrementOnly.has(key) && Math.abs(diff) !== 1) {
+      throw new BadRequestError(`${key} can only change by ±1`);
     }
   }
 
