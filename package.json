@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.5",
-    "@tailwindcss/vite": "^4.3.1",
+    "@tailwindcss/vite": "^4.3.2",
     "@threlte/core": "^8.5.16",
     "@threlte/extras": "^9.21.0",
     "bits-ui": "^2.18.1",
@@ -45,7 +45,7 @@
     "pocketbase": "^0.27.0",
     "screenfull": "^6.0.2",
     "sveltekit-superforms": "^2.30.1",
-    "three": "^0.176.0",
+    "three": "^0.185.0",
     "three-custom-shader-material": "^6.3.7",
     "ua-parser-js": "1.0.40",
     "zod": "^4.4.3"
@@ -61,7 +61,7 @@
     "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^25.9.2",
     "@types/pako": "^2.0.3",
-    "@types/three": "^0.176.0",
+    "@types/three": "^0.185.0",
     "@types/ua-parser-js": "^0.7.39",
     "@vitest/coverage-v8": "^4.1.8",
     "changelogen": "^0.6.2",
