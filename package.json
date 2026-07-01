@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
-    "@eslint/js": "^9.39.4",
+    "@eslint/js": "^10.0.1",
     "@iconify-json/tabler": "^1.2.35",
     "@iconify/tailwind4": "^1.2.3",
     "@sveltejs/adapter-auto": "^7.0.1",
