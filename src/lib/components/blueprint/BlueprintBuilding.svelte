@@ -90,7 +90,13 @@
       } else if (name.includes('glas')) {
         mesh.material = BUILDING_MATERIAL_GLASS;
       } else {
+        if (name === 'beltdefaultforwardinternalvariant') {
+          console.log(mesh.material, BUILDING_MATERIAL);
+        }
         mesh.material = BUILDING_MATERIAL;
+        if (name === 'beltdefaultforwardinternalvariant') {
+          console.log(mesh.material, BUILDING_MATERIAL);
+        }
       }
     }
 
