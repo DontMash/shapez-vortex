@@ -1,11 +1,11 @@
 ---
 name: commit
-description: "Creates a git commit with a well-crafted message — inferring the right style from the repo's history rather than defaulting to conventional commits. Use this skill any time the user wants to record their current changes in git: explicit requests like \"commit this\", \"write a commit message\", or \"checkpoint my work\", but also implicit ones like \"we're done, wrap it up\", \"go ahead and commit\", or finishing a coding task where nothing has been committed yet. Also use it when the user asks what commit message to write."
+description: "Creates git commits that match the repository's history instead of defaulting to conventional commits. Use this skill whenever the user wants to record changes in git, asks for a commit message, or indicates that the work is ready to wrap up."
 ---
 
 # Commit
 
-Create one or more commits that accurately reflect what changed and why — in a style consistent with the repo's existing history.
+Create one or more commits that accurately describe what changed and why. Match the repository's existing style.
 
 ## Step 1: Understand the changes
 
@@ -17,13 +17,36 @@ git diff
 git diff --staged
 ```
 
+If the request or session context does not make the intended changes clear, do
+not guess. Inspect the available targets:
+
+```bash
+git status --short
+git branch --all
+git log --oneline -20
+```
+
+Ask the user what to compare and commit. Offer the relevant choices you found,
+such as:
+
+- All uncommitted changes
+- Only staged changes
+- Specific changed files or groups of related files
+- Changes since a named branch, tag, or commit
+- A specific commit or commit range
+- Another ref supplied by the user
+
+Show concrete branch names, commit hashes, and changed file groups in the
+choices. Allow the user to select one or more groups. Do not stage or commit
+anything until the user chooses.
+
 If nothing is staged, don't blindly stage everything. First look at what's changed and decide what actually belongs in a commit:
 
 - **Exclude** files that look like temporary edits, local experiments, environment config (`.env`, `*.local`, IDE settings), debug logging added during development, or anything unrelated to the work described in the session
-- **Include** the files that form the logical change — the ones that would make sense to a future reader of the diff
+- **Include** the files that form the logical change and make sense together in the diff
 - Use session context to guide this: if the user described what they were working on, the commit should reflect that work, not everything `git status` happens to show
 
-When in doubt about a specific file, err on the side of leaving it out and mentioning it to the user ("I left out `.env.local` — let me know if you want that included").
+When unsure about a file, leave it out and tell the user why.
 
 Once you've decided what belongs, stage those files explicitly rather than using `git add -A`.
 
@@ -39,9 +62,9 @@ A single logical change belongs in a single commit. But if the staged changes cl
 **Don't split when:**
 - The changes work together as one unit (e.g. a new feature file + its test + a README update)
 - The changes are small and the split would be pedantic
-- You'd have to stage partial file content to separate them cleanly — that's usually not worth it
+- You would have to stage parts of files to separate the changes cleanly
 
-**When it's ambiguous**, ask: "I could split this into two commits — [A] and [B]. Would you prefer that, or one commit covering everything?"
+**When it is ambiguous**, ask whether the user wants one commit or separate commits for the distinct changes.
 
 When splitting, commit each group separately: unstage the second group, commit the first, then stage and commit the second.
 
@@ -56,7 +79,7 @@ Before committing, decide whether the current branch is the right place for this
 
 **1. You're on a protected/shared branch**
 
-These branches shouldn't receive direct commits — work flows in via PRs:
+These branches should receive changes through pull requests, not direct commits:
 - The repo's default branch (`main`, `master`, or whatever `origin/HEAD` points to)
 - Common integration branches: `develop`, `dev`, `staging`, `next`
 - Release branches matching patterns like `release/*`, `release-*`
@@ -69,13 +92,13 @@ Check whether the branch has been merged into the default branch:
 git branch --merged origin/main 2>/dev/null || git branch --merged origin/master 2>/dev/null
 ```
 
-If the current branch appears in that list, it's already been merged — committing more work here would be confusing. Create a fresh branch instead.
+If the current branch appears in that list, it has already been merged. Create a new branch instead of adding commits to it.
 
 **3. The branch topic doesn't match the work**
 
 Compare the current branch name to what the user is actually working on. If you're on `fix/login-redirect` but the user just finished building the CSV export feature, that branch is the wrong home for this commit. Create a new branch that reflects the actual work.
 
-Use session context to make this call — what has the conversation been about? Does the branch name still describe it?
+Use the session context to decide whether the branch name still describes the work.
 
 ---
 
@@ -113,7 +136,7 @@ Things to observe:
 - **Body**: Do commits have bodies? Are they common or rare? What do they contain?
 - **Footers**: Any patterns like `Refs:`, `Closes #123`, `BREAKING CHANGE:`?
 
-If the repo has a `CONTRIBUTING.md`, `docs/contributing.md`, or `.gitmessage` file, read it — it may document the conventions explicitly.
+If the repository has a `CONTRIBUTING.md`, `docs/contributing.md`, or `.gitmessage` file, read it for explicit conventions.
 
 Match what you find. Don't impose a different convention. If the repo uses plain prose with no prefix, don't add `feat:`. If it uses conventional commits, follow the type vocabulary you see in the history.
 
@@ -123,11 +146,11 @@ If the repo has no commits yet, default to plain imperative prose (no type prefi
 
 Write a commit message that:
 
-1. **Subject line** — one line, ≤72 chars, matches the repo's style. Summarizes *what* changed, not *how*.
-2. **Blank line** — separates subject from body (if there's a body).
-3. **Body** (optional but often useful) — explains *why* the change was made, any tradeoffs, and context that won't be obvious from the diff. Wrap at ~72 chars. Skip it for tiny, self-explanatory changes.
+1. **Subject line:** One line of no more than 72 characters that matches the repository's style and summarizes what changed.
+2. **Blank line:** Separates the subject from the body when a body is present.
+3. **Body:** Explain why the change was made, relevant tradeoffs, and context that is not clear from the diff. Wrap it at about 72 characters. Omit it for small, self-explanatory changes.
 
-The message should be honest about what changed. Read the diff carefully — don't just describe the filenames, describe the actual behavior change.
+Read the diff carefully and describe the behavior change, not just the filenames.
 
 ## Step 5: Commit
 
@@ -159,4 +182,4 @@ For multiple commits:
 git log --oneline -<N>
 ```
 
-Tell the user what was committed, the hash(es), and — if you split — briefly explain why.
+Tell the user what was committed and provide each commit hash. If you split the work, briefly explain why.
