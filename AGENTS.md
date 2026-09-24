@@ -77,3 +77,13 @@ Both scripts are **interactive** (require typing `y` at the prompt), so they can
 ## Release / deploy (CI, for context)
 
 On push to `main`: lint + check + format + build → test → `release` (`pnpm release`; `changelogen --release --push` bumps the version, writes `CHANGELOG.md`, commits+tags with `[skip-ci]`, pushes to `main`; `changelogen gh release` syncs the GitHub release from `CHANGELOG.md`) → `build-deploy` (Docker images `shapez-base`, `shapez-proxy` to `ghcr.io/<owner>/...`) → `deploy` (SSH to host, `docker compose -f compose.production.yml up -d --force-recreate --pull always`). PRs run only lint/check/format/build/test. The `release` job is also reachable via `workflow_dispatch` for manual re-runs.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live in this repository’s GitHub Issues; use the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+Single-context layout: root `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
