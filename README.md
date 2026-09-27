@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/DontMash/shapez-vortex">
-    <img src="static/favicon.png" alt="Logo" width="80" height="80">
+    <img src="apps/sveltekit/static/favicon.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Shapez Vortex</h3>
@@ -100,13 +100,20 @@ To setup, install & develop you may need some tools:
    git clone https://github.com/DontMash/shapez-vortex.git
    ```
 
-2. Install packages
+2. Install packages and start the services from the repository root:
 
-     ```sh
-       pnpm install
-     ```
+   ```sh
+   pnpm install
+   cp apps/sveltekit/.env.example apps/sveltekit/.env
+   pnpm dev:db
+   pnpm dev
+   ```
+
+   Set `POCKETBASE_URL` in `apps/sveltekit/.env` (for local development, `http://localhost:8080`). Run `pnpm dev:db` and `pnpm dev` in separate terminals.
 
 3. Visit [localhost:5173](http://localhost:5173)
+
+The pnpm workspace contains the SvelteKit application in `apps/sveltekit` and reserves `packages/` for future packages. PocketBase and Caddy own their container definitions in `apps/pocketbase` and `apps/proxy`. Root `compose.yml` and `compose.production.yml` assemble those services. SvelteKit remains on Vercel: set the Vercel project's **Root Directory** to `apps/sveltekit`; its `vercel.json` is in that directory. Vercel does not accept Root Directory in `vercel.json`.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

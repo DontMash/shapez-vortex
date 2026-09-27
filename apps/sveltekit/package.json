@@ -1,0 +1,58 @@
+{
+  "name": "@shapez-vortex/sveltekit",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "prepare:buildings": "bash resources/scripts/buildings-pipeline.sh",
+    "prepare:shapes": "bash resources/scripts/shapes-pipeline.sh",
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "check": "svelte-kit sync && NODE_OPTIONS=--max-old-space-size=8192 svelte-check --tsconfig ./tsconfig.json",
+    "lint": "NODE_OPTIONS=--max-old-space-size=8192 eslint src",
+    "lint:fix": "NODE_OPTIONS=--max-old-space-size=8192 eslint src --fix",
+    "format": "prettier --check src",
+    "format:fix": "prettier --write src"
+  },
+  "dependencies": {
+    "@fontsource-variable/outfit": "^5.2.5",
+    "@tailwindcss/vite": "^4.3.1",
+    "@threlte/core": "^8.5.16",
+    "@threlte/extras": "^9.21.0",
+    "bits-ui": "^2.18.1",
+    "class-variance-authority": "^0.7.1",
+    "embla-carousel": "^8.6.0",
+    "formsnap": "^2.0.1",
+    "pako": "^2.1.0",
+    "pocketbase": "^0.27.0",
+    "screenfull": "^6.0.2",
+    "sveltekit-superforms": "^2.30.2",
+    "three": "^0.176.0",
+    "three-custom-shader-material": "^6.3.7",
+    "ua-parser-js": "1.0.40",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@iconify-json/tabler": "^1.2.35",
+    "@iconify/tailwind4": "^1.2.3",
+    "@sveltejs/adapter-auto": "^7.0.1",
+    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/vite-plugin-svelte": "^6.2.4",
+    "@tailwindcss/typography": "^0.5.20",
+    "@types/node": "^25.9.2",
+    "@types/pako": "^2.0.3",
+    "@types/three": "^0.176.0",
+    "@types/ua-parser-js": "^0.7.39",
+    "@vitest/coverage-v8": "^4.1.11",
+    "svelte": "^5.56.3",
+    "svelte-check": "^4.6.0",
+    "tailwindcss": "^4.3.1",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.11"
+  }
+}

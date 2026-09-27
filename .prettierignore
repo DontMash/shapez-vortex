@@ -1,8 +1,8 @@
 .DS_Store
 node_modules
-/build
-/.svelte-kit
-/package
+apps/sveltekit/build
+apps/sveltekit/.svelte-kit
+apps/sveltekit/package
 .env
 .env.*
 !.env.example
@@ -12,6 +12,6 @@ pnpm-lock.yaml
 package-lock.json
 yarn.lock
 
-src/lib/assets/*
-src/lib/components/models/*
-src/lib/components/ui/*
+apps/sveltekit/src/lib/assets/*
+apps/sveltekit/src/lib/components/models/*
+apps/sveltekit/src/lib/components/ui/*
