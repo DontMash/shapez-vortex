@@ -3,6 +3,7 @@ services:
     container_name: shapez-base
     image: ghcr.io/dontmash/shapez-base
     build:
+      context: .
       dockerfile: pocketbase.dockerfile
     restart: unless-stopped
     volumes:

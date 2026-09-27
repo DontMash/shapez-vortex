@@ -1,0 +1,12 @@
+name: shapez-vortex-development
+services:
+  db:
+    extends:
+      file: apps/pocketbase/compose.yml
+      service: pocketbase
+    ports:
+      - 8080:8080
+    volumes:
+      - ./apps/pocketbase/pb_data:/pb/pb_data
+      - ./apps/pocketbase/pb_hooks:/pb/pb_hooks
+      - ./apps/pocketbase/pb_migrations:/pb/pb_migrations

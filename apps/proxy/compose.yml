@@ -3,6 +3,7 @@ services:
     container_name: shapez-proxy
     image: ghcr.io/dontmash/shapez-proxy
     build:
+      context: .
       dockerfile: caddy.dockerfile
     restart: unless-stopped
     ports:

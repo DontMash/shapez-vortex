@@ -164,7 +164,6 @@ jobs:
         run: |
           echo "REGISTRY_DIR=${GITHUB_REPOSITORY_OWNER@L}" >> "${GITHUB_ENV}"
       - name: Build
-        working-directory: ./resources/deployment
         run: |
           docker compose -f compose.production.yml build
           docker tag ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base ghcr.io/${{ env.REGISTRY_DIR }}/shapez-base:${{ needs.release.outputs.tag }}
@@ -192,7 +191,6 @@ jobs:
           ssh-private-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
           context-use: true
       - name: Deploy
-        working-directory: ./resources/deployment
         # todo use docker stack deploy
         run: |
           docker compose -f compose.production.yml up -d --force-recreate --pull always
