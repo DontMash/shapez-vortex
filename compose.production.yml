@@ -1,0 +1,15 @@
+name: shapez-vortex
+services:
+  proxy:
+    extends:
+      file: apps/proxy/compose.yml
+      service: caddy
+  db:
+    extends:
+      file: apps/pocketbase/compose.yml
+      service: pocketbase
+
+volumes:
+  db-data:
+  proxy_data:
+  proxy_config:

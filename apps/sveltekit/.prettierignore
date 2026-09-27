@@ -1,0 +1,6 @@
+.svelte-kit
+build
+package
+src/lib/assets/*
+src/lib/components/models/*
+src/lib/components/ui/*
