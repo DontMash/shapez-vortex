@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.14.5
+
+[compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.4...v0.14.5)
+
+### 🩹 Fixes
+
+- **deps:** Update vulnerable dependencies ([52e041f](https://github.com/DontMash/shapez-vortex/commit/52e041f))
+
+### 💅 Refactors
+
+- Organize services into a pnpm monorepo ([0020c13](https://github.com/DontMash/shapez-vortex/commit/0020c13))
+
+### 🏡 Chore
+
+- Configure engineering skills ([70505eb](https://github.com/DontMash/shapez-vortex/commit/70505eb))
+- Add engineering skills ([f200955](https://github.com/DontMash/shapez-vortex/commit/f200955))
+
+### ❤️ Contributors
+
+- Sören Maschmann <soeren@maschmann.online>
+
 ## v0.14.4
 
 [compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.3...v0.14.4)
