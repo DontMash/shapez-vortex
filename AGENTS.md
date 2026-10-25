@@ -2,6 +2,8 @@
 
 Monorepo for the Shapez 2 community: `apps/sveltekit` is the SvelteKit 2 + Svelte 5 (runes) application, `apps/pocketbase` owns the database service, `apps/proxy` owns Caddy, and `packages/` is reserved for future packages. The SvelteKit app provides 3D shape/blueprint viewers (Threlte/three.js), a blueprint codec, and a PocketBase-backed upload/search UI.
 
+**Coding standards**: See [CODING_STANDARDS.md](CODING_STANDARDS.md) for conventions (language, framework, commits, testing).
+
 ## Toolchain
 
 - Node `>=22` (enforced via `.npmrc` `engine-strict=true`).
@@ -61,18 +63,11 @@ pnpm prepare:buildings  # apps/sveltekit/static/models/{buildings/,}*.gltf -> ap
 
 Both scripts are **interactive** (require typing `y` at the prompt), so they cannot run in CI. Run them locally after adding/changing `.gltf` sources.
 
-## Conventions
-
-- Svelte 5 runes only (`$props`, `$state`, `$derived`); no Svelte 4 syntax.
-- No source comments unless asked (matches existing code).
-- Tailwind 4: theme tokens (`--color-*`, `--radius-*`, `--text-*`, `--leading-*`, `--font-*`) live in `apps/sveltekit/src/app.css` under `@theme`; new colors go there.
-- `csrf: { trustedOrigins: ['*'] }` is intentional for the OAuth-style sign-in flow; do not tighten it without a replacement strategy.
-- Conventional Commits are required — `changelogen` reads them and bumps `package.json` + writes `CHANGELOG.md`.
-
 ## Tests
 
 - Vitest, discovery `src/**/*.{test,spec}.{js,ts}` from `apps/sveltekit` (see `apps/sveltekit/vite.config.ts`).
-- Today the suite is a single smoke test in `apps/sveltekit/src/index.test.ts`. Pure-data modules (`apps/sveltekit/src/lib/blueprint.ts`, `shape.ts`, `utils.ts`) are good candidates for new tests.
+- Tests follow the Robot + Fixture pattern — see [docs/testing.md](docs/testing.md) and [CODING_STANDARDS.md](CODING_STANDARDS.md).
+- Pure-data modules (`apps/sveltekit/src/lib/blueprint.ts`, `shape.ts`, `utils.ts`) are good candidates for direct unit tests (no robots needed).
 
 ## Release / deploy (CI, for context)
 

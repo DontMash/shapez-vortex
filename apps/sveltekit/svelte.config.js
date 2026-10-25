@@ -16,6 +16,9 @@ const config = {
     version: {
       name: version,
     },
+    alias: {
+      $tests: 'tests',
+    },
   },
 };
 
