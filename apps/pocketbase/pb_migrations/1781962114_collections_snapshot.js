@@ -2,8 +2,14 @@
 migrate((app) => {
   const snapshot = [
     {
+      "id": "pbc_2279338944",
+      "listRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
+      "viewRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
       "createRule": null,
+      "updateRule": null,
       "deleteRule": null,
+      "name": "_mfas",
+      "type": "base",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -86,20 +92,20 @@ migrate((app) => {
           "type": "autodate"
         }
       ],
-      "id": "pbc_2279338944",
       "indexes": [
         "CREATE INDEX `idx_mfas_collectionRef_recordRef` ON `_mfas` (collectionRef,recordRef)"
       ],
-      "listRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
-      "name": "_mfas",
-      "system": true,
-      "type": "base",
-      "updateRule": null,
-      "viewRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId"
+      "system": true
     },
     {
+      "id": "pbc_1638494021",
+      "listRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
+      "viewRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
       "createRule": null,
+      "updateRule": null,
       "deleteRule": null,
+      "name": "_otps",
+      "type": "base",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -196,20 +202,20 @@ migrate((app) => {
           "type": "autodate"
         }
       ],
-      "id": "pbc_1638494021",
       "indexes": [
         "CREATE INDEX `idx_otps_collectionRef_recordRef` ON `_otps` (collectionRef, recordRef)"
       ],
-      "listRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
-      "name": "_otps",
-      "system": true,
-      "type": "base",
-      "updateRule": null,
-      "viewRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId"
+      "system": true
     },
     {
+      "id": "pbc_2281828961",
+      "listRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
+      "viewRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
       "createRule": null,
+      "updateRule": null,
       "deleteRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
+      "name": "_externalAuths",
+      "type": "base",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -307,21 +313,21 @@ migrate((app) => {
           "type": "autodate"
         }
       ],
-      "id": "pbc_2281828961",
       "indexes": [
         "CREATE UNIQUE INDEX `idx_externalAuths_record_provider` ON `_externalAuths` (collectionRef, recordRef, provider)",
         "CREATE UNIQUE INDEX `idx_externalAuths_collection_provider` ON `_externalAuths` (collectionRef, provider, providerId)"
       ],
-      "listRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
-      "name": "_externalAuths",
-      "system": true,
-      "type": "base",
-      "updateRule": null,
-      "viewRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId"
+      "system": true
     },
     {
+      "id": "pbc_4275539003",
+      "listRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
+      "viewRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
       "createRule": null,
+      "updateRule": null,
       "deleteRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
+      "name": "_authOrigins",
+      "type": "base",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -404,38 +410,20 @@ migrate((app) => {
           "type": "autodate"
         }
       ],
-      "id": "pbc_4275539003",
       "indexes": [
         "CREATE UNIQUE INDEX `idx_authOrigins_unique_pairs` ON `_authOrigins` (collectionRef, recordRef, fingerprint)"
       ],
-      "listRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId",
-      "name": "_authOrigins",
-      "system": true,
-      "type": "base",
-      "updateRule": null,
-      "viewRule": "@request.auth.id != '' && recordRef = @request.auth.id && collectionRef = @request.auth.collectionId"
+      "system": true
     },
     {
-      "authAlert": {
-        "emailTemplate": {
-          "body": "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location:</p>\n<p><em>{ALERT_INFO}</em></p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>If this was you, you may disregard this email.</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-          "subject": "Login from a new location"
-        },
-        "enabled": true
-      },
-      "authRule": "",
-      "authToken": {
-        "duration": 1209600
-      },
-      "confirmEmailChangeTemplate": {
-        "body": "<p>Hello,</p>\n<p>Click on the button below to confirm your new email address.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-email-change/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Confirm new email</a>\n</p>\n<p><i>If you didn't ask to change your email address, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-        "subject": "Confirm your {APP_NAME} new email address"
-      },
+      "id": "pbc_3142635823",
+      "listRule": null,
+      "viewRule": null,
       "createRule": null,
+      "updateRule": null,
       "deleteRule": null,
-      "emailChangeToken": {
-        "duration": 1800
-      },
+      "name": "_superusers",
+      "type": "auth",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -482,12 +470,12 @@ migrate((app) => {
           "type": "text"
         },
         {
-          "exceptDomains": null,
+          "exceptDomains": [],
           "help": "",
           "hidden": false,
           "id": "email3885137012",
           "name": "email",
-          "onlyDomains": null,
+          "onlyDomains": [],
           "presentable": false,
           "required": true,
           "system": true,
@@ -534,39 +522,29 @@ migrate((app) => {
           "type": "autodate"
         }
       ],
-      "fileToken": {
-        "duration": 120
-      },
-      "id": "pbc_3142635823",
       "indexes": [
         "CREATE UNIQUE INDEX `idx_tokenKey_pbc_3142635823` ON `_superusers` (`tokenKey`)",
         "CREATE UNIQUE INDEX `idx_email_pbc_3142635823` ON `_superusers` (`email`) WHERE `email` != ''"
       ],
-      "listRule": null,
+      "system": true,
+      "authRule": "",
       "manageRule": null,
-      "mfa": {
-        "duration": 1800,
-        "enabled": false,
-        "rule": ""
-      },
-      "name": "_superusers",
-      "oauth2": {
-        "enabled": false,
-        "mappedFields": {
-          "avatarURL": "",
-          "id": "",
-          "name": "",
-          "username": ""
+      "authAlert": {
+        "enabled": true,
+        "emailTemplate": {
+          "subject": "Login from a new location",
+          "body": "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location:</p>\n<p><em>{ALERT_INFO}</em></p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>If this was you, you may disregard this email.</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
         }
       },
-      "otp": {
-        "duration": 180,
-        "emailTemplate": {
-          "body": "<p>Hello,</p>\n<p>Your one-time password is: <strong>{OTP}</strong></p>\n<p><i>If you didn't ask for the one-time password, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-          "subject": "OTP for {APP_NAME}"
+      "oauth2": {
+        "providers": [],
+        "mappedFields": {
+          "id": "",
+          "name": "",
+          "username": "",
+          "avatarURL": ""
         },
-        "enabled": false,
-        "length": 8
+        "enabled": false
       },
       "passwordAuth": {
         "enabled": true,
@@ -574,46 +552,57 @@ migrate((app) => {
           "email"
         ]
       },
+      "mfa": {
+        "enabled": false,
+        "duration": 1800,
+        "rule": ""
+      },
+      "otp": {
+        "enabled": false,
+        "duration": 180,
+        "length": 8,
+        "emailTemplate": {
+          "subject": "OTP for {APP_NAME}",
+          "body": "<p>Hello,</p>\n<p>Your one-time password is: <strong>{OTP}</strong></p>\n<p><i>If you didn't ask for the one-time password, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+        }
+      },
+      "authToken": {
+        "duration": 1209600
+      },
       "passwordResetToken": {
         "duration": 1800
       },
-      "resetPasswordTemplate": {
-        "body": "<p>Hello,</p>\n<p>Click on the button below to reset your password.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-password-reset/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Reset password</a>\n</p>\n<p><i>If you didn't ask to reset your password, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-        "subject": "Reset your {APP_NAME} password"
-      },
-      "system": true,
-      "type": "auth",
-      "updateRule": null,
-      "verificationTemplate": {
-        "body": "<p>Hello,</p>\n<p>Thank you for joining us at {APP_NAME}.</p>\n<p>Click on the button below to verify your email address.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-verification/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Verify</a>\n</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-        "subject": "Verify your {APP_NAME} email"
+      "emailChangeToken": {
+        "duration": 1800
       },
       "verificationToken": {
         "duration": 259200
       },
-      "viewRule": null
-    },
-    {
-      "authAlert": {
-        "emailTemplate": {
-          "body": "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location:</p>\n<p><em>{ALERT_INFO}</em></p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>If this was you, you may disregard this email.</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-          "subject": "Login from a new location"
-        },
-        "enabled": true
+      "fileToken": {
+        "duration": 120
       },
-      "authRule": "",
-      "authToken": {
-        "duration": 1209600
+      "verificationTemplate": {
+        "subject": "Verify your {APP_NAME} email",
+        "body": "<p>Hello,</p>\n<p>Thank you for joining us at {APP_NAME}.</p>\n<p>Click on the button below to verify your email address.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-verification/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Verify</a>\n</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+      },
+      "resetPasswordTemplate": {
+        "subject": "Reset your {APP_NAME} password",
+        "body": "<p>Hello,</p>\n<p>Click on the button below to reset your password.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-password-reset/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Reset password</a>\n</p>\n<p><i>If you didn't ask to reset your password, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
       },
       "confirmEmailChangeTemplate": {
-        "body": "<p>Hello,</p>\n<p>Click on the button below to confirm your new email address.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-email-change/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Confirm new email</a>\n</p>\n<p><i>If you didn't ask to change your email address, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-        "subject": "Confirm your {APP_NAME} new email address"
-      },
+        "subject": "Confirm your {APP_NAME} new email address",
+        "body": "<p>Hello,</p>\n<p>Click on the button below to confirm your new email address.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-email-change/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Confirm new email</a>\n</p>\n<p><i>If you didn't ask to change your email address, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+      }
+    },
+    {
+      "id": "_pb_users_auth_",
+      "listRule": "",
+      "viewRule": "",
       "createRule": "",
+      "updateRule": "id = @request.auth.id",
       "deleteRule": "id = @request.auth.id",
-      "emailChangeToken": {
-        "duration": 1800
-      },
+      "name": "users",
+      "type": "auth",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -660,12 +649,12 @@ migrate((app) => {
           "type": "text"
         },
         {
-          "exceptDomains": null,
+          "exceptDomains": [],
           "help": "",
           "hidden": false,
           "id": "email3885137012",
           "name": "email",
-          "onlyDomains": null,
+          "onlyDomains": [],
           "presentable": false,
           "required": false,
           "system": true,
@@ -739,7 +728,7 @@ migrate((app) => {
           "protected": false,
           "required": false,
           "system": false,
-          "thumbs": null,
+          "thumbs": [],
           "type": "file"
         },
         {
@@ -806,41 +795,31 @@ migrate((app) => {
           "type": "text"
         }
       ],
-      "fileToken": {
-        "duration": 120
-      },
-      "id": "_pb_users_auth_",
       "indexes": [
         "CREATE UNIQUE INDEX `__pb_users_auth__username_idx` ON `users` (username COLLATE NOCASE)",
         "CREATE UNIQUE INDEX `__pb_users_auth__email_idx` ON `users` (`email`) WHERE `email` != ''",
         "CREATE UNIQUE INDEX `__pb_users_auth__tokenKey_idx` ON `users` (`tokenKey`)",
         "CREATE UNIQUE INDEX `idx_aez81VK` ON `users` (`displayname`)"
       ],
-      "listRule": "",
+      "system": false,
+      "authRule": "",
       "manageRule": null,
-      "mfa": {
-        "duration": 1800,
-        "enabled": false,
-        "rule": ""
-      },
-      "name": "users",
-      "oauth2": {
-        "enabled": false,
-        "mappedFields": {
-          "avatarURL": "",
-          "id": "",
-          "name": "",
-          "username": "username"
+      "authAlert": {
+        "enabled": true,
+        "emailTemplate": {
+          "subject": "Login from a new location",
+          "body": "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location:</p>\n<p><em>{ALERT_INFO}</em></p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>If this was you, you may disregard this email.</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
         }
       },
-      "otp": {
-        "duration": 180,
-        "emailTemplate": {
-          "body": "<p>Hello,</p>\n<p>Your one-time password is: <strong>{OTP}</strong></p>\n<p><i>If you didn't ask for the one-time password, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-          "subject": "OTP for {APP_NAME}"
+      "oauth2": {
+        "providers": [],
+        "mappedFields": {
+          "id": "",
+          "name": "",
+          "username": "username",
+          "avatarURL": ""
         },
-        "enabled": false,
-        "length": 8
+        "enabled": false
       },
       "passwordAuth": {
         "enabled": true,
@@ -848,28 +827,57 @@ migrate((app) => {
           "username"
         ]
       },
+      "mfa": {
+        "enabled": false,
+        "duration": 1800,
+        "rule": ""
+      },
+      "otp": {
+        "enabled": false,
+        "duration": 180,
+        "length": 8,
+        "emailTemplate": {
+          "subject": "OTP for {APP_NAME}",
+          "body": "<p>Hello,</p>\n<p>Your one-time password is: <strong>{OTP}</strong></p>\n<p><i>If you didn't ask for the one-time password, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+        }
+      },
+      "authToken": {
+        "duration": 1209600
+      },
       "passwordResetToken": {
         "duration": 1800
       },
-      "resetPasswordTemplate": {
-        "body": "<p>Hello,</p>\n<p>Click on the button below to reset your password.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-password-reset/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Reset password</a>\n</p>\n<p><i>If you didn't ask to reset your password, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-        "subject": "Reset your {APP_NAME} password"
-      },
-      "system": false,
-      "type": "auth",
-      "updateRule": "id = @request.auth.id",
-      "verificationTemplate": {
-        "body": "<p>Hello,</p>\n<p>Thank you for joining us at {APP_NAME}.</p>\n<p>Click on the button below to verify your email address.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-verification/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Verify</a>\n</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>",
-        "subject": "Verify your {APP_NAME} email"
+      "emailChangeToken": {
+        "duration": 1800
       },
       "verificationToken": {
         "duration": 604800
       },
-      "viewRule": ""
+      "fileToken": {
+        "duration": 120
+      },
+      "verificationTemplate": {
+        "subject": "Verify your {APP_NAME} email",
+        "body": "<p>Hello,</p>\n<p>Thank you for joining us at {APP_NAME}.</p>\n<p>Click on the button below to verify your email address.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-verification/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Verify</a>\n</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+      },
+      "resetPasswordTemplate": {
+        "subject": "Reset your {APP_NAME} password",
+        "body": "<p>Hello,</p>\n<p>Click on the button below to reset your password.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-password-reset/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Reset password</a>\n</p>\n<p><i>If you didn't ask to reset your password, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+      },
+      "confirmEmailChangeTemplate": {
+        "subject": "Confirm your {APP_NAME} new email address",
+        "body": "<p>Hello,</p>\n<p>Click on the button below to confirm your new email address.</p>\n<p>\n  <a class=\"btn\" href=\"{APP_URL}/_/#/auth/confirm-email-change/{TOKEN}\" target=\"_blank\" rel=\"noopener\">Confirm new email</a>\n</p>\n<p><i>If you didn't ask to change your email address, you can ignore this email.</i></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+      }
     },
     {
+      "id": "zd5u2s0odf28ljg",
+      "listRule": "",
+      "viewRule": "",
       "createRule": "@request.auth.id != \"\"",
+      "updateRule": "",
       "deleteRule": "",
+      "name": "tags",
+      "type": "base",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -936,20 +944,20 @@ migrate((app) => {
           "type": "autodate"
         }
       ],
-      "id": "zd5u2s0odf28ljg",
       "indexes": [
         "CREATE UNIQUE INDEX `idx_IcpzmJs` ON `tags` (`name`)"
       ],
-      "listRule": "",
-      "name": "tags",
-      "system": false,
-      "type": "base",
-      "updateRule": "",
-      "viewRule": ""
+      "system": false
     },
     {
+      "id": "f96llnpqjo2l87m",
+      "listRule": "",
+      "viewRule": "",
       "createRule": "@request.auth.id != \"\" && @request.auth.verified = true && @request.auth.id = @request.body.creator.id",
+      "updateRule": "",
       "deleteRule": "@request.auth.id = creator.id",
+      "name": "blueprints",
+      "type": "base",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -1198,18 +1206,18 @@ migrate((app) => {
           "type": "autodate"
         }
       ],
-      "id": "f96llnpqjo2l87m",
       "indexes": [],
-      "listRule": "",
-      "name": "blueprints",
-      "system": false,
-      "type": "base",
-      "updateRule": "@request.auth.id = creator.id",
-      "viewRule": ""
+      "system": false
     },
     {
+      "id": "0z55yujym3tisf7",
+      "listRule": null,
+      "viewRule": null,
       "createRule": "@request.auth.id != \"\"",
+      "updateRule": null,
       "deleteRule": null,
+      "name": "blueprintReports",
+      "type": "base",
       "fields": [
         {
           "autogeneratePattern": "[a-z0-9]{15}",
@@ -1318,14 +1326,8 @@ migrate((app) => {
           "type": "autodate"
         }
       ],
-      "id": "0z55yujym3tisf7",
       "indexes": [],
-      "listRule": null,
-      "name": "blueprintReports",
-      "system": false,
-      "type": "base",
-      "updateRule": null,
-      "viewRule": null
+      "system": false
     }
   ];
 
