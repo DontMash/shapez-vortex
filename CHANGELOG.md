@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.14.6
+
+[compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.5...v0.14.6)
+
+### 🚀 Enhancements
+
+- Upgrade pocketbase to v0.40.6 ([56b800e](https://github.com/DontMash/shapez-vortex/commit/56b800e))
+
+### 🏡 Chore
+
+- Update and expand engineering skills ([85550c9](https://github.com/DontMash/shapez-vortex/commit/85550c9))
+
+### ❤️ Contributors
+
+- Sören Maschmann <soeren@maschmann.online>
+
 ## v0.14.5
 
 [compare changes](https://github.com/DontMash/shapez-vortex/compare/v0.14.4...v0.14.5)
