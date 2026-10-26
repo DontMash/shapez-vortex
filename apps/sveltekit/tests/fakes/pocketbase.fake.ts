@@ -1,3 +1,5 @@
+import type PocketBase from 'pocketbase';
+
 type FakeRecord = Record<string, unknown> & {
   id: string;
   collectionName: string;
@@ -27,7 +29,7 @@ interface FakeCollection {
     data: Record<string, unknown> | FormData,
   ): Promise<FakeRecord>;
   authWithPassword(
-    email: string,
+    identity: string,
     password: string,
   ): Promise<{ token: string; record: FakeRecord }>;
 }
@@ -43,24 +45,25 @@ interface FakePocketBaseClient {
     exportToCookie(): string;
   };
   collection(name: string): FakeCollection;
-}
-
-export interface FakePocketBase extends FakePocketBaseClient {
   createClient(): FakePocketBaseClient;
 }
+
+export type FakePocketBase = PocketBase & {
+  createClient: () => FakePocketBase;
+};
 
 const FILTER_PATTERNS: Array<
   [RegExp, (record: FakeRecord, field: string, value: string) => boolean]
 > = [
   [
-    /^(\w+)\s*~\s*"(.+)"$/,
+    /^(\w+)\s*~\s*"(.*)"$/,
     (record, field, value) =>
       String(record[field] ?? '')
         .toLowerCase()
         .includes(value.toLowerCase()),
   ],
   [
-    /^(\w+)\?\~\s*"(.+)"$/,
+    /^(\w+)\?~\s*"(.*)"$/,
     (record, field, value) => {
       const fieldValue = record[field];
       if (Array.isArray(fieldValue)) {
@@ -70,7 +73,7 @@ const FILTER_PATTERNS: Array<
     },
   ],
   [
-    /^(\w+)\s*=\s*"(.+)"$/,
+    /^(\w+)\s*=\s*"(.*)"$/,
     (record, field, value) => String(record[field] ?? '') === value,
   ],
 ];
@@ -123,11 +126,16 @@ export const createFakePocketBase = (): FakePocketBase => {
     return obj;
   };
 
+  const toRecordData = (
+    data: Record<string, unknown> | FormData,
+  ): Record<string, unknown> =>
+    data instanceof FormData ? formDataToObject(data) : { ...data };
+
   const applyUpdate = (
     existing: FakeRecord,
     data: Record<string, unknown> | FormData,
   ): FakeRecord => {
-    const updates = data instanceof FormData ? formDataToObject(data) : data;
+    const updates = toRecordData(data);
     const result = { ...existing };
     for (const [key, value] of Object.entries(updates)) {
       if (key.endsWith('+')) {
@@ -157,7 +165,7 @@ export const createFakePocketBase = (): FakePocketBase => {
         return compare(record, match[1], match[2]);
       }
     }
-    return true;
+    throw new Error(`Unsupported filter condition: "${condition}"`);
   };
 
   const matchesFilter = (record: FakeRecord, filter: string): boolean => {
@@ -169,6 +177,9 @@ export const createFakePocketBase = (): FakePocketBase => {
       );
     });
   };
+
+  const filterRecords = (items: FakeRecord[], filter?: string): FakeRecord[] =>
+    filter ? items.filter((record) => matchesFilter(record, filter)) : items;
 
   const applySort = (records: FakeRecord[], sort: string): FakeRecord[] => {
     const sortFields = sort.split(',').map((s) => s.trim());
@@ -193,8 +204,7 @@ export const createFakePocketBase = (): FakePocketBase => {
       const records = getCollection(name);
       return {
         async create(data) {
-          const obj =
-            data instanceof FormData ? formDataToObject(data) : { ...data };
+          const obj = toRecordData(data);
           const now = new Date().toISOString();
           const record = {
             id: generateId(),
@@ -208,10 +218,7 @@ export const createFakePocketBase = (): FakePocketBase => {
         },
 
         async getList(page, perPage, options) {
-          let items = [...records.values()];
-          if (options?.filter) {
-            items = items.filter((r) => matchesFilter(r, options.filter!));
-          }
+          let items = filterRecords([...records.values()], options?.filter);
           if (options?.sort) {
             items = applySort(items, options.sort);
           }
@@ -223,11 +230,7 @@ export const createFakePocketBase = (): FakePocketBase => {
         },
 
         async getFullList(options) {
-          let items = [...records.values()];
-          if (options?.filter) {
-            items = items.filter((r) => matchesFilter(r, options.filter!));
-          }
-          return items;
+          return filterRecords([...records.values()], options?.filter);
         },
 
         async getOne(id) {
@@ -248,10 +251,10 @@ export const createFakePocketBase = (): FakePocketBase => {
           return updated;
         },
 
-        async authWithPassword(email, password) {
+        async authWithPassword(identity, password) {
           const users = getCollection('users');
           const user = [...users.values()].find(
-            (u) => u.email === email && u.password === password,
+            (u) => u.username === identity && u.password === password,
           );
           if (!user) {
             throw new Error('Failed to authenticate.');
@@ -262,7 +265,7 @@ export const createFakePocketBase = (): FakePocketBase => {
       };
     };
 
-    return {
+    const client = {
       authStore: {
         get isValid() {
           return currentAuth !== null;
@@ -279,15 +282,15 @@ export const createFakePocketBase = (): FakePocketBase => {
         save(_token: string, record: FakeRecord) {
           currentAuth = record;
         },
-        loadFromCookie(_cookie: string) {},
+        loadFromCookie() {},
         exportToCookie() {
           return '';
         },
       },
       collection,
     };
+    return Object.assign(client, { createClient });
   };
 
-  const defaultClient = createClient();
-  return Object.assign(defaultClient, { createClient });
+  return createClient() as unknown as FakePocketBase;
 };

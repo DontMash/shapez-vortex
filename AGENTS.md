@@ -26,9 +26,9 @@ Root commands delegate SvelteKit scripts via `pnpm --filter @shapez-vortex/svelt
 ## Verify (run in this order)
 
 ```sh
-pnpm lint       # eslint src
+pnpm lint       # eslint src tests
 pnpm check      # svelte-kit sync + svelte-check (8GB heap; required after dep/tsconfig changes)
-pnpm format     # prettier --check src
+pnpm format     # prettier --check src tests
 pnpm test       # vitest run
 pnpm build      # vite build (needs the .env vars)
 pnpm release    # changelogen --release --push (pushes tags and commits; needs GITHUB_TOKEN + push access)
