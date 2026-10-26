@@ -1,8 +1,8 @@
-# Run robot tests against a fake PocketBase by default and a real PocketBase via `PB_TEST_URL`
+# Run robot tests against a fake PocketBase by default and a real PocketBase via `.env.test`
 
 **Status**: accepted
 
-Server-side tests inject a PocketBase client into robots, so the client is the seam between test and backend. `createTestPocketBase()` (`apps/sveltekit/tests/test-pocketbase.ts`) returns an in-memory fake PocketBase by default and a real PocketBase client when `PB_TEST_URL` is set, so the same robot tests run against both backends. We chose this over module mocks (which verify interactions, not behavior) and over Docker-only tests (slow, external service in every run): the fake keeps the suite fast and offline, and the real-backend run catches fidelity drift in the fake.
+Server-side tests inject a PocketBase client into robots, so the client is the seam between test and backend. `createTestPocketBase()` (`apps/sveltekit/tests/test-pocketbase.ts`) returns an in-memory fake PocketBase by default and a real PocketBase client when `.env.test` sets `POCKETBASE_URL`, so the same robot tests run against both backends. We chose this over module mocks (which verify interactions, not behavior) and over Docker-only tests (slow, external service in every run): the fake keeps the suite fast and offline, and the real-backend run catches fidelity drift in the fake.
 
 ## Considered Options
 
