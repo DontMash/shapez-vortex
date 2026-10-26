@@ -5,16 +5,24 @@ export type UserFixture = {
   password: string;
 };
 
-export const userA: UserFixture = {
+export const createUserFixture = (
+  overrides: Partial<UserFixture> = {},
+): UserFixture => ({
+  username: 'user',
+  displayname: 'User',
+  email: 'user@test.com',
+  password: 'password123',
+  ...overrides,
+});
+
+export const userA: UserFixture = createUserFixture({
   username: 'usera',
   displayname: 'User A',
   email: 'usera@test.com',
-  password: 'password123',
-};
+});
 
-export const userB: UserFixture = {
+export const userB: UserFixture = createUserFixture({
   username: 'userb',
   displayname: 'User B',
   email: 'userb@test.com',
-  password: 'password123',
-};
+});

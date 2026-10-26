@@ -8,6 +8,7 @@ export const createUserRobot = (pb: PocketBase) => ({
       displayname: fixture.displayname,
       email: fixture.email,
       password: fixture.password,
+      passwordConfirm: fixture.password,
       verified: false,
       blueprints: [],
       bookmarks: [],
@@ -17,7 +18,7 @@ export const createUserRobot = (pb: PocketBase) => ({
   async signIn(fixture: UserFixture) {
     return pb
       .collection('users')
-      .authWithPassword(fixture.email, fixture.password);
+      .authWithPassword(fixture.username, fixture.password);
   },
 
   async signOut() {

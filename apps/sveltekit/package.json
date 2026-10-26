@@ -14,10 +14,10 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "check": "svelte-kit sync && NODE_OPTIONS=--max-old-space-size=8192 svelte-check --tsconfig ./tsconfig.json",
-    "lint": "NODE_OPTIONS=--max-old-space-size=8192 eslint src",
-    "lint:fix": "NODE_OPTIONS=--max-old-space-size=8192 eslint src --fix",
-    "format": "prettier --check src",
-    "format:fix": "prettier --write src"
+    "lint": "NODE_OPTIONS=--max-old-space-size=8192 eslint src tests",
+    "lint:fix": "NODE_OPTIONS=--max-old-space-size=8192 eslint src tests --fix",
+    "format": "prettier --check src tests",
+    "format:fix": "prettier --write src tests"
   },
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.5",
