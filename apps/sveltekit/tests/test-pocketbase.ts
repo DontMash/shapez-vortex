@@ -5,7 +5,7 @@ import {
 } from '$tests/fakes/pocketbase.fake';
 
 export const createTestPocketBase = (): FakePocketBase => {
-  const url = process.env.PB_TEST_URL;
+  const url = process.env.POCKETBASE_URL;
   if (!url) {
     return createFakePocketBase();
   }

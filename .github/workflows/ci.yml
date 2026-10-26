@@ -96,8 +96,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
       - name: Test
-        env:
-          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
         run: pnpm run test
 
   release:

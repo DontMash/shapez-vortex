@@ -104,11 +104,17 @@ export const userA: UserFixture = createUserFixture({
 
 ## Test backends
 
-Tests get their PocketBase client from `createTestPocketBase()` (`tests/test-pocketbase.ts`) — never from `createFakePocketBase()` directly. By default it returns an in-memory fake PocketBase (`tests/fakes/pocketbase.fake.ts`). Set `PB_TEST_URL` to run the same tests against a real PocketBase:
+Tests get their PocketBase client from `createTestPocketBase()` (`tests/test-pocketbase.ts`) — never from `createFakePocketBase()` directly. By default it returns an in-memory fake PocketBase (`tests/fakes/pocketbase.fake.ts`). To run the same tests against a real PocketBase, create `apps/sveltekit/.env.test` containing:
 
 ```sh
-pnpm dev:db                                 # PocketBase on :8080
-PB_TEST_URL=http://localhost:8080 pnpm test # same tests, real backend
+POCKETBASE_URL=http://localhost:8080
+```
+
+Then run the suite as usual:
+
+```sh
+pnpm dev:db   # PocketBase on :8080
+pnpm test     # same tests, real backend
 ```
 
 Note: the real backend requires verified users for blueprint creation (`blueprints.createRule`), and tests share one database — until the integration layer adds a verify step and per-test isolation, the suite runs green in fake mode only (see `docs/adr/0002-test-backends.md`).
@@ -145,7 +151,7 @@ The fake supports the PB API surface used by `blueprint.api.ts`:
 - **Imports**: Use the `$tests` alias for test infrastructure (`$tests/robots/...`, `$tests/fixtures/...`, `$tests/fakes/...`, `$tests/test-pocketbase`)
 - **Test discovery**: Vitest discovers `src/**/*.{test,spec}.{js,ts}` — test files must live in `src/`
 - **Terminology**: Use "Robot", "Fixture", and "Fake" (see `GLOSSARY.md`). Avoid "scenario", "helper", "driver", "seed", "persona", "mock"
-- **Backend**: Get the client from `createTestPocketBase()`, never `createFakePocketBase()` directly — set `PB_TEST_URL` to run the same test against a real PocketBase
+- **Backend**: Get the client from `createTestPocketBase()`, never `createFakePocketBase()` directly — create `.env.test` with `POCKETBASE_URL` to run the same test against a real PocketBase
 - **Casting**: Never cast the fake to `PocketBase` in tests — `createFakePocketBase()` already returns a PocketBase-compatible type
 - **Access rules**: The fake enforces no access rules — test authz against the real backend only (the JSVM hook is the single source of authz)
 - **Robot growth**: Add robot actions per-feature as tests arrive — a robot without a test is speculative surface
