@@ -104,12 +104,12 @@ To setup, install & develop you may need some tools:
 
    ```sh
    pnpm install
-   cp apps/sveltekit/.env.example apps/sveltekit/.env.development
+   cp apps/sveltekit/.env.example apps/sveltekit/.env
    pnpm dev:db
    pnpm dev
    ```
 
-   Set `POCKETBASE_URL` in `apps/sveltekit/.env.development` (for local development, `http://localhost:8080`). Run `pnpm dev:db` and `pnpm dev` in separate terminals.
+   Set `POCKETBASE_URL` in `apps/sveltekit/.env` (for local development, `http://localhost:8080`). Run `pnpm dev:db` and `pnpm dev` in separate terminals. SvelteKit also reads `.env` during builds; use `.env.development` instead if these values should apply only to development.
 
 3. Visit [localhost:5173](http://localhost:5173)
 

@@ -14,12 +14,12 @@ Monorepo for the Shapez 2 community: `apps/sveltekit` is the SvelteKit 2 + Svelt
 
 ```sh
 pnpm install
-cp apps/sveltekit/.env.example apps/sveltekit/.env.development  # set POCKETBASE_URL (e.g. http://localhost:8080)
+cp apps/sveltekit/.env.example apps/sveltekit/.env  # set POCKETBASE_URL (e.g. http://localhost:8080)
 pnpm dev:db                                     # root compose.yml, PocketBase on :8080
 pnpm dev                                        # Vite dev on :5173
 ```
 
-`.env.development` is git-ignored (`.env.*` pattern). The vars above are the only required ones and are also passed as CI secrets.
+`.env` is git-ignored. The vars above are the only required ones and are also passed as CI secrets.
 
 Root commands delegate SvelteKit scripts via `pnpm --filter @shapez-vortex/sveltekit`; keep scripts and app dependencies in `apps/sveltekit/package.json`. Shared ESLint, Prettier, and TypeScript base configuration lives at the root. `pnpm-workspace.yaml` whitelists `esbuild` and `sharp` builds; keep that allow-list intact or `pnpm install` will refuse to run.
 
@@ -30,7 +30,7 @@ pnpm lint       # eslint src tests
 pnpm check      # svelte-kit sync + svelte-check (8GB heap; required after dep/tsconfig changes)
 pnpm format     # prettier --check src tests
 pnpm test       # vitest run
-pnpm build      # vite build (local: export POCKETBASE_URL first; CI: from secrets)
+pnpm build      # vite build (needs POCKETBASE_URL from .env or the environment)
 pnpm release    # changelogen --release --push (pushes tags and commits; needs GITHUB_TOKEN + push access)
 ```
 

@@ -104,11 +104,15 @@ export const userA: UserFixture = createUserFixture({
 
 ## Test backends
 
-Tests get their PocketBase client from `createTestPocketBase()` (`tests/test-pocketbase.ts`) — never from `createFakePocketBase()` directly. By default it returns an in-memory fake PocketBase (`tests/fakes/pocketbase.fake.ts`). To run the same tests against a real PocketBase, create `apps/sveltekit/.env.test` containing:
+Tests get their PocketBase client from `createTestPocketBase()` (`tests/test-pocketbase.ts`) — never from `createFakePocketBase()` directly. By default it returns an in-memory fake PocketBase (`tests/fakes/pocketbase.fake.ts`). To select a real PocketBase, set `POCKETBASE_URL` in the shell/CI environment or create `apps/sveltekit/.env.test` containing:
 
 ```sh
 POCKETBASE_URL=http://localhost:8080
 ```
+
+Vite's test configuration parses only `.env.test` using Node's native `util.parseEnv()` and passes the result to Vitest without preloading `process.env`. Shell/CI values override file values, including an empty `POCKETBASE_URL` to select the fake. A missing file supplies no overrides, so tests use the fake unless the shell/CI environment selects a real backend.
+
+Shared `.env` and `.env.local` files do not select the test backend. SvelteKit's normal env loading is unchanged: application code importing `$env/...` can still read shared files. This isolates backend selection, not every environment value accessible to tests. `.env.development` remains optional for development-only application configuration.
 
 Then run the suite as usual:
 
@@ -151,7 +155,7 @@ The fake supports the PB API surface used by `blueprint.api.ts`:
 - **Imports**: Use the `$tests` alias for test infrastructure (`$tests/robots/...`, `$tests/fixtures/...`, `$tests/fakes/...`, `$tests/test-pocketbase`)
 - **Test discovery**: Vitest discovers `src/**/*.{test,spec}.{js,ts}` — test files must live in `src/`
 - **Terminology**: Use "Robot", "Fixture", and "Fake" (see `GLOSSARY.md`). Avoid "scenario", "helper", "driver", "seed", "persona", "mock"
-- **Backend**: Get the client from `createTestPocketBase()`, never `createFakePocketBase()` directly — create `.env.test` with `POCKETBASE_URL` to run the same test against a real PocketBase
+- **Backend**: Get the client from `createTestPocketBase()`, never `createFakePocketBase()` directly — see Test backends for environment configuration and precedence
 - **Casting**: Never cast the fake to `PocketBase` in tests — `createFakePocketBase()` already returns a PocketBase-compatible type
 - **Access rules**: The fake enforces no access rules — test authz against the real backend only (the JSVM hook is the single source of authz)
 - **Robot growth**: Add robot actions per-feature as tests arrive — a robot without a test is speculative surface
