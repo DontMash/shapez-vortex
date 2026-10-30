@@ -38,7 +38,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@iconify-json/tabler": "^1.2.35",
+    "@iconify-json/tabler": "^1.2.42",
     "@iconify/tailwind4": "^1.2.3",
     "@sveltejs/adapter-auto": "^7.0.1",
     "@sveltejs/kit": "^2.70.3",
@@ -49,10 +49,10 @@
     "@types/three": "^0.176.0",
     "@types/ua-parser-js": "^0.7.39",
     "@vitest/coverage-v8": "^4.1.11",
-    "svelte": "^5.56.3",
-    "svelte-check": "^4.6.0",
-    "tailwindcss": "^4.3.1",
-    "vite": "^8.0.16",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.7",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.5",
     "vitest": "^4.1.11"
   }
 }
