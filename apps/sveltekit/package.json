@@ -12,12 +12,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "check": "svelte-kit sync && NODE_OPTIONS=--max-old-space-size=8192 svelte-check --tsconfig ./tsconfig.json",
-    "lint": "NODE_OPTIONS=--max-old-space-size=8192 eslint src",
-    "lint:fix": "NODE_OPTIONS=--max-old-space-size=8192 eslint src --fix",
-    "format": "prettier --check src",
-    "format:fix": "prettier --write src"
+    "test:coverage": "node tooling/testing/run-coverage.mjs",
+    "check": "svelte-kit sync && NODE_OPTIONS=--max-old-space-size=8192 svelte-check --tsconfig ./tsconfig.json && tsc --allowJs --checkJs --noEmit --skipLibCheck --module nodenext --target es2022 tooling/testing/*.mjs",
+    "lint": "NODE_OPTIONS=--max-old-space-size=8192 eslint src tooling",
+    "lint:fix": "NODE_OPTIONS=--max-old-space-size=8192 eslint src tooling --fix",
+    "format": "prettier --check src tooling vite.config.ts",
+    "format:fix": "prettier --write src tooling vite.config.ts"
   },
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.5",
@@ -49,9 +49,11 @@
     "@types/three": "^0.176.0",
     "@types/ua-parser-js": "^0.7.39",
     "@vitest/coverage-v8": "^4.1.11",
+    "happy-dom": "^21.0.4",
     "svelte": "^5.56.3",
     "svelte-check": "^4.6.0",
     "tailwindcss": "^4.3.1",
+    "tinyglobby": "^0.2.17",
     "vite": "^8.0.16",
     "vitest": "^4.1.11"
   }

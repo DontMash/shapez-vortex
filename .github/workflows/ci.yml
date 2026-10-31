@@ -85,20 +85,40 @@ jobs:
     name: Test
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Remove previous coverage
+        run: rm -rf apps/sveltekit/coverage
       - uses: actions/setup-node@v4
         with:
           node-version-file: package.json
       - run: corepack enable
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-      - name: Test
+      - name: Test with coverage
         env:
-          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
-        run: pnpm run test
+          POCKETBASE_URL: http://127.0.0.1:8080
+        run: pnpm run test:coverage
+      - name: Coverage run summary
+        if: always()
+        shell: bash
+        run: |
+          if [ -f apps/sveltekit/coverage/summary.md ]; then
+            cat apps/sveltekit/coverage/summary.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '## Coverage\n\nCoverage unavailable: no report was produced by this run.\n' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Downloadable HTML coverage report
+        if: always() && hashFiles('apps/sveltekit/coverage/report-ready') != '' && hashFiles('apps/sveltekit/coverage/index.html') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: apps/sveltekit/coverage/
+          if-no-files-found: error
 
   release:
     name: Release
