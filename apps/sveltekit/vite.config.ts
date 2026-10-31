@@ -1,25 +1,49 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { parseEnv } from 'node:util';
 import { defineConfig } from 'vitest/config';
+import {
+  coveragePolicy,
+  coverageThresholds,
+} from './tooling/testing/policy.mjs';
+import { coverageScope } from './tooling/testing/scope.mjs';
 
-const readEnvTest = (): NodeJS.ProcessEnv => {
-  const path = resolve(process.cwd(), '.env.test');
-  if (!existsSync(path)) return {};
-  const env = parseEnv(readFileSync(path, 'utf-8'));
-  for (const key of Object.keys(env)) {
-    env[key] = process.env[key] ?? env[key];
-  }
-  return env;
-};
+const nodeTests = [
+  'tooling/**/*.test.js',
+  'src/**/server/**/*.{test,spec}.{js,ts}',
+  'src/**/*.server.{test,spec}.{js,ts}',
+  'src/**/+server.{test,spec}.{js,ts}',
+  '../pocketbase/pb_hooks/**/*.{test,spec}.js',
+];
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   assetsInclude: ['**/*.vs', '**/*.fs'],
   plugins: [tailwindcss(), sveltekit()],
   test: {
-    include: ['src/**/*.{test,spec}.{js,ts}'],
-    env: mode === 'test' ? readEnvTest() : {},
+    environment: 'happy-dom',
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'client',
+          environment: 'happy-dom',
+          include: ['src/**/*.{test,spec}.{js,ts}'],
+          exclude: nodeTests,
+        },
+      },
+      {
+        extends: true,
+        test: { name: 'node', environment: 'node', include: nodeTests },
+      },
+    ],
+    coverage: {
+      provider: 'v8',
+      ...coverageScope,
+      allowExternal: true,
+      excludeAfterRemap: true,
+      reporter: ['text', 'json-summary', 'json', 'html'],
+      reportsDirectory: 'coverage',
+      reportOnFailure: true,
+      thresholds: coverageThresholds(coveragePolicy),
+    },
   },
-}));
+});
