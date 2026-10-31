@@ -98,7 +98,7 @@ describe('coverage reporting and policy', () => {
       1,
     );
     expect(disabled.markdown).toContain('disabled (rollout baseline)');
-    expect(enabled.markdown).toContain('Global gate: enabled');
+    expect(enabled.markdown).toMatch(/^Global gate: enabled$/m);
     expect(enabled.markdown).toContain(
       '| Global | lines | 100.00% | 100/100 | PASS |',
     );
