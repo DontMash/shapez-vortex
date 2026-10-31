@@ -81,7 +81,7 @@ export function reportCoverage(
       '## Coverage',
       '',
       `Test/coverage command: ${testExit === 0 ? 'passed' : `failed (exit ${testExit})`}`,
-      `Global gate: ${policy.globalGate ? 'enabled (80.01% on all four metrics)' : 'disabled (rollout baseline)'}`,
+      `Global gate: ${policy.globalGate ? 'enabled' : 'disabled (rollout baseline)'}`,
       `Completed source groups: ${policy.completedGroups.length}`,
       '',
       '| Scope | Metric | Coverage | Covered/total | Gate |',
