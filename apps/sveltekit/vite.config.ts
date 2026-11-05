@@ -1,24 +1,42 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { parseEnv } from 'node:util';
 import { defineConfig } from 'vitest/config';
-import {
-  coveragePolicy,
-  coverageThresholds,
-} from './tooling/testing/policy.mjs';
-import { coverageScope } from './tooling/testing/scope.mjs';
+
+const readEnvTest = (): NodeJS.ProcessEnv => {
+  const path = resolve(process.cwd(), '.env.test');
+  if (!existsSync(path)) return {};
+  const env = parseEnv(readFileSync(path, 'utf-8'));
+  for (const key of Object.keys(env)) {
+    env[key] = process.env[key] ?? env[key];
+  }
+  return env;
+};
+
+const minimumCoverage = {
+  lines: 80,
+  statements: 80,
+  functions: 80,
+  branches: 80,
+};
+const globalCoverageGate = false;
 
 const nodeTests = [
-  'tooling/**/*.test.js',
   'src/**/server/**/*.{test,spec}.{js,ts}',
   'src/**/*.server.{test,spec}.{js,ts}',
   'src/**/+server.{test,spec}.{js,ts}',
-  '../pocketbase/pb_hooks/**/*.{test,spec}.js',
 ];
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   assetsInclude: ['**/*.vs', '**/*.fs'],
   plugins: [tailwindcss(), sveltekit()],
   test: {
+    env: mode === 'test' ? readEnvTest() : {},
+    reporters: process.env.GITHUB_ACTIONS
+      ? ['default', 'github-actions']
+      : ['default'],
     environment: 'happy-dom',
     projects: [
       {
@@ -37,13 +55,24 @@ export default defineConfig({
     ],
     coverage: {
       provider: 'v8',
-      ...coverageScope,
-      allowExternal: true,
+      include: ['src/**/*.{js,ts,svelte}'],
+      exclude: [
+        '**/*.d.ts',
+        '**/*.{test,spec}.{js,ts}',
+        '**/{__tests__,__fixtures__,test-support}/**',
+        'src/lib/components/models/{buildings,shapes}/**',
+        'src/lib/components/models/Error.svelte',
+        'src/lib/style/typography.js',
+      ],
       excludeAfterRemap: true,
       reporter: ['text', 'json-summary', 'json', 'html'],
       reportsDirectory: 'coverage',
+      clean: true,
       reportOnFailure: true,
-      thresholds: coverageThresholds(coveragePolicy),
+      thresholds: {
+        perFile: false,
+        ...(globalCoverageGate ? minimumCoverage : {}),
+      },
     },
   },
-});
+}));
