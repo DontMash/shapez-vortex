@@ -21,7 +21,7 @@ pnpm dev                                        # Vite dev on :5173
 
 `.env` is git-ignored. The vars above are the only required ones and are also passed as CI secrets.
 
-Root commands delegate SvelteKit scripts via `pnpm --filter @shapez-vortex/sveltekit`; keep scripts and app dependencies in `apps/sveltekit/package.json`. Shared ESLint, Prettier, and TypeScript base configuration lives at the root. `pnpm-workspace.yaml` whitelists `esbuild` and `sharp` builds; keep that allow-list intact or `pnpm install` will refuse to run.
+Root commands delegate SvelteKit scripts via `pnpm --filter @shapez-vortex/sveltekit`, except `test` and `test:coverage`, which run existing workspace suites recursively. Keep each app/package's test scripts, configuration, and dependencies with its source. Shared ESLint, Prettier, and TypeScript base configuration lives at the root. `pnpm-workspace.yaml` whitelists `esbuild` and `sharp` builds; keep that allow-list intact or `pnpm install` will refuse to run.
 
 ## Verify (run in this order)
 
@@ -34,7 +34,7 @@ pnpm build      # vite build (needs POCKETBASE_URL from .env or the environment)
 pnpm release    # changelogen --release --push (pushes tags and commits; needs GITHUB_TOKEN + push access)
 ```
 
-In CI (`.github/workflows/ci.yml`) lint, check, format, and build run in parallel, test `needs: build`, and the `release` job depends on all five and runs only for `workflow_dispatch`. The release job runs `pnpm release`, which uses [unjs/changelogen](https://unjs.io/packages/changelogen) to bump the version in the root `package.json`, update `CHANGELOG.md`, commit+tag with `[skip-ci]` (configured via `changelog.templates.commitMessage`), and push to `main`. `build-deploy` reads the new tag from the `release` job's outputs. The root `package.json` version is the only release version and is displayed in the SvelteKit footer. `test:coverage` is local-only.
+In CI (`.github/workflows/ci.yml`) lint, check, format, and build run in parallel, test `needs: build`, and the `release` job depends on all five and runs only for `workflow_dispatch`. The release job runs `pnpm release`, which uses [unjs/changelogen](https://unjs.io/packages/changelogen) to bump the version in the root `package.json`, update `CHANGELOG.md`, commit+tag with `[skip-ci]` (configured via `changelog.templates.commitMessage`), and push to `main`. `build-deploy` reads the new tag from the `release` job's outputs. The root `package.json` version is the only release version and is displayed in the SvelteKit footer. CI runs `test:coverage` and uploads native Vitest coverage reports.
 
 ## Architecture (where to look)
 
@@ -66,8 +66,8 @@ Both scripts are **interactive** (require typing `y` at the prompt), so they can
 ## Tests
 
 - Vitest, discovery `src/**/*.{test,spec}.{js,ts}` from `apps/sveltekit` (see `apps/sveltekit/vite.config.ts`).
-- Tests follow the Robot + Fixture pattern — see [docs/testing.md](docs/testing.md) and [CODING_STANDARDS.md](CODING_STANDARDS.md).
-- Pure-data modules (`apps/sveltekit/src/lib/blueprint.ts`, `shape.ts`, `utils.ts`) are good candidates for direct unit tests (no robots needed).
+- Tests follow the Robot + Fixture pattern; pure-data modules use direct unit tests without robots. PocketBase service source is outside unit tests and coverage; SvelteKit's server tests use a fake PocketBase by default.
+- For test-writing conventions, backend selection, local workflows, coverage policy, and CI reports, read `docs/testing.md` when adding or changing tests or testing infrastructure.
 
 ## Release / deploy (CI, for context)
 
