@@ -10,11 +10,11 @@ The issue tracker and triage label vocabulary should have been provided to you. 
 
 ## Process
 
-1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching. Treat the latest confirmed decisions as authoritative when earlier discussion conflicts.
+1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
 
 2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
 
-Carry forward agreed testing seams; record unresolved choices in Further Notes rather than reopening settled decisions. For testing and reporting infrastructure, verify existing runner/framework/platform capabilities first and preserve app/package ownership boundaries. Specify native facilities where they meet the agreed needs. Custom infrastructure requires an explicitly accepted gap and trade-off.
+Check with the user that these seams match their expectations.
 
 3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
 
@@ -70,8 +70,6 @@ A description of the things that are out of scope for this spec.
 
 ## Further Notes
 
-Any further notes about the feature, including unresolved decisions.
-
-Keep feature-specific acceptance criteria, rollout stages, dated baselines, and implementation evidence in the issue. Specify durable documentation updates only for reusable contributor guidance; keep delivery-specific material out of project how-to guides.
+Any further notes about the feature.
 
 </spec-template>
