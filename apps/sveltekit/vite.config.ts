@@ -71,6 +71,7 @@ export default defineConfig(({ mode }) => ({
       reportOnFailure: true,
       thresholds: {
         perFile: false,
+        'src/lib/blueprint{,.types}.ts': minimumCoverage,
         ...(globalCoverageGate ? minimumCoverage : {}),
       },
     },
