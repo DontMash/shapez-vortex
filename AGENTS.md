@@ -6,7 +6,7 @@ Monorepo for the Shapez 2 community: `apps/sveltekit` is the SvelteKit 2 + Svelt
 
 ## Toolchain
 
-- Node `>=22` (enforced via `.npmrc` `engine-strict=true`).
+- Node `24.x` (enforced via `.npmrc` `engine-strict=true`). Keep root and app engine ranges aligned and bounded to a major supported by the Vercel adapter; open-ended ranges can select an unsupported deployment runtime.
 - pnpm `11.5.3` via Corepack (`packageManager` field). Do not run `npm` or `bun`.
 - Docker is required for the local DB and the CI/deploy path.
 
