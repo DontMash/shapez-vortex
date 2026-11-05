@@ -8,7 +8,7 @@
     "url": "git+https://github.com/DontMash/shapez-vortex.git"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": "24.x"
   },
   "packageManager": "pnpm@11.5.3",
   "scripts": {

@@ -89,7 +89,7 @@ In the current state it provides the following features:
 
 To setup, install & develop you may need some tools:
 
-* [Node.js (JavaScript runtime)](https://nodejs.org/) (with Corepack enabled)
+* [Node.js 24.x (JavaScript runtime)](https://nodejs.org/) (with Corepack enabled)
 * [Docker (Test & Deployment)](https://docs.docker.com/get-docker/)
 
 ### Installation

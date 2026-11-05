@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": ">=22.0.0"
+    "node": "24.x"
   },
   "scripts": {
     "prepare:buildings": "bash resources/scripts/buildings-pipeline.sh",
