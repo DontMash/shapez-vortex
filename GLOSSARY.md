@@ -2,6 +2,11 @@
 
 Community platform for Shapez 2: blueprint sharing, search, and 3D shape/blueprint viewers backed by PocketBase.
 
+## Shapes
+
+**Shape identifier**:
+A textual representation of a shape's layers and parts. Syntactic recognition does not establish that the represented shape is physically stable or obtainable in-game.
+
 ## Testing Language
 
 **Robot**:
